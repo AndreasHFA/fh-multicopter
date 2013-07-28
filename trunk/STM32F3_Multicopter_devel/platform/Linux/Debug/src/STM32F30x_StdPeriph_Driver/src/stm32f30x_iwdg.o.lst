@@ -1,0 +1,503 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"stm32f30x_iwdg.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.global	IWDG_WriteAccessCmd
+  20              		.thumb
+  21              		.thumb_func
+  23              	IWDG_WriteAccessCmd:
+  24              	.LFB111:
+  25              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /**
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   ******************************************************************************
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @file    stm32f30x_iwdg.c
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @author  MCD Application Team
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @version V1.0.1
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @date    23-October-2012
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @brief   This file provides firmware functions to manage the following 
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *          functionalities of the Independent watchdog (IWDG) peripheral:           
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *           + Prescaler and Counter configuration
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *           + IWDG activation
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *           + Flag management
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   @verbatim  
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****  ===============================================================================
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****                           ##### IWDG features #####
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****  ===============================================================================
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****     [..] The IWDG can be started by either software or hardware (configurable
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****          through option byte).
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****     [..] The IWDG is clocked by its own dedicated low-speed clock (LSI) and
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****          thus stays active even if the main clock fails.
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****          Once the IWDG is started, the LSI is forced ON and cannot be disabled
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****          (LSI cannot be disabled too), and the counter starts counting down from 
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****          the reset value of 0xFFF. When it reaches the end of count value (0x000)
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****          a system reset is generated.
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****          The IWDG counter should be reloaded at regular intervals to prevent
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****          an MCU reset.
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****     [..] The IWDG is implemented in the VDD voltage domain that is still functional
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****          in STOP and STANDBY mode (IWDG reset can wake-up from STANDBY).          
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****     [..] IWDGRST flag in RCC_CSR register can be used to inform when a IWDG
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****          reset occurs.
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****     [..] Min-max timeout value @41KHz (LSI): ~0.1ms / ~25.5s
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****          The IWDG timeout may vary due to LSI frequency dispersion. STM32F30x
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****          devices provide the capability to measure the LSI frequency (LSI clock
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****          connected internally to TIM16 CH1 input capture). The measured value
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****          can be used to have an IWDG timeout with an acceptable accuracy. 
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****          For more information, please refer to the STM32F30x Reference manual.
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****                       ##### How to use this driver #####
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****  ===============================================================================
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****     [..] This driver allows to use IWDG peripheral with either window option enabled
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****          or disabled. To do so follow one of the two procedures below.
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****     (#) Window option is enabled:    
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****         (++) Start the IWDG using IWDG_Enable() function, when the IWDG is used
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****              in software mode (no need to enable the LSI, it will be enabled
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****              by hardware).        
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****         (++) Enable write access to IWDG_PR and IWDG_RLR registers using
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****              IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable) function.
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****         (++) Configure the IWDG prescaler using IWDG_SetPrescaler() function.
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****         (++) Configure the IWDG counter value using IWDG_SetReload() function.
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****              This value will be loaded in the IWDG counter each time the counter
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****              is reloaded, then the IWDG will start counting down from this value.
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****         (++) Wait for the IWDG registers to be updated using IWDG_GetFlagStatus() function.
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****         (++) Configure the IWDG refresh window using IWDG_SetWindowValue() function.
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****     (#) Window option is disabled:    
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****         (++) Enable write access to IWDG_PR and IWDG_RLR registers using
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****              IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable) function.
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****         (++) Configure the IWDG prescaler using IWDG_SetPrescaler() function.
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****         (++) Configure the IWDG counter value using IWDG_SetReload() function.
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****              This value will be loaded in the IWDG counter each time the counter
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****              is reloaded, then the IWDG will start counting down from this value.
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****         (++) Wait for the IWDG registers to be updated using IWDG_GetFlagStatus() function.
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****         (++) reload the IWDG counter at regular intervals during normal operation 
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****              to prevent an MCU reset, using IWDG_ReloadCounter() function.
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****         (++) Start the IWDG using IWDG_Enable() function, when the IWDG is used
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****              in software mode (no need to enable the LSI, it will be enabled
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****              by hardware).    
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****           
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   @endverbatim
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****     
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   ******************************************************************************
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @attention
+  74:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  76:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *
+  77:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  78:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * You may not use this file except in compliance with the License.
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * You may obtain a copy of the License at:
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *
+  81:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+  82:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * Unless required by applicable law or agreed to in writing, software 
+  84:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+  85:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * See the License for the specific language governing permissions and
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * limitations under the License.
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   ******************************************************************************
+  90:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   */
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+  92:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /* Includes ------------------------------------------------------------------*/
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** #include "stm32f30x_iwdg.h"
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /** @addtogroup STM32F30x_StdPeriph_Driver
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @{
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   */
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /** @defgroup IWDG 
+ 100:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @brief IWDG driver modules
+ 101:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @{
+ 102:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   */ 
+ 103:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /* Private typedef -----------------------------------------------------------*/
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /* Private define ------------------------------------------------------------*/
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /* ---------------------- IWDG registers bit mask ----------------------------*/
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /* KR register bit mask */
+ 108:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** #define KR_KEY_RELOAD    ((uint16_t)0xAAAA)
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** #define KR_KEY_ENABLE    ((uint16_t)0xCCCC)
+ 110:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 111:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /* Private macro -------------------------------------------------------------*/
+ 112:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /* Private variables ---------------------------------------------------------*/
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /* Private function prototypes -----------------------------------------------*/
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /* Private functions ---------------------------------------------------------*/
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /** @defgroup IWDG_Private_Functions
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @{
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   */
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /** @defgroup IWDG_Group1 Prescaler and Counter configuration functions
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****  *  @brief   Prescaler and Counter configuration functions
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****  *
+ 123:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** @verbatim   
+ 124:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****  ===============================================================================
+ 125:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****             ##### Prescaler and Counter configuration functions #####
+ 126:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****  ===============================================================================  
+ 127:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** @endverbatim
+ 129:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @{
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   */
+ 131:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /**
+ 133:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @brief  Enables or disables write access to IWDG_PR and IWDG_RLR registers.
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @param  IWDG_WriteAccess: new state of write access to IWDG_PR and IWDG_RLR registers.
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *   This parameter can be one of the following values:
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *     @arg IWDG_WriteAccess_Enable: Enable write access to IWDG_PR and IWDG_RLR registers
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *     @arg IWDG_WriteAccess_Disable: Disable write access to IWDG_PR and IWDG_RLR registers
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @retval None
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   */
+ 140:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** void IWDG_WriteAccessCmd(uint16_t IWDG_WriteAccess)
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** {
+  26              		.loc 1 141 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  31              	.LVL0:
+ 142:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   /* Check the parameters */
+ 143:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   assert_param(IS_IWDG_WRITE_ACCESS(IWDG_WriteAccess));
+ 144:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   IWDG->KR = IWDG_WriteAccess;
+  32              		.loc 1 144 0
+  33 0000 014B     		ldr	r3, .L2
+  34 0002 1860     		str	r0, [r3, #0]
+  35 0004 7047     		bx	lr
+  36              	.L3:
+  37 0006 00BF     		.align	2
+  38              	.L2:
+  39 0008 00300040 		.word	1073754112
+  40              		.cfi_endproc
+  41              	.LFE111:
+  43              		.align	1
+  44              		.global	IWDG_SetPrescaler
+  45              		.thumb
+  46              		.thumb_func
+  48              	IWDG_SetPrescaler:
+  49              	.LFB112:
+ 145:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** }
+ 146:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /**
+ 148:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @brief  Sets IWDG Prescaler value.
+ 149:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @param  IWDG_Prescaler: specifies the IWDG Prescaler value.
+ 150:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *   This parameter can be one of the following values:
+ 151:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *     @arg IWDG_Prescaler_4: IWDG prescaler set to 4
+ 152:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *     @arg IWDG_Prescaler_8: IWDG prescaler set to 8
+ 153:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *     @arg IWDG_Prescaler_16: IWDG prescaler set to 16
+ 154:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *     @arg IWDG_Prescaler_32: IWDG prescaler set to 32
+ 155:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *     @arg IWDG_Prescaler_64: IWDG prescaler set to 64
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *     @arg IWDG_Prescaler_128: IWDG prescaler set to 128
+ 157:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *     @arg IWDG_Prescaler_256: IWDG prescaler set to 256
+ 158:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @retval None
+ 159:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   */
+ 160:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** void IWDG_SetPrescaler(uint8_t IWDG_Prescaler)
+ 161:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** {
+  50              		.loc 1 161 0
+  51              		.cfi_startproc
+  52              		@ args = 0, pretend = 0, frame = 0
+  53              		@ frame_needed = 0, uses_anonymous_args = 0
+  54              		@ link register save eliminated.
+  55              	.LVL1:
+ 162:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   /* Check the parameters */
+ 163:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   assert_param(IS_IWDG_PRESCALER(IWDG_Prescaler));
+ 164:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   IWDG->PR = IWDG_Prescaler;
+  56              		.loc 1 164 0
+  57 000c 014B     		ldr	r3, .L5
+  58 000e 5860     		str	r0, [r3, #4]
+  59 0010 7047     		bx	lr
+  60              	.L6:
+  61 0012 00BF     		.align	2
+  62              	.L5:
+  63 0014 00300040 		.word	1073754112
+  64              		.cfi_endproc
+  65              	.LFE112:
+  67              		.align	1
+  68              		.global	IWDG_SetReload
+  69              		.thumb
+  70              		.thumb_func
+  72              	IWDG_SetReload:
+  73              	.LFB113:
+ 165:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** }
+ 166:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 167:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /**
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @brief  Sets IWDG Reload value.
+ 169:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @param  Reload: specifies the IWDG Reload value.
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *   This parameter must be a number between 0 and 0x0FFF.
+ 171:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @retval None
+ 172:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   */
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** void IWDG_SetReload(uint16_t Reload)
+ 174:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** {
+  74              		.loc 1 174 0
+  75              		.cfi_startproc
+  76              		@ args = 0, pretend = 0, frame = 0
+  77              		@ frame_needed = 0, uses_anonymous_args = 0
+  78              		@ link register save eliminated.
+  79              	.LVL2:
+ 175:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   /* Check the parameters */
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   assert_param(IS_IWDG_RELOAD(Reload));
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   IWDG->RLR = Reload;
+  80              		.loc 1 177 0
+  81 0018 014B     		ldr	r3, .L8
+  82 001a 9860     		str	r0, [r3, #8]
+  83 001c 7047     		bx	lr
+  84              	.L9:
+  85 001e 00BF     		.align	2
+  86              	.L8:
+  87 0020 00300040 		.word	1073754112
+  88              		.cfi_endproc
+  89              	.LFE113:
+  91              		.align	1
+  92              		.global	IWDG_ReloadCounter
+  93              		.thumb
+  94              		.thumb_func
+  96              	IWDG_ReloadCounter:
+  97              	.LFB114:
+ 178:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** }
+ 179:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 180:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /**
+ 181:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @brief  Reloads IWDG counter with value defined in the reload register
+ 182:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *   (write access to IWDG_PR and IWDG_RLR registers disabled).
+ 183:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @param  None
+ 184:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @retval None
+ 185:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   */
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** void IWDG_ReloadCounter(void)
+ 187:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** {
+  98              		.loc 1 187 0
+  99              		.cfi_startproc
+ 100              		@ args = 0, pretend = 0, frame = 0
+ 101              		@ frame_needed = 0, uses_anonymous_args = 0
+ 102              		@ link register save eliminated.
+ 188:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   IWDG->KR = KR_KEY_RELOAD;
+ 103              		.loc 1 188 0
+ 104 0024 024B     		ldr	r3, .L11
+ 105 0026 4AF6AA22 		movw	r2, #43690
+ 106 002a 1A60     		str	r2, [r3, #0]
+ 107 002c 7047     		bx	lr
+ 108              	.L12:
+ 109 002e 00BF     		.align	2
+ 110              	.L11:
+ 111 0030 00300040 		.word	1073754112
+ 112              		.cfi_endproc
+ 113              	.LFE114:
+ 115              		.align	1
+ 116              		.global	IWDG_SetWindowValue
+ 117              		.thumb
+ 118              		.thumb_func
+ 120              	IWDG_SetWindowValue:
+ 121              	.LFB115:
+ 189:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** }
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 191:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 192:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /**
+ 193:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @brief  Sets the IWDG window value.
+ 194:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @param  WindowValue: specifies the window value to be compared to the downcounter.
+ 195:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @retval None
+ 196:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   */
+ 197:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** void IWDG_SetWindowValue(uint16_t WindowValue)
+ 198:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** {
+ 122              		.loc 1 198 0
+ 123              		.cfi_startproc
+ 124              		@ args = 0, pretend = 0, frame = 0
+ 125              		@ frame_needed = 0, uses_anonymous_args = 0
+ 126              		@ link register save eliminated.
+ 127              	.LVL3:
+ 199:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   /* Check the parameters */
+ 200:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   assert_param(IS_IWDG_WINDOW_VALUE(WindowValue));
+ 201:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   IWDG->WINR = WindowValue;
+ 128              		.loc 1 201 0
+ 129 0034 014B     		ldr	r3, .L14
+ 130 0036 1861     		str	r0, [r3, #16]
+ 131 0038 7047     		bx	lr
+ 132              	.L15:
+ 133 003a 00BF     		.align	2
+ 134              	.L14:
+ 135 003c 00300040 		.word	1073754112
+ 136              		.cfi_endproc
+ 137              	.LFE115:
+ 139              		.align	1
+ 140              		.global	IWDG_Enable
+ 141              		.thumb
+ 142              		.thumb_func
+ 144              	IWDG_Enable:
+ 145              	.LFB116:
+ 202:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** }
+ 203:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 204:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /**
+ 205:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @}
+ 206:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   */
+ 207:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 208:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /** @defgroup IWDG_Group2 IWDG activation function
+ 209:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****  *  @brief   IWDG activation function 
+ 210:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****  *
+ 211:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** @verbatim   
+ 212:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****  ===============================================================================
+ 213:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****                     ##### IWDG activation function #####
+ 214:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****  ===============================================================================  
+ 215:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 216:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** @endverbatim
+ 217:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @{
+ 218:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   */
+ 219:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 220:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /**
+ 221:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @brief  Enables IWDG (write access to IWDG_PR and IWDG_RLR registers disabled).
+ 222:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @param  None
+ 223:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @retval None
+ 224:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   */
+ 225:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** void IWDG_Enable(void)
+ 226:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** {
+ 146              		.loc 1 226 0
+ 147              		.cfi_startproc
+ 148              		@ args = 0, pretend = 0, frame = 0
+ 149              		@ frame_needed = 0, uses_anonymous_args = 0
+ 150              		@ link register save eliminated.
+ 227:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   IWDG->KR = KR_KEY_ENABLE;
+ 151              		.loc 1 227 0
+ 152 0040 024B     		ldr	r3, .L17
+ 153 0042 4CF6CC42 		movw	r2, #52428
+ 154 0046 1A60     		str	r2, [r3, #0]
+ 155 0048 7047     		bx	lr
+ 156              	.L18:
+ 157 004a 00BF     		.align	2
+ 158              	.L17:
+ 159 004c 00300040 		.word	1073754112
+ 160              		.cfi_endproc
+ 161              	.LFE116:
+ 163              		.align	1
+ 164              		.global	IWDG_GetFlagStatus
+ 165              		.thumb
+ 166              		.thumb_func
+ 168              	IWDG_GetFlagStatus:
+ 169              	.LFB117:
+ 228:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** }
+ 229:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 230:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /**
+ 231:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @}
+ 232:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   */
+ 233:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 234:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /** @defgroup IWDG_Group3 Flag management function 
+ 235:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****  *  @brief  Flag management function  
+ 236:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****  *
+ 237:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** @verbatim   
+ 238:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****  ===============================================================================
+ 239:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****                      ##### Flag management function ##### 
+ 240:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****  ===============================================================================  
+ 241:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 242:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** @endverbatim
+ 243:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @{
+ 244:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   */
+ 245:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** 
+ 246:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** /**
+ 247:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @brief  Checks whether the specified IWDG flag is set or not.
+ 248:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @param  IWDG_FLAG: specifies the flag to check.
+ 249:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *   This parameter can be one of the following values:
+ 250:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *     @arg IWDG_FLAG_PVU: Prescaler Value Update on going
+ 251:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *     @arg IWDG_FLAG_RVU: Reload Value Update on going
+ 252:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   *     @arg IWDG_FLAG_WVU: Counter Window Value Update on going
+ 253:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   * @retval The new state of IWDG_FLAG (SET or RESET).
+ 254:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   */
+ 255:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** FlagStatus IWDG_GetFlagStatus(uint16_t IWDG_FLAG)
+ 256:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** {
+ 170              		.loc 1 256 0
+ 171              		.cfi_startproc
+ 172              		@ args = 0, pretend = 0, frame = 0
+ 173              		@ frame_needed = 0, uses_anonymous_args = 0
+ 174              		@ link register save eliminated.
+ 175              	.LVL4:
+ 257:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   FlagStatus bitstatus = RESET;
+ 258:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   /* Check the parameters */
+ 259:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   assert_param(IS_IWDG_FLAG(IWDG_FLAG));
+ 260:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   if ((IWDG->SR & IWDG_FLAG) != (uint32_t)RESET)
+ 176              		.loc 1 260 0
+ 177 0050 034B     		ldr	r3, .L20
+ 178 0052 DB68     		ldr	r3, [r3, #12]
+ 179              	.LVL5:
+ 180 0054 1842     		tst	r0, r3
+ 261:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   {
+ 262:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****     bitstatus = SET;
+ 263:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   }
+ 264:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   else
+ 265:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   {
+ 266:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****     bitstatus = RESET;
+ 267:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   }
+ 268:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   /* Return the flag status */
+ 269:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c ****   return bitstatus;
+ 270:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_iwdg.c **** }
+ 181              		.loc 1 270 0
+ 182 0056 0CBF     		ite	eq
+ 183 0058 0020     		moveq	r0, #0
+ 184 005a 0120     		movne	r0, #1
+ 185              	.LVL6:
+ 186 005c 7047     		bx	lr
+ 187              	.L21:
+ 188 005e 00BF     		.align	2
+ 189              	.L20:
+ 190 0060 00300040 		.word	1073754112
+ 191              		.cfi_endproc
+ 192              	.LFE117:
+ 194              	.Letext0:
+ 195              		.file 2 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+ 196              		.file 3 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Device/ST/STM32F30x
+ 197              		.file 4 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Include/core_cm4.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f30x_iwdg.c
+     /tmp/ccDrjf0J.s:18     .text:00000000 $t
+     /tmp/ccDrjf0J.s:23     .text:00000000 IWDG_WriteAccessCmd
+     /tmp/ccDrjf0J.s:39     .text:00000008 $d
+     /tmp/ccDrjf0J.s:43     .text:0000000c $t
+     /tmp/ccDrjf0J.s:48     .text:0000000c IWDG_SetPrescaler
+     /tmp/ccDrjf0J.s:63     .text:00000014 $d
+     /tmp/ccDrjf0J.s:67     .text:00000018 $t
+     /tmp/ccDrjf0J.s:72     .text:00000018 IWDG_SetReload
+     /tmp/ccDrjf0J.s:87     .text:00000020 $d
+     /tmp/ccDrjf0J.s:91     .text:00000024 $t
+     /tmp/ccDrjf0J.s:96     .text:00000024 IWDG_ReloadCounter
+     /tmp/ccDrjf0J.s:111    .text:00000030 $d
+     /tmp/ccDrjf0J.s:115    .text:00000034 $t
+     /tmp/ccDrjf0J.s:120    .text:00000034 IWDG_SetWindowValue
+     /tmp/ccDrjf0J.s:135    .text:0000003c $d
+     /tmp/ccDrjf0J.s:139    .text:00000040 $t
+     /tmp/ccDrjf0J.s:144    .text:00000040 IWDG_Enable
+     /tmp/ccDrjf0J.s:159    .text:0000004c $d
+     /tmp/ccDrjf0J.s:163    .text:00000050 $t
+     /tmp/ccDrjf0J.s:168    .text:00000050 IWDG_GetFlagStatus
+     /tmp/ccDrjf0J.s:190    .text:00000060 $d
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.stm32f30x.h.54.c7b24f715ee55ef38656f44540ae3be6
+                           .group:00000000 wm4.core_cm4.h.32.2441f2e49dd40451ba4254637c879d0c
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.292.5f9271075d54fc48f1e25ff79df85cb2
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_comp.h.31.9bbc5f5f1a849069ea9062fbe7b81435
+                           .group:00000000 wm4.stm32f30x_dma.h.31.73d173fa6d60026d432f3cf1d2fc4407
+                           .group:00000000 wm4.stm32f30x_exti.h.31.22e280aa6e095108654ac8d3c74a2409
+                           .group:00000000 wm4.stm32f30x_flash.h.31.bee86dc3079b7049419bdbeec073e2cd
+                           .group:00000000 wm4.stm32f30x_gpio.h.31.3745297fee3728b346ad4d2a2467e40f
+                           .group:00000000 wm4.stm32f30x_syscfg.h.31.96b023b7dbc3641f358604478433eb5c
+                           .group:00000000 wm4.stm32f30x_i2c.h.31.52025acd7f154308042bf46a2835e9d3
+                           .group:00000000 wm4.stm32f30x_pwr.h.31.cdef322c6e7f25cfc29954045d24e9b8
+                           .group:00000000 wm4.stm32f30x_rcc.h.31.3b94c1144b21d1e4fe780e4d1a02d257
+                           .group:00000000 wm4.stm32f30x_spi.h.31.c1ebebab897d23cecc617ec8ad9fd534
+                           .group:00000000 wm4.stm32f30x_tim.h.31.336f9cd855fb4e2cd819ac260ded6518
+                           .group:00000000 wm4.stm32f30x_usart.h.31.cd85313e29c0a128555b4a7b8ec0f487
+                           .group:00000000 wm4.stm32f30x_misc.h.31.f08b0e9f53f0471613b5131bb95f8725
+                           .group:00000000 wm4.stm32f30x.h.6173.8b641ba1d9b0040eda9120fe8a414b2d
+                           .group:00000000 wm4.stm32f30x_iwdg.h.59.467d704fb073a015941f19b50fa6470a
+
+NO UNDEFINED SYMBOLS

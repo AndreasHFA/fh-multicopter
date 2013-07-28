@@ -1,0 +1,1156 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"stm32f30x_opamp.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.global	OPAMP_DeInit
+  20              		.thumb
+  21              		.thumb_func
+  23              	OPAMP_DeInit:
+  24              	.LFB111:
+  25              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /**
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   ******************************************************************************
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @file    stm32f30x_opamp.c
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @author  MCD Application Team
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @version V1.0.1
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @date    23-October-2012
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @brief   This file provides firmware functions to manage the following 
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          functionalities of the operational amplifiers (OPAMP1,...OPAMP4) peripheral: 
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *           + OPAMP Configuration
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *           + OPAMP calibration
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   @verbatim
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   ==============================================================================
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****                         ##### OPAMP Peripheral Features #####
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   ==============================================================================
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****                    
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   [..]
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****       The device integrates 4 operational amplifiers OPAMP1, OPAMP2, OPAMP3 and OPAMP4:
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****               
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****       (+) The OPAMPs non inverting input can be selected among the list shown by
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****           table below.
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****       (+) The OPAMPs inverting input can be selected among the list shown by
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****           table below.
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****       (+) The OPAMPs outputs can be internally connected to the inverting input 
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****           (follower mode)
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****       (+) The OPAMPs outputs can be internally connected to resistor feedback
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****           output (Programmable Gain Amplifier mode)
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****       (+) The OPAMPs outputs can be internally connected to ADC
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****       (+) The OPAMPs can be calibrated to compensate the offset compensation
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****       (+) Timer-controlled Mux for automatic switch of inverting and
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****           non-inverting input
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   OPAMPs inverting/non-inverting inputs:
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     +--------------------------------------------------------------+     
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     |                 |        | OPAMP1 | OPAMP2 | OPAMP3 | OPAMP4 |
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     |-----------------|--------|--------|--------|--------|--------|
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     |                 | PGA    |  OK    |  OK    |  OK    |  OK    |
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     | Inverting Input | Vout   |  OK    |  OK    |  OK    |  OK    |
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     |                 | IO1    |  PC5   |  PC5   |  PB10  |  PB10  |
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     |                 | IO2    |  PA3   |  PA5   |  PB2   |  PD8   |
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     |-----------------|--------|--------|--------|--------|--------|
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     |                 | IO1    |  PA7   |  PD14  |  PB13  |  PD11  |
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     |  Non Inverting  | IO2    |  PA5   |  PB14  |  PA5   |  PB11  |
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     |    Input        | IO3    |  PA3   |  PB0   |  PA1   |  PA4   |
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     |                 | IO4    |  PA1   |  PA7   |  PB0   |  PB13  |
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     +--------------------------------------------------------------+  
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****                         ##### How to use this driver #####
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   ==============================================================================
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   [..]
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   This driver provides functions to configure and program the OPAMP 
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   of all STM32F30x devices.
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   To use the OPAMP, perform the following steps:
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****  
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   (#) Enable the SYSCFG APB clock to get write access to OPAMP
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****       register using RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   (#) Configure the OPAMP input in analog mode using GPIO_Init()
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   (#) Configure the OPAMP using OPAMP_Init() function:
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****       (++) Select the inverting input
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****       (++) Select the non-inverting inverting input
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   (#) Enable the OPAMP using OPAMP_Cmd() function
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   @endverbatim
+  74:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****       
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   ******************************************************************************
+  76:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @attention
+  77:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *
+  78:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  81:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * You may not use this file except in compliance with the License.
+  82:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * You may obtain a copy of the License at:
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *
+  84:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+  85:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * Unless required by applicable law or agreed to in writing, software 
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * See the License for the specific language governing permissions and
+  90:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * limitations under the License.
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *
+  92:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   ******************************************************************************
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */ 
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /* Includes ------------------------------------------------------------------*/
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** #include "stm32f30x_opamp.h"
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /** @addtogroup STM32F30x_StdPeriph_Driver
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @{
+ 100:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 101:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 102:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /** @defgroup OPAMP 
+ 103:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @brief OPAMP driver modules
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @{
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */ 
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /* Private typedef -----------------------------------------------------------*/
+ 108:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /* Private define ------------------------------------------------------------*/
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** #define OPAMP_CSR_DEFAULT_MASK                    ((uint32_t)0xFFFFFF93)
+ 110:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** #define OPAMP_CSR_TIMERMUX_MASK                   ((uint32_t)0xFFFFF8FF)
+ 111:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** #define OPAMP_CSR_TRIMMING_MASK                   ((uint32_t)0x0000001F)
+ 112:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /* Private macro -------------------------------------------------------------*/
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /* Private variables ---------------------------------------------------------*/
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /* Private function prototypes -----------------------------------------------*/
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /* Private functions ---------------------------------------------------------*/
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /** @defgroup OPAMP_Private_Functions
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @{
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /** @defgroup OPAMP_Group1 Initialization and Configuration functions
+ 123:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****  *  @brief   Initialization and Configuration functions 
+ 124:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****  *
+ 125:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** @verbatim   
+ 126:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****  ===============================================================================
+ 127:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****              ##### Initialization and Configuration functions #####
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****  ===============================================================================  
+ 129:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** @endverbatim
+ 131:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @{
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 133:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****    
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /**
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @brief  Deinitializes OPAMP peripheral registers to their default reset values.
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @note   Deinitialization can't be performed if the OPAMP configuration is locked.
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         To unlock the configuration, perform a system reset.
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_Selection: the selected OPAMP. 
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          This parameter can be OPAMP_Selection_OPAMPx where x can be 1 to 4
+ 140:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          to select the OPAMP peripheral.
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  None
+ 142:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @retval None
+ 143:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 144:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** void OPAMP_DeInit(uint32_t OPAMP_Selection)
+ 145:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+  26              		.loc 1 145 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  31              	.LVL0:
+ 146:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /*!< Set OPAMP_CSR register to reset value */
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) = ((uint32_t)0x00000000);
+  32              		.loc 1 147 0
+  33 0000 014B     		ldr	r3, .L2
+  34 0002 0022     		movs	r2, #0
+  35 0004 C250     		str	r2, [r0, r3]
+  36 0006 7047     		bx	lr
+  37              	.L3:
+  38              		.align	2
+  39              	.L2:
+  40 0008 38000140 		.word	1073807416
+  41              		.cfi_endproc
+  42              	.LFE111:
+  44              		.align	1
+  45              		.global	OPAMP_Init
+  46              		.thumb
+  47              		.thumb_func
+  49              	OPAMP_Init:
+  50              	.LFB112:
+ 148:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** }
+ 149:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 150:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /**
+ 151:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @brief  Initializes the OPAMP peripheral according to the specified parameters
+ 152:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         in OPAMP_InitStruct
+ 153:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @note   If the selected OPAMP is locked, initialization can't be performed.
+ 154:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         To unlock the configuration, perform a system reset.
+ 155:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_Selection: the selected OPAMP. 
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          This parameter can be OPAMP_Selection_OPAMPx where x can be 1 to 4
+ 157:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          to select the OPAMP peripheral.
+ 158:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_InitStruct: pointer to an OPAMP_InitTypeDef structure that contains 
+ 159:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         the configuration information for the specified OPAMP peripheral.
+ 160:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *           - OPAMP_InvertingInput specifies the inverting input of OPAMP
+ 161:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *           - OPAMP_NonInvertingInput specifies the non inverting input of OPAMP
+ 162:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @retval None
+ 163:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 164:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** void OPAMP_Init(uint32_t OPAMP_Selection, OPAMP_InitTypeDef* OPAMP_InitStruct)
+ 165:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+  51              		.loc 1 165 0
+  52              		.cfi_startproc
+  53              		@ args = 0, pretend = 0, frame = 0
+  54              		@ frame_needed = 0, uses_anonymous_args = 0
+  55              	.LVL1:
+ 166:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   uint32_t tmpreg = 0;
+ 167:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Check the parameters */
+ 169:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_INVERTING_INPUT(OPAMP_InitStruct->OPAMP_InvertingInput));
+ 171:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_NONINVERTING_INPUT(OPAMP_InitStruct->OPAMP_NonInvertingInput));
+ 172:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /*!< Get the OPAMPx_CSR register value */
+ 174:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg = *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection);
+  56              		.loc 1 174 0
+  57 000c 054B     		ldr	r3, .L5
+ 165:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+  58              		.loc 1 165 0
+  59 000e 30B5     		push	{r4, r5, lr}
+  60              	.LCFI0:
+  61              		.cfi_def_cfa_offset 12
+  62              		.cfi_offset 4, -12
+  63              		.cfi_offset 5, -8
+  64              		.cfi_offset 14, -4
+ 175:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /*!< Clear the inverting and non inverting bits selection bits */
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg &= (uint32_t) (OPAMP_CSR_DEFAULT_MASK);
+ 178:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 179:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /*!< Configure OPAMP: inverting and non inverting inputs */
+ 180:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg |= (uint32_t)(OPAMP_InitStruct->OPAMP_InvertingInput | OPAMP_InitStruct->OPAMP_NonInvertin
+  65              		.loc 1 180 0
+  66 0010 91E82400 		ldmia	r1, {r2, r5}
+ 174:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg = *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection);
+  67              		.loc 1 174 0
+  68 0014 C458     		ldr	r4, [r0, r3]
+  69              	.LVL2:
+  70              		.loc 1 180 0
+  71 0016 2A43     		orrs	r2, r2, r5
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg &= (uint32_t) (OPAMP_CSR_DEFAULT_MASK);
+  72              		.loc 1 177 0
+  73 0018 24F06C04 		bic	r4, r4, #108
+  74              	.LVL3:
+  75              		.loc 1 180 0
+  76 001c 2243     		orrs	r2, r2, r4
+  77              	.LVL4:
+ 181:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 182:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /*!< Write to OPAMPx_CSR register */
+ 183:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) = tmpreg;
+  78              		.loc 1 183 0
+  79 001e C250     		str	r2, [r0, r3]
+  80 0020 30BD     		pop	{r4, r5, pc}
+  81              	.L6:
+  82 0022 00BF     		.align	2
+  83              	.L5:
+  84 0024 38000140 		.word	1073807416
+  85              		.cfi_endproc
+  86              	.LFE112:
+  88              		.align	1
+  89              		.global	OPAMP_StructInit
+  90              		.thumb
+  91              		.thumb_func
+  93              	OPAMP_StructInit:
+  94              	.LFB113:
+ 184:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** }
+ 185:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /**
+ 187:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @brief  Fills each OPAMP_InitStruct member with its default value.
+ 188:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_InitStruct: pointer to an OPAMP_InitTypeDef structure which will 
+ 189:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         be initialized.
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @retval None
+ 191:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 192:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** void OPAMP_StructInit(OPAMP_InitTypeDef* OPAMP_InitStruct)
+ 193:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+  95              		.loc 1 193 0
+  96              		.cfi_startproc
+  97              		@ args = 0, pretend = 0, frame = 0
+  98              		@ frame_needed = 0, uses_anonymous_args = 0
+  99              		@ link register save eliminated.
+ 100              	.LVL5:
+ 194:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   OPAMP_InitStruct->OPAMP_NonInvertingInput = OPAMP_NonInvertingInput_IO1;
+ 101              		.loc 1 194 0
+ 102 0028 0023     		movs	r3, #0
+ 103 002a 4360     		str	r3, [r0, #4]
+ 195:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   OPAMP_InitStruct->OPAMP_InvertingInput = OPAMP_InvertingInput_IO1;
+ 104              		.loc 1 195 0
+ 105 002c 0360     		str	r3, [r0, #0]
+ 106 002e 7047     		bx	lr
+ 107              		.cfi_endproc
+ 108              	.LFE113:
+ 110              		.align	1
+ 111              		.global	OPAMP_PGAConfig
+ 112              		.thumb
+ 113              		.thumb_func
+ 115              	OPAMP_PGAConfig:
+ 116              	.LFB114:
+ 196:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** }
+ 197:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 198:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /**
+ 199:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @brief  Configure the feedback resistor gain.
+ 200:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @note   If the selected OPAMP is locked, gain configuration can't be performed.
+ 201:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         To unlock the configuration, perform a system reset.
+ 202:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_Selection: the selected OPAMP. 
+ 203:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          This parameter can be OPAMP_Selection_OPAMPx where x can be 1 to 4
+ 204:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          to select the OPAMP peripheral.
+ 205:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  NewState: new state of the OPAMP peripheral.
+ 206:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         This parameter can be: ENABLE or DISABLE.
+ 207:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @retval None
+ 208:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 209:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** void OPAMP_PGAConfig(uint32_t OPAMP_Selection, uint32_t OPAMP_PGAGain, uint32_t OPAMP_PGAConnect)
+ 210:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+ 117              		.loc 1 210 0
+ 118              		.cfi_startproc
+ 119              		@ args = 0, pretend = 0, frame = 0
+ 120              		@ frame_needed = 0, uses_anonymous_args = 0
+ 121              	.LVL6:
+ 211:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Check the parameters */
+ 212:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
+ 213:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_PGAGAIN(OPAMP_PGAGain));
+ 214:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_PGACONNECT(OPAMP_PGAConnect));
+ 215:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 216:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Reset the configuration bits */
+ 217:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) &= (uint32_t)(~OPAMP_CSR_PGGAIN);
+ 122              		.loc 1 217 0
+ 123 0030 054B     		ldr	r3, .L9
+ 210:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+ 124              		.loc 1 210 0
+ 125 0032 10B5     		push	{r4, lr}
+ 126              	.LCFI1:
+ 127              		.cfi_def_cfa_offset 8
+ 128              		.cfi_offset 4, -8
+ 129              		.cfi_offset 14, -4
+ 130              		.loc 1 217 0
+ 131 0034 C458     		ldr	r4, [r0, r3]
+ 218:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 219:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Set the new configuration */
+ 220:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) |= (uint32_t) (OPAMP_PGAGain | OPAMP_PGAConnect
+ 132              		.loc 1 220 0
+ 133 0036 0A43     		orrs	r2, r2, r1
+ 134              	.LVL7:
+ 217:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) &= (uint32_t)(~OPAMP_CSR_PGGAIN);
+ 135              		.loc 1 217 0
+ 136 0038 24F47034 		bic	r4, r4, #245760
+ 137 003c C450     		str	r4, [r0, r3]
+ 138              		.loc 1 220 0
+ 139 003e C458     		ldr	r4, [r0, r3]
+ 140 0040 1443     		orrs	r4, r4, r2
+ 141 0042 C450     		str	r4, [r0, r3]
+ 142 0044 10BD     		pop	{r4, pc}
+ 143              	.L10:
+ 144 0046 00BF     		.align	2
+ 145              	.L9:
+ 146 0048 38000140 		.word	1073807416
+ 147              		.cfi_endproc
+ 148              	.LFE114:
+ 150              		.align	1
+ 151              		.global	OPAMP_VrefConfig
+ 152              		.thumb
+ 153              		.thumb_func
+ 155              	OPAMP_VrefConfig:
+ 156              	.LFB115:
+ 221:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** }
+ 222:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 223:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /**
+ 224:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @brief  Configure the OPAMP's internal reference.
+ 225:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @note   This feature is used when calibration enabled or OPAMP's reference
+ 226:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         connected to the non inverting input.
+ 227:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @note   If the selected OPAMP is locked, Vref configuration can't be performed.
+ 228:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         To unlock the configuration, perform a system reset.  
+ 229:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_Selection: the selected OPAMP. 
+ 230:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          This parameter can be OPAMP_Selection_OPAMPx where x can be 1 to 4
+ 231:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          to select the OPAMP peripheral.
+ 232:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_Vref: This parameter can be:
+ 233:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *           OPAMP_Vref_3VDDA: OPMAP Vref = 3.3% VDDA
+ 234:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *           OPAMP_Vref_10VDDA: OPMAP Vref = 10% VDDA
+ 235:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *           OPAMP_Vref_50VDDA: OPMAP Vref = 50% VDDA
+ 236:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *           OPAMP_Vref_90VDDA: OPMAP Vref = 90% VDDA
+ 237:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @retval None
+ 238:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 239:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** void OPAMP_VrefConfig(uint32_t OPAMP_Selection, uint32_t OPAMP_Vref)
+ 240:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+ 157              		.loc 1 240 0
+ 158              		.cfi_startproc
+ 159              		@ args = 0, pretend = 0, frame = 0
+ 160              		@ frame_needed = 0, uses_anonymous_args = 0
+ 161              		@ link register save eliminated.
+ 162              	.LVL8:
+ 241:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   uint32_t tmpreg = 0;
+ 242:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 243:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Check the parameters */
+ 244:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
+ 245:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_VREF(OPAMP_Vref));
+ 246:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 247:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /*!< Get the OPAMPx_CSR register value */
+ 248:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg = *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection);
+ 163              		.loc 1 248 0
+ 164 004c 034B     		ldr	r3, .L12
+ 165 004e C258     		ldr	r2, [r0, r3]
+ 166              	.LVL9:
+ 249:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 250:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /*!< Clear the CALSEL bits */
+ 251:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg &= (uint32_t) (~OPAMP_CSR_CALSEL);
+ 167              		.loc 1 251 0
+ 168 0050 22F44052 		bic	r2, r2, #12288
+ 169              	.LVL10:
+ 252:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 253:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /*!< Configure OPAMP reference */
+ 254:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg |= (uint32_t)(OPAMP_Vref);
+ 170              		.loc 1 254 0
+ 171 0054 1143     		orrs	r1, r1, r2
+ 172              	.LVL11:
+ 255:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 256:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /*!< Write to OPAMPx_CSR register */
+ 257:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) = tmpreg;
+ 173              		.loc 1 257 0
+ 174 0056 C150     		str	r1, [r0, r3]
+ 175 0058 7047     		bx	lr
+ 176              	.L13:
+ 177 005a 00BF     		.align	2
+ 178              	.L12:
+ 179 005c 38000140 		.word	1073807416
+ 180              		.cfi_endproc
+ 181              	.LFE115:
+ 183              		.align	1
+ 184              		.global	OPAMP_VrefConnectNonInvertingInput
+ 185              		.thumb
+ 186              		.thumb_func
+ 188              	OPAMP_VrefConnectNonInvertingInput:
+ 189              	.LFB116:
+ 258:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** }
+ 259:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 260:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /**
+ 261:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @brief  Connnect the internal reference to the OPAMP's non inverting input.
+ 262:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @note   If the selected OPAMP is locked, Vref configuration can't be performed.
+ 263:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         To unlock the configuration, perform a system reset.  
+ 264:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_Selection: the selected OPAMP. 
+ 265:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          This parameter can be OPAMP_Selection_OPAMPx where x can be 1 to 4
+ 266:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          to select the OPAMP peripheral.
+ 267:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  NewState: new state of the OPAMP peripheral.
+ 268:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         This parameter can be: ENABLE or DISABLE.
+ 269:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @retval None
+ 270:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 271:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** void OPAMP_VrefConnectNonInvertingInput(uint32_t OPAMP_Selection, FunctionalState NewState)
+ 272:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+ 190              		.loc 1 272 0
+ 191              		.cfi_startproc
+ 192              		@ args = 0, pretend = 0, frame = 0
+ 193              		@ frame_needed = 0, uses_anonymous_args = 0
+ 194              		@ link register save eliminated.
+ 195              	.LVL12:
+ 196 0060 044B     		ldr	r3, .L18
+ 273:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Check the parameters */
+ 274:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
+ 275:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 276:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 277:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   if (NewState != DISABLE)
+ 278:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   {
+ 279:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     /* Connnect the internal reference to the OPAMP's non inverting input */
+ 280:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) |= (uint32_t) (OPAMP_CSR_FORCEVP);
+ 197              		.loc 1 280 0
+ 198 0062 C258     		ldr	r2, [r0, r3]
+ 277:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   if (NewState != DISABLE)
+ 199              		.loc 1 277 0
+ 200 0064 11B1     		cbz	r1, .L15
+ 201              		.loc 1 280 0
+ 202 0066 42F00202 		orr	r2, r2, #2
+ 203 006a 01E0     		b	.L17
+ 204              	.L15:
+ 281:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   }
+ 282:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   else
+ 283:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   {
+ 284:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     /* Disconnnect the internal reference to the OPAMP's non inverting input */
+ 285:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) &= (uint32_t)(~OPAMP_CSR_FORCEVP);
+ 205              		.loc 1 285 0
+ 206 006c 22F00202 		bic	r2, r2, #2
+ 207              	.L17:
+ 208 0070 C250     		str	r2, [r0, r3]
+ 209 0072 7047     		bx	lr
+ 210              	.L19:
+ 211              		.align	2
+ 212              	.L18:
+ 213 0074 38000140 		.word	1073807416
+ 214              		.cfi_endproc
+ 215              	.LFE116:
+ 217              		.align	1
+ 218              		.global	OPAMP_VrefConnectADCCmd
+ 219              		.thumb
+ 220              		.thumb_func
+ 222              	OPAMP_VrefConnectADCCmd:
+ 223              	.LFB117:
+ 286:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   }
+ 287:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** }
+ 288:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 289:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /**
+ 290:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @brief  Enables or disables connecting the OPAMP's internal reference to ADC.
+ 291:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @note   If the selected OPAMP is locked, Vref connection can't be performed.
+ 292:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         To unlock the configuration, perform a system reset.  
+ 293:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  NewState: new state of the Vrefint output.
+ 294:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         This parameter can be: ENABLE or DISABLE.
+ 295:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @retval None
+ 296:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 297:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** void OPAMP_VrefConnectADCCmd(uint32_t OPAMP_Selection, FunctionalState NewState)
+ 298:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+ 224              		.loc 1 298 0
+ 225              		.cfi_startproc
+ 226              		@ args = 0, pretend = 0, frame = 0
+ 227              		@ frame_needed = 0, uses_anonymous_args = 0
+ 228              		@ link register save eliminated.
+ 229              	.LVL13:
+ 230 0078 044B     		ldr	r3, .L24
+ 299:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Check the parameters */
+ 300:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
+ 301:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 302:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 303:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   if (NewState != DISABLE)
+ 304:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   {
+ 305:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     /* Enable output internal reference */
+ 306:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) |= (uint32_t) (OPAMP_CSR_TSTREF);
+ 231              		.loc 1 306 0
+ 232 007a C258     		ldr	r2, [r0, r3]
+ 303:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   if (NewState != DISABLE)
+ 233              		.loc 1 303 0
+ 234 007c 11B1     		cbz	r1, .L21
+ 235              		.loc 1 306 0
+ 236 007e 42F00052 		orr	r2, r2, #536870912
+ 237 0082 01E0     		b	.L23
+ 238              	.L21:
+ 307:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   }
+ 308:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   else
+ 309:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   {
+ 310:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     /* Disable output internal reference */
+ 311:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) &= (uint32_t)(~OPAMP_CSR_TSTREF);
+ 239              		.loc 1 311 0
+ 240 0084 22F00052 		bic	r2, r2, #536870912
+ 241              	.L23:
+ 242 0088 C250     		str	r2, [r0, r3]
+ 243 008a 7047     		bx	lr
+ 244              	.L25:
+ 245              		.align	2
+ 246              	.L24:
+ 247 008c 38000140 		.word	1073807416
+ 248              		.cfi_endproc
+ 249              	.LFE117:
+ 251              		.align	1
+ 252              		.global	OPAMP_TimerControlledMuxConfig
+ 253              		.thumb
+ 254              		.thumb_func
+ 256              	OPAMP_TimerControlledMuxConfig:
+ 257              	.LFB118:
+ 312:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   }
+ 313:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** }
+ 314:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 315:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /**
+ 316:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @brief  Configure the OPAMP peripheral (secondary inputs) for timer-controlled
+ 317:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          mux mode according to the specified parameters in OPAMP_InitStruct.
+ 318:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @note   If the selected OPAMP is locked, timer-controlled mux configuration
+ 319:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         can't be performed.
+ 320:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         To unlock the configuration, perform a system reset.
+ 321:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_Selection: the selected OPAMP. 
+ 322:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          This parameter can be OPAMP_Selection_OPAMPx where x can be 1 to 4
+ 323:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          to select the OPAMP peripheral.
+ 324:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_InitStruct: pointer to an OPAMP_InitTypeDef structure that contains 
+ 325:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         the configuration information for the specified OPAMP peripheral.
+ 326:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *           - OPAMP_InvertingInput specifies the inverting input of OPAMP
+ 327:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *           - OPAMP_NonInvertingInput specifies the non inverting input of OPAMP
+ 328:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @note   PGA and Vout can't be selected as seconadry inverting input.
+ 329:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @retval None
+ 330:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 331:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** void OPAMP_TimerControlledMuxConfig(uint32_t OPAMP_Selection, OPAMP_InitTypeDef* OPAMP_InitStruct)
+ 332:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+ 258              		.loc 1 332 0
+ 259              		.cfi_startproc
+ 260              		@ args = 0, pretend = 0, frame = 0
+ 261              		@ frame_needed = 0, uses_anonymous_args = 0
+ 262              	.LVL14:
+ 333:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   uint32_t tmpreg = 0;
+ 334:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 335:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Check the parameters */
+ 336:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
+ 337:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_SECONDARY_INVINPUT(OPAMP_InitStruct->OPAMP_InvertingInput));
+ 338:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_NONINVERTING_INPUT(OPAMP_InitStruct->OPAMP_NonInvertingInput));
+ 339:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 340:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /*!< Get the OPAMPx_CSR register value */
+ 341:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg = *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection);
+ 263              		.loc 1 341 0
+ 264 0090 064B     		ldr	r3, .L27
+ 332:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+ 265              		.loc 1 332 0
+ 266 0092 30B5     		push	{r4, r5, lr}
+ 267              	.LCFI2:
+ 268              		.cfi_def_cfa_offset 12
+ 269              		.cfi_offset 4, -12
+ 270              		.cfi_offset 5, -8
+ 271              		.cfi_offset 14, -4
+ 342:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 343:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /*!< Clear the secondary inverting bit, secondary non inverting bit and TCMEN bits */
+ 344:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg &= (uint32_t) (OPAMP_CSR_TIMERMUX_MASK);
+ 345:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 346:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /*!< Configure OPAMP: secondary inverting and non inverting inputs */
+ 347:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg |= (uint32_t)((uint32_t)(OPAMP_InitStruct->OPAMP_InvertingInput<<3) | (uint32_t)(OPAMP_Ini
+ 272              		.loc 1 347 0
+ 273 0094 91E82400 		ldmia	r1, {r2, r5}
+ 341:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg = *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection);
+ 274              		.loc 1 341 0
+ 275 0098 C458     		ldr	r4, [r0, r3]
+ 276              	.LVL15:
+ 277              		.loc 1 347 0
+ 278 009a D200     		lsls	r2, r2, #3
+ 344:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg &= (uint32_t) (OPAMP_CSR_TIMERMUX_MASK);
+ 279              		.loc 1 344 0
+ 280 009c 24F4E064 		bic	r4, r4, #1792
+ 281              	.LVL16:
+ 282              		.loc 1 347 0
+ 283 00a0 42EAC512 		orr	r2, r2, r5, lsl #7
+ 284 00a4 2243     		orrs	r2, r2, r4
+ 285              	.LVL17:
+ 348:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 349:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /*!< Write to OPAMPx_CSR register */
+ 350:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) = tmpreg;
+ 286              		.loc 1 350 0
+ 287 00a6 C250     		str	r2, [r0, r3]
+ 288 00a8 30BD     		pop	{r4, r5, pc}
+ 289              	.L28:
+ 290 00aa 00BF     		.align	2
+ 291              	.L27:
+ 292 00ac 38000140 		.word	1073807416
+ 293              		.cfi_endproc
+ 294              	.LFE118:
+ 296              		.align	1
+ 297              		.global	OPAMP_TimerControlledMuxCmd
+ 298              		.thumb
+ 299              		.thumb_func
+ 301              	OPAMP_TimerControlledMuxCmd:
+ 302              	.LFB119:
+ 351:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** }
+ 352:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 353:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /**
+ 354:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @brief  Enable or disable the timer-controlled mux mode.
+ 355:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @note   If the selected OPAMP is locked, enable/disable can't be performed.
+ 356:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         To unlock the configuration, perform a system reset.
+ 357:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_Selection: the selected OPAMP. 
+ 358:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          This parameter can be OPAMP_Selection_OPAMPx where x can be 1 to 4
+ 359:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          to select the OPAMP peripheral.
+ 360:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  NewState: new state of the OPAMP peripheral.
+ 361:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         This parameter can be: ENABLE or DISABLE.
+ 362:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @retval None
+ 363:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 364:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** void OPAMP_TimerControlledMuxCmd(uint32_t OPAMP_Selection, FunctionalState NewState)
+ 365:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+ 303              		.loc 1 365 0
+ 304              		.cfi_startproc
+ 305              		@ args = 0, pretend = 0, frame = 0
+ 306              		@ frame_needed = 0, uses_anonymous_args = 0
+ 307              		@ link register save eliminated.
+ 308              	.LVL18:
+ 309 00b0 044B     		ldr	r3, .L33
+ 366:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Check the parameters */
+ 367:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
+ 368:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 369:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 370:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   if (NewState != DISABLE)
+ 371:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   {
+ 372:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     /* Enable the timer-controlled Mux mode */
+ 373:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) |= (uint32_t) (OPAMP_CSR_TCMEN);
+ 310              		.loc 1 373 0
+ 311 00b2 C258     		ldr	r2, [r0, r3]
+ 370:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   if (NewState != DISABLE)
+ 312              		.loc 1 370 0
+ 313 00b4 11B1     		cbz	r1, .L30
+ 314              		.loc 1 373 0
+ 315 00b6 42F08002 		orr	r2, r2, #128
+ 316 00ba 01E0     		b	.L32
+ 317              	.L30:
+ 374:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   }
+ 375:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   else
+ 376:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   {
+ 377:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     /* Disable the timer-controlled Mux mode */
+ 378:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) &= (uint32_t)(~OPAMP_CSR_TCMEN);
+ 318              		.loc 1 378 0
+ 319 00bc 22F08002 		bic	r2, r2, #128
+ 320              	.L32:
+ 321 00c0 C250     		str	r2, [r0, r3]
+ 322 00c2 7047     		bx	lr
+ 323              	.L34:
+ 324              		.align	2
+ 325              	.L33:
+ 326 00c4 38000140 		.word	1073807416
+ 327              		.cfi_endproc
+ 328              	.LFE119:
+ 330              		.align	1
+ 331              		.global	OPAMP_Cmd
+ 332              		.thumb
+ 333              		.thumb_func
+ 335              	OPAMP_Cmd:
+ 336              	.LFB120:
+ 379:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   }
+ 380:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** }
+ 381:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 382:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /**
+ 383:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @brief  Enable or disable the OPAMP peripheral.
+ 384:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @note   If the selected OPAMP is locked, enable/disable can't be performed.
+ 385:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         To unlock the configuration, perform a system reset.
+ 386:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_Selection: the selected OPAMP. 
+ 387:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          This parameter can be OPAMP_Selection_OPAMPx where x can be 1 to 4
+ 388:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          to select the OPAMP peripheral.
+ 389:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  NewState: new state of the OPAMP peripheral.
+ 390:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         This parameter can be: ENABLE or DISABLE.
+ 391:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @retval None
+ 392:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 393:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** void OPAMP_Cmd(uint32_t OPAMP_Selection, FunctionalState NewState)
+ 394:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+ 337              		.loc 1 394 0
+ 338              		.cfi_startproc
+ 339              		@ args = 0, pretend = 0, frame = 0
+ 340              		@ frame_needed = 0, uses_anonymous_args = 0
+ 341              		@ link register save eliminated.
+ 342              	.LVL19:
+ 343 00c8 044B     		ldr	r3, .L39
+ 395:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Check the parameters */
+ 396:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
+ 397:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 398:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 399:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   if (NewState != DISABLE)
+ 400:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   {
+ 401:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     /* Enable the selected OPAMPx peripheral */
+ 402:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) |= (uint32_t) (OPAMP_CSR_OPAMPxEN);
+ 344              		.loc 1 402 0
+ 345 00ca C258     		ldr	r2, [r0, r3]
+ 399:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   if (NewState != DISABLE)
+ 346              		.loc 1 399 0
+ 347 00cc 11B1     		cbz	r1, .L36
+ 348              		.loc 1 402 0
+ 349 00ce 42F00102 		orr	r2, r2, #1
+ 350 00d2 01E0     		b	.L38
+ 351              	.L36:
+ 403:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   }
+ 404:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   else
+ 405:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   {
+ 406:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     /* Disable the selected OPAMPx peripheral */
+ 407:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) &= (uint32_t)(~OPAMP_CSR_OPAMPxEN);
+ 352              		.loc 1 407 0
+ 353 00d4 22F00102 		bic	r2, r2, #1
+ 354              	.L38:
+ 355 00d8 C250     		str	r2, [r0, r3]
+ 356 00da 7047     		bx	lr
+ 357              	.L40:
+ 358              		.align	2
+ 359              	.L39:
+ 360 00dc 38000140 		.word	1073807416
+ 361              		.cfi_endproc
+ 362              	.LFE120:
+ 364              		.align	1
+ 365              		.global	OPAMP_GetOutputLevel
+ 366              		.thumb
+ 367              		.thumb_func
+ 369              	OPAMP_GetOutputLevel:
+ 370              	.LFB121:
+ 408:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   }
+ 409:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** }
+ 410:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 411:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /**
+ 412:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @brief  Return the output level (high or low) during calibration of the selected OPAMP. 
+ 413:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_Selection: the selected OPAMP. 
+ 414:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          This parameter can be OPAMP_Selection_OPAMPx where x can be 1 to 4
+ 415:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          to select the OPAMP peripheral.
+ 416:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *           - OPAMP output is low when the non-inverting input is at a lower
+ 417:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *             voltage than the inverting input
+ 418:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *           - OPAMP output is high when the non-inverting input is at a higher
+ 419:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *             voltage than the inverting input
+ 420:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @note OPAMP ouput level is provided only during calibration phase.
+ 421:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @retval Returns the selected OPAMP output level: low or high.
+ 422:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *       
+ 423:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 424:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** uint32_t OPAMP_GetOutputLevel(uint32_t OPAMP_Selection)
+ 425:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+ 371              		.loc 1 425 0
+ 372              		.cfi_startproc
+ 373              		@ args = 0, pretend = 0, frame = 0
+ 374              		@ frame_needed = 0, uses_anonymous_args = 0
+ 375              		@ link register save eliminated.
+ 376              	.LVL20:
+ 426:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   uint32_t opampout = 0x0;
+ 427:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 428:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Check the parameters */
+ 429:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
+ 430:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 431:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Check if selected OPAMP output is high */
+ 432:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   if ((*(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) & (OPAMP_CSR_OUTCAL)) != 0)
+ 377              		.loc 1 432 0
+ 378 00e0 024B     		ldr	r3, .L44
+ 379 00e2 C058     		ldr	r0, [r0, r3]
+ 380              	.LVL21:
+ 433:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   {
+ 434:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     opampout = OPAMP_OutputLevel_High;
+ 435:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   }
+ 436:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   else
+ 437:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   {
+ 438:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     opampout = OPAMP_OutputLevel_Low;
+ 439:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   }
+ 440:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 441:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Return the OPAMP output level */
+ 442:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   return (uint32_t)(opampout);
+ 443:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** }
+ 381              		.loc 1 443 0
+ 382 00e4 00F08040 		and	r0, r0, #1073741824
+ 383              	.LVL22:
+ 384 00e8 7047     		bx	lr
+ 385              	.L45:
+ 386 00ea 00BF     		.align	2
+ 387              	.L44:
+ 388 00ec 38000140 		.word	1073807416
+ 389              		.cfi_endproc
+ 390              	.LFE121:
+ 392              		.align	1
+ 393              		.global	OPAMP_OffsetTrimModeSelect
+ 394              		.thumb
+ 395              		.thumb_func
+ 397              	OPAMP_OffsetTrimModeSelect:
+ 398              	.LFB122:
+ 444:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 445:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /**
+ 446:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @brief  Select the trimming mode.
+ 447:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OffsetTrimming: the selected offset trimming mode. 
+ 448:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *   This parameter  can be one of the following values:
+ 449:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *     @arg OPAMP_Trimming_Factory: factory trimming values are used for offset
+ 450:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *                                  calibration
+ 451:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *     @arg OPAMP_Trimming_User: user trimming values are used for offset
+ 452:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *                               calibration
+ 453:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @note When OffsetTrimming_User is selected, use OPAMP_OffsetTrimConfig()
+ 454:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *       function or OPAMP_OffsetTrimLowPowerConfig() function to adjust 
+ 455:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *       trimming value.
+ 456:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @retval None
+ 457:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 458:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** void OPAMP_OffsetTrimModeSelect(uint32_t OPAMP_Selection, uint32_t OPAMP_Trimming)
+ 459:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+ 399              		.loc 1 459 0
+ 400              		.cfi_startproc
+ 401              		@ args = 0, pretend = 0, frame = 0
+ 402              		@ frame_needed = 0, uses_anonymous_args = 0
+ 403              		@ link register save eliminated.
+ 404              	.LVL23:
+ 460:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Check the parameters */
+ 461:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
+ 462:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_TRIMMING(OPAMP_Trimming));
+ 463:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 464:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Reset USERTRIM bit */
+ 465:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) &= (~(uint32_t) (OPAMP_CSR_USERTRIM));
+ 405              		.loc 1 465 0
+ 406 00f0 044B     		ldr	r3, .L47
+ 407 00f2 C258     		ldr	r2, [r0, r3]
+ 408 00f4 22F48022 		bic	r2, r2, #262144
+ 409 00f8 C250     		str	r2, [r0, r3]
+ 466:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 467:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Select trimming mode */
+ 468:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) |= OPAMP_Trimming;
+ 410              		.loc 1 468 0
+ 411 00fa C258     		ldr	r2, [r0, r3]
+ 412 00fc 1143     		orrs	r1, r1, r2
+ 413              	.LVL24:
+ 414 00fe C150     		str	r1, [r0, r3]
+ 415 0100 7047     		bx	lr
+ 416              	.L48:
+ 417 0102 00BF     		.align	2
+ 418              	.L47:
+ 419 0104 38000140 		.word	1073807416
+ 420              		.cfi_endproc
+ 421              	.LFE122:
+ 423              		.align	1
+ 424              		.global	OPAMP_OffsetTrimConfig
+ 425              		.thumb
+ 426              		.thumb_func
+ 428              	OPAMP_OffsetTrimConfig:
+ 429              	.LFB123:
+ 469:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** }
+ 470:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 471:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /**
+ 472:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @brief  Configure the trimming value of the OPAMP.
+ 473:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_Selection: the selected OPAMP. 
+ 474:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          This parameter can be OPAMP_Selection_OPAMPx where x can be 1 to 4
+ 475:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          to select the OPAMP peripheral.
+ 476:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_Input: the selected OPAMP input. 
+ 477:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *   This parameter can be one of the following values:
+ 478:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         @arg OPAMP_Input_Inverting: Inverting input is selected to configure the trimming value
+ 479:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         @arg OPAMP_Input_NonInverting: Non inverting input is selected to configure the trimmin
+ 480:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_TrimValue: the trimming value. This parameter can be any value lower
+ 481:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         or equal to 0x0000001F. 
+ 482:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @retval None
+ 483:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 484:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** void OPAMP_OffsetTrimConfig(uint32_t OPAMP_Selection, uint32_t OPAMP_Input, uint32_t OPAMP_TrimValu
+ 485:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+ 430              		.loc 1 485 0
+ 431              		.cfi_startproc
+ 432              		@ args = 0, pretend = 0, frame = 0
+ 433              		@ frame_needed = 0, uses_anonymous_args = 0
+ 434              	.LVL25:
+ 435 0108 30B5     		push	{r4, r5, lr}
+ 436              	.LCFI3:
+ 437              		.cfi_def_cfa_offset 12
+ 438              		.cfi_offset 4, -12
+ 439              		.cfi_offset 5, -8
+ 440              		.cfi_offset 14, -4
+ 486:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   uint32_t tmpreg = 0;
+ 487:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 488:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Check the parameters */
+ 489:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
+ 490:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_INPUT(OPAMP_Input));
+ 491:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_TRIMMINGVALUE(OPAMP_TrimValue));
+ 492:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 493:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /*!< Get the OPAMPx_CSR register value */
+ 494:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg = *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection);
+ 495:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 496:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /*!< Clear the trimming bits */
+ 497:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg &= ((uint32_t)~(OPAMP_CSR_TRIMMING_MASK<<OPAMP_Input));
+ 441              		.loc 1 497 0
+ 442 010a 1F24     		movs	r4, #31
+ 443 010c 04FA01F4 		lsl	r4, r4, r1
+ 498:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 499:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /*!< Configure the new trimming value */
+ 500:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg |= (uint32_t)(OPAMP_TrimValue<<OPAMP_Input);
+ 444              		.loc 1 500 0
+ 445 0110 02FA01F2 		lsl	r2, r2, r1
+ 446              	.LVL26:
+ 494:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg = *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection);
+ 447              		.loc 1 494 0
+ 448 0114 034B     		ldr	r3, .L50
+ 449 0116 C558     		ldr	r5, [r0, r3]
+ 450              	.LVL27:
+ 497:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   tmpreg &= ((uint32_t)~(OPAMP_CSR_TRIMMING_MASK<<OPAMP_Input));
+ 451              		.loc 1 497 0
+ 452 0118 25EA0404 		bic	r4, r5, r4
+ 453              	.LVL28:
+ 454              		.loc 1 500 0
+ 455 011c 1443     		orrs	r4, r4, r2
+ 456              	.LVL29:
+ 501:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 502:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /*!< Write to OPAMPx_CSR register */
+ 503:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) = tmpreg;
+ 457              		.loc 1 503 0
+ 458 011e C450     		str	r4, [r0, r3]
+ 459 0120 30BD     		pop	{r4, r5, pc}
+ 460              	.L51:
+ 461 0122 00BF     		.align	2
+ 462              	.L50:
+ 463 0124 38000140 		.word	1073807416
+ 464              		.cfi_endproc
+ 465              	.LFE123:
+ 467              		.align	1
+ 468              		.global	OPAMP_StartCalibration
+ 469              		.thumb
+ 470              		.thumb_func
+ 472              	OPAMP_StartCalibration:
+ 473              	.LFB124:
+ 504:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** }
+ 505:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 506:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /**
+ 507:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @brief  Start or stop the calibration of selected OPAMP peripheral.
+ 508:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @note   If the selected OPAMP is locked, start/stop can't be performed.
+ 509:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         To unlock the configuration, perform a system reset.
+ 510:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_Selection: the selected OPAMP. 
+ 511:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          This parameter can be OPAMP_Selection_OPAMPx where x can be 1 to 4
+ 512:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          to select the OPAMP peripheral.
+ 513:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  NewState: new state of the OPAMP peripheral.
+ 514:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         This parameter can be: ENABLE or DISABLE.  
+ 515:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @retval None
+ 516:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 517:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** void OPAMP_StartCalibration(uint32_t OPAMP_Selection, FunctionalState NewState)
+ 518:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+ 474              		.loc 1 518 0
+ 475              		.cfi_startproc
+ 476              		@ args = 0, pretend = 0, frame = 0
+ 477              		@ frame_needed = 0, uses_anonymous_args = 0
+ 478              		@ link register save eliminated.
+ 479              	.LVL30:
+ 480 0128 044B     		ldr	r3, .L56
+ 519:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Check the parameters */
+ 520:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
+ 521:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 522:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 523:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   if (NewState != DISABLE)
+ 524:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   {
+ 525:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     /* Start the OPAMPx calibration */
+ 526:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) |= (uint32_t) (OPAMP_CSR_CALON);
+ 481              		.loc 1 526 0
+ 482 012a C258     		ldr	r2, [r0, r3]
+ 523:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   if (NewState != DISABLE)
+ 483              		.loc 1 523 0
+ 484 012c 11B1     		cbz	r1, .L53
+ 485              		.loc 1 526 0
+ 486 012e 42F40062 		orr	r2, r2, #2048
+ 487 0132 01E0     		b	.L55
+ 488              	.L53:
+ 527:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   }
+ 528:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   else
+ 529:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   {
+ 530:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     /* Stop the OPAMPx calibration */
+ 531:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****     *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) &= (uint32_t)(~OPAMP_CSR_CALON);
+ 489              		.loc 1 531 0
+ 490 0134 22F40062 		bic	r2, r2, #2048
+ 491              	.L55:
+ 492 0138 C250     		str	r2, [r0, r3]
+ 493 013a 7047     		bx	lr
+ 494              	.L57:
+ 495              		.align	2
+ 496              	.L56:
+ 497 013c 38000140 		.word	1073807416
+ 498              		.cfi_endproc
+ 499              	.LFE124:
+ 501              		.align	1
+ 502              		.global	OPAMP_LockConfig
+ 503              		.thumb
+ 504              		.thumb_func
+ 506              	OPAMP_LockConfig:
+ 507              	.LFB125:
+ 532:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   }
+ 533:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** }
+ 534:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 535:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /**
+ 536:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @}
+ 537:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 538:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 539:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /** @defgroup OPAMP_Group2 OPAMP configuration locking function
+ 540:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****  *  @brief   OPAMP1,...OPAMP4 configuration locking function
+ 541:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****  *           OPAMP1,...OPAMP4 configuration can be locked each separately.
+ 542:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****  *           Unlocking is performed by system reset.
+ 543:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****  *
+ 544:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** @verbatim   
+ 545:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****  ===============================================================================
+ 546:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****                      ##### Configuration Lock function #####
+ 547:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****  ===============================================================================  
+ 548:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 549:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** @endverbatim
+ 550:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @{
+ 551:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 552:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 553:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** /**
+ 554:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @brief  Lock the selected OPAMP configuration.
+ 555:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @note   Locking the configuration means that all control bits are read-only.
+ 556:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *         To unlock the OPAMP configuration, perform a system reset.
+ 557:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @param  OPAMP_Selection: the selected OPAMP. 
+ 558:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          This parameter can be OPAMP_Selection_OPAMPx where x can be 1 to 4
+ 559:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *          to select the OPAMP peripheral.
+ 560:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   * @retval None
+ 561:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   */
+ 562:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** void OPAMP_LockConfig(uint32_t OPAMP_Selection)
+ 563:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** {
+ 508              		.loc 1 563 0
+ 509              		.cfi_startproc
+ 510              		@ args = 0, pretend = 0, frame = 0
+ 511              		@ frame_needed = 0, uses_anonymous_args = 0
+ 512              		@ link register save eliminated.
+ 513              	.LVL31:
+ 564:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Check the parameter */
+ 565:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   assert_param(IS_OPAMP_ALL_PERIPH(OPAMP_Selection));
+ 566:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c **** 
+ 567:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   /* Set the lock bit corresponding to selected OPAMP */
+ 568:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_opamp.c ****   *(__IO uint32_t *) (OPAMP_BASE + OPAMP_Selection) |= (uint32_t) (OPAMP_CSR_LOCK);
+ 514              		.loc 1 568 0
+ 515 0140 024B     		ldr	r3, .L59
+ 516 0142 C258     		ldr	r2, [r0, r3]
+ 517 0144 42F00042 		orr	r2, r2, #-2147483648
+ 518 0148 C250     		str	r2, [r0, r3]
+ 519 014a 7047     		bx	lr
+ 520              	.L60:
+ 521              		.align	2
+ 522              	.L59:
+ 523 014c 38000140 		.word	1073807416
+ 524              		.cfi_endproc
+ 525              	.LFE125:
+ 527              	.Letext0:
+ 528              		.file 2 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+ 529              		.file 3 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Device/ST/STM32F30x
+ 530              		.file 4 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+ 531              		.file 5 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Include/core_cm4.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f30x_opamp.c
+     /tmp/cc6Cv6HC.s:18     .text:00000000 $t
+     /tmp/cc6Cv6HC.s:23     .text:00000000 OPAMP_DeInit
+     /tmp/cc6Cv6HC.s:40     .text:00000008 $d
+     /tmp/cc6Cv6HC.s:44     .text:0000000c $t
+     /tmp/cc6Cv6HC.s:49     .text:0000000c OPAMP_Init
+     /tmp/cc6Cv6HC.s:84     .text:00000024 $d
+     /tmp/cc6Cv6HC.s:88     .text:00000028 $t
+     /tmp/cc6Cv6HC.s:93     .text:00000028 OPAMP_StructInit
+     /tmp/cc6Cv6HC.s:115    .text:00000030 OPAMP_PGAConfig
+     /tmp/cc6Cv6HC.s:146    .text:00000048 $d
+     /tmp/cc6Cv6HC.s:150    .text:0000004c $t
+     /tmp/cc6Cv6HC.s:155    .text:0000004c OPAMP_VrefConfig
+     /tmp/cc6Cv6HC.s:179    .text:0000005c $d
+     /tmp/cc6Cv6HC.s:183    .text:00000060 $t
+     /tmp/cc6Cv6HC.s:188    .text:00000060 OPAMP_VrefConnectNonInvertingInput
+     /tmp/cc6Cv6HC.s:213    .text:00000074 $d
+     /tmp/cc6Cv6HC.s:217    .text:00000078 $t
+     /tmp/cc6Cv6HC.s:222    .text:00000078 OPAMP_VrefConnectADCCmd
+     /tmp/cc6Cv6HC.s:247    .text:0000008c $d
+     /tmp/cc6Cv6HC.s:251    .text:00000090 $t
+     /tmp/cc6Cv6HC.s:256    .text:00000090 OPAMP_TimerControlledMuxConfig
+     /tmp/cc6Cv6HC.s:292    .text:000000ac $d
+     /tmp/cc6Cv6HC.s:296    .text:000000b0 $t
+     /tmp/cc6Cv6HC.s:301    .text:000000b0 OPAMP_TimerControlledMuxCmd
+     /tmp/cc6Cv6HC.s:326    .text:000000c4 $d
+     /tmp/cc6Cv6HC.s:330    .text:000000c8 $t
+     /tmp/cc6Cv6HC.s:335    .text:000000c8 OPAMP_Cmd
+     /tmp/cc6Cv6HC.s:360    .text:000000dc $d
+     /tmp/cc6Cv6HC.s:364    .text:000000e0 $t
+     /tmp/cc6Cv6HC.s:369    .text:000000e0 OPAMP_GetOutputLevel
+     /tmp/cc6Cv6HC.s:388    .text:000000ec $d
+     /tmp/cc6Cv6HC.s:392    .text:000000f0 $t
+     /tmp/cc6Cv6HC.s:397    .text:000000f0 OPAMP_OffsetTrimModeSelect
+     /tmp/cc6Cv6HC.s:419    .text:00000104 $d
+     /tmp/cc6Cv6HC.s:423    .text:00000108 $t
+     /tmp/cc6Cv6HC.s:428    .text:00000108 OPAMP_OffsetTrimConfig
+     /tmp/cc6Cv6HC.s:463    .text:00000124 $d
+     /tmp/cc6Cv6HC.s:467    .text:00000128 $t
+     /tmp/cc6Cv6HC.s:472    .text:00000128 OPAMP_StartCalibration
+     /tmp/cc6Cv6HC.s:497    .text:0000013c $d
+     /tmp/cc6Cv6HC.s:501    .text:00000140 $t
+     /tmp/cc6Cv6HC.s:506    .text:00000140 OPAMP_LockConfig
+     /tmp/cc6Cv6HC.s:523    .text:0000014c $d
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.stm32f30x.h.54.c7b24f715ee55ef38656f44540ae3be6
+                           .group:00000000 wm4.core_cm4.h.32.2441f2e49dd40451ba4254637c879d0c
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.292.5f9271075d54fc48f1e25ff79df85cb2
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_comp.h.31.9bbc5f5f1a849069ea9062fbe7b81435
+                           .group:00000000 wm4.stm32f30x_dma.h.31.73d173fa6d60026d432f3cf1d2fc4407
+                           .group:00000000 wm4.stm32f30x_exti.h.31.22e280aa6e095108654ac8d3c74a2409
+                           .group:00000000 wm4.stm32f30x_flash.h.31.bee86dc3079b7049419bdbeec073e2cd
+                           .group:00000000 wm4.stm32f30x_gpio.h.31.3745297fee3728b346ad4d2a2467e40f
+                           .group:00000000 wm4.stm32f30x_syscfg.h.31.96b023b7dbc3641f358604478433eb5c
+                           .group:00000000 wm4.stm32f30x_i2c.h.31.52025acd7f154308042bf46a2835e9d3
+                           .group:00000000 wm4.stm32f30x_pwr.h.31.cdef322c6e7f25cfc29954045d24e9b8
+                           .group:00000000 wm4.stm32f30x_rcc.h.31.3b94c1144b21d1e4fe780e4d1a02d257
+                           .group:00000000 wm4.stm32f30x_spi.h.31.c1ebebab897d23cecc617ec8ad9fd534
+                           .group:00000000 wm4.stm32f30x_tim.h.31.336f9cd855fb4e2cd819ac260ded6518
+                           .group:00000000 wm4.stm32f30x_usart.h.31.cd85313e29c0a128555b4a7b8ec0f487
+                           .group:00000000 wm4.stm32f30x_misc.h.31.f08b0e9f53f0471613b5131bb95f8725
+                           .group:00000000 wm4.stm32f30x.h.6173.8b641ba1d9b0040eda9120fe8a414b2d
+                           .group:00000000 wm4.stm32f30x_opamp.h.75.704e2e5e2aab039de307aaa2dcc99fa5
+
+NO UNDEFINED SYMBOLS

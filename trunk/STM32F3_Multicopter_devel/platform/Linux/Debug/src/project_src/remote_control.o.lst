@@ -1,0 +1,470 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"remote_control.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.global	__aeabi_i2f
+  19              		.global	__aeabi_fmul
+  20              		.global	__aeabi_fadd
+  21              		.global	__aeabi_f2iz
+  22              		.global	__aeabi_fcmpgt
+  23              		.align	1
+  24              		.global	CalcRXValues
+  25              		.thumb
+  26              		.thumb_func
+  28              	CalcRXValues:
+  29              	.LFB111:
+  30              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_contro
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** /*
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c ****  * remote_control.c
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c ****  *
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c ****  *  Created on: Apr 28, 2013
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c ****  *      Author: franz
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c ****  */
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** #include <filter_Lib.h>
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** #include <remote_control.h>
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** #include <multicopter_settings.h>
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** void CalcRXValues(unsigned char *msgPointer, int16_t adjValue)
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** {
+  31              		.loc 1 13 0
+  32              		.cfi_startproc
+  33              		@ args = 0, pretend = 0, frame = 0
+  34              		@ frame_needed = 0, uses_anonymous_args = 0
+  35              	.LVL0:
+  36 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+  37              	.LCFI0:
+  38              		.cfi_def_cfa_offset 32
+  39              		.cfi_offset 3, -32
+  40              		.cfi_offset 4, -28
+  41              		.cfi_offset 5, -24
+  42              		.cfi_offset 6, -20
+  43              		.cfi_offset 7, -16
+  44              		.cfi_offset 8, -12
+  45              		.cfi_offset 9, -8
+  46              		.cfi_offset 14, -4
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	static intFilter gasFiltered = {0,0};
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	static intFilter rollFiltered = {0,0};
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	static intFilter nickFiltered = {0,0};
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	static intFilter yawFiltered = {0,0};
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	static int16_t currentYaw = 0;
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	/*Reset the Watchdog Timer value*/
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	CtrlStates.watchDogTimVal = 0;
+  47              		.loc 1 21 0
+  48 0004 684D     		ldr	r5, .L22
+  49 0006 0023     		movs	r3, #0
+  50 0008 6B72     		strb	r3, [r5, #9]
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** {
+  51              		.loc 1 13 0
+  52 000a 0746     		mov	r7, r0
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	currentYaw = ((uint8_t)msgPointer[4]-adjValue);
+  53              		.loc 1 23 0
+  54 000c 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	update_intFilter(&gasFiltered, 1, (((uint8_t)msgPointer[5]-adjValue)*7.5f)+60);
+  55              		.loc 1 25 0
+  56 000e 4079     		ldrb	r0, [r0, #5]	@ zero_extendqisi2
+  57              	.LVL1:
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	currentYaw = ((uint8_t)msgPointer[4]-adjValue);
+  58              		.loc 1 23 0
+  59 0010 664C     		ldr	r4, .L22+4
+  60 0012 5B1A     		subs	r3, r3, r1
+  61              		.loc 1 25 0
+  62 0014 401A     		subs	r0, r0, r1
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	currentYaw = ((uint8_t)msgPointer[4]-adjValue);
+  63              		.loc 1 23 0
+  64 0016 2380     		strh	r3, [r4, #0]	@ movhi
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** {
+  65              		.loc 1 13 0
+  66 0018 0E46     		mov	r6, r1
+  67              		.loc 1 25 0
+  68 001a FFF7FEFF 		bl	__aeabi_i2f
+  69              	.LVL2:
+  70 001e 6449     		ldr	r1, .L22+8
+  71 0020 FFF7FEFF 		bl	__aeabi_fmul
+  72              	.LVL3:
+  73 0024 6349     		ldr	r1, .L22+12
+  74 0026 FFF7FEFF 		bl	__aeabi_fadd
+  75              	.LVL4:
+  76 002a FFF7FEFF 		bl	__aeabi_f2iz
+  77              	.LVL5:
+  78 002e 0121     		movs	r1, #1
+  79 0030 0246     		mov	r2, r0
+  80 0032 201D     		adds	r0, r4, #4
+  81 0034 FFF7FEFF 		bl	update_intFilter
+  82              	.LVL6:
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	update_intFilter(&nickFiltered, 1, ((uint8_t)msgPointer[3]-adjValue)*2.0f);
+  83              		.loc 1 26 0
+  84 0038 F878     		ldrb	r0, [r7, #3]	@ zero_extendqisi2
+  85 003a 801B     		subs	r0, r0, r6
+  86 003c FFF7FEFF 		bl	__aeabi_i2f
+  87              	.LVL7:
+  88 0040 0146     		mov	r1, r0
+  89 0042 FFF7FEFF 		bl	__aeabi_fadd
+  90              	.LVL8:
+  91 0046 FFF7FEFF 		bl	__aeabi_f2iz
+  92              	.LVL9:
+  93 004a 0121     		movs	r1, #1
+  94 004c 0246     		mov	r2, r0
+  95 004e 04F10C00 		add	r0, r4, #12
+  96 0052 FFF7FEFF 		bl	update_intFilter
+  97              	.LVL10:
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	update_intFilter(&rollFiltered, 1, ((uint8_t)msgPointer[2]-adjValue)*2.0f);
+  98              		.loc 1 27 0
+  99 0056 B878     		ldrb	r0, [r7, #2]	@ zero_extendqisi2
+ 100 0058 801B     		subs	r0, r0, r6
+ 101 005a FFF7FEFF 		bl	__aeabi_i2f
+ 102              	.LVL11:
+ 103 005e 0146     		mov	r1, r0
+ 104 0060 FFF7FEFF 		bl	__aeabi_fadd
+ 105              	.LVL12:
+ 106 0064 FFF7FEFF 		bl	__aeabi_f2iz
+ 107              	.LVL13:
+ 108 0068 0121     		movs	r1, #1
+ 109 006a 0246     		mov	r2, r0
+ 110 006c 04F11400 		add	r0, r4, #20
+ 111 0070 FFF7FEFF 		bl	update_intFilter
+ 112              	.LVL14:
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	update_intFilter(&yawFiltered, 1, currentYaw*0.3f);
+ 113              		.loc 1 28 0
+ 114 0074 B4F90000 		ldrsh	r0, [r4, #0]
+ 115 0078 FFF7FEFF 		bl	__aeabi_i2f
+ 116              	.LVL15:
+ 117 007c 4E49     		ldr	r1, .L22+16
+ 118 007e FFF7FEFF 		bl	__aeabi_fmul
+ 119              	.LVL16:
+ 120 0082 FFF7FEFF 		bl	__aeabi_f2iz
+ 121              	.LVL17:
+ 122 0086 0121     		movs	r1, #1
+ 123 0088 0246     		mov	r2, r0
+ 124 008a 04F11C00 		add	r0, r4, #28
+ 125 008e FFF7FEFF 		bl	update_intFilter
+ 126              	.LVL18:
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	CtrlStates.gas = gasFiltered.filtered;
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	CtrlStates.roll = rollFiltered.filtered;
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	CtrlStates.nick = nickFiltered.filtered;
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	/* integrating the yaw value */
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	if(CtrlStates.copterStatus & ARMED_FLAG)
+ 127              		.loc 1 35 0
+ 128 0092 2E7A     		ldrb	r6, [r5, #8]	@ zero_extendqisi2
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	CtrlStates.gas = gasFiltered.filtered;
+ 129              		.loc 1 30 0
+ 130 0094 B4F80890 		ldrh	r9, [r4, #8]
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	CtrlStates.roll = rollFiltered.filtered;
+ 131              		.loc 1 31 0
+ 132 0098 D4F81880 		ldr	r8, [r4, #24]
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	CtrlStates.nick = nickFiltered.filtered;
+ 133              		.loc 1 32 0
+ 134 009c 2769     		ldr	r7, [r4, #16]
+ 135              	.LVL19:
+ 136              		.loc 1 35 0
+ 137 009e F307     		lsls	r3, r6, #31
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	CtrlStates.gas = gasFiltered.filtered;
+ 138              		.loc 1 30 0
+ 139 00a0 A5F80090 		strh	r9, [r5, #0]	@ movhi
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	CtrlStates.roll = rollFiltered.filtered;
+ 140              		.loc 1 31 0
+ 141 00a4 A5F80280 		strh	r8, [r5, #2]	@ movhi
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	CtrlStates.nick = nickFiltered.filtered;
+ 142              		.loc 1 32 0
+ 143 00a8 AF80     		strh	r7, [r5, #4]	@ movhi
+ 144              		.loc 1 35 0
+ 145 00aa 04D5     		bpl	.L2
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	{
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 		CtrlStates.yaw -= yawFiltered.filtered;
+ 146              		.loc 1 37 0
+ 147 00ac EA88     		ldrh	r2, [r5, #6]
+ 148 00ae 236A     		ldr	r3, [r4, #32]
+ 149 00b0 D31A     		subs	r3, r2, r3
+ 150 00b2 EB80     		strh	r3, [r5, #6]	@ movhi
+ 151 00b4 04E0     		b	.L3
+ 152              	.L2:
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	}
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	else
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	{
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 		CtrlStates.yaw = XYZ.z;
+ 153              		.loc 1 41 0
+ 154 00b6 414B     		ldr	r3, .L22+20
+ 155 00b8 9868     		ldr	r0, [r3, #8]	@ float
+ 156 00ba FFF7FEFF 		bl	__aeabi_f2iz
+ 157              	.LVL20:
+ 158 00be E880     		strh	r0, [r5, #6]	@ movhi
+ 159              	.L3:
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	}
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** #define ROLL_NICK_TRSHLD 3
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	/* Narrow down all ctrl values */
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	if(CtrlStates.gas > MAX_GAS) CtrlStates.gas = MAX_GAS;
+ 160              		.loc 1 47 0
+ 161 00c0 0FFA89F9 		sxth	r9, r9
+ 162 00c4 B9F1C80F 		cmp	r9, #200
+ 163 00c8 374B     		ldr	r3, .L22
+ 164 00ca 01DD     		ble	.L4
+ 165              		.loc 1 47 0 is_stmt 0 discriminator 1
+ 166 00cc C822     		movs	r2, #200
+ 167 00ce 1A80     		strh	r2, [r3, #0]	@ movhi
+ 168              	.L4:
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	if(CtrlStates.gas < 0) CtrlStates.gas = 0;
+ 169              		.loc 1 48 0 is_stmt 1
+ 170 00d0 B3F90030 		ldrsh	r3, [r3, #0]
+ 171 00d4 002B     		cmp	r3, #0
+ 172 00d6 02DA     		bge	.L5
+ 173              		.loc 1 48 0 is_stmt 0 discriminator 1
+ 174 00d8 334B     		ldr	r3, .L22
+ 175 00da 0022     		movs	r2, #0
+ 176 00dc 1A80     		strh	r2, [r3, #0]	@ movhi
+ 177              	.L5:
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	if(CtrlStates.roll > -ROLL_NICK_TRSHLD && CtrlStates.roll < ROLL_NICK_TRSHLD) CtrlStates.roll = 0;
+ 178              		.loc 1 50 0 is_stmt 1
+ 179 00de 08F10208 		add	r8, r8, #2
+ 180 00e2 1FFA88F8 		uxth	r8, r8
+ 181 00e6 B8F1040F 		cmp	r8, #4
+ 182 00ea 2F4B     		ldr	r3, .L22
+ 183 00ec 01D8     		bhi	.L6
+ 184              		.loc 1 50 0 is_stmt 0 discriminator 1
+ 185 00ee 0022     		movs	r2, #0
+ 186 00f0 5A80     		strh	r2, [r3, #2]	@ movhi
+ 187              	.L6:
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	if(CtrlStates.roll > MAX_ROLL) CtrlStates.roll = MAX_ROLL;
+ 188              		.loc 1 51 0 is_stmt 1
+ 189 00f2 B3F90220 		ldrsh	r2, [r3, #2]
+ 190 00f6 232A     		cmp	r2, #35
+ 191 00f8 02DD     		ble	.L7
+ 192              		.loc 1 51 0 is_stmt 0 discriminator 1
+ 193 00fa 2B4A     		ldr	r2, .L22
+ 194 00fc 2321     		movs	r1, #35
+ 195 00fe 5180     		strh	r1, [r2, #2]	@ movhi
+ 196              	.L7:
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	if(CtrlStates.roll < -MAX_ROLL) CtrlStates.roll = -MAX_ROLL;
+ 197              		.loc 1 52 0 is_stmt 1
+ 198 0100 B3F90230 		ldrsh	r3, [r3, #2]
+ 199 0104 2333     		adds	r3, r3, #35
+ 200 0106 03DA     		bge	.L8
+ 201              		.loc 1 52 0 is_stmt 0 discriminator 1
+ 202 0108 274B     		ldr	r3, .L22
+ 203 010a 4FF6DD72 		movw	r2, #65501
+ 204 010e 5A80     		strh	r2, [r3, #2]	@ movhi
+ 205              	.L8:
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	if(CtrlStates.nick > -ROLL_NICK_TRSHLD && CtrlStates.nick < ROLL_NICK_TRSHLD) CtrlStates.nick = 0;
+ 206              		.loc 1 54 0 is_stmt 1
+ 207 0110 0237     		adds	r7, r7, #2
+ 208 0112 BFB2     		uxth	r7, r7
+ 209 0114 042F     		cmp	r7, #4
+ 210 0116 244B     		ldr	r3, .L22
+ 211 0118 01D8     		bhi	.L9
+ 212              		.loc 1 54 0 is_stmt 0 discriminator 1
+ 213 011a 0022     		movs	r2, #0
+ 214 011c 9A80     		strh	r2, [r3, #4]	@ movhi
+ 215              	.L9:
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	if(CtrlStates.nick > MAX_NICK) CtrlStates.nick = MAX_NICK;
+ 216              		.loc 1 55 0 is_stmt 1
+ 217 011e B3F90420 		ldrsh	r2, [r3, #4]
+ 218 0122 232A     		cmp	r2, #35
+ 219 0124 02DD     		ble	.L10
+ 220              		.loc 1 55 0 is_stmt 0 discriminator 1
+ 221 0126 204A     		ldr	r2, .L22
+ 222 0128 2321     		movs	r1, #35
+ 223 012a 9180     		strh	r1, [r2, #4]	@ movhi
+ 224              	.L10:
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	if(CtrlStates.nick < -MAX_NICK) CtrlStates.nick = -MAX_NICK;
+ 225              		.loc 1 56 0 is_stmt 1
+ 226 012c B3F90430 		ldrsh	r3, [r3, #4]
+ 227 0130 2333     		adds	r3, r3, #35
+ 228 0132 03DA     		bge	.L11
+ 229              		.loc 1 56 0 is_stmt 0 discriminator 1
+ 230 0134 1C4B     		ldr	r3, .L22
+ 231 0136 4FF6DD72 		movw	r2, #65501
+ 232 013a 9A80     		strh	r2, [r3, #4]	@ movhi
+ 233              	.L11:
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	/* The yaw value needs a special handling */
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	if(CtrlStates.yaw > 180) CtrlStates.yaw -= 360;
+ 234              		.loc 1 59 0 is_stmt 1
+ 235 013c 1A4B     		ldr	r3, .L22
+ 236 013e DA88     		ldrh	r2, [r3, #6]
+ 237 0140 11B2     		sxth	r1, r2
+ 238 0142 B429     		cmp	r1, #180
+ 239 0144 C4BF     		itt	gt
+ 240 0146 A2F5B472 		subgt	r2, r2, #360
+ 241 014a DA80     		strhgt	r2, [r3, #6]	@ movhi
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	if(CtrlStates.yaw < -180) CtrlStates.yaw += 360;
+ 242              		.loc 1 60 0
+ 243 014c DB88     		ldrh	r3, [r3, #6]
+ 244 014e 1AB2     		sxth	r2, r3
+ 245 0150 B432     		adds	r2, r2, #180
+ 246 0152 03DA     		bge	.L13
+ 247              		.loc 1 60 0 is_stmt 0 discriminator 1
+ 248 0154 144A     		ldr	r2, .L22
+ 249 0156 03F5B473 		add	r3, r3, #360
+ 250 015a D380     		strh	r3, [r2, #6]	@ movhi
+ 251              	.L13:
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** #ifdef USART_REMOTE
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	if(msgPointer[1] == 'K')
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	{
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 		COPTER_STATUS |= READY_FLAG;
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	}
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	else
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	{
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 		COPTER_STATUS &= ~(READY_FLAG);
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	}
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** #else
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	if(currentYaw < -20 && CtrlStates.gas < 5)
+ 252              		.loc 1 72 0 is_stmt 1
+ 253 015c 134B     		ldr	r3, .L22+4
+ 254 015e 1888     		ldrh	r0, [r3, #0]
+ 255 0160 03B2     		sxth	r3, r0
+ 256 0162 1433     		adds	r3, r3, #20
+ 257 0164 0BDA     		bge	.L14
+ 258              		.loc 1 72 0 is_stmt 0 discriminator 1
+ 259 0166 104B     		ldr	r3, .L22
+ 260 0168 B3F90020 		ldrsh	r2, [r3, #0]
+ 261 016c 042A     		cmp	r2, #4
+ 262 016e 06DC     		bgt	.L14
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	{
+  74:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 		if(CtrlStates.copterStatus & IMU_READY_FLAG)
+ 263              		.loc 1 74 0 is_stmt 1
+ 264 0170 06F00202 		and	r2, r6, #2
+ 265 0174 D2B2     		uxtb	r2, r2
+ 266 0176 AAB1     		cbz	r2, .L1
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 		{
+  76:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 			CtrlStates.copterStatus |= ARMED_FLAG;
+ 267              		.loc 1 76 0
+ 268 0178 46F00106 		orr	r6, r6, #1
+ 269 017c 11E0     		b	.L21
+ 270              	.L14:
+  77:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 		}
+  78:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	}
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	else if((currentYaw*1.5) > 20 && CtrlStates.gas < 5)
+ 271              		.loc 1 79 0
+ 272 017e 00B2     		sxth	r0, r0
+ 273 0180 FFF7FEFF 		bl	__aeabi_i2f
+ 274              	.LVL21:
+ 275 0184 4FF07F51 		mov	r1, #1069547520
+ 276 0188 FFF7FEFF 		bl	__aeabi_fmul
+ 277              	.LVL22:
+ 278 018c 0C49     		ldr	r1, .L22+24
+ 279 018e FFF7FEFF 		bl	__aeabi_fcmpgt
+ 280              	.LVL23:
+ 281 0192 38B1     		cbz	r0, .L1
+ 282              		.loc 1 79 0 is_stmt 0 discriminator 1
+ 283 0194 044B     		ldr	r3, .L22
+ 284 0196 B3F90020 		ldrsh	r2, [r3, #0]
+ 285 019a 042A     		cmp	r2, #4
+ 286 019c 02DC     		bgt	.L1
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 	{
+  81:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/remote_control.c **** 		CtrlStates.copterStatus &= ~(ARMED_FLAG);
+ 287              		.loc 1 81 0 is_stmt 1
+ 288 019e 26F00106 		bic	r6, r6, #1
+ 289              	.L21:
+ 290 01a2 1E72     		strb	r6, [r3, #8]
+ 291              	.L1:
+ 292 01a4 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 293              	.L23:
+ 294              		.align	2
+ 295              	.L22:
+ 296 01a8 00000000 		.word	CtrlStates
+ 297 01ac 00000000 		.word	.LANCHOR0
+ 298 01b0 0000F040 		.word	1089470464
+ 299 01b4 00007042 		.word	1114636288
+ 300 01b8 9A99993E 		.word	1050253722
+ 301 01bc 00000000 		.word	XYZ
+ 302 01c0 0000A041 		.word	1101004800
+ 303              		.cfi_endproc
+ 304              	.LFE111:
+ 306              		.comm	XYZ,12,4
+ 307              		.comm	CtrlStates,10,2
+ 308              		.comm	GlobalSettings,64,4
+ 309              		.bss
+ 310              		.align	2
+ 311              		.set	.LANCHOR0,. + 0
+ 314              	currentYaw.6770:
+ 315 0000 0000     		.space	2
+ 316 0002 0000     		.space	2
+ 319              	gasFiltered.6766:
+ 320 0004 00000000 		.space	8
+ 320      00000000 
+ 323              	nickFiltered.6768:
+ 324 000c 00000000 		.space	8
+ 324      00000000 
+ 327              	rollFiltered.6767:
+ 328 0014 00000000 		.space	8
+ 328      00000000 
+ 331              	yawFiltered.6769:
+ 332 001c 00000000 		.space	8
+ 332      00000000 
+ 333              		.text
+ 334              	.Letext0:
+ 335              		.file 2 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_inc/filter_Lib.h"
+ 336              		.file 3 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+ 337              		.file 4 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_inc/IMU_algorithm
+ 338              		.file 5 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_inc/multicopter_s
+ 339              		.file 6 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Include/core_cm4.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 remote_control.c
+     /tmp/ccc6zqDq.s:23     .text:00000000 $t
+     /tmp/ccc6zqDq.s:28     .text:00000000 CalcRXValues
+     /tmp/ccc6zqDq.s:296    .text:000001a8 $d
+                            *COM*:0000000a CtrlStates
+                            *COM*:0000000c XYZ
+                            *COM*:00000040 GlobalSettings
+     /tmp/ccc6zqDq.s:310    .bss:00000000 $d
+     /tmp/ccc6zqDq.s:314    .bss:00000000 currentYaw.6770
+     /tmp/ccc6zqDq.s:319    .bss:00000004 gasFiltered.6766
+     /tmp/ccc6zqDq.s:323    .bss:0000000c nickFiltered.6768
+     /tmp/ccc6zqDq.s:327    .bss:00000014 rollFiltered.6767
+     /tmp/ccc6zqDq.s:331    .bss:0000001c yawFiltered.6769
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.filter_Lib.h.9.c3b4da84b619ff7a2d8e947a9cf27fbf
+                           .group:00000000 wm4.stm32f30x.h.54.c7b24f715ee55ef38656f44540ae3be6
+                           .group:00000000 wm4.core_cm4.h.32.2441f2e49dd40451ba4254637c879d0c
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.292.5f9271075d54fc48f1e25ff79df85cb2
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_comp.h.31.9bbc5f5f1a849069ea9062fbe7b81435
+                           .group:00000000 wm4.stm32f30x_dma.h.31.73d173fa6d60026d432f3cf1d2fc4407
+                           .group:00000000 wm4.stm32f30x_exti.h.31.22e280aa6e095108654ac8d3c74a2409
+                           .group:00000000 wm4.stm32f30x_flash.h.31.bee86dc3079b7049419bdbeec073e2cd
+                           .group:00000000 wm4.stm32f30x_gpio.h.31.3745297fee3728b346ad4d2a2467e40f
+                           .group:00000000 wm4.stm32f30x_syscfg.h.31.96b023b7dbc3641f358604478433eb5c
+                           .group:00000000 wm4.stm32f30x_i2c.h.31.52025acd7f154308042bf46a2835e9d3
+                           .group:00000000 wm4.stm32f30x_pwr.h.31.cdef322c6e7f25cfc29954045d24e9b8
+                           .group:00000000 wm4.stm32f30x_rcc.h.31.3b94c1144b21d1e4fe780e4d1a02d257
+                           .group:00000000 wm4.stm32f30x_spi.h.31.c1ebebab897d23cecc617ec8ad9fd534
+                           .group:00000000 wm4.stm32f30x_tim.h.31.336f9cd855fb4e2cd819ac260ded6518
+                           .group:00000000 wm4.stm32f30x_usart.h.31.cd85313e29c0a128555b4a7b8ec0f487
+                           .group:00000000 wm4.stm32f30x_misc.h.31.f08b0e9f53f0471613b5131bb95f8725
+                           .group:00000000 wm4.stm32f30x.h.6173.8b641ba1d9b0040eda9120fe8a414b2d
+                           .group:00000000 wm4.multicopter_settings.h.29.0b31706a1ebdcc10c24bd8ac6bb149dd
+
+UNDEFINED SYMBOLS
+__aeabi_i2f
+__aeabi_fmul
+__aeabi_fadd
+__aeabi_f2iz
+__aeabi_fcmpgt
+update_intFilter

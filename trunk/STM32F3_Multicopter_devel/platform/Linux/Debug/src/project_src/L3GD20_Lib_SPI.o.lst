@@ -1,0 +1,755 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"L3GD20_Lib_SPI.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.thumb
+  20              		.thumb_func
+  22              	L3GD20_SendByte:
+  23              	.LFB111:
+  24              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SP
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** /*
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****  * L3GD20_Lib_SPI.c
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****  *
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****  *  Created on: Nov 17, 2012
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****  *      Author: franz
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****  */
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** #include <L3GD20_Lib_SPI.h>
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** static uint8_t L3GD20_SendByte(uint8_t byte)
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** {
+  25              		.loc 1 11 0
+  26              		.cfi_startproc
+  27              		@ args = 0, pretend = 0, frame = 0
+  28              		@ frame_needed = 0, uses_anonymous_args = 0
+  29              	.LVL0:
+  30 0000 10B5     		push	{r4, lr}
+  31              	.LCFI0:
+  32              		.cfi_def_cfa_offset 8
+  33              		.cfi_offset 4, -8
+  34              		.cfi_offset 14, -4
+  35 0002 0446     		mov	r4, r0
+  36              	.LVL1:
+  37              	.L2:
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   /* Loop while DR register in not empty */
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   while (SPI_I2S_GetFlagStatus(L3GD20_SPI, SPI_I2S_FLAG_TXE) == RESET)
+  38              		.loc 1 13 0 discriminator 1
+  39 0004 0A48     		ldr	r0, .L12
+  40 0006 0221     		movs	r1, #2
+  41 0008 FFF7FEFF 		bl	SPI_I2S_GetFlagStatus
+  42              	.LVL2:
+  43 000c 0028     		cmp	r0, #0
+  44 000e F9D0     		beq	.L2
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   {
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   }
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   /* Send a Byte through the SPI peripheral */
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   SPI_SendData8(L3GD20_SPI, byte);
+  45              		.loc 1 18 0
+  46 0010 0748     		ldr	r0, .L12
+  47 0012 2146     		mov	r1, r4
+  48 0014 FFF7FEFF 		bl	SPI_SendData8
+  49              	.LVL3:
+  50              	.L3:
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   /* Wait to receive a Byte */
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   while (SPI_I2S_GetFlagStatus(L3GD20_SPI, SPI_I2S_FLAG_RXNE) == RESET)
+  51              		.loc 1 21 0 discriminator 1
+  52 0018 0548     		ldr	r0, .L12
+  53 001a 0121     		movs	r1, #1
+  54 001c FFF7FEFF 		bl	SPI_I2S_GetFlagStatus
+  55              	.LVL4:
+  56 0020 0028     		cmp	r0, #0
+  57 0022 F9D0     		beq	.L3
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   {
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   }
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   /* Return the Byte read from the SPI bus */
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   return (uint8_t)SPI_ReceiveData8(L3GD20_SPI);
+  58              		.loc 1 26 0
+  59 0024 0248     		ldr	r0, .L12
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** }
+  60              		.loc 1 27 0
+  61 0026 BDE81040 		pop	{r4, lr}
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   return (uint8_t)SPI_ReceiveData8(L3GD20_SPI);
+  62              		.loc 1 26 0
+  63 002a FFF7FEBF 		b	SPI_ReceiveData8
+  64              	.LVL5:
+  65              	.L13:
+  66 002e 00BF     		.align	2
+  67              	.L12:
+  68 0030 00300140 		.word	1073819648
+  69              		.cfi_endproc
+  70              	.LFE111:
+  72              		.align	1
+  73              		.global	L3GD20_Init
+  74              		.thumb
+  75              		.thumb_func
+  77              	L3GD20_Init:
+  78              	.LFB112:
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** void L3GD20_Init(void)
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** {
+  79              		.loc 1 32 0
+  80              		.cfi_startproc
+  81              		@ args = 0, pretend = 0, frame = 0
+  82              		@ frame_needed = 0, uses_anonymous_args = 0
+  83              	.LVL6:
+  84 0034 10B5     		push	{r4, lr}
+  85              	.LCFI1:
+  86              		.cfi_def_cfa_offset 8
+  87              		.cfi_offset 4, -8
+  88              		.cfi_offset 14, -4
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   uint8_t ctrl1 = 0x00, ctrl2 = 0x00, ctrl5 = 0x00, ctrl4 = 0x00;
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   /* Configure the low level interface ---------------------------------------*/
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   //L3GD20_LowLevel_Init();
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   /* Configure MEMS: data rate, power mode, full scale and axes */
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** //  ctrl1 = (uint8_t) (L3GD20_MODE_ACTIVE | L3GD20_OUTPUT_DATARATE_4  |
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** //		  	  	  	  L3GD20_AXES_ENABLE | L3GD20_BANDWIDTH_2);
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   ctrl1 = (uint8_t) (L3GD20_MODE_ACTIVE | L3GD20_OUTPUT_DATARATE_4  |
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 		  	  	  	  L3GD20_AXES_ENABLE | L3GD20_BANDWIDTH_4);
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   ctrl2 = (uint8_t) (0x34); /* CTRL_REG2   HPF Setup HPF(0,5Hz-4Hz) Autoreset */
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   ctrl4 = (uint8_t) (L3GD20_BlockDataUpdate_Single  | L3GD20_BLE_LSB |
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 		  	  	  	  L3GD20_FULLSCALE_2000);
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   ctrl5 = (uint8_t) (0x13); /* CTRL_REG5   low pass filter enable, high pass filter enabled */
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   /* Write value to MEMS CTRL_REG1 regsister */
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_CS_LOW();
+  89              		.loc 1 54 0
+  90 0036 1D4C     		ldr	r4, .L15
+  91 0038 0821     		movs	r1, #8
+  92 003a 2046     		mov	r0, r4
+  93 003c FFF7FEFF 		bl	GPIO_ResetBits
+  94              	.LVL7:
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_SendByte(L3GD20_CTRL_REG1_ADDR);
+  95              		.loc 1 55 0
+  96 0040 2020     		movs	r0, #32
+  97 0042 FFF7DDFF 		bl	L3GD20_SendByte
+  98              	.LVL8:
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_SendByte(ctrl1);
+  99              		.loc 1 56 0
+ 100 0046 FF20     		movs	r0, #255
+ 101 0048 FFF7DAFF 		bl	L3GD20_SendByte
+ 102              	.LVL9:
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_CS_HIGH();
+ 103              		.loc 1 57 0
+ 104 004c 2046     		mov	r0, r4
+ 105 004e 0821     		movs	r1, #8
+ 106 0050 FFF7FEFF 		bl	GPIO_SetBits
+ 107              	.LVL10:
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   /* Write value to MEMS CTRL_REG2 regsister */
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_CS_LOW();
+ 108              		.loc 1 60 0
+ 109 0054 0821     		movs	r1, #8
+ 110 0056 2046     		mov	r0, r4
+ 111 0058 FFF7FEFF 		bl	GPIO_ResetBits
+ 112              	.LVL11:
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_SendByte(L3GD20_CTRL_REG2_ADDR);
+ 113              		.loc 1 61 0
+ 114 005c 2120     		movs	r0, #33
+ 115 005e FFF7CFFF 		bl	L3GD20_SendByte
+ 116              	.LVL12:
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_SendByte(ctrl2);
+ 117              		.loc 1 62 0
+ 118 0062 3420     		movs	r0, #52
+ 119 0064 FFF7CCFF 		bl	L3GD20_SendByte
+ 120              	.LVL13:
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_CS_HIGH();
+ 121              		.loc 1 63 0
+ 122 0068 2046     		mov	r0, r4
+ 123 006a 0821     		movs	r1, #8
+ 124 006c FFF7FEFF 		bl	GPIO_SetBits
+ 125              	.LVL14:
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   /* Write value to MEMS CTRL_REG4 regsister */
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_CS_LOW();
+ 126              		.loc 1 66 0
+ 127 0070 0821     		movs	r1, #8
+ 128 0072 2046     		mov	r0, r4
+ 129 0074 FFF7FEFF 		bl	GPIO_ResetBits
+ 130              	.LVL15:
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_SendByte(L3GD20_CTRL_REG4_ADDR);
+ 131              		.loc 1 67 0
+ 132 0078 2320     		movs	r0, #35
+ 133 007a FFF7C1FF 		bl	L3GD20_SendByte
+ 134              	.LVL16:
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_SendByte(ctrl4);
+ 135              		.loc 1 68 0
+ 136 007e A020     		movs	r0, #160
+ 137 0080 FFF7BEFF 		bl	L3GD20_SendByte
+ 138              	.LVL17:
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_CS_HIGH();
+ 139              		.loc 1 69 0
+ 140 0084 2046     		mov	r0, r4
+ 141 0086 0821     		movs	r1, #8
+ 142 0088 FFF7FEFF 		bl	GPIO_SetBits
+ 143              	.LVL18:
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   /* Write value to MEMS CTRL_REG2 regsister */
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_CS_LOW();
+ 144              		.loc 1 72 0
+ 145 008c 0821     		movs	r1, #8
+ 146 008e 2046     		mov	r0, r4
+ 147 0090 FFF7FEFF 		bl	GPIO_ResetBits
+ 148              	.LVL19:
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_SendByte(L3GD20_CTRL_REG5_ADDR);
+ 149              		.loc 1 73 0
+ 150 0094 2420     		movs	r0, #36
+ 151 0096 FFF7B3FF 		bl	L3GD20_SendByte
+ 152              	.LVL20:
+  74:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_SendByte(ctrl5);
+ 153              		.loc 1 74 0
+ 154 009a 1320     		movs	r0, #19
+ 155 009c FFF7B0FF 		bl	L3GD20_SendByte
+ 156              	.LVL21:
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_CS_HIGH();
+ 157              		.loc 1 75 0
+ 158 00a0 2046     		mov	r0, r4
+ 159 00a2 0821     		movs	r1, #8
+  76:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** }
+ 160              		.loc 1 76 0
+ 161 00a4 BDE81040 		pop	{r4, lr}
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_CS_HIGH();
+ 162              		.loc 1 75 0
+ 163 00a8 FFF7FEBF 		b	GPIO_SetBits
+ 164              	.LVL22:
+ 165              	.L16:
+ 166              		.align	2
+ 167              	.L15:
+ 168 00ac 00100048 		.word	1207963648
+ 169              		.cfi_endproc
+ 170              	.LFE112:
+ 172              		.align	1
+ 173              		.global	L3GD20_Read
+ 174              		.thumb
+ 175              		.thumb_func
+ 177              	L3GD20_Read:
+ 178              	.LFB113:
+  77:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  78:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** void L3GD20_Read(uint8_t* pBuffer, uint8_t ReadAddr, uint16_t NumByteToRead)
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** {
+ 179              		.loc 1 80 0
+ 180              		.cfi_startproc
+ 181              		@ args = 0, pretend = 0, frame = 0
+ 182              		@ frame_needed = 0, uses_anonymous_args = 0
+ 183              	.LVL23:
+  81:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   if(NumByteToRead > 0x01)
+ 184              		.loc 1 81 0
+ 185 00b0 012A     		cmp	r2, #1
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** {
+ 186              		.loc 1 80 0
+ 187 00b2 70B5     		push	{r4, r5, r6, lr}
+ 188              	.LCFI2:
+ 189              		.cfi_def_cfa_offset 16
+ 190              		.cfi_offset 4, -16
+ 191              		.cfi_offset 5, -12
+ 192              		.cfi_offset 6, -8
+ 193              		.cfi_offset 14, -4
+  82:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   {
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****     ReadAddr |= (uint8_t)(READWRITE_CMD | MULTIPLEBYTE_CMD);
+ 194              		.loc 1 83 0
+ 195 00b4 8CBF     		ite	hi
+ 196 00b6 41F0C006 		orrhi	r6, r1, #192
+ 197              	.LVL24:
+  84:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   }
+  85:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   else
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   {
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****     ReadAddr |= (uint8_t)READWRITE_CMD;
+ 198              		.loc 1 87 0
+ 199 00ba 41F08006 		orrls	r6, r1, #128
+ 200              	.LVL25:
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** {
+ 201              		.loc 1 80 0
+ 202 00be 0546     		mov	r5, r0
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   }
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   /* Set chip select Low at the start of the transmission */
+  90:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_CS_LOW();
+ 203              		.loc 1 90 0
+ 204 00c0 0821     		movs	r1, #8
+ 205 00c2 0B48     		ldr	r0, .L22
+ 206              	.LVL26:
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** {
+ 207              		.loc 1 80 0
+ 208 00c4 1446     		mov	r4, r2
+ 209              		.loc 1 90 0
+ 210 00c6 FFF7FEFF 		bl	GPIO_ResetBits
+ 211              	.LVL27:
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  92:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   /* Send the Address of the indexed register */
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_SendByte(ReadAddr);
+ 212              		.loc 1 93 0
+ 213 00ca 3046     		mov	r0, r6
+ 214 00cc FFF798FF 		bl	L3GD20_SendByte
+ 215              	.LVL28:
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   /* Receive the data that will be read from the device (MSB First) */
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   while(NumByteToRead > 0x00)
+ 216              		.loc 1 96 0
+ 217 00d0 06E0     		b	.L20
+ 218              	.LVL29:
+ 219              	.L21:
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   {
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****     /* Send dummy byte (0x00) to generate the SPI clock to L3GD20 (Slave device) */
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****     *pBuffer = L3GD20_SendByte(DUMMY_BYTE);
+ 220              		.loc 1 99 0
+ 221 00d2 0020     		movs	r0, #0
+ 222 00d4 FFF794FF 		bl	L3GD20_SendByte
+ 223              	.LVL30:
+ 100:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****     NumByteToRead--;
+ 224              		.loc 1 100 0
+ 225 00d8 013C     		subs	r4, r4, #1
+ 226              	.LVL31:
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****     *pBuffer = L3GD20_SendByte(DUMMY_BYTE);
+ 227              		.loc 1 99 0
+ 228 00da 05F8010B 		strb	r0, [r5], #1
+ 229              	.LVL32:
+ 230              		.loc 1 100 0
+ 231 00de A4B2     		uxth	r4, r4
+ 232              	.LVL33:
+ 233              	.L20:
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   while(NumByteToRead > 0x00)
+ 234              		.loc 1 96 0 discriminator 1
+ 235 00e0 002C     		cmp	r4, #0
+ 236 00e2 F6D1     		bne	.L21
+ 101:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****     pBuffer++;
+ 102:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   }
+ 103:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   /* Set chip select High at the end of the transmission */
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_CS_HIGH();
+ 237              		.loc 1 105 0
+ 238 00e4 0248     		ldr	r0, .L22
+ 239 00e6 0821     		movs	r1, #8
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** }
+ 240              		.loc 1 106 0
+ 241 00e8 BDE87040 		pop	{r4, r5, r6, lr}
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_CS_HIGH();
+ 242              		.loc 1 105 0
+ 243 00ec FFF7FEBF 		b	GPIO_SetBits
+ 244              	.LVL34:
+ 245              	.L23:
+ 246              		.align	2
+ 247              	.L22:
+ 248 00f0 00100048 		.word	1207963648
+ 249              		.cfi_endproc
+ 250              	.LFE113:
+ 252              		.align	1
+ 253              		.global	Gyro_convert
+ 254              		.thumb
+ 255              		.thumb_func
+ 257              	Gyro_convert:
+ 258              	.LFB114:
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+ 108:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** void Gyro_convert(uint8_t Buffer[6], struct gyroValues *gyro, uint8_t bigEndian)
+ 110:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** {
+ 259              		.loc 1 110 0
+ 260              		.cfi_startproc
+ 261              		@ args = 0, pretend = 0, frame = 0
+ 262              		@ frame_needed = 0, uses_anonymous_args = 0
+ 263              	.LVL35:
+ 264 00f4 10B5     		push	{r4, lr}
+ 265              	.LCFI3:
+ 266              		.cfi_def_cfa_offset 8
+ 267              		.cfi_offset 4, -8
+ 268              		.cfi_offset 14, -4
+ 269 00f6 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 270 00f8 0478     		ldrb	r4, [r0, #0]	@ zero_extendqisi2
+ 111:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 	if(bigEndian)
+ 271              		.loc 1 111 0
+ 272 00fa 52B1     		cbz	r2, .L25
+ 273              	.LVL36:
+ 274              	.LBB4:
+ 275              	.LBB5:
+ 112:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 	{
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 		gyro->gyroValueX = (Buffer[1] << 8) | (Buffer[0]);
+ 276              		.loc 1 113 0
+ 277 00fc 44EA0323 		orr	r3, r4, r3, lsl #8
+ 278 0100 0B80     		strh	r3, [r1, #0]	@ movhi
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 		gyro->gyroValueY = (Buffer[3] << 8) | (Buffer[2]);
+ 279              		.loc 1 114 0
+ 280 0102 C278     		ldrb	r2, [r0, #3]	@ zero_extendqisi2
+ 281              	.LVL37:
+ 282 0104 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+ 283 0106 43EA0223 		orr	r3, r3, r2, lsl #8
+ 284 010a 4B80     		strh	r3, [r1, #2]	@ movhi
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 		gyro->gyroValueZ = (Buffer[5] << 8) | (Buffer[4]);
+ 285              		.loc 1 115 0
+ 286 010c 4279     		ldrb	r2, [r0, #5]	@ zero_extendqisi2
+ 287 010e 0379     		ldrb	r3, [r0, #4]	@ zero_extendqisi2
+ 288 0110 09E0     		b	.L27
+ 289              	.LVL38:
+ 290              	.L25:
+ 291              	.LBE5:
+ 292              	.LBE4:
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 	}
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 	else
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 	{
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 		gyro->gyroValueX = (Buffer[0] << 8) | (Buffer[1]);
+ 293              		.loc 1 119 0
+ 294 0112 43EA0423 		orr	r3, r3, r4, lsl #8
+ 295 0116 0B80     		strh	r3, [r1, #0]	@ movhi
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 		gyro->gyroValueY = (Buffer[2] << 8) | (Buffer[3]);
+ 296              		.loc 1 120 0
+ 297 0118 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
+ 298              	.LVL39:
+ 299 011a C378     		ldrb	r3, [r0, #3]	@ zero_extendqisi2
+ 300 011c 43EA0223 		orr	r3, r3, r2, lsl #8
+ 301 0120 4B80     		strh	r3, [r1, #2]	@ movhi
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 		gyro->gyroValueZ = (Buffer[4] << 8) | (Buffer[5]);
+ 302              		.loc 1 121 0
+ 303 0122 0279     		ldrb	r2, [r0, #4]	@ zero_extendqisi2
+ 304 0124 4379     		ldrb	r3, [r0, #5]	@ zero_extendqisi2
+ 305              	.L27:
+ 306 0126 43EA0223 		orr	r3, r3, r2, lsl #8
+ 307 012a 8B80     		strh	r3, [r1, #4]	@ movhi
+ 308 012c 10BD     		pop	{r4, pc}
+ 309              		.cfi_endproc
+ 310              	.LFE114:
+ 312              		.align	1
+ 313              		.global	Gyro_readValues
+ 314              		.thumb
+ 315              		.thumb_func
+ 317              	Gyro_readValues:
+ 318              	.LFB115:
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 	}
+ 123:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** }
+ 124:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+ 125:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+ 126:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** void Gyro_readValues (struct gyroValues *gyro)
+ 127:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** {
+ 319              		.loc 1 127 0
+ 320              		.cfi_startproc
+ 321              		@ args = 0, pretend = 0, frame = 16
+ 322              		@ frame_needed = 0, uses_anonymous_args = 0
+ 323              	.LVL40:
+ 324 012e 30B5     		push	{r4, r5, lr}
+ 325              	.LCFI4:
+ 326              		.cfi_def_cfa_offset 12
+ 327              		.cfi_offset 4, -12
+ 328              		.cfi_offset 5, -8
+ 329              		.cfi_offset 14, -4
+ 330 0130 85B0     		sub	sp, sp, #20
+ 331              	.LCFI5:
+ 332              		.cfi_def_cfa_offset 32
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   uint8_t tmpbuffer[6] ={0};
+ 333              		.loc 1 128 0
+ 334 0132 0024     		movs	r4, #0
+ 127:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** {
+ 335              		.loc 1 127 0
+ 336 0134 0546     		mov	r5, r0
+ 129:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   uint8_t tmpreg = 0;
+ 337              		.loc 1 129 0
+ 338 0136 04A8     		add	r0, sp, #16
+ 339              	.LVL41:
+ 340 0138 00F8094D 		strb	r4, [r0, #-9]!
+ 341              	.LVL42:
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+ 131:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_Read(&tmpreg,L3GD20_CTRL_REG4_ADDR,1);
+ 342              		.loc 1 131 0
+ 343 013c 2321     		movs	r1, #35
+ 344 013e 0122     		movs	r2, #1
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   uint8_t tmpbuffer[6] ={0};
+ 345              		.loc 1 128 0
+ 346 0140 0294     		str	r4, [sp, #8]
+ 347 0142 ADF80C40 		strh	r4, [sp, #12]	@ movhi
+ 348              		.loc 1 131 0
+ 349 0146 FFF7FEFF 		bl	L3GD20_Read
+ 350              	.LVL43:
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   L3GD20_Read(tmpbuffer,L3GD20_OUT_X_L_ADDR,6);
+ 351              		.loc 1 132 0
+ 352 014a 02A8     		add	r0, sp, #8
+ 353 014c 2821     		movs	r1, #40
+ 354 014e 0622     		movs	r2, #6
+ 355 0150 FFF7FEFF 		bl	L3GD20_Read
+ 356              	.LVL44:
+ 133:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   /* check in the control register 4 the data alignment (Big Endian or Little Endian)*/
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   if(!(tmpreg & 0x40))
+ 357              		.loc 1 135 0
+ 358 0154 9DF80730 		ldrb	r3, [sp, #7]	@ zero_extendqisi2
+ 359              	.LVL45:
+ 360 0158 03F04003 		and	r3, r3, #64
+ 361              	.LVL46:
+ 362 015c DBB2     		uxtb	r3, r3
+ 363 015e ABB9     		cbnz	r3, .L29
+ 364              	.LVL47:
+ 365              	.LBB10:
+ 366              	.LBB11:
+ 367              	.LBB12:
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 		gyro->gyroValueX = (Buffer[1] << 8) | (Buffer[0]);
+ 368              		.loc 1 113 0
+ 369 0160 9DF80920 		ldrb	r2, [sp, #9]	@ zero_extendqisi2
+ 370 0164 9DF80830 		ldrb	r3, [sp, #8]	@ zero_extendqisi2
+ 371 0168 43EA0223 		orr	r3, r3, r2, lsl #8
+ 372 016c 2B80     		strh	r3, [r5, #0]	@ movhi
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 		gyro->gyroValueY = (Buffer[3] << 8) | (Buffer[2]);
+ 373              		.loc 1 114 0
+ 374 016e 9DF80B20 		ldrb	r2, [sp, #11]	@ zero_extendqisi2
+ 375 0172 9DF80A30 		ldrb	r3, [sp, #10]	@ zero_extendqisi2
+ 376 0176 43EA0223 		orr	r3, r3, r2, lsl #8
+ 377 017a 6B80     		strh	r3, [r5, #2]	@ movhi
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 		gyro->gyroValueZ = (Buffer[5] << 8) | (Buffer[4]);
+ 378              		.loc 1 115 0
+ 379 017c 9DF80D20 		ldrb	r2, [sp, #13]	@ zero_extendqisi2
+ 380 0180 9DF80C30 		ldrb	r3, [sp, #12]	@ zero_extendqisi2
+ 381 0184 43EA0223 		orr	r3, r3, r2, lsl #8
+ 382 0188 AB80     		strh	r3, [r5, #4]	@ movhi
+ 383 018a 04E0     		b	.L28
+ 384              	.LVL48:
+ 385              	.L29:
+ 386              	.LBE12:
+ 387              	.LBE11:
+ 388              	.LBE10:
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   {
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 	Gyro_convert(&tmpbuffer[0], gyro, 1);
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   }
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   else
+ 140:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   {
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****    	Gyro_convert(&tmpbuffer[0], gyro, 0);
+ 389              		.loc 1 141 0
+ 390 018c 02A8     		add	r0, sp, #8
+ 391 018e 2946     		mov	r1, r5
+ 392 0190 2246     		mov	r2, r4
+ 393 0192 FFF7FEFF 		bl	Gyro_convert
+ 394              	.LVL49:
+ 395              	.L28:
+ 142:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c ****   }
+ 143:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** }
+ 396              		.loc 1 143 0
+ 397 0196 05B0     		add	sp, sp, #20
+ 398 0198 30BD     		pop	{r4, r5, pc}
+ 399              		.cfi_endproc
+ 400              	.LFE115:
+ 402              		.align	1
+ 403              		.global	Gyro_calibrate
+ 404              		.thumb
+ 405              		.thumb_func
+ 407              	Gyro_calibrate:
+ 408              	.LFB116:
+ 144:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+ 145:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+ 146:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** //ACC und GYRO kalibrieren:
+ 148:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** void Gyro_calibrate(struct gyroValues *gyroOffset)
+ 149:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** {
+ 409              		.loc 1 149 0
+ 410              		.cfi_startproc
+ 411              		@ args = 0, pretend = 0, frame = 0
+ 412              		@ frame_needed = 0, uses_anonymous_args = 0
+ 413              	.LVL50:
+ 414 019a 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 415              	.LCFI6:
+ 416              		.cfi_def_cfa_offset 24
+ 417              		.cfi_offset 4, -24
+ 418              		.cfi_offset 5, -20
+ 419              		.cfi_offset 6, -16
+ 420              		.cfi_offset 7, -12
+ 421              		.cfi_offset 8, -8
+ 422              		.cfi_offset 14, -4
+ 423              		.loc 1 149 0
+ 424 019e 0446     		mov	r4, r0
+ 150:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** int i = 0;
+ 151:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** int32_t tmpX = 0;
+ 152:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** int32_t tmpY = 0;
+ 153:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** int32_t tmpZ = 0;
+ 154:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+ 155:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** L3GD20_Init();
+ 425              		.loc 1 155 0
+ 426 01a0 FFF7FEFF 		bl	L3GD20_Init
+ 427              	.LVL51:
+ 428 01a4 6425     		movs	r5, #100
+ 429              	.LVL52:
+ 430              	.L32:
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+ 157:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** //discard the first 100 values
+ 158:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** for(i=0;i<100;i++)
+ 159:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** {
+ 160:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 	Gyro_readValues(gyroOffset);
+ 431              		.loc 1 160 0 discriminator 2
+ 432 01a6 2046     		mov	r0, r4
+ 433 01a8 FFF7FEFF 		bl	Gyro_readValues
+ 434              	.LVL53:
+ 158:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** for(i=0;i<100;i++)
+ 435              		.loc 1 158 0 discriminator 2
+ 436 01ac 013D     		subs	r5, r5, #1
+ 437 01ae FAD1     		bne	.L32
+ 161:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** }
+ 162:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+ 163:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** gyroOffset->gyroValueX = 0;
+ 438              		.loc 1 163 0
+ 439 01b0 2580     		strh	r5, [r4, #0]	@ movhi
+ 164:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** gyroOffset->gyroValueY = 0;
+ 440              		.loc 1 164 0
+ 441 01b2 6580     		strh	r5, [r4, #2]	@ movhi
+ 165:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** gyroOffset->gyroValueZ = 0;
+ 442              		.loc 1 165 0
+ 443 01b4 A580     		strh	r5, [r4, #4]	@ movhi
+ 444              	.LVL54:
+ 445 01b6 4FF49678 		mov	r8, #300
+ 152:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** int32_t tmpY = 0;
+ 446              		.loc 1 152 0
+ 447 01ba 2E46     		mov	r6, r5
+ 151:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** int32_t tmpX = 0;
+ 448              		.loc 1 151 0
+ 449 01bc 2F46     		mov	r7, r5
+ 450              	.LVL55:
+ 451              	.L33:
+ 166:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+ 167:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** /***************Calibrate the Gyro***************/
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** for(i=0;i<average_loop_value;i++)
+ 169:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** {
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+ 171:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 	Gyro_readValues(gyroOffset);
+ 452              		.loc 1 171 0 discriminator 2
+ 453 01be 2046     		mov	r0, r4
+ 454 01c0 FFF7FEFF 		bl	Gyro_readValues
+ 455              	.LVL56:
+ 172:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 	tmpX += gyroOffset->gyroValueX;
+ 456              		.loc 1 172 0 discriminator 2
+ 457 01c4 B4F90030 		ldrsh	r3, [r4, #0]
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** for(i=0;i<average_loop_value;i++)
+ 458              		.loc 1 168 0 discriminator 2
+ 459 01c8 B8F10108 		subs	r8, r8, #1
+ 460              		.loc 1 172 0 discriminator 2
+ 461 01cc 1F44     		add	r7, r7, r3
+ 462              	.LVL57:
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 	tmpY += gyroOffset->gyroValueY;
+ 463              		.loc 1 173 0 discriminator 2
+ 464 01ce B4F90230 		ldrsh	r3, [r4, #2]
+ 465 01d2 1E44     		add	r6, r6, r3
+ 466              	.LVL58:
+ 174:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 	tmpZ += gyroOffset->gyroValueZ;
+ 467              		.loc 1 174 0 discriminator 2
+ 468 01d4 B4F90430 		ldrsh	r3, [r4, #4]
+ 469 01d8 1D44     		add	r5, r5, r3
+ 470              	.LVL59:
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** for(i=0;i<average_loop_value;i++)
+ 471              		.loc 1 168 0 discriminator 2
+ 472 01da F0D1     		bne	.L33
+ 175:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** }
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** 
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** gyroOffset->gyroValueX = tmpX/average_loop_value;
+ 473              		.loc 1 177 0
+ 474 01dc 4FF49673 		mov	r3, #300
+ 475 01e0 97FBF3F7 		sdiv	r7, r7, r3
+ 476              	.LVL60:
+ 178:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** gyroOffset->gyroValueY = tmpY/average_loop_value;
+ 477              		.loc 1 178 0
+ 478 01e4 96FBF3F6 		sdiv	r6, r6, r3
+ 479              	.LVL61:
+ 179:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** gyroOffset->gyroValueZ = tmpZ/average_loop_value;
+ 480              		.loc 1 179 0
+ 481 01e8 95FBF3F5 		sdiv	r5, r5, r3
+ 482              	.LVL62:
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** gyroOffset->gyroValueX = tmpX/average_loop_value;
+ 483              		.loc 1 177 0
+ 484 01ec 2780     		strh	r7, [r4, #0]	@ movhi
+ 178:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/L3GD20_Lib_SPI.c **** gyroOffset->gyroValueY = tmpY/average_loop_value;
+ 485              		.loc 1 178 0
+ 486 01ee 6680     		strh	r6, [r4, #2]	@ movhi
+ 487              		.loc 1 179 0
+ 488 01f0 A580     		strh	r5, [r4, #4]	@ movhi
+ 489 01f2 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 490              		.cfi_endproc
+ 491              	.LFE116:
+ 493              	.Letext0:
+ 494              		.file 2 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+ 495              		.file 3 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Device/ST/STM32F30x
+ 496              		.file 4 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_inc/L3GD20_Lib_SP
+ 497              		.file 5 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+ 498              		.file 6 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+ 499              		.file 7 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Include/core_cm4.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 L3GD20_Lib_SPI.c
+     /tmp/ccPLJn8R.s:18     .text:00000000 $t
+     /tmp/ccPLJn8R.s:22     .text:00000000 L3GD20_SendByte
+     /tmp/ccPLJn8R.s:68     .text:00000030 $d
+     /tmp/ccPLJn8R.s:72     .text:00000034 $t
+     /tmp/ccPLJn8R.s:77     .text:00000034 L3GD20_Init
+     /tmp/ccPLJn8R.s:168    .text:000000ac $d
+     /tmp/ccPLJn8R.s:172    .text:000000b0 $t
+     /tmp/ccPLJn8R.s:177    .text:000000b0 L3GD20_Read
+     /tmp/ccPLJn8R.s:248    .text:000000f0 $d
+     /tmp/ccPLJn8R.s:252    .text:000000f4 $t
+     /tmp/ccPLJn8R.s:257    .text:000000f4 Gyro_convert
+     /tmp/ccPLJn8R.s:317    .text:0000012e Gyro_readValues
+     /tmp/ccPLJn8R.s:407    .text:0000019a Gyro_calibrate
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.stm32f30x.h.54.c7b24f715ee55ef38656f44540ae3be6
+                           .group:00000000 wm4.core_cm4.h.32.2441f2e49dd40451ba4254637c879d0c
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.292.5f9271075d54fc48f1e25ff79df85cb2
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_comp.h.31.9bbc5f5f1a849069ea9062fbe7b81435
+                           .group:00000000 wm4.stm32f30x_dma.h.31.73d173fa6d60026d432f3cf1d2fc4407
+                           .group:00000000 wm4.stm32f30x_exti.h.31.22e280aa6e095108654ac8d3c74a2409
+                           .group:00000000 wm4.stm32f30x_flash.h.31.bee86dc3079b7049419bdbeec073e2cd
+                           .group:00000000 wm4.stm32f30x_gpio.h.31.3745297fee3728b346ad4d2a2467e40f
+                           .group:00000000 wm4.stm32f30x_syscfg.h.31.96b023b7dbc3641f358604478433eb5c
+                           .group:00000000 wm4.stm32f30x_i2c.h.31.52025acd7f154308042bf46a2835e9d3
+                           .group:00000000 wm4.stm32f30x_pwr.h.31.cdef322c6e7f25cfc29954045d24e9b8
+                           .group:00000000 wm4.stm32f30x_rcc.h.31.3b94c1144b21d1e4fe780e4d1a02d257
+                           .group:00000000 wm4.stm32f30x_spi.h.31.c1ebebab897d23cecc617ec8ad9fd534
+                           .group:00000000 wm4.stm32f30x_tim.h.31.336f9cd855fb4e2cd819ac260ded6518
+                           .group:00000000 wm4.stm32f30x_usart.h.31.cd85313e29c0a128555b4a7b8ec0f487
+                           .group:00000000 wm4.stm32f30x_misc.h.31.f08b0e9f53f0471613b5131bb95f8725
+                           .group:00000000 wm4.stm32f30x.h.6173.8b641ba1d9b0040eda9120fe8a414b2d
+                           .group:00000000 wm4.newlib.h.8.e1d498e57c12962fc6d7be5061a6981a
+                           .group:00000000 wm4.config.h.148.52fe83653334d06815a0c57b59a3e584
+                           .group:00000000 wm4._ansi.h.23.95dee4059009fe3ab635a191bb73dc66
+                           .group:00000000 wm4.stdio.h.31.f48311dde756a2aec27351b58a280fb9
+                           .group:00000000 wm4.stddef.h.187.9e651b6b8b16e149c1353259404973ea
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._default_types.h.6.1dbd2e581fd590860c7c17f21d147e91
+                           .group:00000000 wm4.lock.h.2.9bc98482741e5e2a9450b12934a684ea
+                           .group:00000000 wm4.stddef.h.349.31f4c5baff3fa2689010b32028da9c47
+                           .group:00000000 wm4.reent.h.16.58b23a9f0faf0e7f2dfe7e2d33154afd
+                           .group:00000000 wm4.types.h.23.0d949686bbcadd1621462d4fa1f884f9
+                           .group:00000000 wm4.stddef.h.40.cf962ebbec441b3ac67502735f0765db
+                           .group:00000000 wm4.types.h.2.e9cec8c90ab35f77d9f499e06ae02400
+                           .group:00000000 wm4.types.h.80.f2bfdfeee9f340633702c07fad9b5e01
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.63.1f4bc553faa62c5c69dd9cb47f9f1417
+                           .group:00000000 wm4.stdlib.h.18.6f6153fd5cb89acd58c0f0ab1f77e147
+                           .group:00000000 wm4.stddef.h.161.e50ff8a9d5d1abbc15641da28ac571bf
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.58.3943707ca024393181a6211b2c8a1625
+                           .group:00000000 wm4.ctype.h.2.fecd14bb6f4e162ef31748cc97760e21
+                           .group:00000000 wm4.math.h.49.5da716593b937b9fb02bef6ed6537c13
+                           .group:00000000 wm4.L3GD20_Lib_SPI.h.14.2d8e0310bdc090fe291fed780bf82642
+
+UNDEFINED SYMBOLS
+SPI_I2S_GetFlagStatus
+SPI_SendData8
+SPI_ReceiveData8
+GPIO_ResetBits
+GPIO_SetBits

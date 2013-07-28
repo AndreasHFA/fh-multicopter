@@ -1,0 +1,1366 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"IMU_algorithm.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.global	IMU_init
+  20              		.thumb
+  21              		.thumb_func
+  23              	IMU_init:
+  24              	.LFB0:
+  25              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** #include <IMU_algorithm.h>
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** #include <Vector_math.h>
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** #include <math.h>
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** #include <stdio.h>
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** /*Initialization of the main dcm-variables used for the Gyro input*/
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** void IMU_init(struct IMU_values *IMU, float dt)
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+  26              		.loc 1 9 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  31              	.LVL0:
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dt = dt;	
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_xe_line[0] = 1;
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_xe_line[1] = 0;
+  32              		.loc 1 13 0
+  33 0000 0023     		movs	r3, #0
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_xe_line[0] = 1;
+  34              		.loc 1 12 0
+  35 0002 4FF07E52 		mov	r2, #1065353216
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dt = dt;	
+  36              		.loc 1 10 0
+  37 0006 0160     		str	r1, [r0, #0]	@ float
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_xe_line[0] = 1;
+  38              		.loc 1 12 0
+  39 0008 4260     		str	r2, [r0, #4]	@ float
+  40              		.loc 1 13 0
+  41 000a 8360     		str	r3, [r0, #8]	@ float
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_xe_line[2] = 0;
+  42              		.loc 1 14 0
+  43 000c C360     		str	r3, [r0, #12]	@ float
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ye_line[0] = 0;
+  44              		.loc 1 16 0
+  45 000e 0361     		str	r3, [r0, #16]	@ float
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ye_line[1] = 1;
+  46              		.loc 1 17 0
+  47 0010 4261     		str	r2, [r0, #20]	@ float
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ye_line[2] = 0;
+  48              		.loc 1 18 0
+  49 0012 8361     		str	r3, [r0, #24]	@ float
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ze_line[0] = 0;
+  50              		.loc 1 20 0
+  51 0014 C361     		str	r3, [r0, #28]	@ float
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ze_line[1] = 0;
+  52              		.loc 1 21 0
+  53 0016 0362     		str	r3, [r0, #32]	@ float
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ze_line[2] = 1;			
+  54              		.loc 1 22 0
+  55 0018 4262     		str	r2, [r0, #36]	@ float
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->velocity_vector[0] = 0;
+  56              		.loc 1 24 0
+  57 001a 8362     		str	r3, [r0, #40]	@ float
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->velocity_vector[1] = 0;
+  58              		.loc 1 25 0
+  59 001c C362     		str	r3, [r0, #44]	@ float
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->velocity_vector[2] = 0;
+  60              		.loc 1 26 0
+  61 001e 0363     		str	r3, [r0, #48]	@ float
+  62 0020 7047     		bx	lr
+  63              		.cfi_endproc
+  64              	.LFE0:
+  66              		.align	1
+  67              		.global	IMU_init_drift_correction
+  68              		.thumb
+  69              		.thumb_func
+  71              	IMU_init_drift_correction:
+  72              	.LFB1:
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** }
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** /*Initialization of the drift-correction variables - this is mainly solved with a PI-Controller*/
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** void IMU_init_drift_correction(struct IMU_values *IMU, float kp)
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+  73              		.loc 1 32 0
+  74              		.cfi_startproc
+  75              		@ args = 0, pretend = 0, frame = 0
+  76              		@ frame_needed = 0, uses_anonymous_args = 0
+  77              		@ link register save eliminated.
+  78              	.LVL1:
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->kp = kp;
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->accel_vector[0] = 0;
+  79              		.loc 1 35 0
+  80 0022 0023     		movs	r3, #0
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->kp = kp;
+  81              		.loc 1 33 0
+  82 0024 C164     		str	r1, [r0, #76]	@ float
+  83              		.loc 1 35 0
+  84 0026 4363     		str	r3, [r0, #52]	@ float
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->accel_vector[1] = 0;
+  85              		.loc 1 36 0
+  86 0028 8363     		str	r3, [r0, #56]	@ float
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->accel_vector[2] = 0;
+  87              		.loc 1 37 0
+  88 002a C363     		str	r3, [r0, #60]	@ float
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->mag_vector[0] = 0;
+  89              		.loc 1 39 0
+  90 002c 0364     		str	r3, [r0, #64]	@ float
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->mag_vector[1] = 0;
+  91              		.loc 1 40 0
+  92 002e 4364     		str	r3, [r0, #68]	@ float
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->mag_vector[2] = 0;
+  93              		.loc 1 41 0
+  94 0030 8364     		str	r3, [r0, #72]	@ float
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->kp_vector_ACC[0] = 0;
+  95              		.loc 1 43 0
+  96 0032 0366     		str	r3, [r0, #96]	@ float
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->kp_vector_ACC[1] = 0;
+  97              		.loc 1 44 0
+  98 0034 4366     		str	r3, [r0, #100]	@ float
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->kp_vector_ACC[2] = 0;
+  99              		.loc 1 45 0
+ 100 0036 8366     		str	r3, [r0, #104]	@ float
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->kp_vector_MAG[0] = 0;
+ 101              		.loc 1 47 0
+ 102 0038 C366     		str	r3, [r0, #108]	@ float
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->kp_vector_MAG[1] = 0;
+ 103              		.loc 1 48 0
+ 104 003a 0367     		str	r3, [r0, #112]	@ float
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->kp_vector_MAG[2] = 0;
+ 105              		.loc 1 49 0
+ 106 003c 4367     		str	r3, [r0, #116]	@ float
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->error_rollpitch[0] = 0;
+ 107              		.loc 1 51 0
+ 108 003e 0365     		str	r3, [r0, #80]	@ float
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->error_rollpitch[1] = 0;
+ 109              		.loc 1 52 0
+ 110 0040 4365     		str	r3, [r0, #84]	@ float
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->error_rollpitch[2] = 0;
+ 111              		.loc 1 53 0
+ 112 0042 8365     		str	r3, [r0, #88]	@ float
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->error_yaw = 0;
+ 113              		.loc 1 55 0
+ 114 0044 C365     		str	r3, [r0, #92]	@ float
+ 115 0046 7047     		bx	lr
+ 116              		.cfi_endproc
+ 117              	.LFE1:
+ 119              		.global	__aeabi_fmul
+ 120              		.global	__aeabi_fsub
+ 121              		.align	1
+ 122              		.global	IMU_update
+ 123              		.thumb
+ 124              		.thumb_func
+ 126              	IMU_update:
+ 127              	.LFB2:
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** }
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** /*Update of the dcm-matrix*/
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** void IMU_update(struct IMU_values *IMU)
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+ 128              		.loc 1 61 0
+ 129              		.cfi_startproc
+ 130              		@ args = 0, pretend = 0, frame = 16
+ 131              		@ frame_needed = 0, uses_anonymous_args = 0
+ 132              	.LVL2:
+ 133 0048 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
+ 134              	.LCFI0:
+ 135              		.cfi_def_cfa_offset 32
+ 136              		.cfi_offset 0, -32
+ 137              		.cfi_offset 1, -28
+ 138              		.cfi_offset 2, -24
+ 139              		.cfi_offset 3, -20
+ 140              		.cfi_offset 4, -16
+ 141              		.cfi_offset 5, -12
+ 142              		.cfi_offset 6, -8
+ 143              		.cfi_offset 14, -4
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	float result[3];
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	/*dt-factor + addition of omega_vector, which holds the PI-Values*/
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->velocity_vector[0] = (IMU->velocity_vector[0]*IMU->dt) - (IMU->kp_vector_ACC[0]) - (IMU->kp_v
+ 144              		.loc 1 65 0
+ 145 004a 0568     		ldr	r5, [r0, #0]	@ float
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+ 146              		.loc 1 61 0
+ 147 004c 0446     		mov	r4, r0
+ 148              		.loc 1 65 0
+ 149 004e A16A     		ldr	r1, [r4, #40]	@ float
+ 150 0050 2846     		mov	r0, r5
+ 151              	.LVL3:
+ 152 0052 FFF7FEFF 		bl	__aeabi_fmul
+ 153              	.LVL4:
+ 154 0056 216E     		ldr	r1, [r4, #96]	@ float
+ 155 0058 FFF7FEFF 		bl	__aeabi_fsub
+ 156              	.LVL5:
+ 157 005c E16E     		ldr	r1, [r4, #108]	@ float
+ 158 005e FFF7FEFF 		bl	__aeabi_fsub
+ 159              	.LVL6:
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->velocity_vector[1] = (IMU->velocity_vector[1]*IMU->dt) - (IMU->kp_vector_ACC[1]) - (IMU->kp_v
+ 160              		.loc 1 66 0
+ 161 0062 E16A     		ldr	r1, [r4, #44]	@ float
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->velocity_vector[0] = (IMU->velocity_vector[0]*IMU->dt) - (IMU->kp_vector_ACC[0]) - (IMU->kp_v
+ 162              		.loc 1 65 0
+ 163 0064 A062     		str	r0, [r4, #40]	@ float
+ 164              		.loc 1 66 0
+ 165 0066 2846     		mov	r0, r5
+ 166 0068 FFF7FEFF 		bl	__aeabi_fmul
+ 167              	.LVL7:
+ 168 006c 616E     		ldr	r1, [r4, #100]	@ float
+ 169 006e FFF7FEFF 		bl	__aeabi_fsub
+ 170              	.LVL8:
+ 171 0072 216F     		ldr	r1, [r4, #112]	@ float
+ 172 0074 FFF7FEFF 		bl	__aeabi_fsub
+ 173              	.LVL9:
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->velocity_vector[2] = (IMU->velocity_vector[2]*IMU->dt) - (IMU->kp_vector_ACC[2]) - (IMU->kp_v
+ 174              		.loc 1 67 0
+ 175 0078 216B     		ldr	r1, [r4, #48]	@ float
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->velocity_vector[1] = (IMU->velocity_vector[1]*IMU->dt) - (IMU->kp_vector_ACC[1]) - (IMU->kp_v
+ 176              		.loc 1 66 0
+ 177 007a E062     		str	r0, [r4, #44]	@ float
+ 178              		.loc 1 67 0
+ 179 007c 2846     		mov	r0, r5
+ 180 007e FFF7FEFF 		bl	__aeabi_fmul
+ 181              	.LVL10:
+ 182 0082 A16E     		ldr	r1, [r4, #104]	@ float
+ 183 0084 FFF7FEFF 		bl	__aeabi_fsub
+ 184              	.LVL11:
+ 185 0088 616F     		ldr	r1, [r4, #116]	@ float
+ 186 008a FFF7FEFF 		bl	__aeabi_fsub
+ 187              	.LVL12:
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	/*Update of the first dcm-line (xe)*/
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorCrossProduct(result, IMU->dcm_xe_line, IMU->velocity_vector);
+ 188              		.loc 1 70 0
+ 189 008e 261D     		adds	r6, r4, #4
+ 190 0090 04F12805 		add	r5, r4, #40
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->velocity_vector[2] = (IMU->velocity_vector[2]*IMU->dt) - (IMU->kp_vector_ACC[2]) - (IMU->kp_v
+ 191              		.loc 1 67 0
+ 192 0094 2063     		str	r0, [r4, #48]	@ float
+ 193              		.loc 1 70 0
+ 194 0096 3146     		mov	r1, r6
+ 195 0098 01A8     		add	r0, sp, #4
+ 196 009a 2A46     		mov	r2, r5
+ 197 009c FFF7FEFF 		bl	VectorCrossProduct
+ 198              	.LVL13:
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorAdd(IMU->dcm_xe_line, IMU->dcm_xe_line, result);
+ 199              		.loc 1 71 0
+ 200 00a0 3046     		mov	r0, r6
+ 201 00a2 3146     		mov	r1, r6
+ 202 00a4 01AA     		add	r2, sp, #4
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	/*Update of the second dcm-line(ye)*/
+  74:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorCrossProduct(result, IMU->dcm_ye_line, IMU->velocity_vector);
+ 203              		.loc 1 74 0
+ 204 00a6 04F11006 		add	r6, r4, #16
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorAdd(IMU->dcm_xe_line, IMU->dcm_xe_line, result);
+ 205              		.loc 1 71 0
+ 206 00aa FFF7FEFF 		bl	VectorAdd
+ 207              	.LVL14:
+ 208              		.loc 1 74 0
+ 209 00ae 01A8     		add	r0, sp, #4
+ 210 00b0 3146     		mov	r1, r6
+ 211 00b2 2A46     		mov	r2, r5
+ 212 00b4 FFF7FEFF 		bl	VectorCrossProduct
+ 213              	.LVL15:
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorAdd(IMU->dcm_ye_line, IMU->dcm_ye_line, result);
+  76:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  77:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	/*Update of the second dcm-line(ze)*/
+  78:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorCrossProduct(result, IMU->dcm_ze_line, IMU->velocity_vector);
+ 214              		.loc 1 78 0
+ 215 00b8 1C34     		adds	r4, r4, #28
+ 216              	.LVL16:
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorAdd(IMU->dcm_ye_line, IMU->dcm_ye_line, result);
+ 217              		.loc 1 75 0
+ 218 00ba 3046     		mov	r0, r6
+ 219 00bc 3146     		mov	r1, r6
+ 220 00be 01AA     		add	r2, sp, #4
+ 221 00c0 FFF7FEFF 		bl	VectorAdd
+ 222              	.LVL17:
+ 223              		.loc 1 78 0
+ 224 00c4 01A8     		add	r0, sp, #4
+ 225 00c6 2146     		mov	r1, r4
+ 226 00c8 2A46     		mov	r2, r5
+ 227 00ca FFF7FEFF 		bl	VectorCrossProduct
+ 228              	.LVL18:
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorAdd(IMU->dcm_ze_line, IMU->dcm_ze_line, result);
+ 229              		.loc 1 79 0
+ 230 00ce 2046     		mov	r0, r4
+ 231 00d0 2146     		mov	r1, r4
+ 232 00d2 01AA     		add	r2, sp, #4
+ 233 00d4 FFF7FEFF 		bl	VectorAdd
+ 234              	.LVL19:
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** }
+ 235              		.loc 1 80 0
+ 236 00d8 7FBD     		pop	{r0, r1, r2, r3, r4, r5, r6, pc}
+ 237              		.cfi_endproc
+ 238              	.LFE2:
+ 240              		.global	__aeabi_fadd
+ 241              		.global	__aeabi_fdiv
+ 242              		.align	1
+ 243              		.global	IMU_normalize
+ 244              		.thumb
+ 245              		.thumb_func
+ 247              	IMU_normalize:
+ 248              	.LFB3:
+  81:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  82:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** /*Normalization of the vectors*/
+  84:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** void IMU_normalize(struct IMU_values *IMU)
+  85:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+ 249              		.loc 1 85 0
+ 250              		.cfi_startproc
+ 251              		@ args = 0, pretend = 0, frame = 0
+ 252              		@ frame_needed = 0, uses_anonymous_args = 0
+ 253              	.LVL20:
+ 254 00da F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 255              	.LCFI1:
+ 256              		.cfi_def_cfa_offset 24
+ 257              		.cfi_offset 3, -24
+ 258              		.cfi_offset 4, -20
+ 259              		.cfi_offset 5, -16
+ 260              		.cfi_offset 6, -12
+ 261              		.cfi_offset 7, -8
+ 262              		.cfi_offset 14, -4
+ 263              		.loc 1 85 0
+ 264 00dc 0446     		mov	r4, r0
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	float normfactor;
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	normfactor = sqrtf(IMU->dcm_xe_line[0]*IMU->dcm_xe_line[0] + IMU->dcm_xe_line[1]*IMU->dcm_xe_line[
+ 265              		.loc 1 87 0
+ 266 00de 4068     		ldr	r0, [r0, #4]	@ float
+ 267              	.LVL21:
+ 268 00e0 A768     		ldr	r7, [r4, #8]	@ float
+ 269 00e2 0146     		mov	r1, r0
+ 270 00e4 FFF7FEFF 		bl	__aeabi_fmul
+ 271              	.LVL22:
+ 272 00e8 3946     		mov	r1, r7
+ 273 00ea 0546     		mov	r5, r0
+ 274 00ec 3846     		mov	r0, r7
+ 275 00ee FFF7FEFF 		bl	__aeabi_fmul
+ 276              	.LVL23:
+ 277 00f2 0146     		mov	r1, r0
+ 278 00f4 2846     		mov	r0, r5
+ 279 00f6 FFF7FEFF 		bl	__aeabi_fadd
+ 280              	.LVL24:
+ 281 00fa E668     		ldr	r6, [r4, #12]	@ float
+ 282 00fc 0546     		mov	r5, r0
+ 283 00fe 3146     		mov	r1, r6
+ 284 0100 3046     		mov	r0, r6
+ 285 0102 FFF7FEFF 		bl	__aeabi_fmul
+ 286              	.LVL25:
+ 287 0106 0146     		mov	r1, r0
+ 288 0108 2846     		mov	r0, r5
+ 289 010a FFF7FEFF 		bl	__aeabi_fadd
+ 290              	.LVL26:
+ 291 010e FFF7FEFF 		bl	sqrtf
+ 292              	.LVL27:
+ 293 0112 0546     		mov	r5, r0
+ 294              	.LVL28:
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_xe_line[0] = IMU->dcm_xe_line[0]/normfactor;	
+ 295              		.loc 1 88 0
+ 296 0114 2946     		mov	r1, r5
+ 297 0116 6068     		ldr	r0, [r4, #4]	@ float
+ 298              	.LVL29:
+ 299 0118 FFF7FEFF 		bl	__aeabi_fdiv
+ 300              	.LVL30:
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_xe_line[1] = IMU->dcm_xe_line[1]/normfactor;	
+ 301              		.loc 1 89 0
+ 302 011c 2946     		mov	r1, r5
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_xe_line[0] = IMU->dcm_xe_line[0]/normfactor;	
+ 303              		.loc 1 88 0
+ 304 011e 6060     		str	r0, [r4, #4]	@ float
+ 305              		.loc 1 89 0
+ 306 0120 A068     		ldr	r0, [r4, #8]	@ float
+ 307 0122 FFF7FEFF 		bl	__aeabi_fdiv
+ 308              	.LVL31:
+  90:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_xe_line[2] = IMU->dcm_xe_line[2]/normfactor;	
+ 309              		.loc 1 90 0
+ 310 0126 2946     		mov	r1, r5
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_xe_line[1] = IMU->dcm_xe_line[1]/normfactor;	
+ 311              		.loc 1 89 0
+ 312 0128 A060     		str	r0, [r4, #8]	@ float
+ 313              		.loc 1 90 0
+ 314 012a E068     		ldr	r0, [r4, #12]	@ float
+ 315 012c FFF7FEFF 		bl	__aeabi_fdiv
+ 316              	.LVL32:
+ 317 0130 E060     		str	r0, [r4, #12]	@ float
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  92:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	normfactor = sqrtf(IMU->dcm_ye_line[0]*IMU->dcm_ye_line[0] + IMU->dcm_ye_line[1]*IMU->dcm_ye_line[
+ 318              		.loc 1 92 0
+ 319 0132 2069     		ldr	r0, [r4, #16]	@ float
+ 320 0134 6769     		ldr	r7, [r4, #20]	@ float
+ 321 0136 0146     		mov	r1, r0
+ 322 0138 FFF7FEFF 		bl	__aeabi_fmul
+ 323              	.LVL33:
+ 324 013c 3946     		mov	r1, r7
+ 325 013e 0546     		mov	r5, r0
+ 326              	.LVL34:
+ 327 0140 3846     		mov	r0, r7
+ 328 0142 FFF7FEFF 		bl	__aeabi_fmul
+ 329              	.LVL35:
+ 330 0146 0146     		mov	r1, r0
+ 331 0148 2846     		mov	r0, r5
+ 332 014a FFF7FEFF 		bl	__aeabi_fadd
+ 333              	.LVL36:
+ 334 014e A669     		ldr	r6, [r4, #24]	@ float
+ 335 0150 0546     		mov	r5, r0
+ 336 0152 3146     		mov	r1, r6
+ 337 0154 3046     		mov	r0, r6
+ 338 0156 FFF7FEFF 		bl	__aeabi_fmul
+ 339              	.LVL37:
+ 340 015a 0146     		mov	r1, r0
+ 341 015c 2846     		mov	r0, r5
+ 342 015e FFF7FEFF 		bl	__aeabi_fadd
+ 343              	.LVL38:
+ 344 0162 FFF7FEFF 		bl	sqrtf
+ 345              	.LVL39:
+ 346 0166 0546     		mov	r5, r0
+ 347              	.LVL40:
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ye_line[0] = IMU->dcm_ye_line[0]/normfactor;	
+ 348              		.loc 1 93 0
+ 349 0168 2946     		mov	r1, r5
+ 350 016a 2069     		ldr	r0, [r4, #16]	@ float
+ 351              	.LVL41:
+ 352 016c FFF7FEFF 		bl	__aeabi_fdiv
+ 353              	.LVL42:
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ye_line[1] = IMU->dcm_ye_line[1]/normfactor;	
+ 354              		.loc 1 94 0
+ 355 0170 2946     		mov	r1, r5
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ye_line[0] = IMU->dcm_ye_line[0]/normfactor;	
+ 356              		.loc 1 93 0
+ 357 0172 2061     		str	r0, [r4, #16]	@ float
+ 358              		.loc 1 94 0
+ 359 0174 6069     		ldr	r0, [r4, #20]	@ float
+ 360 0176 FFF7FEFF 		bl	__aeabi_fdiv
+ 361              	.LVL43:
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ye_line[2] = IMU->dcm_ye_line[2]/normfactor;	
+ 362              		.loc 1 95 0
+ 363 017a 2946     		mov	r1, r5
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ye_line[1] = IMU->dcm_ye_line[1]/normfactor;	
+ 364              		.loc 1 94 0
+ 365 017c 6061     		str	r0, [r4, #20]	@ float
+ 366              		.loc 1 95 0
+ 367 017e A069     		ldr	r0, [r4, #24]	@ float
+ 368 0180 FFF7FEFF 		bl	__aeabi_fdiv
+ 369              	.LVL44:
+ 370 0184 A061     		str	r0, [r4, #24]	@ float
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	normfactor = sqrtf(IMU->dcm_ze_line[0]*IMU->dcm_ze_line[0] + IMU->dcm_ze_line[1]*IMU->dcm_ze_line[
+ 371              		.loc 1 97 0
+ 372 0186 E069     		ldr	r0, [r4, #28]	@ float
+ 373 0188 276A     		ldr	r7, [r4, #32]	@ float
+ 374 018a 0146     		mov	r1, r0
+ 375 018c FFF7FEFF 		bl	__aeabi_fmul
+ 376              	.LVL45:
+ 377 0190 3946     		mov	r1, r7
+ 378 0192 0546     		mov	r5, r0
+ 379              	.LVL46:
+ 380 0194 3846     		mov	r0, r7
+ 381 0196 FFF7FEFF 		bl	__aeabi_fmul
+ 382              	.LVL47:
+ 383 019a 0146     		mov	r1, r0
+ 384 019c 2846     		mov	r0, r5
+ 385 019e FFF7FEFF 		bl	__aeabi_fadd
+ 386              	.LVL48:
+ 387 01a2 666A     		ldr	r6, [r4, #36]	@ float
+ 388 01a4 0546     		mov	r5, r0
+ 389 01a6 3146     		mov	r1, r6
+ 390 01a8 3046     		mov	r0, r6
+ 391 01aa FFF7FEFF 		bl	__aeabi_fmul
+ 392              	.LVL49:
+ 393 01ae 0146     		mov	r1, r0
+ 394 01b0 2846     		mov	r0, r5
+ 395 01b2 FFF7FEFF 		bl	__aeabi_fadd
+ 396              	.LVL50:
+ 397 01b6 FFF7FEFF 		bl	sqrtf
+ 398              	.LVL51:
+ 399 01ba 0546     		mov	r5, r0
+ 400              	.LVL52:
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ze_line[0] = IMU->dcm_ze_line[0]/normfactor;	
+ 401              		.loc 1 98 0
+ 402 01bc 2946     		mov	r1, r5
+ 403 01be E069     		ldr	r0, [r4, #28]	@ float
+ 404              	.LVL53:
+ 405 01c0 FFF7FEFF 		bl	__aeabi_fdiv
+ 406              	.LVL54:
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ze_line[1] = IMU->dcm_ze_line[1]/normfactor;	
+ 407              		.loc 1 99 0
+ 408 01c4 2946     		mov	r1, r5
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ze_line[0] = IMU->dcm_ze_line[0]/normfactor;	
+ 409              		.loc 1 98 0
+ 410 01c6 E061     		str	r0, [r4, #28]	@ float
+ 411              		.loc 1 99 0
+ 412 01c8 206A     		ldr	r0, [r4, #32]	@ float
+ 413 01ca FFF7FEFF 		bl	__aeabi_fdiv
+ 414              	.LVL55:
+ 100:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ze_line[2] = IMU->dcm_ze_line[2]/normfactor;		
+ 415              		.loc 1 100 0
+ 416 01ce 2946     		mov	r1, r5
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ze_line[1] = IMU->dcm_ze_line[1]/normfactor;	
+ 417              		.loc 1 99 0
+ 418 01d0 2062     		str	r0, [r4, #32]	@ float
+ 419              		.loc 1 100 0
+ 420 01d2 606A     		ldr	r0, [r4, #36]	@ float
+ 421 01d4 FFF7FEFF 		bl	__aeabi_fdiv
+ 422              	.LVL56:
+ 423 01d8 6062     		str	r0, [r4, #36]	@ float
+ 424 01da F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 425              		.cfi_endproc
+ 426              	.LFE3:
+ 428              		.align	1
+ 429              		.global	IMU_ortho_adjust
+ 430              		.thumb
+ 431              		.thumb_func
+ 433              	IMU_ortho_adjust:
+ 434              	.LFB4:
+ 101:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** }
+ 102:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 103:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** /*Keep the orthogonality*/
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** void IMU_ortho_adjust(struct IMU_values *IMU)
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+ 435              		.loc 1 105 0
+ 436              		.cfi_startproc
+ 437              		@ args = 0, pretend = 0, frame = 24
+ 438              		@ frame_needed = 0, uses_anonymous_args = 0
+ 439              	.LVL57:
+ 440 01dc F0B5     		push	{r4, r5, r6, r7, lr}
+ 441              	.LCFI2:
+ 442              		.cfi_def_cfa_offset 20
+ 443              		.cfi_offset 4, -20
+ 444              		.cfi_offset 5, -16
+ 445              		.cfi_offset 6, -12
+ 446              		.cfi_offset 7, -8
+ 447              		.cfi_offset 14, -4
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	float ortho_error;
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 108:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	float result_x[3];
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	float result_y[3];
+ 110:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 111:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	/*calc the orthogonality error*/	
+ 112:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	ortho_error = -VectorDotProduct(&IMU->dcm_xe_line[0], &IMU->dcm_ye_line[0])*0.5f;
+ 448              		.loc 1 112 0
+ 449 01de 00F11004 		add	r4, r0, #16
+ 450 01e2 051D     		adds	r5, r0, #4
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+ 451              		.loc 1 105 0
+ 452 01e4 87B0     		sub	sp, sp, #28
+ 453              	.LCFI3:
+ 454              		.cfi_def_cfa_offset 48
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+ 455              		.loc 1 105 0
+ 456 01e6 0646     		mov	r6, r0
+ 457              		.loc 1 112 0
+ 458 01e8 2146     		mov	r1, r4
+ 459 01ea 2846     		mov	r0, r5
+ 460              	.LVL58:
+ 461 01ec FFF7FEFF 		bl	VectorDotProduct
+ 462              	.LVL59:
+ 463 01f0 4FF07C51 		mov	r1, #1056964608
+ 464 01f4 00F10040 		add	r0, r0, #-2147483648
+ 465 01f8 FFF7FEFF 		bl	__aeabi_fmul
+ 466              	.LVL60:
+ 467 01fc 0746     		mov	r7, r0
+ 468              	.LVL61:
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	/*add the half of the error to xe and ye*/
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorScale(&result_y[0],&IMU->dcm_ye_line[0],ortho_error);
+ 469              		.loc 1 115 0
+ 470 01fe 2146     		mov	r1, r4
+ 471 0200 03A8     		add	r0, sp, #12
+ 472              	.LVL62:
+ 473 0202 3A46     		mov	r2, r7
+ 474 0204 FFF7FEFF 		bl	VectorScale
+ 475              	.LVL63:
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorScale(&result_x[0],&IMU->dcm_xe_line[0],ortho_error);
+ 476              		.loc 1 116 0
+ 477 0208 6846     		mov	r0, sp
+ 478 020a 2946     		mov	r1, r5
+ 479 020c 3A46     		mov	r2, r7
+ 480 020e FFF7FEFF 		bl	VectorScale
+ 481              	.LVL64:
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorAdd(&IMU->dcm_xe_line[0], &IMU->dcm_xe_line[0], &result_y[0]);
+ 482              		.loc 1 118 0
+ 483 0212 2846     		mov	r0, r5
+ 484 0214 2946     		mov	r1, r5
+ 485 0216 03AA     		add	r2, sp, #12
+ 486 0218 FFF7FEFF 		bl	VectorAdd
+ 487              	.LVL65:
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorAdd(&IMU->dcm_ye_line[0], &IMU->dcm_ye_line[0], &result_x[0]);
+ 488              		.loc 1 119 0
+ 489 021c 2046     		mov	r0, r4
+ 490 021e 2146     		mov	r1, r4
+ 491 0220 6A46     		mov	r2, sp
+ 492 0222 FFF7FEFF 		bl	VectorAdd
+ 493              	.LVL66:
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	/*the ze-line will be recalculated with the crossproduct*/	
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorCrossProduct(&IMU->dcm_ze_line[0],&IMU->dcm_xe_line[0],&IMU->dcm_ye_line[0]);   
+ 494              		.loc 1 122 0
+ 495 0226 06F11C00 		add	r0, r6, #28
+ 496 022a 2946     		mov	r1, r5
+ 497 022c 2246     		mov	r2, r4
+ 498 022e FFF7FEFF 		bl	VectorCrossProduct
+ 499              	.LVL67:
+ 123:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** }
+ 500              		.loc 1 123 0
+ 501 0232 07B0     		add	sp, sp, #28
+ 502 0234 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 503              		.cfi_endproc
+ 504              	.LFE4:
+ 506              		.global	__aeabi_fcmpeq
+ 507              		.align	1
+ 508              		.global	IMU_drift_correction_ACC
+ 509              		.thumb
+ 510              		.thumb_func
+ 512              	IMU_drift_correction_ACC:
+ 513              	.LFB5:
+ 124:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 125:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 126:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** /*Roll-pitch Drift-Correction with Accelerometer*/
+ 127:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** void IMU_drift_correction_ACC(struct IMU_values *IMU)
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+ 514              		.loc 1 128 0
+ 515              		.cfi_startproc
+ 516              		@ args = 0, pretend = 0, frame = 0
+ 517              		@ frame_needed = 0, uses_anonymous_args = 0
+ 518              	.LVL68:
+ 519 0236 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 520              	.LCFI4:
+ 521              		.cfi_def_cfa_offset 24
+ 522              		.cfi_offset 4, -24
+ 523              		.cfi_offset 5, -20
+ 524              		.cfi_offset 6, -16
+ 525              		.cfi_offset 7, -12
+ 526              		.cfi_offset 8, -8
+ 527              		.cfi_offset 14, -4
+ 528              		.loc 1 128 0
+ 529 023a 0446     		mov	r4, r0
+ 129:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	float normfactor;
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	float error_absolute;
+ 131:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	normfactor = sqrtf((IMU->accel_vector[0]*IMU->accel_vector[0]) + (IMU->accel_vector[1]*IMU->accel_
+ 530              		.loc 1 132 0
+ 531 023c 406B     		ldr	r0, [r0, #52]	@ float
+ 532              	.LVL69:
+ 533 023e A76B     		ldr	r7, [r4, #56]	@ float
+ 534 0240 0146     		mov	r1, r0
+ 535 0242 FFF7FEFF 		bl	__aeabi_fmul
+ 536              	.LVL70:
+ 537 0246 3946     		mov	r1, r7
+ 538 0248 0546     		mov	r5, r0
+ 539 024a 3846     		mov	r0, r7
+ 540 024c FFF7FEFF 		bl	__aeabi_fmul
+ 541              	.LVL71:
+ 542 0250 0146     		mov	r1, r0
+ 543 0252 2846     		mov	r0, r5
+ 544 0254 FFF7FEFF 		bl	__aeabi_fadd
+ 545              	.LVL72:
+ 546 0258 E66B     		ldr	r6, [r4, #60]	@ float
+ 547 025a 0546     		mov	r5, r0
+ 548 025c 3146     		mov	r1, r6
+ 549 025e 3046     		mov	r0, r6
+ 550 0260 FFF7FEFF 		bl	__aeabi_fmul
+ 551              	.LVL73:
+ 552 0264 0146     		mov	r1, r0
+ 553 0266 2846     		mov	r0, r5
+ 554 0268 FFF7FEFF 		bl	__aeabi_fadd
+ 555              	.LVL74:
+ 556 026c FFF7FEFF 		bl	sqrtf
+ 557              	.LVL75:
+ 133:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	if(normfactor != 0)
+ 558              		.loc 1 134 0
+ 559 0270 0021     		movs	r1, #0
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	normfactor = sqrtf((IMU->accel_vector[0]*IMU->accel_vector[0]) + (IMU->accel_vector[1]*IMU->accel_
+ 560              		.loc 1 132 0
+ 561 0272 0546     		mov	r5, r0
+ 562              	.LVL76:
+ 563              		.loc 1 134 0
+ 564 0274 FFF7FEFF 		bl	__aeabi_fcmpeq
+ 565              	.LVL77:
+ 566 0278 70B9     		cbnz	r0, .L7
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	{
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 		IMU->accel_vector[0] = IMU->accel_vector[0]/normfactor;
+ 567              		.loc 1 136 0
+ 568 027a 606B     		ldr	r0, [r4, #52]	@ float
+ 569 027c 2946     		mov	r1, r5
+ 570 027e FFF7FEFF 		bl	__aeabi_fdiv
+ 571              	.LVL78:
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 		IMU->accel_vector[1] = IMU->accel_vector[1]/normfactor;
+ 572              		.loc 1 137 0
+ 573 0282 2946     		mov	r1, r5
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 		IMU->accel_vector[0] = IMU->accel_vector[0]/normfactor;
+ 574              		.loc 1 136 0
+ 575 0284 6063     		str	r0, [r4, #52]	@ float
+ 576              		.loc 1 137 0
+ 577 0286 A06B     		ldr	r0, [r4, #56]	@ float
+ 578 0288 FFF7FEFF 		bl	__aeabi_fdiv
+ 579              	.LVL79:
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 		IMU->accel_vector[2] = IMU->accel_vector[2]/normfactor;
+ 580              		.loc 1 138 0
+ 581 028c 2946     		mov	r1, r5
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 		IMU->accel_vector[1] = IMU->accel_vector[1]/normfactor;
+ 582              		.loc 1 137 0
+ 583 028e A063     		str	r0, [r4, #56]	@ float
+ 584              		.loc 1 138 0
+ 585 0290 E06B     		ldr	r0, [r4, #60]	@ float
+ 586 0292 FFF7FEFF 		bl	__aeabi_fdiv
+ 587              	.LVL80:
+ 588 0296 E063     		str	r0, [r4, #60]	@ float
+ 589              	.L7:
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	}
+ 140:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	/*Calc the error between the gyrobased calculations and the vector of the accelerometer, 
+ 142:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	this will be done with the crossproduct of the two vectors*/
+ 143:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorCrossProduct(&IMU->error_rollpitch[0], &IMU->dcm_ze_line[0], &IMU->accel_vector[0]);
+ 590              		.loc 1 143 0
+ 591 0298 04F15005 		add	r5, r4, #80
+ 592              	.LVL81:
+ 593 029c 04F13402 		add	r2, r4, #52
+ 594 02a0 2846     		mov	r0, r5
+ 595 02a2 04F11C01 		add	r1, r4, #28
+ 596 02a6 FFF7FEFF 		bl	VectorCrossProduct
+ 597              	.LVL82:
+ 144:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	//VectorCrossProduct(&IMU->error_rollpitch[0], &IMU->dcm_ze_line[0], &test[0]);
+ 145:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	
+ 146:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	error_absolute = sqrtf((IMU->error_rollpitch[0]*IMU->error_rollpitch[0]) + (IMU->error_rollpitch[1
+ 598              		.loc 1 146 0
+ 599 02aa 206D     		ldr	r0, [r4, #80]	@ float
+ 600 02ac D4F85480 		ldr	r8, [r4, #84]	@ float
+ 601 02b0 0146     		mov	r1, r0
+ 602 02b2 FFF7FEFF 		bl	__aeabi_fmul
+ 603              	.LVL83:
+ 604 02b6 4146     		mov	r1, r8
+ 605 02b8 0646     		mov	r6, r0
+ 606 02ba 4046     		mov	r0, r8
+ 607 02bc FFF7FEFF 		bl	__aeabi_fmul
+ 608              	.LVL84:
+ 609 02c0 0146     		mov	r1, r0
+ 610 02c2 3046     		mov	r0, r6
+ 611 02c4 FFF7FEFF 		bl	__aeabi_fadd
+ 612              	.LVL85:
+ 613 02c8 A76D     		ldr	r7, [r4, #88]	@ float
+ 614 02ca 0646     		mov	r6, r0
+ 615 02cc 3946     		mov	r1, r7
+ 616 02ce 3846     		mov	r0, r7
+ 617 02d0 FFF7FEFF 		bl	__aeabi_fmul
+ 618              	.LVL86:
+ 619 02d4 0146     		mov	r1, r0
+ 620 02d6 3046     		mov	r0, r6
+ 621 02d8 FFF7FEFF 		bl	__aeabi_fadd
+ 622              	.LVL87:
+ 623 02dc FFF7FEFF 		bl	sqrtf
+ 624              	.LVL88:
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 148:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	//printf("%3.1f %3.1f %3.1f %3.1f\n", IMU->accel_vector[0], IMU->accel_vector[1], IMU->accel_vecto
+ 149:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	//printf(" %3.1f ", error_absolute);
+ 150:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	/*
+ 151:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	if(error_absolute > 0.6)
+ 152:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	{
+ 153:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 		VectorScale(&IMU->kp_vector[0], &IMU->error_rollpitch[0], IMU->kp*2);
+ 154:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	}
+ 155:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	else
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	{
+ 157:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 		VectorScale(&IMU->kp_vector[0], &IMU->error_rollpitch[0], IMU->kp);
+ 158:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	}
+ 159:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	*/
+ 160:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorScale(&IMU->kp_vector_ACC[0], &IMU->error_rollpitch[0], (IMU->kp+(IMU->kp*error_absolute)));
+ 625              		.loc 1 160 0
+ 626 02e0 E66C     		ldr	r6, [r4, #76]	@ float
+ 146:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	error_absolute = sqrtf((IMU->error_rollpitch[0]*IMU->error_rollpitch[0]) + (IMU->error_rollpitch[1
+ 627              		.loc 1 146 0
+ 628 02e2 0146     		mov	r1, r0
+ 629              	.LVL89:
+ 630              		.loc 1 160 0
+ 631 02e4 3046     		mov	r0, r6
+ 632              	.LVL90:
+ 633 02e6 FFF7FEFF 		bl	__aeabi_fmul
+ 634              	.LVL91:
+ 635 02ea 0146     		mov	r1, r0
+ 636 02ec 3046     		mov	r0, r6
+ 637 02ee FFF7FEFF 		bl	__aeabi_fadd
+ 638              	.LVL92:
+ 639 02f2 6034     		adds	r4, r4, #96
+ 640              	.LVL93:
+ 641 02f4 0246     		mov	r2, r0
+ 642 02f6 2946     		mov	r1, r5
+ 643 02f8 2046     		mov	r0, r4
+ 161:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	//printf("%f\n", (IMU->kp+(IMU->kp*error_absolute)));
+ 162:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** }
+ 644              		.loc 1 162 0
+ 645 02fa BDE8F041 		pop	{r4, r5, r6, r7, r8, lr}
+ 160:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorScale(&IMU->kp_vector_ACC[0], &IMU->error_rollpitch[0], (IMU->kp+(IMU->kp*error_absolute)));
+ 646              		.loc 1 160 0
+ 647 02fe FFF7FEBF 		b	VectorScale
+ 648              	.LVL94:
+ 649              		.cfi_endproc
+ 650              	.LFE5:
+ 652              		.align	1
+ 653              		.global	IMU_drift_correction_MAG
+ 654              		.thumb
+ 655              		.thumb_func
+ 657              	IMU_drift_correction_MAG:
+ 658              	.LFB6:
+ 163:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 164:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 165:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** /*yaw Drift-Correction with Magnetometer*/
+ 166:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** void IMU_drift_correction_MAG(struct IMU_values *IMU)
+ 167:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+ 659              		.loc 1 167 0
+ 660              		.cfi_startproc
+ 661              		@ args = 0, pretend = 0, frame = 0
+ 662              		@ frame_needed = 0, uses_anonymous_args = 0
+ 663              	.LVL95:
+ 664 0302 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 665              	.LCFI5:
+ 666              		.cfi_def_cfa_offset 24
+ 667              		.cfi_offset 3, -24
+ 668              		.cfi_offset 4, -20
+ 669              		.cfi_offset 5, -16
+ 670              		.cfi_offset 6, -12
+ 671              		.cfi_offset 7, -8
+ 672              		.cfi_offset 14, -4
+ 673              		.loc 1 167 0
+ 674 0304 0446     		mov	r4, r0
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	float normfactor;
+ 169:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	//float error_absolute;
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 171:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	normfactor = sqrtf((IMU->mag_vector[0]*IMU->mag_vector[0]) + (IMU->mag_vector[1]*IMU->mag_vector[1
+ 675              		.loc 1 171 0
+ 676 0306 006C     		ldr	r0, [r0, #64]	@ float
+ 677              	.LVL96:
+ 678 0308 676C     		ldr	r7, [r4, #68]	@ float
+ 679 030a 0146     		mov	r1, r0
+ 680 030c FFF7FEFF 		bl	__aeabi_fmul
+ 681              	.LVL97:
+ 682 0310 3946     		mov	r1, r7
+ 683 0312 0546     		mov	r5, r0
+ 684 0314 3846     		mov	r0, r7
+ 685 0316 FFF7FEFF 		bl	__aeabi_fmul
+ 686              	.LVL98:
+ 687 031a 0146     		mov	r1, r0
+ 688 031c 2846     		mov	r0, r5
+ 689 031e FFF7FEFF 		bl	__aeabi_fadd
+ 690              	.LVL99:
+ 691 0322 A66C     		ldr	r6, [r4, #72]	@ float
+ 692 0324 0546     		mov	r5, r0
+ 693 0326 3146     		mov	r1, r6
+ 694 0328 3046     		mov	r0, r6
+ 695 032a FFF7FEFF 		bl	__aeabi_fmul
+ 696              	.LVL100:
+ 697 032e 0146     		mov	r1, r0
+ 698 0330 2846     		mov	r0, r5
+ 699 0332 FFF7FEFF 		bl	__aeabi_fadd
+ 700              	.LVL101:
+ 701 0336 FFF7FEFF 		bl	sqrtf
+ 702              	.LVL102:
+ 172:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	if(normfactor != 0)
+ 703              		.loc 1 173 0
+ 704 033a 0021     		movs	r1, #0
+ 171:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	normfactor = sqrtf((IMU->mag_vector[0]*IMU->mag_vector[0]) + (IMU->mag_vector[1]*IMU->mag_vector[1
+ 705              		.loc 1 171 0
+ 706 033c 0546     		mov	r5, r0
+ 707              	.LVL103:
+ 708              		.loc 1 173 0
+ 709 033e FFF7FEFF 		bl	__aeabi_fcmpeq
+ 710              	.LVL104:
+ 711 0342 70B9     		cbnz	r0, .L11
+ 174:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	{
+ 175:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 		IMU->mag_vector[0] = IMU->mag_vector[0]/normfactor;
+ 712              		.loc 1 175 0
+ 713 0344 206C     		ldr	r0, [r4, #64]	@ float
+ 714 0346 2946     		mov	r1, r5
+ 715 0348 FFF7FEFF 		bl	__aeabi_fdiv
+ 716              	.LVL105:
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 		IMU->mag_vector[1] = IMU->mag_vector[1]/normfactor;
+ 717              		.loc 1 176 0
+ 718 034c 2946     		mov	r1, r5
+ 175:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 		IMU->mag_vector[0] = IMU->mag_vector[0]/normfactor;
+ 719              		.loc 1 175 0
+ 720 034e 2064     		str	r0, [r4, #64]	@ float
+ 721              		.loc 1 176 0
+ 722 0350 606C     		ldr	r0, [r4, #68]	@ float
+ 723 0352 FFF7FEFF 		bl	__aeabi_fdiv
+ 724              	.LVL106:
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 		IMU->mag_vector[2] = IMU->mag_vector[2]/normfactor;
+ 725              		.loc 1 177 0
+ 726 0356 2946     		mov	r1, r5
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 		IMU->mag_vector[1] = IMU->mag_vector[1]/normfactor;
+ 727              		.loc 1 176 0
+ 728 0358 6064     		str	r0, [r4, #68]	@ float
+ 729              		.loc 1 177 0
+ 730 035a A06C     		ldr	r0, [r4, #72]	@ float
+ 731 035c FFF7FEFF 		bl	__aeabi_fdiv
+ 732              	.LVL107:
+ 733 0360 A064     		str	r0, [r4, #72]	@ float
+ 734              	.L11:
+ 178:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	}
+ 179:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 180:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	/*Calc the error between the gyrobased calculations and the vector of the accelerometer,
+ 181:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	this will be done with the crossproduct of the two vectors*/
+ 182:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	//VectorCrossProduct(&IMU->error_yaw[0], &IMU->dcm_xe_line[0], &IMU->mag_vector[0]);
+ 183:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 184:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->error_yaw = (IMU->dcm_xe_line[0]*IMU->mag_vector[1]) - (IMU->dcm_ye_line[0]*IMU->mag_vector[0
+ 735              		.loc 1 184 0
+ 736 0362 616C     		ldr	r1, [r4, #68]	@ float
+ 737 0364 6068     		ldr	r0, [r4, #4]	@ float
+ 738 0366 FFF7FEFF 		bl	__aeabi_fmul
+ 739              	.LVL108:
+ 740 036a 216C     		ldr	r1, [r4, #64]	@ float
+ 741 036c 0546     		mov	r5, r0
+ 742              	.LVL109:
+ 743 036e 2069     		ldr	r0, [r4, #16]	@ float
+ 744 0370 FFF7FEFF 		bl	__aeabi_fmul
+ 745              	.LVL110:
+ 746 0374 0146     		mov	r1, r0
+ 747 0376 2846     		mov	r0, r5
+ 748 0378 FFF7FEFF 		bl	__aeabi_fsub
+ 749              	.LVL111:
+ 185:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorScale(&IMU->kp_vector_MAG[0], &IMU->dcm_ze_line[0], (IMU->kp*IMU->error_yaw));
+ 750              		.loc 1 185 0
+ 751 037c E16C     		ldr	r1, [r4, #76]	@ float
+ 184:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->error_yaw = (IMU->dcm_xe_line[0]*IMU->mag_vector[1]) - (IMU->dcm_ye_line[0]*IMU->mag_vector[0
+ 752              		.loc 1 184 0
+ 753 037e E065     		str	r0, [r4, #92]	@ float
+ 754              		.loc 1 185 0
+ 755 0380 FFF7FEFF 		bl	__aeabi_fmul
+ 756              	.LVL112:
+ 757 0384 04F16C06 		add	r6, r4, #108
+ 758 0388 04F11C05 		add	r5, r4, #28
+ 759 038c 0246     		mov	r2, r0
+ 760 038e 2946     		mov	r1, r5
+ 761 0390 3046     		mov	r0, r6
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	//VectorScale(&IMU->kp_vector_MAG[0], &IMU->error_yaw[0], IMU->kp);
+ 187:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	//printf("%f\n", (IMU->kp+(IMU->kp*error_absolute)));
+ 188:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** }
+ 762              		.loc 1 188 0
+ 763 0392 BDE8F840 		pop	{r3, r4, r5, r6, r7, lr}
+ 185:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	VectorScale(&IMU->kp_vector_MAG[0], &IMU->dcm_ze_line[0], (IMU->kp*IMU->error_yaw));
+ 764              		.loc 1 185 0
+ 765 0396 FFF7FEBF 		b	VectorScale
+ 766              	.LVL113:
+ 767              		.cfi_endproc
+ 768              	.LFE6:
+ 770              		.align	1
+ 771              		.global	IMU_DCM_to_Euler_deg
+ 772              		.thumb
+ 773              		.thumb_func
+ 775              	IMU_DCM_to_Euler_deg:
+ 776              	.LFB7:
+ 189:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 191:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** /*DCM to EULER Angles*/
+ 192:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** void IMU_DCM_to_Euler_deg(struct IMU_values* IMU, struct EULER_angles *euler)
+ 193:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+ 777              		.loc 1 193 0
+ 778              		.cfi_startproc
+ 779              		@ args = 0, pretend = 0, frame = 0
+ 780              		@ frame_needed = 0, uses_anonymous_args = 0
+ 781              	.LVL114:
+ 782 039a 38B5     		push	{r3, r4, r5, lr}
+ 783              	.LCFI6:
+ 784              		.cfi_def_cfa_offset 16
+ 785              		.cfi_offset 3, -16
+ 786              		.cfi_offset 4, -12
+ 787              		.cfi_offset 5, -8
+ 788              		.cfi_offset 14, -4
+ 789              		.loc 1 193 0
+ 790 039c 0446     		mov	r4, r0
+ 194:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	euler->pitch = (asinf(-IMU->dcm_ze_line[0]))*(180/M_PI);
+ 791              		.loc 1 194 0
+ 792 039e C069     		ldr	r0, [r0, #28]
+ 793              	.LVL115:
+ 193:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+ 794              		.loc 1 193 0
+ 795 03a0 0D46     		mov	r5, r1
+ 796              		.loc 1 194 0
+ 797 03a2 00F10040 		add	r0, r0, #-2147483648
+ 798 03a6 FFF7FEFF 		bl	asinf
+ 799              	.LVL116:
+ 800 03aa 0A49     		ldr	r1, .L15
+ 801 03ac FFF7FEFF 		bl	__aeabi_fmul
+ 802              	.LVL117:
+ 195:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	euler->roll = (atan2f(IMU->dcm_ze_line[1],IMU->dcm_ze_line[2]))*(180/M_PI);
+ 803              		.loc 1 195 0
+ 804 03b0 616A     		ldr	r1, [r4, #36]	@ float
+ 194:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	euler->pitch = (asinf(-IMU->dcm_ze_line[0]))*(180/M_PI);
+ 805              		.loc 1 194 0
+ 806 03b2 6860     		str	r0, [r5, #4]	@ float
+ 807              		.loc 1 195 0
+ 808 03b4 206A     		ldr	r0, [r4, #32]	@ float
+ 809 03b6 FFF7FEFF 		bl	atan2f
+ 810              	.LVL118:
+ 811 03ba 0649     		ldr	r1, .L15
+ 812 03bc FFF7FEFF 		bl	__aeabi_fmul
+ 813              	.LVL119:
+ 196:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	euler->yaw = (atan2f(IMU->dcm_ye_line[0],IMU->dcm_xe_line[0]))*(180/M_PI);
+ 814              		.loc 1 196 0
+ 815 03c0 6168     		ldr	r1, [r4, #4]	@ float
+ 195:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	euler->roll = (atan2f(IMU->dcm_ze_line[1],IMU->dcm_ze_line[2]))*(180/M_PI);
+ 816              		.loc 1 195 0
+ 817 03c2 2860     		str	r0, [r5, #0]	@ float
+ 818              		.loc 1 196 0
+ 819 03c4 2069     		ldr	r0, [r4, #16]	@ float
+ 820 03c6 FFF7FEFF 		bl	atan2f
+ 821              	.LVL120:
+ 822 03ca 0249     		ldr	r1, .L15
+ 823 03cc FFF7FEFF 		bl	__aeabi_fmul
+ 824              	.LVL121:
+ 825 03d0 A860     		str	r0, [r5, #8]	@ float
+ 826 03d2 38BD     		pop	{r3, r4, r5, pc}
+ 827              	.L16:
+ 828              		.align	2
+ 829              	.L15:
+ 830 03d4 E02E6542 		.word	1113927392
+ 831              		.cfi_endproc
+ 832              	.LFE7:
+ 834              		.align	1
+ 835              		.global	IMU_Euler_to_DCM
+ 836              		.thumb
+ 837              		.thumb_func
+ 839              	IMU_Euler_to_DCM:
+ 840              	.LFB8:
+ 197:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	//printf("%3.1f  %3.1f  %3.1f\n", roll*(180/M_PI), pitch*(180/M_PI), yaw*(180/M_PI));
+ 198:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** }
+ 199:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 200:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** /*EULER Angles to DCM*/
+ 201:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** void IMU_Euler_to_DCM(struct IMU_values* IMU, struct EULER_angles *euler)
+ 202:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+ 841              		.loc 1 202 0
+ 842              		.cfi_startproc
+ 843              		@ args = 0, pretend = 0, frame = 16
+ 844              		@ frame_needed = 0, uses_anonymous_args = 0
+ 845              	.LVL122:
+ 846 03d8 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 847              	.LCFI7:
+ 848              		.cfi_def_cfa_offset 36
+ 849              		.cfi_offset 4, -36
+ 850              		.cfi_offset 5, -32
+ 851              		.cfi_offset 6, -28
+ 852              		.cfi_offset 7, -24
+ 853              		.cfi_offset 8, -20
+ 854              		.cfi_offset 9, -16
+ 855              		.cfi_offset 10, -12
+ 856              		.cfi_offset 11, -8
+ 857              		.cfi_offset 14, -4
+ 203:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	/*First line DCM Matrix*/
+ 204:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_xe_line[0] = cosf(euler->pitch)*cosf(euler->yaw);
+ 858              		.loc 1 204 0
+ 859 03dc D1F804B0 		ldr	fp, [r1, #4]	@ float
+ 202:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+ 860              		.loc 1 202 0
+ 861 03e0 85B0     		sub	sp, sp, #20
+ 862              	.LCFI8:
+ 863              		.cfi_def_cfa_offset 56
+ 202:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+ 864              		.loc 1 202 0
+ 865 03e2 0446     		mov	r4, r0
+ 866              		.loc 1 204 0
+ 867 03e4 5846     		mov	r0, fp
+ 868              	.LVL123:
+ 202:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+ 869              		.loc 1 202 0
+ 870 03e6 0F46     		mov	r7, r1
+ 871              		.loc 1 204 0
+ 872 03e8 FFF7FEFF 		bl	cosf
+ 873              	.LVL124:
+ 874 03ec D7F80880 		ldr	r8, [r7, #8]	@ float
+ 875 03f0 0646     		mov	r6, r0
+ 876 03f2 4046     		mov	r0, r8
+ 877 03f4 FFF7FEFF 		bl	cosf
+ 878              	.LVL125:
+ 879 03f8 0546     		mov	r5, r0
+ 880 03fa 2946     		mov	r1, r5
+ 881 03fc 3046     		mov	r0, r6
+ 882 03fe FFF7FEFF 		bl	__aeabi_fmul
+ 883              	.LVL126:
+ 884 0402 6060     		str	r0, [r4, #4]	@ float
+ 205:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_xe_line[1] = (cosf(euler->pitch)*sinf(euler->yaw))+(sinf(euler->roll)*sinf(euler->pitch)*
+ 885              		.loc 1 205 0
+ 886 0404 4046     		mov	r0, r8
+ 887 0406 FFF7FEFF 		bl	sinf
+ 888              	.LVL127:
+ 889 040a 8046     		mov	r8, r0
+ 890 040c 4146     		mov	r1, r8
+ 891 040e 3046     		mov	r0, r6
+ 892 0410 FFF7FEFF 		bl	__aeabi_fmul
+ 893              	.LVL128:
+ 894 0414 D7F80090 		ldr	r9, [r7, #0]	@ float
+ 895 0418 8246     		mov	sl, r0
+ 896 041a 4846     		mov	r0, r9
+ 897 041c FFF7FEFF 		bl	sinf
+ 898              	.LVL129:
+ 899 0420 0746     		mov	r7, r0
+ 900              	.LVL130:
+ 901 0422 5846     		mov	r0, fp
+ 902 0424 FFF7FEFF 		bl	sinf
+ 903              	.LVL131:
+ 904 0428 8346     		mov	fp, r0
+ 905 042a 5946     		mov	r1, fp
+ 906 042c 3846     		mov	r0, r7
+ 907 042e FFF7FEFF 		bl	__aeabi_fmul
+ 908              	.LVL132:
+ 909 0432 2946     		mov	r1, r5
+ 910 0434 0190     		str	r0, [sp, #4]
+ 911 0436 FFF7FEFF 		bl	__aeabi_fmul
+ 912              	.LVL133:
+ 913 043a 0146     		mov	r1, r0
+ 914 043c 5046     		mov	r0, sl
+ 915 043e FFF7FEFF 		bl	__aeabi_fadd
+ 916              	.LVL134:
+ 917 0442 A060     		str	r0, [r4, #8]	@ float
+ 206:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_xe_line[2] = (sinf(euler->roll)*sinf(euler->yaw))-(cosf(euler->roll)*sinf(euler->pitch)*c
+ 918              		.loc 1 206 0
+ 919 0444 4846     		mov	r0, r9
+ 920 0446 FFF7FEFF 		bl	cosf
+ 921              	.LVL135:
+ 922 044a 5946     		mov	r1, fp
+ 923 044c 8146     		mov	r9, r0
+ 924 044e FFF7FEFF 		bl	__aeabi_fmul
+ 925              	.LVL136:
+ 926 0452 4146     		mov	r1, r8
+ 927 0454 0390     		str	r0, [sp, #12]	@ float
+ 928 0456 3846     		mov	r0, r7
+ 929 0458 FFF7FEFF 		bl	__aeabi_fmul
+ 930              	.LVL137:
+ 931 045c 2946     		mov	r1, r5
+ 932 045e 8446     		mov	ip, r0
+ 933 0460 0398     		ldr	r0, [sp, #12]	@ float
+ 934 0462 CDF808C0 		str	ip, [sp, #8]
+ 935 0466 FFF7FEFF 		bl	__aeabi_fmul
+ 936              	.LVL138:
+ 937 046a DDF808C0 		ldr	ip, [sp, #8]
+ 938 046e 0146     		mov	r1, r0
+ 939 0470 6046     		mov	r0, ip
+ 940 0472 FFF7FEFF 		bl	__aeabi_fsub
+ 941              	.LVL139:
+ 207:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 208:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	/*Second line DCM Matrix*/
+ 209:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ye_line[0] = -(cosf(euler->pitch)*sinf(euler->yaw));
+ 942              		.loc 1 209 0
+ 943 0476 0AF1004A 		add	sl, sl, #-2147483648
+ 210:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ye_line[1] = (cosf(euler->roll)*cosf(euler->yaw))-(sinf(euler->roll)*sinf(euler->pitch)*s
+ 944              		.loc 1 210 0
+ 945 047a 2946     		mov	r1, r5
+ 206:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_xe_line[2] = (sinf(euler->roll)*sinf(euler->yaw))-(cosf(euler->roll)*sinf(euler->pitch)*c
+ 946              		.loc 1 206 0
+ 947 047c E060     		str	r0, [r4, #12]	@ float
+ 209:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ye_line[0] = -(cosf(euler->pitch)*sinf(euler->yaw));
+ 948              		.loc 1 209 0
+ 949 047e C4F810A0 		str	sl, [r4, #16]	@ float
+ 950              		.loc 1 210 0
+ 951 0482 4846     		mov	r0, r9
+ 952 0484 FFF7FEFF 		bl	__aeabi_fmul
+ 953              	.LVL140:
+ 954 0488 019A     		ldr	r2, [sp, #4]
+ 955 048a 8246     		mov	sl, r0
+ 956 048c 4146     		mov	r1, r8
+ 957 048e 1046     		mov	r0, r2
+ 958 0490 FFF7FEFF 		bl	__aeabi_fmul
+ 959              	.LVL141:
+ 960 0494 0146     		mov	r1, r0
+ 961 0496 5046     		mov	r0, sl
+ 962 0498 FFF7FEFF 		bl	__aeabi_fsub
+ 963              	.LVL142:
+ 211:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ye_line[2] = (sinf(euler->roll)*cosf(euler->yaw)) + (cosf(euler->roll)*sinf(euler->pitch)
+ 964              		.loc 1 211 0
+ 965 049c 2946     		mov	r1, r5
+ 210:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ye_line[1] = (cosf(euler->roll)*cosf(euler->yaw))-(sinf(euler->roll)*sinf(euler->pitch)*s
+ 966              		.loc 1 210 0
+ 967 049e 6061     		str	r0, [r4, #20]	@ float
+ 968              		.loc 1 211 0
+ 969 04a0 3846     		mov	r0, r7
+ 970 04a2 FFF7FEFF 		bl	__aeabi_fmul
+ 971              	.LVL143:
+ 972 04a6 4146     		mov	r1, r8
+ 973 04a8 0546     		mov	r5, r0
+ 974 04aa 0398     		ldr	r0, [sp, #12]	@ float
+ 975 04ac FFF7FEFF 		bl	__aeabi_fmul
+ 976              	.LVL144:
+ 977 04b0 0146     		mov	r1, r0
+ 978 04b2 2846     		mov	r0, r5
+ 979 04b4 FFF7FEFF 		bl	__aeabi_fadd
+ 980              	.LVL145:
+ 212:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 213:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	/*Third line DCM Matrix*/
+ 214:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ze_line[0] = sinf(euler->pitch);
+ 215:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ze_line[1] = -sinf(euler->roll)*cosf(euler->pitch);
+ 981              		.loc 1 215 0
+ 982 04b8 3146     		mov	r1, r6
+ 211:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ye_line[2] = (sinf(euler->roll)*cosf(euler->yaw)) + (cosf(euler->roll)*sinf(euler->pitch)
+ 983              		.loc 1 211 0
+ 984 04ba A061     		str	r0, [r4, #24]	@ float
+ 214:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ze_line[0] = sinf(euler->pitch);
+ 985              		.loc 1 214 0
+ 986 04bc C4F81CB0 		str	fp, [r4, #28]	@ float
+ 987              		.loc 1 215 0
+ 988 04c0 07F10040 		add	r0, r7, #-2147483648
+ 989 04c4 FFF7FEFF 		bl	__aeabi_fmul
+ 990              	.LVL146:
+ 216:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ze_line[2] = cosf(euler->roll)*cosf(euler->pitch);
+ 991              		.loc 1 216 0
+ 992 04c8 3146     		mov	r1, r6
+ 215:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	IMU->dcm_ze_line[1] = -sinf(euler->roll)*cosf(euler->pitch);
+ 993              		.loc 1 215 0
+ 994 04ca 2062     		str	r0, [r4, #32]	@ float
+ 995              		.loc 1 216 0
+ 996 04cc 4846     		mov	r0, r9
+ 997 04ce FFF7FEFF 		bl	__aeabi_fmul
+ 998              	.LVL147:
+ 999 04d2 6062     		str	r0, [r4, #36]	@ float
+ 217:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** }
+ 1000              		.loc 1 217 0
+ 1001 04d4 05B0     		add	sp, sp, #20
+ 1002 04d6 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 1003              		.cfi_endproc
+ 1004              	.LFE8:
+ 1006              		.align	1
+ 1007              		.global	IMU_DCM_to_XYZ
+ 1008              		.thumb
+ 1009              		.thumb_func
+ 1011              	IMU_DCM_to_XYZ:
+ 1012              	.LFB9:
+ 218:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 
+ 219:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** void IMU_DCM_to_XYZ(struct IMU_values* IMU, struct XYZ_angles *XYZ)
+ 220:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+ 1013              		.loc 1 220 0
+ 1014              		.cfi_startproc
+ 1015              		@ args = 0, pretend = 0, frame = 0
+ 1016              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1017              	.LVL148:
+ 1018 04da 38B5     		push	{r3, r4, r5, lr}
+ 1019              	.LCFI9:
+ 1020              		.cfi_def_cfa_offset 16
+ 1021              		.cfi_offset 3, -16
+ 1022              		.cfi_offset 4, -12
+ 1023              		.cfi_offset 5, -8
+ 1024              		.cfi_offset 14, -4
+ 1025              		.loc 1 220 0
+ 1026 04dc 0446     		mov	r4, r0
+ 221:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	XYZ->x = asinf(-IMU->dcm_ze_line[0])*(180/M_PI);
+ 1027              		.loc 1 221 0
+ 1028 04de C069     		ldr	r0, [r0, #28]
+ 1029              	.LVL149:
+ 220:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** {
+ 1030              		.loc 1 220 0
+ 1031 04e0 0D46     		mov	r5, r1
+ 1032              		.loc 1 221 0
+ 1033 04e2 00F10040 		add	r0, r0, #-2147483648
+ 1034 04e6 FFF7FEFF 		bl	asinf
+ 1035              	.LVL150:
+ 1036 04ea 0A49     		ldr	r1, .L19
+ 1037 04ec FFF7FEFF 		bl	__aeabi_fmul
+ 1038              	.LVL151:
+ 1039 04f0 2860     		str	r0, [r5, #0]	@ float
+ 222:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	XYZ->y = asinf(IMU->dcm_ze_line[1])*(180/M_PI);
+ 1040              		.loc 1 222 0
+ 1041 04f2 206A     		ldr	r0, [r4, #32]	@ float
+ 1042 04f4 FFF7FEFF 		bl	asinf
+ 1043              	.LVL152:
+ 1044 04f8 0649     		ldr	r1, .L19
+ 1045 04fa FFF7FEFF 		bl	__aeabi_fmul
+ 1046              	.LVL153:
+ 223:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	XYZ->z = (atan2f(IMU->dcm_ye_line[0],IMU->dcm_xe_line[0]))*(180/M_PI);
+ 1047              		.loc 1 223 0
+ 1048 04fe 6168     		ldr	r1, [r4, #4]	@ float
+ 222:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/IMU_algorithm.c **** 	XYZ->y = asinf(IMU->dcm_ze_line[1])*(180/M_PI);
+ 1049              		.loc 1 222 0
+ 1050 0500 6860     		str	r0, [r5, #4]	@ float
+ 1051              		.loc 1 223 0
+ 1052 0502 2069     		ldr	r0, [r4, #16]	@ float
+ 1053 0504 FFF7FEFF 		bl	atan2f
+ 1054              	.LVL154:
+ 1055 0508 0249     		ldr	r1, .L19
+ 1056 050a FFF7FEFF 		bl	__aeabi_fmul
+ 1057              	.LVL155:
+ 1058 050e A860     		str	r0, [r5, #8]	@ float
+ 1059 0510 38BD     		pop	{r3, r4, r5, pc}
+ 1060              	.L20:
+ 1061 0512 00BF     		.align	2
+ 1062              	.L19:
+ 1063 0514 E02E6542 		.word	1113927392
+ 1064              		.cfi_endproc
+ 1065              	.LFE9:
+ 1067              	.Letext0:
+ 1068              		.file 2 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_inc/IMU_algorithm
+ 1069              		.file 3 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_inc/Vector_math.h
+ 1070              		.file 4 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+DEFINED SYMBOLS
+                            *ABS*:00000000 IMU_algorithm.c
+     /tmp/ccSWlk0s.s:18     .text:00000000 $t
+     /tmp/ccSWlk0s.s:23     .text:00000000 IMU_init
+     /tmp/ccSWlk0s.s:71     .text:00000022 IMU_init_drift_correction
+     /tmp/ccSWlk0s.s:126    .text:00000048 IMU_update
+     /tmp/ccSWlk0s.s:247    .text:000000da IMU_normalize
+     /tmp/ccSWlk0s.s:433    .text:000001dc IMU_ortho_adjust
+     /tmp/ccSWlk0s.s:512    .text:00000236 IMU_drift_correction_ACC
+     /tmp/ccSWlk0s.s:657    .text:00000302 IMU_drift_correction_MAG
+     /tmp/ccSWlk0s.s:775    .text:0000039a IMU_DCM_to_Euler_deg
+     /tmp/ccSWlk0s.s:830    .text:000003d4 $d
+     /tmp/ccSWlk0s.s:834    .text:000003d8 $t
+     /tmp/ccSWlk0s.s:839    .text:000003d8 IMU_Euler_to_DCM
+     /tmp/ccSWlk0s.s:1011   .text:000004da IMU_DCM_to_XYZ
+     /tmp/ccSWlk0s.s:1063   .text:00000514 $d
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.newlib.h.8.e1d498e57c12962fc6d7be5061a6981a
+                           .group:00000000 wm4.config.h.148.52fe83653334d06815a0c57b59a3e584
+                           .group:00000000 wm4._ansi.h.23.95dee4059009fe3ab635a191bb73dc66
+                           .group:00000000 wm4._default_types.h.6.1dbd2e581fd590860c7c17f21d147e91
+                           .group:00000000 wm4.lock.h.2.9bc98482741e5e2a9450b12934a684ea
+                           .group:00000000 wm4.stddef.h.349.31f4c5baff3fa2689010b32028da9c47
+                           .group:00000000 wm4.reent.h.16.58b23a9f0faf0e7f2dfe7e2d33154afd
+                           .group:00000000 wm4.math.h.49.5da716593b937b9fb02bef6ed6537c13
+                           .group:00000000 wm4.stdio.h.31.f48311dde756a2aec27351b58a280fb9
+                           .group:00000000 wm4.stddef.h.187.9e651b6b8b16e149c1353259404973ea
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.types.h.23.0d949686bbcadd1621462d4fa1f884f9
+                           .group:00000000 wm4.stddef.h.40.cf962ebbec441b3ac67502735f0765db
+                           .group:00000000 wm4.types.h.2.e9cec8c90ab35f77d9f499e06ae02400
+                           .group:00000000 wm4.types.h.80.f2bfdfeee9f340633702c07fad9b5e01
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.63.1f4bc553faa62c5c69dd9cb47f9f1417
+
+UNDEFINED SYMBOLS
+__aeabi_fmul
+__aeabi_fsub
+VectorCrossProduct
+VectorAdd
+__aeabi_fadd
+__aeabi_fdiv
+sqrtf
+VectorDotProduct
+VectorScale
+__aeabi_fcmpeq
+asinf
+atan2f
+cosf
+sinf

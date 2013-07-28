@@ -1,0 +1,251 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"usart.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.global	Usart2Put
+  20              		.thumb
+  21              		.thumb_func
+  23              	Usart2Put:
+  24              	.LFB111:
+  25              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c"
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** #include <stm32f30x.h>
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** #include <stm32f30x_conf.h>
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** void Usart2Put(uint8_t ch)
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** {
+  26              		.loc 1 5 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              	.LVL0:
+  31 0000 0146     		mov	r1, r0
+  32 0002 08B5     		push	{r3, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 3, -8
+  36              		.cfi_offset 14, -4
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c ****       USART_SendData(USART2, (uint8_t) ch);
+  37              		.loc 1 6 0
+  38 0004 0448     		ldr	r0, .L7
+  39              	.LVL1:
+  40 0006 FFF7FEFF 		bl	USART_SendData
+  41              	.LVL2:
+  42              	.L2:
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c ****       //Loop until the end of transmission
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c ****       while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET)
+  43              		.loc 1 8 0 discriminator 1
+  44 000a 0348     		ldr	r0, .L7
+  45 000c 4021     		movs	r1, #64
+  46 000e FFF7FEFF 		bl	USART_GetFlagStatus
+  47              	.LVL3:
+  48 0012 0028     		cmp	r0, #0
+  49 0014 F9D0     		beq	.L2
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c ****       {
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c ****       }
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** }
+  50              		.loc 1 11 0
+  51 0016 08BD     		pop	{r3, pc}
+  52              	.L8:
+  53              		.align	2
+  54              	.L7:
+  55 0018 00440040 		.word	1073759232
+  56              		.cfi_endproc
+  57              	.LFE111:
+  59              		.align	1
+  60              		.global	Usart3Put
+  61              		.thumb
+  62              		.thumb_func
+  64              	Usart3Put:
+  65              	.LFB112:
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** /*
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c ****  * USART3 wurde auf Interrupt modus umprogrammiert
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c ****  * */
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** void Usart3Put(uint8_t ch)
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** {
+  66              		.loc 1 18 0
+  67              		.cfi_startproc
+  68              		@ args = 0, pretend = 0, frame = 0
+  69              		@ frame_needed = 0, uses_anonymous_args = 0
+  70              	.LVL4:
+  71 001c 0146     		mov	r1, r0
+  72 001e 08B5     		push	{r3, lr}
+  73              	.LCFI1:
+  74              		.cfi_def_cfa_offset 8
+  75              		.cfi_offset 3, -8
+  76              		.cfi_offset 14, -4
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c ****       USART_SendData(USART3, (uint8_t) ch);
+  77              		.loc 1 19 0
+  78 0020 0448     		ldr	r0, .L15
+  79              	.LVL5:
+  80 0022 FFF7FEFF 		bl	USART_SendData
+  81              	.LVL6:
+  82              	.L10:
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c ****       //Loop until the end of transmission
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c ****       while(USART_GetFlagStatus(USART3, USART_FLAG_TC) == RESET)
+  83              		.loc 1 21 0 discriminator 1
+  84 0026 0348     		ldr	r0, .L15
+  85 0028 4021     		movs	r1, #64
+  86 002a FFF7FEFF 		bl	USART_GetFlagStatus
+  87              	.LVL7:
+  88 002e 0028     		cmp	r0, #0
+  89 0030 F9D0     		beq	.L10
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c ****       {
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c ****       }
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** }
+  90              		.loc 1 24 0
+  91 0032 08BD     		pop	{r3, pc}
+  92              	.L16:
+  93              		.align	2
+  94              	.L15:
+  95 0034 00480040 		.word	1073760256
+  96              		.cfi_endproc
+  97              	.LFE112:
+  99              		.align	1
+ 100              		.global	Usart3Get
+ 101              		.thumb
+ 102              		.thumb_func
+ 104              	Usart3Get:
+ 105              	.LFB113:
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** uint8_t Usart3Get(){
+ 106              		.loc 1 26 0
+ 107              		.cfi_startproc
+ 108              		@ args = 0, pretend = 0, frame = 0
+ 109              		@ frame_needed = 0, uses_anonymous_args = 0
+ 110 0038 08B5     		push	{r3, lr}
+ 111              	.LCFI2:
+ 112              		.cfi_def_cfa_offset 8
+ 113              		.cfi_offset 3, -8
+ 114              		.cfi_offset 14, -4
+ 115              	.L18:
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 	uint8_t ch;
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 	while(USART_GetFlagStatus(USART3, USART_FLAG_RXNE) == RESET)
+ 116              		.loc 1 28 0 discriminator 1
+ 117 003a 0548     		ldr	r0, .L23
+ 118 003c 2021     		movs	r1, #32
+ 119 003e FFF7FEFF 		bl	USART_GetFlagStatus
+ 120              	.LVL8:
+ 121 0042 0028     		cmp	r0, #0
+ 122 0044 F9D0     		beq	.L18
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 	{
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 	}
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 	ch = USART_ReceiveData(USART3);
+ 123              		.loc 1 31 0
+ 124 0046 0248     		ldr	r0, .L23
+ 125 0048 FFF7FEFF 		bl	USART_ReceiveData
+ 126              	.LVL9:
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 	return ch;
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** }
+ 127              		.loc 1 33 0
+ 128 004c C0B2     		uxtb	r0, r0
+ 129 004e 08BD     		pop	{r3, pc}
+ 130              	.L24:
+ 131              		.align	2
+ 132              	.L23:
+ 133 0050 00480040 		.word	1073760256
+ 134              		.cfi_endproc
+ 135              	.LFE113:
+ 137              		.align	1
+ 138              		.global	InttoBuffer
+ 139              		.thumb
+ 140              		.thumb_func
+ 142              	InttoBuffer:
+ 143              	.LFB114:
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** /* TODO
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c ****  * Evtl. Typecast auf Bytestream
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c ****  */
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** void InttoBuffer(unsigned char *ptr, uint32_t Value){
+ 144              		.loc 1 38 0
+ 145              		.cfi_startproc
+ 146              		@ args = 0, pretend = 0, frame = 0
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148              		@ link register save eliminated.
+ 149              	.LVL10:
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 	*ptr= (char) (Value >> 24);
+ 150              		.loc 1 39 0
+ 151 0054 0B0E     		lsrs	r3, r1, #24
+ 152 0056 0370     		strb	r3, [r0, #0]
+ 153              	.LVL11:
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 	ptr++;
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 	*ptr= (char) (Value >> 16);
+ 154              		.loc 1 41 0
+ 155 0058 0B0C     		lsrs	r3, r1, #16
+ 156 005a 4370     		strb	r3, [r0, #1]
+ 157              	.LVL12:
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 	ptr++;
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 	*ptr= (char) (Value >> 8);
+ 158              		.loc 1 43 0
+ 159 005c 0B0A     		lsrs	r3, r1, #8
+ 160 005e 8370     		strb	r3, [r0, #2]
+ 161              	.LVL13:
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 	ptr++;
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/usart.c **** 	*ptr= (char) Value;
+ 162              		.loc 1 45 0
+ 163 0060 C170     		strb	r1, [r0, #3]
+ 164 0062 7047     		bx	lr
+ 165              		.cfi_endproc
+ 166              	.LFE114:
+ 168              	.Letext0:
+ 169              		.file 2 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+ 170              		.file 3 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Device/ST/STM32F30x
+ 171              		.file 4 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+ 172              		.file 5 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Include/core_cm4.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 usart.c
+     /tmp/ccbEYrxQ.s:18     .text:00000000 $t
+     /tmp/ccbEYrxQ.s:23     .text:00000000 Usart2Put
+     /tmp/ccbEYrxQ.s:55     .text:00000018 $d
+     /tmp/ccbEYrxQ.s:59     .text:0000001c $t
+     /tmp/ccbEYrxQ.s:64     .text:0000001c Usart3Put
+     /tmp/ccbEYrxQ.s:95     .text:00000034 $d
+     /tmp/ccbEYrxQ.s:99     .text:00000038 $t
+     /tmp/ccbEYrxQ.s:104    .text:00000038 Usart3Get
+     /tmp/ccbEYrxQ.s:133    .text:00000050 $d
+     /tmp/ccbEYrxQ.s:137    .text:00000054 $t
+     /tmp/ccbEYrxQ.s:142    .text:00000054 InttoBuffer
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.stm32f30x.h.54.c7b24f715ee55ef38656f44540ae3be6
+                           .group:00000000 wm4.core_cm4.h.32.2441f2e49dd40451ba4254637c879d0c
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.292.5f9271075d54fc48f1e25ff79df85cb2
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_comp.h.31.9bbc5f5f1a849069ea9062fbe7b81435
+                           .group:00000000 wm4.stm32f30x_dma.h.31.73d173fa6d60026d432f3cf1d2fc4407
+                           .group:00000000 wm4.stm32f30x_exti.h.31.22e280aa6e095108654ac8d3c74a2409
+                           .group:00000000 wm4.stm32f30x_flash.h.31.bee86dc3079b7049419bdbeec073e2cd
+                           .group:00000000 wm4.stm32f30x_gpio.h.31.3745297fee3728b346ad4d2a2467e40f
+                           .group:00000000 wm4.stm32f30x_syscfg.h.31.96b023b7dbc3641f358604478433eb5c
+                           .group:00000000 wm4.stm32f30x_i2c.h.31.52025acd7f154308042bf46a2835e9d3
+                           .group:00000000 wm4.stm32f30x_pwr.h.31.cdef322c6e7f25cfc29954045d24e9b8
+                           .group:00000000 wm4.stm32f30x_rcc.h.31.3b94c1144b21d1e4fe780e4d1a02d257
+                           .group:00000000 wm4.stm32f30x_spi.h.31.c1ebebab897d23cecc617ec8ad9fd534
+                           .group:00000000 wm4.stm32f30x_tim.h.31.336f9cd855fb4e2cd819ac260ded6518
+                           .group:00000000 wm4.stm32f30x_usart.h.31.cd85313e29c0a128555b4a7b8ec0f487
+                           .group:00000000 wm4.stm32f30x_misc.h.31.f08b0e9f53f0471613b5131bb95f8725
+                           .group:00000000 wm4.stm32f30x.h.6173.8b641ba1d9b0040eda9120fe8a414b2d
+
+UNDEFINED SYMBOLS
+USART_SendData
+USART_GetFlagStatus
+USART_ReceiveData

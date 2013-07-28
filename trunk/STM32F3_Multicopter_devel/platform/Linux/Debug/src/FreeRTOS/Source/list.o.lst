@@ -1,0 +1,467 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"list.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.global	vListInitialise
+  20              		.thumb
+  21              		.thumb_func
+  23              	vListInitialise:
+  24              	.LFB0:
+  25              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c"
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** /*
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     FreeRTOS V7.4.0 - Copyright (C) 2013 Real Time Engineers Ltd.
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     FEATURES AND PORTS ARE ADDED TO FREERTOS ALL THE TIME.  PLEASE VISIT
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     ***************************************************************************
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *                                                                       *
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *    FreeRTOS tutorial books are available in pdf and paperback.        *
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *    Complete, revised, and edited pdf reference manuals are also       *
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *    available.                                                         *
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *                                                                       *
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *    Purchasing FreeRTOS documentation will not only help you, by       *
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *    ensuring you get running as quickly as possible and with an        *
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *    in-depth knowledge of how to use FreeRTOS, it will also help       *
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *    the FreeRTOS project to continue with its mission of providing     *
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *    professional grade, cross platform, de facto standard solutions    *
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *    for microcontrollers - completely free of charge!                  *
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *                                                                       *
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *    >>> See http://www.FreeRTOS.org/Documentation for details. <<<     *
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *                                                                       *
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *    Thank you for using FreeRTOS, and thank you for your support!      *
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *                                                                       *
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     ***************************************************************************
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     This file is part of the FreeRTOS distribution.
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     FreeRTOS is free software; you can redistribute it and/or modify it under
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     the terms of the GNU General Public License (version 2) as published by the
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     Free Software Foundation AND MODIFIED BY the FreeRTOS exception.
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     >>>>>>NOTE<<<<<< The modification to the GPL is included to allow you to
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     distribute a combined work that includes FreeRTOS without being obliged to
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     provide the source code for proprietary components outside of the FreeRTOS
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     kernel.
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     details. You should have received a copy of the GNU General Public License
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     and the FreeRTOS license exception along with FreeRTOS; if not itcan be
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     viewed here: http://www.freertos.org/a00114.html and also obtained by
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     writing to Real Time Engineers Ltd., contact details for whom are available
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     on the FreeRTOS WEB site.
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     1 tab == 4 spaces!
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     ***************************************************************************
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *                                                                       *
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *    Having a problem?  Start by reading the FAQ "My application does   *
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *    not run, what could be wrong?"                                     *
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *                                                                       *
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *    http://www.FreeRTOS.org/FAQHelp.html                               *
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****      *                                                                       *
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     ***************************************************************************
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     http://www.FreeRTOS.org - Documentation, books, training, latest versions, 
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     license and Real Time Engineers Ltd. contact details.
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     including FreeRTOS+Trace - an indispensable productivity tool, and our new
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     fully thread aware and reentrant UDP/IP stack.
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     http://www.OpenRTOS.com - Real Time Engineers ltd license FreeRTOS to High 
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     Integrity Systems, who sell the code with commercial support, 
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     indemnification and middleware, under the OpenRTOS brand.
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     http://www.SafeRTOS.com - High Integrity Systems also provide a safety 
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     engineered and independently SIL3 certified version for use in safety and 
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****     mission critical applications that require provable dependability.
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** */
+  74:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+  76:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** #include <stdlib.h>
+  77:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** #include "FreeRTOS.h"
+  78:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** #include "list.h"
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** /*-----------------------------------------------------------
+  81:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****  * PUBLIC LIST API documented in list.h
+  82:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c ****  *----------------------------------------------------------*/
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+  84:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** void vListInitialise( xList *pxList )
+  85:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** {
+  26              		.loc 1 85 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  31              	.LVL0:
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	/* The list structure contains a list item which is used to mark the
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	end of the list.  To initialise the list the list end is inserted
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	as the only list entry. */
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxList->pxIndex = ( xListItem * ) &( pxList->xListEnd );
+  32              		.loc 1 89 0
+  33 0000 00F10803 		add	r3, r0, #8
+  90:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	/* The list end value is the highest possible value in the list to
+  92:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	ensure it remains at the end of the list. */
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxList->xListEnd.xItemValue = portMAX_DELAY;
+  34              		.loc 1 93 0
+  35 0004 4FF0FF32 		mov	r2, #-1
+  36 0008 8260     		str	r2, [r0, #8]
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxList->pxIndex = ( xListItem * ) &( pxList->xListEnd );
+  37              		.loc 1 89 0
+  38 000a 4360     		str	r3, [r0, #4]
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	/* The list end next and previous pointers point to itself so we know
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	when the list is empty. */
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxList->xListEnd.pxNext = ( xListItem * ) &( pxList->xListEnd );
+  39              		.loc 1 97 0
+  40 000c C360     		str	r3, [r0, #12]
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxList->xListEnd.pxPrevious = ( xListItem * ) &( pxList->xListEnd );
+  41              		.loc 1 98 0
+  42 000e 0361     		str	r3, [r0, #16]
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 100:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxList->uxNumberOfItems = ( unsigned portBASE_TYPE ) 0U;
+  43              		.loc 1 100 0
+  44 0010 0023     		movs	r3, #0
+  45 0012 0360     		str	r3, [r0, #0]
+  46 0014 7047     		bx	lr
+  47              		.cfi_endproc
+  48              	.LFE0:
+  50              		.align	1
+  51              		.global	vListInitialiseItem
+  52              		.thumb
+  53              		.thumb_func
+  55              	vListInitialiseItem:
+  56              	.LFB1:
+ 101:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** }
+ 102:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** /*-----------------------------------------------------------*/
+ 103:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** void vListInitialiseItem( xListItem *pxItem )
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** {
+  57              		.loc 1 105 0
+  58              		.cfi_startproc
+  59              		@ args = 0, pretend = 0, frame = 0
+  60              		@ frame_needed = 0, uses_anonymous_args = 0
+  61              		@ link register save eliminated.
+  62              	.LVL1:
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	/* Make sure the list item is not recorded as being on a list. */
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxItem->pvContainer = NULL;
+  63              		.loc 1 107 0
+  64 0016 0023     		movs	r3, #0
+  65 0018 0361     		str	r3, [r0, #16]
+  66 001a 7047     		bx	lr
+  67              		.cfi_endproc
+  68              	.LFE1:
+  70              		.align	1
+  71              		.global	vListInsertEnd
+  72              		.thumb
+  73              		.thumb_func
+  75              	vListInsertEnd:
+  76              	.LFB2:
+ 108:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** }
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** /*-----------------------------------------------------------*/
+ 110:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 111:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** void vListInsertEnd( xList *pxList, xListItem *pxNewListItem )
+ 112:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** {
+  77              		.loc 1 112 0
+  78              		.cfi_startproc
+  79              		@ args = 0, pretend = 0, frame = 0
+  80              		@ frame_needed = 0, uses_anonymous_args = 0
+  81              		@ link register save eliminated.
+  82              	.LVL2:
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** volatile xListItem * pxIndex;
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	/* Insert a new list item into pxList, but rather than sort the list,
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	makes the new list item the last item to be removed by a call to
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pvListGetOwnerOfNextEntry.  This means it has to be the item pointed to by
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	the pxIndex member. */
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxIndex = pxList->pxIndex;
+  83              		.loc 1 119 0
+  84 001c 4368     		ldr	r3, [r0, #4]
+  85              	.LVL3:
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxNewListItem->pxNext = pxIndex->pxNext;
+  86              		.loc 1 121 0
+  87 001e 5A68     		ldr	r2, [r3, #4]
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxNewListItem->pxPrevious = pxList->pxIndex;
+  88              		.loc 1 122 0
+  89 0020 8B60     		str	r3, [r1, #8]
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxNewListItem->pxNext = pxIndex->pxNext;
+  90              		.loc 1 121 0
+  91 0022 4A60     		str	r2, [r1, #4]
+ 123:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxIndex->pxNext->pxPrevious = ( volatile xListItem * ) pxNewListItem;
+  92              		.loc 1 123 0
+  93 0024 5A68     		ldr	r2, [r3, #4]
+  94 0026 9160     		str	r1, [r2, #8]
+ 124:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxIndex->pxNext = ( volatile xListItem * ) pxNewListItem;
+  95              		.loc 1 124 0
+  96 0028 5960     		str	r1, [r3, #4]
+ 125:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxList->pxIndex = ( volatile xListItem * ) pxNewListItem;
+ 126:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 127:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	/* Remember which list the item is in. */
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxNewListItem->pvContainer = ( void * ) pxList;
+ 129:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	( pxList->uxNumberOfItems )++;
+  97              		.loc 1 130 0
+  98 002a 0368     		ldr	r3, [r0, #0]
+  99              	.LVL4:
+ 125:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxList->pxIndex = ( volatile xListItem * ) pxNewListItem;
+ 100              		.loc 1 125 0
+ 101 002c 4160     		str	r1, [r0, #4]
+ 102              		.loc 1 130 0
+ 103 002e 0133     		adds	r3, r3, #1
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxNewListItem->pvContainer = ( void * ) pxList;
+ 104              		.loc 1 128 0
+ 105 0030 0861     		str	r0, [r1, #16]
+ 106              		.loc 1 130 0
+ 107 0032 0360     		str	r3, [r0, #0]
+ 108 0034 7047     		bx	lr
+ 109              		.cfi_endproc
+ 110              	.LFE2:
+ 112              		.align	1
+ 113              		.global	vListInsert
+ 114              		.thumb
+ 115              		.thumb_func
+ 117              	vListInsert:
+ 118              	.LFB3:
+ 131:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** }
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** /*-----------------------------------------------------------*/
+ 133:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** void vListInsert( xList *pxList, xListItem *pxNewListItem )
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** {
+ 119              		.loc 1 135 0
+ 120              		.cfi_startproc
+ 121              		@ args = 0, pretend = 0, frame = 0
+ 122              		@ frame_needed = 0, uses_anonymous_args = 0
+ 123              	.LVL5:
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** volatile xListItem *pxIterator;
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** portTickType xValueOfInsertion;
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	/* Insert the new list item into the list, sorted in ulListItem order. */
+ 140:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	xValueOfInsertion = pxNewListItem->xItemValue;
+ 124              		.loc 1 140 0
+ 125 0036 0A68     		ldr	r2, [r1, #0]
+ 126              	.LVL6:
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** {
+ 127              		.loc 1 135 0
+ 128 0038 10B5     		push	{r4, lr}
+ 129              	.LCFI0:
+ 130              		.cfi_def_cfa_offset 8
+ 131              		.cfi_offset 4, -8
+ 132              		.cfi_offset 14, -4
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 142:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	/* If the list already contains a list item with the same item value then
+ 143:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	the new list item should be placed after it.  This ensures that TCB's which
+ 144:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	are stored in ready lists (all of which have the same ulListItem value)
+ 145:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	get an equal share of the CPU.  However, if the xItemValue is the same as
+ 146:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	the back marker the iteration loop below will not end.  This means we need
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	to guard against this by checking the value first and modifying the
+ 148:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	algorithm slightly if necessary. */
+ 149:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	if( xValueOfInsertion == portMAX_DELAY )
+ 133              		.loc 1 149 0
+ 134 003a 531C     		adds	r3, r2, #1
+ 135 003c 01D1     		bne	.L5
+ 150:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	{
+ 151:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 		pxIterator = pxList->xListEnd.pxPrevious;
+ 136              		.loc 1 151 0
+ 137 003e 0369     		ldr	r3, [r0, #16]
+ 138              	.LVL7:
+ 139 0040 07E0     		b	.L6
+ 140              	.LVL8:
+ 141              	.L5:
+ 152:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	}
+ 153:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	else
+ 154:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	{
+ 155:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 		/* *** NOTE ***********************************************************
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 		If you find your application is crashing here then likely causes are:
+ 157:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 			1) Stack overflow -
+ 158:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 			   see http://www.freertos.org/Stacks-and-stack-overflow-checking.html
+ 159:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 			2) Incorrect interrupt priority assignment, especially on Cortex-M3
+ 160:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 			   parts where numerically high priority values denote low actual
+ 161:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 			   interrupt priories, which can seem counter intuitive.  See
+ 162:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 			   configMAX_SYSCALL_INTERRUPT_PRIORITY on http://www.freertos.org/a00110.html
+ 163:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 			3) Calling an API function from within a critical section or when
+ 164:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 			   the scheduler is suspended.
+ 165:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 			4) Using a queue or semaphore before it has been initialised or
+ 166:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 			   before the scheduler has been started (are interrupts firing
+ 167:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 			   before vTaskStartScheduler() has been called?).
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 		See http://www.freertos.org/FAQHelp.html for more tips.
+ 169:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 		**********************************************************************/
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 171:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 		for( pxIterator = ( xListItem * ) &( pxList->xListEnd ); pxIterator->pxNext->xItemValue <= xValue
+ 142              		.loc 1 171 0
+ 143 0042 00F10803 		add	r3, r0, #8
+ 144              	.LVL9:
+ 145 0046 00E0     		b	.L7
+ 146              	.L8:
+ 147              		.loc 1 171 0 is_stmt 0 discriminator 2
+ 148 0048 5B68     		ldr	r3, [r3, #4]
+ 149              	.LVL10:
+ 150              	.L7:
+ 151              		.loc 1 171 0 discriminator 1
+ 152 004a 5C68     		ldr	r4, [r3, #4]
+ 153 004c 2468     		ldr	r4, [r4, #0]
+ 154 004e 9442     		cmp	r4, r2
+ 155 0050 FAD9     		bls	.L8
+ 156              	.L6:
+ 172:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 		{
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 			/* There is nothing to do here, we are just iterating to the
+ 174:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 			wanted insertion position. */
+ 175:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 		}
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	}
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 178:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxNewListItem->pxNext = pxIterator->pxNext;
+ 157              		.loc 1 178 0 is_stmt 1
+ 158 0052 5A68     		ldr	r2, [r3, #4]
+ 159              	.LVL11:
+ 179:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxNewListItem->pxNext->pxPrevious = ( volatile xListItem * ) pxNewListItem;
+ 180:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxNewListItem->pxPrevious = pxIterator;
+ 181:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxIterator->pxNext = ( volatile xListItem * ) pxNewListItem;
+ 182:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 183:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	/* Remember which list the item is in.  This allows fast removal of the
+ 184:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	item later. */
+ 185:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxNewListItem->pvContainer = ( void * ) pxList;
+ 160              		.loc 1 185 0
+ 161 0054 0861     		str	r0, [r1, #16]
+ 179:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxNewListItem->pxNext->pxPrevious = ( volatile xListItem * ) pxNewListItem;
+ 162              		.loc 1 179 0
+ 163 0056 9160     		str	r1, [r2, #8]
+ 178:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxNewListItem->pxNext = pxIterator->pxNext;
+ 164              		.loc 1 178 0
+ 165 0058 4A60     		str	r2, [r1, #4]
+ 181:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxIterator->pxNext = ( volatile xListItem * ) pxNewListItem;
+ 166              		.loc 1 181 0
+ 167 005a 5960     		str	r1, [r3, #4]
+ 180:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxNewListItem->pxPrevious = pxIterator;
+ 168              		.loc 1 180 0
+ 169 005c 8B60     		str	r3, [r1, #8]
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 187:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	( pxList->uxNumberOfItems )++;
+ 170              		.loc 1 187 0
+ 171 005e 0368     		ldr	r3, [r0, #0]
+ 172              	.LVL12:
+ 173 0060 0133     		adds	r3, r3, #1
+ 174 0062 0360     		str	r3, [r0, #0]
+ 175 0064 10BD     		pop	{r4, pc}
+ 176              		.cfi_endproc
+ 177              	.LFE3:
+ 179              		.align	1
+ 180              		.global	uxListRemove
+ 181              		.thumb
+ 182              		.thumb_func
+ 184              	uxListRemove:
+ 185              	.LFB4:
+ 188:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** }
+ 189:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** /*-----------------------------------------------------------*/
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 191:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** unsigned portBASE_TYPE uxListRemove( xListItem *pxItemToRemove )
+ 192:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** {
+ 186              		.loc 1 192 0
+ 187              		.cfi_startproc
+ 188              		@ args = 0, pretend = 0, frame = 0
+ 189              		@ frame_needed = 0, uses_anonymous_args = 0
+ 190              		@ link register save eliminated.
+ 191              	.LVL13:
+ 193:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** xList * pxList;
+ 194:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 195:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxItemToRemove->pxNext->pxPrevious = pxItemToRemove->pxPrevious;
+ 192              		.loc 1 195 0
+ 193 0066 4368     		ldr	r3, [r0, #4]
+ 194 0068 8268     		ldr	r2, [r0, #8]
+ 195 006a 9A60     		str	r2, [r3, #8]
+ 196:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxItemToRemove->pxPrevious->pxNext = pxItemToRemove->pxNext;
+ 196              		.loc 1 196 0
+ 197 006c 8268     		ldr	r2, [r0, #8]
+ 198 006e 5360     		str	r3, [r2, #4]
+ 197:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 198:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	/* The list item knows which list it is in.  Obtain the list from the list
+ 199:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	item. */
+ 200:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxList = ( xList * ) pxItemToRemove->pvContainer;
+ 199              		.loc 1 200 0
+ 200 0070 0369     		ldr	r3, [r0, #16]
+ 201              	.LVL14:
+ 201:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 202:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	/* Make sure the index is left pointing to a valid item. */
+ 203:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	if( pxList->pxIndex == pxItemToRemove )
+ 202              		.loc 1 203 0
+ 203 0072 5968     		ldr	r1, [r3, #4]
+ 204 0074 8142     		cmp	r1, r0
+ 204:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	{
+ 205:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 		pxList->pxIndex = pxItemToRemove->pxPrevious;
+ 205              		.loc 1 205 0
+ 206 0076 08BF     		it	eq
+ 207 0078 5A60     		streq	r2, [r3, #4]
+ 206:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	}
+ 207:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 208:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	pxItemToRemove->pvContainer = NULL;
+ 208              		.loc 1 208 0
+ 209 007a 0022     		movs	r2, #0
+ 210 007c 0261     		str	r2, [r0, #16]
+ 209:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	( pxList->uxNumberOfItems )--;
+ 211              		.loc 1 209 0
+ 212 007e 1A68     		ldr	r2, [r3, #0]
+ 213 0080 013A     		subs	r2, r2, #1
+ 214 0082 1A60     		str	r2, [r3, #0]
+ 210:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 
+ 211:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** 	return pxList->uxNumberOfItems;
+ 215              		.loc 1 211 0
+ 216 0084 1868     		ldr	r0, [r3, #0]
+ 217              	.LVL15:
+ 212:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/list.c **** }
+ 218              		.loc 1 212 0
+ 219 0086 7047     		bx	lr
+ 220              		.cfi_endproc
+ 221              	.LFE4:
+ 223              	.Letext0:
+ 224              		.file 2 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/include/l
+ 225              		.file 3 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/
+DEFINED SYMBOLS
+                            *ABS*:00000000 list.c
+     /tmp/ccKS0MDM.s:18     .text:00000000 $t
+     /tmp/ccKS0MDM.s:23     .text:00000000 vListInitialise
+     /tmp/ccKS0MDM.s:55     .text:00000016 vListInitialiseItem
+     /tmp/ccKS0MDM.s:75     .text:0000001c vListInsertEnd
+     /tmp/ccKS0MDM.s:117    .text:00000036 vListInsert
+     /tmp/ccKS0MDM.s:184    .text:00000066 uxListRemove
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.newlib.h.8.e1d498e57c12962fc6d7be5061a6981a
+                           .group:00000000 wm4.config.h.148.52fe83653334d06815a0c57b59a3e584
+                           .group:00000000 wm4._ansi.h.23.95dee4059009fe3ab635a191bb73dc66
+                           .group:00000000 wm4.stdlib.h.18.6f6153fd5cb89acd58c0f0ab1f77e147
+                           .group:00000000 wm4.stddef.h.187.40b3a084f9bc2c020a9e00b9eabe9c14
+                           .group:00000000 wm4._default_types.h.6.1dbd2e581fd590860c7c17f21d147e91
+                           .group:00000000 wm4.lock.h.2.9bc98482741e5e2a9450b12934a684ea
+                           .group:00000000 wm4.stddef.h.349.31f4c5baff3fa2689010b32028da9c47
+                           .group:00000000 wm4.reent.h.16.58b23a9f0faf0e7f2dfe7e2d33154afd
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.55.22eafe60f8565d898cbb44515781114b
+                           .group:00000000 wm4.stddef.h.40.b60a1c1ee3f272eef5327a730cbabca6
+                           .group:00000000 wm4.projdefs.h.76.214f319a5937dae232f0ee2912b07e1d
+                           .group:00000000 wm4.FreeRTOSConfig.h.79.5ce50f1f04ae36d94916fa991aa4b8d7
+                           .group:00000000 wm4.portmacro.h.77.0810e0eb8c6edf5adf0d27242484a945
+                           .group:00000000 wm4.portable.h.332.e25bf3f97ebf50a0f90736144cb8c3f8
+                           .group:00000000 wm4.mpu_wrappers.h.76.3abcfc7ebb6d78909ee0b4ad2f20f282
+                           .group:00000000 wm4.FreeRTOS.h.159.741cbf33489b2c951994722716e9692e
+                           .group:00000000 wm4.list.h.105.6a6307ce3396638a078c02ff83387dc6
+
+NO UNDEFINED SYMBOLS

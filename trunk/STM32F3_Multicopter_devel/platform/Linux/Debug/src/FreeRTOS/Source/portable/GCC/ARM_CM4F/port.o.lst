@@ -1,0 +1,1042 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"port.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.thumb
+  20              		.thumb_func
+  22              	prvPortStartFirstTask:
+  23              	.LFB2:
+  24              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     FreeRTOS V7.4.2 - Copyright (C) 2013 Real Time Engineers Ltd.
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     FEATURES AND PORTS ARE ADDED TO FREERTOS ALL THE TIME.  PLEASE VISIT
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     ***************************************************************************
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *                                                                       *
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *    FreeRTOS tutorial books are available in pdf and paperback.        *
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *    Complete, revised, and edited pdf reference manuals are also       *
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *    available.                                                         *
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *                                                                       *
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *    Purchasing FreeRTOS documentation will not only help you, by       *
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *    ensuring you get running as quickly as possible and with an        *
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *    in-depth knowledge of how to use FreeRTOS, it will also help       *
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *    the FreeRTOS project to continue with its mission of providing     *
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *    professional grade, cross platform, de facto standard solutions    *
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *    for microcontrollers - completely free of charge!                  *
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *                                                                       *
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *    >>> See http://www.FreeRTOS.org/Documentation for details. <<<     *
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *                                                                       *
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *    Thank you for using FreeRTOS, and thank you for your support!      *
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *                                                                       *
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     ***************************************************************************
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     This file is part of the FreeRTOS distribution.
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     FreeRTOS is free software; you can redistribute it and/or modify it under
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     the terms of the GNU General Public License (version 2) as published by the
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     Free Software Foundation AND MODIFIED BY the FreeRTOS exception.
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     >>>>>>NOTE<<<<<< The modification to the GPL is included to allow you to
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     distribute a combined work that includes FreeRTOS without being obliged to
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     provide the source code for proprietary components outside of the FreeRTOS
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     kernel.
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     details. You should have received a copy of the GNU General Public License
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     and the FreeRTOS license exception along with FreeRTOS; if not it can be
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     viewed here: http://www.freertos.org/a00114.html and also obtained by
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     writing to Real Time Engineers Ltd., contact details for whom are available
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     on the FreeRTOS WEB site.
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     1 tab == 4 spaces!
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     ***************************************************************************
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *                                                                       *
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *    Having a problem?  Start by reading the FAQ "My application does   *
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *    not run, what could be wrong?"                                     *
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *                                                                       *
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *    http://www.FreeRTOS.org/FAQHelp.html                               *
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****      *                                                                       *
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     ***************************************************************************
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     http://www.FreeRTOS.org - Documentation, books, training, latest versions,
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     license and Real Time Engineers Ltd. contact details.
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     including FreeRTOS+Trace - an indispensable productivity tool, and our new
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     fully thread aware and reentrant UDP/IP stack.
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     http://www.OpenRTOS.com - Real Time Engineers ltd license FreeRTOS to High
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     Integrity Systems, who sell the code with commercial support,
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     indemnification and middleware, under the OpenRTOS brand.
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     http://www.SafeRTOS.com - High Integrity Systems also provide a safety
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     engineered and independently SIL3 certified version for use in safety and
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****     mission critical applications that require provable dependability.
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** */
+  74:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*-----------------------------------------------------------
+  76:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  * Implementation of functions defined in portable.h for the ARM CM3 port.
+  77:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  *----------------------------------------------------------*/
+  78:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /* Scheduler includes. */
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #include "FreeRTOS.h"
+  81:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #include "task.h"
+  82:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /* For backward compatibility, ensure configKERNEL_INTERRUPT_PRIORITY is
+  84:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** defined.  The value should also ensure backward compatibility.
+  85:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** FreeRTOS.org versions prior to V4.4.0 did not include this definition. */
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #ifndef configKERNEL_INTERRUPT_PRIORITY
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	#define configKERNEL_INTERRUPT_PRIORITY 255
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #endif
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+  90:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #ifndef configSYSTICK_CLOCK_HZ
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	#define configSYSTICK_CLOCK_HZ configCPU_CLOCK_HZ
+  92:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #endif
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /* Constants required to manipulate the core.  Registers first... */
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #define portNVIC_SYSTICK_CTRL_REG			( * ( ( volatile unsigned long * ) 0xe000e010 ) )
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #define portNVIC_SYSTICK_LOAD_REG			( * ( ( volatile unsigned long * ) 0xe000e014 ) )
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #define portNVIC_SYSTICK_CURRENT_VALUE_REG	( * ( ( volatile unsigned long * ) 0xe000e018 ) )
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #define portNVIC_INT_CTRL_REG				( * ( ( volatile unsigned long * ) 0xe000ed04 ) )
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #define portNVIC_SYSPRI2_REG				( * ( ( volatile unsigned long * ) 0xe000ed20 ) )
+ 100:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /* ...then bits in the registers. */
+ 101:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #define portNVIC_SYSTICK_CLK_BIT			( 1UL << 2UL )
+ 102:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #define portNVIC_SYSTICK_INT_BIT			( 1UL << 1UL )
+ 103:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #define portNVIC_SYSTICK_ENABLE_BIT			( 1UL << 0UL )
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #define portNVIC_SYSTICK_COUNT_FLAG_BIT		( 1UL << 16UL )
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #define portNVIC_PENDSVSET_BIT				( 1UL << 28UL )
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #define portNVIC_PENDSVCLEAR_BIT 			( 1UL << 27UL )
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #define portNVIC_PEND_SYSTICK_CLEAR_BIT		( 1UL << 25UL )
+ 108:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #define portNVIC_PENDSV_PRI				( ( ( unsigned long ) configKERNEL_INTERRUPT_PRIORITY ) << 16UL )
+ 110:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #define portNVIC_SYSTICK_PRI			( ( ( unsigned long ) configKERNEL_INTERRUPT_PRIORITY ) << 24UL )
+ 111:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 112:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /* Constants required to set up the initial stack. */
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #define portINITIAL_XPSR			( 0x01000000 )
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /* The priority used by the kernel is assigned to a variable to make access
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** from inline assembler easier. */
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** const unsigned long ulKernelPriority = configKERNEL_INTERRUPT_PRIORITY;
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /* Each task maintains its own interrupt status in the critical nesting
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** variable. */
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** static unsigned portBASE_TYPE uxCriticalNesting = 0xaaaaaaaa;
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 123:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*
+ 124:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  * Setup the timer to generate the tick interrupts.  The implementation in this
+ 125:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  * file is weak to allow application writers to change the timer used to
+ 126:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  * generate the tick interrupt.
+ 127:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  */
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** void vPortSetupTimerInterrupt( void );
+ 129:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*
+ 131:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  * Exception handlers.
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  */
+ 133:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** void xPortPendSVHandler( void ) __attribute__ (( naked ));
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** void xPortSysTickHandler( void );
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** void vPortSVCHandler( void ) __attribute__ (( naked ));
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  * Start first task is a separate function so it can be tested in isolation.
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  */
+ 140:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** static void prvPortStartFirstTask( void ) __attribute__ (( naked ));
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 142:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*-----------------------------------------------------------*/
+ 143:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 144:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*
+ 145:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  * The number of SysTick increments that make up one tick period.
+ 146:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  */
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #if configUSE_TICKLESS_IDLE == 1
+ 148:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	static unsigned long ulTimerReloadValueForOneTick = 0;
+ 149:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #endif
+ 150:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 151:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*
+ 152:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  * The maximum number of tick periods that can be suppressed is limited by the
+ 153:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  * 24 bit resolution of the SysTick timer.
+ 154:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  */
+ 155:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #if configUSE_TICKLESS_IDLE == 1
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	static unsigned long xMaximumPossibleSuppressedTicks = 0;
+ 157:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #endif /* configUSE_TICKLESS_IDLE */
+ 158:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 159:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*
+ 160:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  * Compensate for the CPU cycles that pass while the SysTick is stopped (low
+ 161:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  * power functionality only.
+ 162:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  */
+ 163:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #if configUSE_TICKLESS_IDLE == 1
+ 164:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	static unsigned long ulStoppedTimerCompensation = 0;
+ 165:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #endif /* configUSE_TICKLESS_IDLE */
+ 166:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 167:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*-----------------------------------------------------------*/
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 169:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  * See header file for description.
+ 171:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  */
+ 172:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** portSTACK_TYPE *pxPortInitialiseStack( portSTACK_TYPE *pxTopOfStack, pdTASK_CODE pxCode, void *pvPa
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+ 174:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	/* Simulate the stack frame as it would be created by a context switch
+ 175:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	interrupt. */
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	pxTopOfStack--; /* Offset added to account for the way the MCU uses the stack on entry/exit of int
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	*pxTopOfStack = portINITIAL_XPSR;	/* xPSR */
+ 178:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	pxTopOfStack--;
+ 179:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	*pxTopOfStack = ( portSTACK_TYPE ) pxCode;	/* PC */
+ 180:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	pxTopOfStack--;
+ 181:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	*pxTopOfStack = 0;	/* LR */
+ 182:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	pxTopOfStack -= 5;	/* R12, R3, R2 and R1. */
+ 183:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	*pxTopOfStack = ( portSTACK_TYPE ) pvParameters;	/* R0 */
+ 184:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	pxTopOfStack -= 8;	/* R11, R10, R9, R8, R7, R6, R5 and R4. */
+ 185:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	return pxTopOfStack;
+ 187:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** }
+ 188:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*-----------------------------------------------------------*/
+ 189:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** void vPortSVCHandler( void )
+ 191:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+ 192:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	__asm volatile (
+ 193:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					"	ldr	r3, pxCurrentTCBConst2		\n" /* Restore the context. */
+ 194:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					"	ldr r1, [r3]					\n" /* Use pxCurrentTCBConst to get the pxCurrentTCB address. */
+ 195:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					"	ldr r0, [r1]					\n" /* The first item in pxCurrentTCB is the task top of stack. */
+ 196:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					"	ldmia r0!, {r4-r11}				\n" /* Pop the registers that are not automatically saved on exceptio
+ 197:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					"	msr psp, r0						\n" /* Restore the task stack pointer. */
+ 198:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					"	mov r0, #0 						\n"
+ 199:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					"	msr	basepri, r0					\n"
+ 200:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					"	orr r14, #0xd					\n"
+ 201:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					"	bx r14							\n"
+ 202:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					"									\n"
+ 203:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					"	.align 2						\n"
+ 204:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					"pxCurrentTCBConst2: .word pxCurrentTCB				\n"
+ 205:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				);
+ 206:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** }
+ 207:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*-----------------------------------------------------------*/
+ 208:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 209:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** static void prvPortStartFirstTask( void )
+ 210:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+  25              		.loc 1 210 0
+  26              		.cfi_startproc
+  27              		@ Naked Function: prologue and epilogue provided by programmer.
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+ 211:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	__asm volatile(
+  30              		.loc 1 211 0
+  31              	@ 211 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC
+  32 0000 5248     		 ldr r0, =0xE000ED08 	
+  33 0002 0068     	 ldr r0, [r0] 			
+  34 0004 0068     	 ldr r0, [r0] 			
+  35 0006 80F30888 	 msr msp, r0			
+  36 000a 62B6     	 cpsie i				
+  37 000c 00DF     	 svc 0					
+  38 000e 00BF     	 nop					
+  39              	
+  40              	@ 0 "" 2
+ 212:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					" ldr r0, =0xE000ED08 	\n" /* Use the NVIC offset register to locate the stack. */
+ 213:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					" ldr r0, [r0] 			\n"
+ 214:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					" ldr r0, [r0] 			\n"
+ 215:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					" msr msp, r0			\n" /* Set the msp back to the start of the stack. */
+ 216:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					" cpsie i				\n" /* Globally enable interrupts. */
+ 217:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					" svc 0					\n" /* System call to start first task. */
+ 218:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 					" nop					\n"
+ 219:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				);
+ 220:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** }
+  41              		.loc 1 220 0
+  42              		.thumb
+  43              		.cfi_endproc
+  44              	.LFE2:
+  46              		.align	1
+  47              		.global	pxPortInitialiseStack
+  48              		.thumb
+  49              		.thumb_func
+  51              	pxPortInitialiseStack:
+  52              	.LFB0:
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+  53              		.loc 1 173 0
+  54              		.cfi_startproc
+  55              		@ args = 0, pretend = 0, frame = 0
+  56              		@ frame_needed = 0, uses_anonymous_args = 0
+  57              		@ link register save eliminated.
+  58              	.LVL0:
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	*pxTopOfStack = portINITIAL_XPSR;	/* xPSR */
+  59              		.loc 1 177 0
+  60 0010 4FF08073 		mov	r3, #16777216
+ 179:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	*pxTopOfStack = ( portSTACK_TYPE ) pxCode;	/* PC */
+  61              		.loc 1 179 0
+  62 0014 00E90A00 		stmdb	r0, {r1, r3}
+  63              	.LVL1:
+ 181:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	*pxTopOfStack = 0;	/* LR */
+  64              		.loc 1 181 0
+  65 0018 0023     		movs	r3, #0
+  66 001a 40F80C3C 		str	r3, [r0, #-12]
+  67              	.LVL2:
+ 183:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	*pxTopOfStack = ( portSTACK_TYPE ) pvParameters;	/* R0 */
+  68              		.loc 1 183 0
+  69 001e 40F8202C 		str	r2, [r0, #-32]
+  70              	.LVL3:
+ 187:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** }
+  71              		.loc 1 187 0
+  72 0022 4038     		subs	r0, r0, #64
+  73              	.LVL4:
+  74 0024 7047     		bx	lr
+  75              		.cfi_endproc
+  76              	.LFE0:
+  78              		.align	1
+  79              		.global	SVC_Handler
+  80              		.thumb
+  81              		.thumb_func
+  83              	SVC_Handler:
+  84              	.LFB1:
+ 191:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+  85              		.loc 1 191 0
+  86              		.cfi_startproc
+  87              		@ Naked Function: prologue and epilogue provided by programmer.
+  88              		@ args = 0, pretend = 0, frame = 0
+  89              		@ frame_needed = 0, uses_anonymous_args = 0
+ 192:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	__asm volatile (
+  90              		.loc 1 192 0
+  91              	@ 192 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC
+  92 0026 074B     			ldr	r3, pxCurrentTCBConst2		
+  93 0028 1968     		ldr r1, [r3]					
+  94 002a 0868     		ldr r0, [r1]					
+  95 002c B0E8F00F 		ldmia r0!, {r4-r11}				
+  96 0030 80F30988 		msr psp, r0						
+  97 0034 4FF00000 		mov r0, #0 						
+  98 0038 80F31188 		msr	basepri, r0					
+  99 003c 4EF00D0E 		orr r14, #0xd					
+ 100 0040 7047     		bx r14							
+ 101              										
+ 102 0042 00BF     		.align 2						
+ 103 0044 00000000 	pxCurrentTCBConst2: .word pxCurrentTCB				
+ 104              	
+ 105              	@ 0 "" 2
+ 206:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** }
+ 106              		.loc 1 206 0
+ 107              		.thumb
+ 108              		.cfi_endproc
+ 109              	.LFE1:
+ 111              		.align	1
+ 112              		.global	vPortEndScheduler
+ 113              		.thumb
+ 114              		.thumb_func
+ 116              	vPortEndScheduler:
+ 117              	.LFB4:
+ 221:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*-----------------------------------------------------------*/
+ 222:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 223:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*
+ 224:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  * See header file for description.
+ 225:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  */
+ 226:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** portBASE_TYPE xPortStartScheduler( void )
+ 227:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+ 228:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	/* configMAX_SYSCALL_INTERRUPT_PRIORITY must not be set to 0.
+ 229:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html */
+ 230:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	configASSERT( configMAX_SYSCALL_INTERRUPT_PRIORITY );
+ 231:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 232:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	/* Make PendSV, CallSV and SysTick the same priroity as the kernel. */
+ 233:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	portNVIC_SYSPRI2_REG |= portNVIC_PENDSV_PRI;
+ 234:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	portNVIC_SYSPRI2_REG |= portNVIC_SYSTICK_PRI;
+ 235:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 236:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	/* Start the timer that generates the tick ISR.  Interrupts are disabled
+ 237:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	here already. */
+ 238:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	vPortSetupTimerInterrupt();
+ 239:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 240:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	/* Initialise the critical nesting count ready for the first task. */
+ 241:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	uxCriticalNesting = 0;
+ 242:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 243:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	/* Start the first task. */
+ 244:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	prvPortStartFirstTask();
+ 245:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 246:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	/* Should not get here! */
+ 247:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	return 0;
+ 248:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** }
+ 249:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*-----------------------------------------------------------*/
+ 250:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 251:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** void vPortEndScheduler( void )
+ 252:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+ 118              		.loc 1 252 0
+ 119              		.cfi_startproc
+ 120              		@ args = 0, pretend = 0, frame = 0
+ 121              		@ frame_needed = 0, uses_anonymous_args = 0
+ 122              		@ link register save eliminated.
+ 123 0048 7047     		bx	lr
+ 124              		.cfi_endproc
+ 125              	.LFE4:
+ 127              		.align	1
+ 128              		.global	vPortYield
+ 129              		.thumb
+ 130              		.thumb_func
+ 132              	vPortYield:
+ 133              	.LFB5:
+ 253:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	/* It is unlikely that the CM3 port will require this function as there
+ 254:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	is nothing to return to.  */
+ 255:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** }
+ 256:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*-----------------------------------------------------------*/
+ 257:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 258:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** void vPortYield( void )
+ 259:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+ 134              		.loc 1 259 0
+ 135              		.cfi_startproc
+ 136              		@ args = 0, pretend = 0, frame = 0
+ 137              		@ frame_needed = 0, uses_anonymous_args = 0
+ 138              		@ link register save eliminated.
+ 260:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	/* Set a PendSV to request a context switch. */
+ 261:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT;
+ 139              		.loc 1 261 0
+ 140 004a 044B     		ldr	r3, .L6
+ 141 004c 4FF08052 		mov	r2, #268435456
+ 142 0050 1A60     		str	r2, [r3, #0]
+ 262:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 263:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	/* Barriers are normally not required but do ensure the code is completely
+ 264:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	within the specified behaviour for the architecture. */
+ 265:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	__asm volatile( "dsb" );
+ 143              		.loc 1 265 0
+ 144              	@ 265 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC
+ 145 0052 BFF34F8F 		dsb
+ 146              	@ 0 "" 2
+ 266:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	__asm volatile( "isb" );
+ 147              		.loc 1 266 0
+ 148              	@ 266 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC
+ 149 0056 BFF36F8F 		isb
+ 150              	@ 0 "" 2
+ 151              		.thumb
+ 152 005a 7047     		bx	lr
+ 153              	.L7:
+ 154              		.align	2
+ 155              	.L6:
+ 156 005c 04ED00E0 		.word	-536810236
+ 157              		.cfi_endproc
+ 158              	.LFE5:
+ 160              		.align	1
+ 161              		.global	ulPortSetInterruptMask
+ 162              		.thumb
+ 163              		.thumb_func
+ 165              	ulPortSetInterruptMask:
+ 166              	.LFB8:
+ 267:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** }
+ 268:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*-----------------------------------------------------------*/
+ 269:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 270:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** void vPortEnterCritical( void )
+ 271:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+ 272:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	portDISABLE_INTERRUPTS();
+ 273:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	uxCriticalNesting++;
+ 274:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	__asm volatile( "dsb" );
+ 275:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	__asm volatile( "isb" );
+ 276:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** }
+ 277:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*-----------------------------------------------------------*/
+ 278:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 279:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** void vPortExitCritical( void )
+ 280:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+ 281:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	uxCriticalNesting--;
+ 282:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	if( uxCriticalNesting == 0 )
+ 283:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	{
+ 284:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		portENABLE_INTERRUPTS();
+ 285:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	}
+ 286:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** }
+ 287:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*-----------------------------------------------------------*/
+ 288:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 289:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** __attribute__(( naked )) unsigned long ulPortSetInterruptMask( void )
+ 290:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+ 167              		.loc 1 290 0
+ 168              		.cfi_startproc
+ 169              		@ Naked Function: prologue and epilogue provided by programmer.
+ 170              		@ args = 0, pretend = 0, frame = 0
+ 171              		@ frame_needed = 0, uses_anonymous_args = 0
+ 291:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	__asm volatile														\
+ 172              		.loc 1 291 0
+ 173              	@ 291 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC
+ 174 0060 EFF31180 			mrs r0, basepri											
+ 175 0064 4FF05001 		mov r1, #80												
+ 176 0068 81F31188 		msr basepri, r1											
+ 177 006c 7047     		bx lr													
+ 178              	
+ 179              	@ 0 "" 2
+ 292:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	(																	\
+ 293:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		"	mrs r0, basepri											\n" \
+ 294:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		"	mov r1, %0												\n"	\
+ 295:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		"	msr basepri, r1											\n" \
+ 296:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		"	bx lr													\n" \
+ 297:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		:: "i" ( configMAX_SYSCALL_INTERRUPT_PRIORITY ) : "r0", "r1"	\
+ 298:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	);
+ 299:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 300:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	/* This return will not be reached but is necessary to prevent compiler
+ 301:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	warnings. */
+ 302:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	return 0;
+ 303:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** }
+ 180              		.loc 1 303 0
+ 181              		.thumb
+ 182 006e 0020     		movs	r0, #0
+ 183              		.cfi_endproc
+ 184              	.LFE8:
+ 186              		.align	1
+ 187              		.global	vPortEnterCritical
+ 188              		.thumb
+ 189              		.thumb_func
+ 191              	vPortEnterCritical:
+ 192              	.LFB6:
+ 271:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+ 193              		.loc 1 271 0
+ 194              		.cfi_startproc
+ 195              		@ args = 0, pretend = 0, frame = 0
+ 196              		@ frame_needed = 0, uses_anonymous_args = 0
+ 197 0070 08B5     		push	{r3, lr}
+ 198              	.LCFI0:
+ 199              		.cfi_def_cfa_offset 8
+ 200              		.cfi_offset 3, -8
+ 201              		.cfi_offset 14, -4
+ 272:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	portDISABLE_INTERRUPTS();
+ 202              		.loc 1 272 0
+ 203 0072 FFF7FEFF 		bl	ulPortSetInterruptMask
+ 204              	.LVL5:
+ 273:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	uxCriticalNesting++;
+ 205              		.loc 1 273 0
+ 206 0076 044B     		ldr	r3, .L10
+ 207 0078 1A68     		ldr	r2, [r3, #0]
+ 208 007a 0132     		adds	r2, r2, #1
+ 209 007c 1A60     		str	r2, [r3, #0]
+ 274:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	__asm volatile( "dsb" );
+ 210              		.loc 1 274 0
+ 211              	@ 274 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC
+ 212 007e BFF34F8F 		dsb
+ 213              	@ 0 "" 2
+ 275:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	__asm volatile( "isb" );
+ 214              		.loc 1 275 0
+ 215              	@ 275 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC
+ 216 0082 BFF36F8F 		isb
+ 217              	@ 0 "" 2
+ 218              		.thumb
+ 219 0086 08BD     		pop	{r3, pc}
+ 220              	.L11:
+ 221              		.align	2
+ 222              	.L10:
+ 223 0088 00000000 		.word	.LANCHOR0
+ 224              		.cfi_endproc
+ 225              	.LFE6:
+ 227              		.align	1
+ 228              		.global	vPortClearInterruptMask
+ 229              		.thumb
+ 230              		.thumb_func
+ 232              	vPortClearInterruptMask:
+ 233              	.LFB9:
+ 304:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*-----------------------------------------------------------*/
+ 305:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 306:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** __attribute__(( naked )) void vPortClearInterruptMask( unsigned long ulNewMaskValue )
+ 307:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+ 234              		.loc 1 307 0
+ 235              		.cfi_startproc
+ 236              		@ Naked Function: prologue and epilogue provided by programmer.
+ 237              		@ args = 0, pretend = 0, frame = 0
+ 238              		@ frame_needed = 0, uses_anonymous_args = 0
+ 239              	.LVL6:
+ 308:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	__asm volatile													\
+ 240              		.loc 1 308 0
+ 241              	@ 308 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC
+ 242 008c 80F31188 			msr basepri, r0										
+ 243 0090 7047     		bx lr												
+ 244              	
+ 245              	@ 0 "" 2
+ 246              	.LVL7:
+ 309:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	(																\
+ 310:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		"	msr basepri, r0										\n"	\
+ 311:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		"	bx lr												\n" \
+ 312:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		:::"r0"														\
+ 313:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	);
+ 314:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 315:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	/* Just to avoid compiler warnings. */
+ 316:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	( void ) ulNewMaskValue;
+ 317:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** }
+ 247              		.loc 1 317 0
+ 248              		.thumb
+ 249              		.cfi_endproc
+ 250              	.LFE9:
+ 252              		.align	1
+ 253              		.global	vPortExitCritical
+ 254              		.thumb
+ 255              		.thumb_func
+ 257              	vPortExitCritical:
+ 258              	.LFB7:
+ 280:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+ 259              		.loc 1 280 0
+ 260              		.cfi_startproc
+ 261              		@ args = 0, pretend = 0, frame = 0
+ 262              		@ frame_needed = 0, uses_anonymous_args = 0
+ 263              		@ link register save eliminated.
+ 281:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	uxCriticalNesting--;
+ 264              		.loc 1 281 0
+ 265 0092 044B     		ldr	r3, .L15
+ 266 0094 1868     		ldr	r0, [r3, #0]
+ 267 0096 0138     		subs	r0, r0, #1
+ 268 0098 1860     		str	r0, [r3, #0]
+ 282:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	if( uxCriticalNesting == 0 )
+ 269              		.loc 1 282 0
+ 270 009a 08B9     		cbnz	r0, .L13
+ 286:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** }
+ 271              		.loc 1 286 0
+ 284:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		portENABLE_INTERRUPTS();
+ 272              		.loc 1 284 0
+ 273 009c FFF7FEBF 		b	vPortClearInterruptMask
+ 274              	.LVL8:
+ 275              	.L13:
+ 276 00a0 7047     		bx	lr
+ 277              	.L16:
+ 278 00a2 00BF     		.align	2
+ 279              	.L15:
+ 280 00a4 00000000 		.word	.LANCHOR0
+ 281              		.cfi_endproc
+ 282              	.LFE7:
+ 284              		.align	1
+ 285              		.global	PendSV_Handler
+ 286              		.thumb
+ 287              		.thumb_func
+ 289              	PendSV_Handler:
+ 290              	.LFB10:
+ 318:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*-----------------------------------------------------------*/
+ 319:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 320:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** void xPortPendSVHandler( void )
+ 321:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+ 291              		.loc 1 321 0
+ 292              		.cfi_startproc
+ 293              		@ Naked Function: prologue and epilogue provided by programmer.
+ 294              		@ args = 0, pretend = 0, frame = 0
+ 295              		@ frame_needed = 0, uses_anonymous_args = 0
+ 322:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	/* This is a naked function. */
+ 323:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 324:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	__asm volatile
+ 296              		.loc 1 324 0
+ 297              	@ 324 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC
+ 298 00a8 EFF30980 			mrs r0, psp							
+ 299              											
+ 300 00ac 0C4B     		ldr	r3, pxCurrentTCBConst			
+ 301 00ae 1A68     		ldr	r2, [r3]						
+ 302              											
+ 303 00b0 20E9F00F 		stmdb r0!, {r4-r11}					
+ 304 00b4 1060     		str r0, [r2]						
+ 305              											
+ 306 00b6 2DE90840 		stmdb sp!, {r3, r14}				
+ 307 00ba 4FF05000 		mov r0, #80							
+ 308 00be 80F31188 		msr basepri, r0						
+ 309 00c2 FFF7FEFF 		bl vTaskSwitchContext				
+ 310 00c6 4FF00000 		mov r0, #0							
+ 311 00ca 80F31188 		msr basepri, r0						
+ 312 00ce BDE80840 		ldmia sp!, {r3, r14}				
+ 313              											
+ 314 00d2 1968     		ldr r1, [r3]						
+ 315 00d4 0868     		ldr r0, [r1]						
+ 316 00d6 B0E8F00F 		ldmia r0!, {r4-r11}					
+ 317 00da 80F30988 		msr psp, r0							
+ 318 00de 7047     		bx r14								
+ 319              											
+ 320              		.align 2							
+ 321 00e0 00000000 	pxCurrentTCBConst: .word pxCurrentTCB	
+ 322              	
+ 323              	@ 0 "" 2
+ 325:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	(
+ 326:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	mrs r0, psp							\n"
+ 327:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"										\n"
+ 328:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	ldr	r3, pxCurrentTCBConst			\n" /* Get the location of the current TCB. */
+ 329:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	ldr	r2, [r3]						\n"
+ 330:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"										\n"
+ 331:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	stmdb r0!, {r4-r11}					\n" /* Save the remaining registers. */
+ 332:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	str r0, [r2]						\n" /* Save the new top of stack into the first member of the TCB. */
+ 333:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"										\n"
+ 334:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	stmdb sp!, {r3, r14}				\n"
+ 335:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	mov r0, %0							\n"
+ 336:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	msr basepri, r0						\n"
+ 337:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	bl vTaskSwitchContext				\n"
+ 338:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	mov r0, #0							\n"
+ 339:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	msr basepri, r0						\n"
+ 340:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	ldmia sp!, {r3, r14}				\n"
+ 341:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"										\n"	/* Restore the context, including the critical nesting count. */
+ 342:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	ldr r1, [r3]						\n"
+ 343:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	ldr r0, [r1]						\n" /* The first item in pxCurrentTCB is the task top of stack. */
+ 344:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	ldmia r0!, {r4-r11}					\n" /* Pop the registers. */
+ 345:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	msr psp, r0							\n"
+ 346:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	bx r14								\n"
+ 347:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"										\n"
+ 348:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"	.align 2							\n"
+ 349:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	"pxCurrentTCBConst: .word pxCurrentTCB	\n"
+ 350:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	::"i"(configMAX_SYSCALL_INTERRUPT_PRIORITY)
+ 351:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	);
+ 352:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** }
+ 324              		.loc 1 352 0
+ 325              		.thumb
+ 326              		.cfi_endproc
+ 327              	.LFE10:
+ 329              		.align	1
+ 330              		.global	SysTick_Handler
+ 331              		.thumb
+ 332              		.thumb_func
+ 334              	SysTick_Handler:
+ 335              	.LFB11:
+ 353:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*-----------------------------------------------------------*/
+ 354:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 355:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** void xPortSysTickHandler( void )
+ 356:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+ 336              		.loc 1 356 0
+ 337              		.cfi_startproc
+ 338              		@ args = 0, pretend = 0, frame = 0
+ 339              		@ frame_needed = 0, uses_anonymous_args = 0
+ 340 00e4 08B5     		push	{r3, lr}
+ 341              	.LCFI1:
+ 342              		.cfi_def_cfa_offset 8
+ 343              		.cfi_offset 3, -8
+ 344              		.cfi_offset 14, -4
+ 357:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	/* If using preemption, also force a context switch. */
+ 358:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	#if configUSE_PREEMPTION == 1
+ 359:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT;
+ 345              		.loc 1 359 0
+ 346 00e6 064B     		ldr	r3, .L19
+ 347 00e8 4FF08052 		mov	r2, #268435456
+ 348 00ec 1A60     		str	r2, [r3, #0]
+ 360:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	#endif
+ 361:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 362:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	/* Only reset the systick load register if configUSE_TICKLESS_IDLE is set to
+ 363:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	1.  If it is set to 0 tickless idle is not being used.  If it is set to a
+ 364:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	value other than 0 or 1 then a timer other than the SysTick is being used
+ 365:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	to generate the tick interrupt. */
+ 366:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	#if configUSE_TICKLESS_IDLE == 1
+ 367:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		portNVIC_SYSTICK_LOAD_REG = ulTimerReloadValueForOneTick;
+ 368:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	#endif
+ 369:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 370:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	( void ) portSET_INTERRUPT_MASK_FROM_ISR();
+ 349              		.loc 1 370 0
+ 350 00ee FFF7FEFF 		bl	ulPortSetInterruptMask
+ 351              	.LVL9:
+ 371:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	{
+ 372:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		vTaskIncrementTick();
+ 352              		.loc 1 372 0
+ 353 00f2 FFF7FEFF 		bl	vTaskIncrementTick
+ 354              	.LVL10:
+ 373:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	}
+ 374:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	portCLEAR_INTERRUPT_MASK_FROM_ISR( 0 );
+ 355              		.loc 1 374 0
+ 356 00f6 0020     		movs	r0, #0
+ 375:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** }
+ 357              		.loc 1 375 0
+ 358 00f8 BDE80840 		pop	{r3, lr}
+ 374:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	portCLEAR_INTERRUPT_MASK_FROM_ISR( 0 );
+ 359              		.loc 1 374 0
+ 360 00fc FFF7FEBF 		b	vPortClearInterruptMask
+ 361              	.LVL11:
+ 362              	.L20:
+ 363              		.align	2
+ 364              	.L19:
+ 365 0100 04ED00E0 		.word	-536810236
+ 366              		.cfi_endproc
+ 367              	.LFE11:
+ 369              		.align	1
+ 370              		.weak	vPortSetupTimerInterrupt
+ 371              		.thumb
+ 372              		.thumb_func
+ 374              	vPortSetupTimerInterrupt:
+ 375              	.LFB12:
+ 376:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*-----------------------------------------------------------*/
+ 377:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 378:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #if configUSE_TICKLESS_IDLE == 1
+ 379:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 380:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	__attribute__((weak)) void vPortSuppressTicksAndSleep( portTickType xExpectedIdleTime )
+ 381:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	{
+ 382:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	unsigned long ulReloadValue, ulCompleteTickPeriods, ulCompletedSysTickIncrements;
+ 383:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	portTickType xModifiableIdleTime;
+ 384:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 385:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		/* Make sure the SysTick reload value does not overflow the counter. */
+ 386:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		if( xExpectedIdleTime > xMaximumPossibleSuppressedTicks )
+ 387:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		{
+ 388:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			xExpectedIdleTime = xMaximumPossibleSuppressedTicks;
+ 389:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		}
+ 390:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 391:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		/* Calculate the reload value required to wait xExpectedIdleTime
+ 392:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		tick periods.  -1 is used because this code will execute part way
+ 393:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		through one of the tick periods, and the fraction of a tick period is
+ 394:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		accounted for later. */
+ 395:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		ulReloadValue = ( ulTimerReloadValueForOneTick * ( xExpectedIdleTime - 1UL ) );
+ 396:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		if( ulReloadValue > ulStoppedTimerCompensation )
+ 397:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		{
+ 398:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			ulReloadValue -= ulStoppedTimerCompensation;
+ 399:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		}
+ 400:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 401:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		/* Stop the SysTick momentarily.  The time the SysTick is stopped for
+ 402:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		is accounted for as best it can be, but using the tickless mode will
+ 403:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		inevitably result in some tiny drift of the time maintained by the
+ 404:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		kernel with respect to calendar time. */
+ 405:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		portNVIC_SYSTICK_CTRL_REG = portNVIC_SYSTICK_CLK_BIT | portNVIC_SYSTICK_INT_BIT;
+ 406:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 407:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		/* Adjust the reload value to take into account that the current time
+ 408:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		slice is already partially complete. */
+ 409:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		ulReloadValue += ( portNVIC_SYSTICK_LOAD_REG - ( portNVIC_SYSTICK_LOAD_REG - portNVIC_SYSTICK_CUR
+ 410:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 411:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		/* Enter a critical section but don't use the taskENTER_CRITICAL()
+ 412:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		method as that will mask interrupts that should exit sleep mode. */
+ 413:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		__asm volatile( "cpsid i" );
+ 414:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 415:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		/* If a context switch is pending or a task is waiting for the scheduler
+ 416:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		to be unsuspended then abandon the low power entry. */
+ 417:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		if( eTaskConfirmSleepModeStatus() == eAbortSleep )
+ 418:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		{
+ 419:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			/* Restart SysTick. */
+ 420:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			portNVIC_SYSTICK_CTRL_REG = portNVIC_SYSTICK_CLK_BIT | portNVIC_SYSTICK_INT_BIT | portNVIC_SYSTI
+ 421:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 422:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			/* Re-enable interrupts - see comments above the cpsid instruction()
+ 423:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			above. */
+ 424:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			__asm volatile( "cpsie i" );
+ 425:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		}
+ 426:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		else
+ 427:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		{
+ 428:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			/* Set the new reload value. */
+ 429:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			portNVIC_SYSTICK_LOAD_REG = ulReloadValue;
+ 430:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 431:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			/* Clear the SysTick count flag and set the count value back to
+ 432:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			zero. */
+ 433:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			portNVIC_SYSTICK_CURRENT_VALUE_REG = 0UL;
+ 434:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 435:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			/* Restart SysTick. */
+ 436:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			portNVIC_SYSTICK_CTRL_REG = portNVIC_SYSTICK_CLK_BIT | portNVIC_SYSTICK_INT_BIT | portNVIC_SYSTI
+ 437:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 438:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			/* Sleep until something happens.  configPRE_SLEEP_PROCESSING() can
+ 439:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			set its parameter to 0 to indicate that its implementation contains
+ 440:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			its own wait for interrupt or wait for event instruction, and so wfi
+ 441:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			should not be executed again.  However, the original expected idle
+ 442:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			time variable must remain unmodified, so a copy is taken. */
+ 443:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			xModifiableIdleTime = xExpectedIdleTime;
+ 444:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			configPRE_SLEEP_PROCESSING( xModifiableIdleTime );
+ 445:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			if( xModifiableIdleTime > 0 )
+ 446:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			{
+ 447:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				__asm volatile( "wfi" );
+ 448:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				__asm volatile( "dsb" );
+ 449:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				__asm volatile( "isb" );
+ 450:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			}
+ 451:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			configPOST_SLEEP_PROCESSING( xExpectedIdleTime );
+ 452:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 453:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			/* Stop SysTick.  Again, the time the SysTick is stopped for is
+ 454:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			accounted for as best it can be, but using the tickless mode will
+ 455:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			inevitably result in some tiny drift of the time maintained by the
+ 456:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			kernel with respect to calendar time. */
+ 457:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			portNVIC_SYSTICK_CTRL_REG = portNVIC_SYSTICK_CLK_BIT | portNVIC_SYSTICK_INT_BIT;
+ 458:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 459:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			/* Re-enable interrupts - see comments above the cpsid instruction()
+ 460:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			above. */
+ 461:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			__asm volatile( "cpsie i" );
+ 462:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 463:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			if( ( portNVIC_SYSTICK_CTRL_REG & portNVIC_SYSTICK_COUNT_FLAG_BIT ) != 0 )
+ 464:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			{
+ 465:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				/* The tick interrupt has already executed, and the SysTick
+ 466:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				count reloaded with the portNVIC_SYSTICK_LOAD_REG value.
+ 467:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				Reset the portNVIC_SYSTICK_LOAD_REG with whatever remains of
+ 468:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				this tick period. */
+ 469:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				portNVIC_SYSTICK_LOAD_REG = ulTimerReloadValueForOneTick - ( ulReloadValue - portNVIC_SYSTICK_C
+ 470:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 471:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				/* The tick interrupt handler will already have pended the tick
+ 472:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				processing in the kernel.  As the pending tick will be
+ 473:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				processed as soon as this function exits, the tick value
+ 474:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				maintained by the tick is stepped forward by one less than the
+ 475:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				time spent waiting. */
+ 476:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				ulCompleteTickPeriods = xExpectedIdleTime - 1UL;
+ 477:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			}
+ 478:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			else
+ 479:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			{
+ 480:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				/* Something other than the tick interrupt ended the sleep.
+ 481:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				Work out how long the sleep lasted. */
+ 482:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				ulCompletedSysTickIncrements = ( xExpectedIdleTime * ulTimerReloadValueForOneTick ) - portNVIC_
+ 483:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 484:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				/* How many complete tick periods passed while the processor
+ 485:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				was waiting? */
+ 486:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				ulCompleteTickPeriods = ulCompletedSysTickIncrements / ulTimerReloadValueForOneTick;
+ 487:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 488:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				/* The reload value is set to whatever fraction of a single tick
+ 489:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				period remains. */
+ 490:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 				portNVIC_SYSTICK_LOAD_REG = ( ( ulCompleteTickPeriods + 1 ) * ulTimerReloadValueForOneTick ) - 
+ 491:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			}
+ 492:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 493:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			/* Restart SysTick so it runs from portNVIC_SYSTICK_LOAD_REG
+ 494:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			again, then set portNVIC_SYSTICK_LOAD_REG back to its standard
+ 495:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			value. */
+ 496:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			portNVIC_SYSTICK_CURRENT_VALUE_REG = 0UL;
+ 497:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			portNVIC_SYSTICK_CTRL_REG = portNVIC_SYSTICK_CLK_BIT | portNVIC_SYSTICK_INT_BIT | portNVIC_SYSTI
+ 498:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 499:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 			vTaskStepTick( ulCompleteTickPeriods );
+ 500:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		}
+ 501:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	}
+ 502:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 503:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** #endif /* #if configUSE_TICKLESS_IDLE */
+ 504:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*-----------------------------------------------------------*/
+ 505:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 506:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** /*
+ 507:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  * Setup the systick timer to generate the tick interrupts at the required
+ 508:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  * frequency.
+ 509:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c ****  */
+ 510:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** __attribute__(( weak )) void vPortSetupTimerInterrupt( void )
+ 511:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+ 376              		.loc 1 511 0
+ 377              		.cfi_startproc
+ 378              		@ args = 0, pretend = 0, frame = 0
+ 379              		@ frame_needed = 0, uses_anonymous_args = 0
+ 380              		@ link register save eliminated.
+ 512:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	/* Calculate the constants required to configure the tick interrupt. */
+ 513:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	#if configUSE_TICKLESS_IDLE == 1
+ 514:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	{
+ 515:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		ulTimerReloadValueForOneTick = ( configSYSTICK_CLOCK_HZ / configTICK_RATE_HZ ) - 1UL;
+ 516:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		xMaximumPossibleSuppressedTicks = 0xffffffUL / ( ( configSYSTICK_CLOCK_HZ / configTICK_RATE_HZ ) 
+ 517:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 		ulStoppedTimerCompensation = 45UL / ( configCPU_CLOCK_HZ / configSYSTICK_CLOCK_HZ );
+ 518:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	}
+ 519:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	#endif /* configUSE_TICKLESS_IDLE */
+ 520:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 
+ 521:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	/* Configure SysTick to interrupt at the requested rate. */
+ 522:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	portNVIC_SYSTICK_LOAD_REG = ( configSYSTICK_CLOCK_HZ / configTICK_RATE_HZ ) - 1UL;;
+ 381              		.loc 1 522 0
+ 382 0104 034A     		ldr	r2, .L22
+ 383 0106 044B     		ldr	r3, .L22+4
+ 384 0108 1A60     		str	r2, [r3, #0]
+ 523:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	portNVIC_SYSTICK_CTRL_REG = portNVIC_SYSTICK_CLK_BIT | portNVIC_SYSTICK_INT_BIT | portNVIC_SYSTICK
+ 385              		.loc 1 523 0
+ 386 010a 0722     		movs	r2, #7
+ 387 010c 43F8042C 		str	r2, [r3, #-4]
+ 388 0110 7047     		bx	lr
+ 389              	.L23:
+ 390 0112 00BF     		.align	2
+ 391              	.L22:
+ 392 0114 3F190100 		.word	71999
+ 393 0118 14E000E0 		.word	-536813548
+ 394              		.cfi_endproc
+ 395              	.LFE12:
+ 397              		.align	1
+ 398              		.global	xPortStartScheduler
+ 399              		.thumb
+ 400              		.thumb_func
+ 402              	xPortStartScheduler:
+ 403              	.LFB3:
+ 227:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+ 404              		.loc 1 227 0
+ 405              		.cfi_startproc
+ 406              		@ args = 0, pretend = 0, frame = 0
+ 407              		@ frame_needed = 0, uses_anonymous_args = 0
+ 233:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	portNVIC_SYSPRI2_REG |= portNVIC_PENDSV_PRI;
+ 408              		.loc 1 233 0
+ 409 011c 094B     		ldr	r3, .L25
+ 227:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** {
+ 410              		.loc 1 227 0
+ 411 011e 10B5     		push	{r4, lr}
+ 412              	.LCFI2:
+ 413              		.cfi_def_cfa_offset 8
+ 414              		.cfi_offset 4, -8
+ 415              		.cfi_offset 14, -4
+ 233:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	portNVIC_SYSPRI2_REG |= portNVIC_PENDSV_PRI;
+ 416              		.loc 1 233 0
+ 417 0120 1A68     		ldr	r2, [r3, #0]
+ 241:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	uxCriticalNesting = 0;
+ 418              		.loc 1 241 0
+ 419 0122 0024     		movs	r4, #0
+ 233:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	portNVIC_SYSPRI2_REG |= portNVIC_PENDSV_PRI;
+ 420              		.loc 1 233 0
+ 421 0124 42F47002 		orr	r2, r2, #15728640
+ 422 0128 1A60     		str	r2, [r3, #0]
+ 234:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	portNVIC_SYSPRI2_REG |= portNVIC_SYSTICK_PRI;
+ 423              		.loc 1 234 0
+ 424 012a 1A68     		ldr	r2, [r3, #0]
+ 425 012c 42F07042 		orr	r2, r2, #-268435456
+ 426 0130 1A60     		str	r2, [r3, #0]
+ 238:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	vPortSetupTimerInterrupt();
+ 427              		.loc 1 238 0
+ 428 0132 FFF7FEFF 		bl	vPortSetupTimerInterrupt
+ 429              	.LVL12:
+ 241:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	uxCriticalNesting = 0;
+ 430              		.loc 1 241 0
+ 431 0136 044B     		ldr	r3, .L25+4
+ 432 0138 1C60     		str	r4, [r3, #0]
+ 244:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** 	prvPortStartFirstTask();
+ 433              		.loc 1 244 0
+ 434 013a FFF761FF 		bl	prvPortStartFirstTask
+ 435              	.LVL13:
+ 248:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c **** }
+ 436              		.loc 1 248 0
+ 437 013e 2046     		mov	r0, r4
+ 438 0140 10BD     		pop	{r4, pc}
+ 439              	.L26:
+ 440 0142 00BF     		.align	2
+ 441              	.L25:
+ 442 0144 20ED00E0 		.word	-536810208
+ 443 0148 00000000 		.word	.LANCHOR0
+ 444              		.cfi_endproc
+ 445              	.LFE3:
+ 447              		.global	ulKernelPriority
+ 448              		.section	.rodata
+ 449              		.align	2
+ 452              	ulKernelPriority:
+ 453 0000 F0000000 		.word	240
+ 454              		.data
+ 455              		.align	2
+ 456              		.set	.LANCHOR0,. + 0
+ 459              	uxCriticalNesting:
+ 460 0000 AAAAAAAA 		.word	-1431655766
+ 461              		.text
+ 462              	.Letext0:
+ 463              		.file 2 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/include/p
+ 464              		.file 3 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/
+ 465              		.file 4 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/include/t
+DEFINED SYMBOLS
+                            *ABS*:00000000 port.c
+     /tmp/cc2Ojghp.s:18     .text:00000000 $t
+     /tmp/cc2Ojghp.s:22     .text:00000000 prvPortStartFirstTask
+     /tmp/cc2Ojghp.s:51     .text:00000010 pxPortInitialiseStack
+     /tmp/cc2Ojghp.s:83     .text:00000026 SVC_Handler
+     /tmp/cc2Ojghp.s:103    .text:00000044 pxCurrentTCBConst2
+     /tmp/cc2Ojghp.s:103    .text:00000044 $d
+     /tmp/cc2Ojghp.s:111    .text:00000048 $t
+     /tmp/cc2Ojghp.s:116    .text:00000048 vPortEndScheduler
+     /tmp/cc2Ojghp.s:132    .text:0000004a vPortYield
+     /tmp/cc2Ojghp.s:156    .text:0000005c $d
+     /tmp/cc2Ojghp.s:160    .text:00000060 $t
+     /tmp/cc2Ojghp.s:165    .text:00000060 ulPortSetInterruptMask
+     /tmp/cc2Ojghp.s:191    .text:00000070 vPortEnterCritical
+     /tmp/cc2Ojghp.s:223    .text:00000088 $d
+     /tmp/cc2Ojghp.s:227    .text:0000008c $t
+     /tmp/cc2Ojghp.s:232    .text:0000008c vPortClearInterruptMask
+     /tmp/cc2Ojghp.s:257    .text:00000092 vPortExitCritical
+     /tmp/cc2Ojghp.s:280    .text:000000a4 $d
+     /tmp/cc2Ojghp.s:284    .text:000000a8 $t
+     /tmp/cc2Ojghp.s:289    .text:000000a8 PendSV_Handler
+     /tmp/cc2Ojghp.s:321    .text:000000e0 pxCurrentTCBConst
+     /tmp/cc2Ojghp.s:321    .text:000000e0 $d
+     /tmp/cc2Ojghp.s:329    .text:000000e4 $t
+     /tmp/cc2Ojghp.s:334    .text:000000e4 SysTick_Handler
+     /tmp/cc2Ojghp.s:365    .text:00000100 $d
+     /tmp/cc2Ojghp.s:369    .text:00000104 $t
+     /tmp/cc2Ojghp.s:374    .text:00000104 vPortSetupTimerInterrupt
+     /tmp/cc2Ojghp.s:392    .text:00000114 $d
+     /tmp/cc2Ojghp.s:397    .text:0000011c $t
+     /tmp/cc2Ojghp.s:402    .text:0000011c xPortStartScheduler
+     /tmp/cc2Ojghp.s:442    .text:00000144 $d
+     /tmp/cc2Ojghp.s:452    .rodata:00000000 ulKernelPriority
+     /tmp/cc2Ojghp.s:449    .rodata:00000000 $d
+     /tmp/cc2Ojghp.s:455    .data:00000000 $d
+     /tmp/cc2Ojghp.s:459    .data:00000000 uxCriticalNesting
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.stddef.h.40.50cf36416e06376af8a9dca28536f2e4
+                           .group:00000000 wm4.projdefs.h.76.214f319a5937dae232f0ee2912b07e1d
+                           .group:00000000 wm4.FreeRTOSConfig.h.79.5ce50f1f04ae36d94916fa991aa4b8d7
+                           .group:00000000 wm4.portmacro.h.77.0810e0eb8c6edf5adf0d27242484a945
+                           .group:00000000 wm4.portable.h.332.e25bf3f97ebf50a0f90736144cb8c3f8
+                           .group:00000000 wm4.mpu_wrappers.h.76.3abcfc7ebb6d78909ee0b4ad2f20f282
+                           .group:00000000 wm4.FreeRTOS.h.159.741cbf33489b2c951994722716e9692e
+                           .group:00000000 wm4.list.h.105.6a6307ce3396638a078c02ff83387dc6
+                           .group:00000000 wm4.task.h.94.33ec4de8c3f825901c54e6cf58507761
+
+UNDEFINED SYMBOLS
+pxCurrentTCB
+vTaskSwitchContext
+vTaskIncrementTick

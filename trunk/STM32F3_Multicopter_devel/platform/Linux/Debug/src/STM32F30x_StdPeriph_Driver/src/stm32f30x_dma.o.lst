@@ -1,0 +1,1406 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"stm32f30x_dma.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.global	DMA_DeInit
+  20              		.thumb
+  21              		.thumb_func
+  23              	DMA_DeInit:
+  24              	.LFB111:
+  25              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /**
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   ******************************************************************************
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @file    stm32f30x_dma.c
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @author  MCD Application Team
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @version V1.0.1
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @date    23-October-2012
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @brief   This file provides firmware functions to manage the following 
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *          functionalities of the Direct Memory Access controller (DMA):
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *           + Initialization and Configuration
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *           + Data Counter
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *           + Interrupts and flags management
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   @verbatim
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****  ===============================================================================
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****                        ##### How to use this driver #####
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****  ===============================================================================
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     [..]
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     (#) Enable The DMA controller clock using 
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE) function for DMA1 or 
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         using RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA2, ENABLE) function for DMA2.
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     (#) Enable and configure the peripheral to be connected to the DMA channel
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         (except for internal SRAM / FLASH memories: no initialization is necessary). 
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     (#) For a given Channel, program the Source and Destination addresses,  
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         the transfer Direction, the Buffer Size, the Peripheral and Memory
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         Incrementation mode and Data Size, the Circular or Normal mode, 
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         the channel transfer Priority and the Memory-to-Memory transfer 
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         mode (if needed) using the DMA_Init() function.
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     (#) Enable the NVIC and the corresponding interrupt(s) using the function 
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         DMA_ITConfig() if you need to use DMA interrupts.
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     (#) Enable the DMA channel using the DMA_Cmd() function.
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     (#) Activate the needed channel Request using PPP_DMACmd() function for
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         any PPP peripheral except internal SRAM and FLASH (ie. SPI, USART ...)
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         The function allowing this operation is provided in each PPP peripheral
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         driver (ie. SPI_DMACmd for SPI peripheral).
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     (#) Optionally, you can configure the number of data to be transferred
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         when the channel is disabled (ie. after each Transfer Complete event
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         or when a Transfer Error occurs) using the function DMA_SetCurrDataCounter().
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         And you can get the number of remaining data to be transferred using 
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         the function DMA_GetCurrDataCounter() at run time (when the DMA channel is
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         enabled and running).
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     (#) To control DMA events you can use one of the following two methods:
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         (##) Check on DMA channel flags using the function DMA_GetFlagStatus().
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         (##) Use DMA interrupts through the function DMA_ITConfig() at initialization
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****              phase and DMA_GetITStatus() function into interrupt routines in
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****              communication phase.
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****              After checking on a flag you should clear it using DMA_ClearFlag()
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****              function. And after checking on an interrupt event you should 
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****              clear it using DMA_ClearITPendingBit() function.
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   @endverbatim
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   ******************************************************************************
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @attention
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * You may not use this file except in compliance with the License.
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * You may obtain a copy of the License at:
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * Unless required by applicable law or agreed to in writing, software 
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * See the License for the specific language governing permissions and
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * limitations under the License.
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   ******************************************************************************
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /* Includes ------------------------------------------------------------------*/
+  74:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** #include "stm32f30x_dma.h"
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+  76:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /** @addtogroup STM32F30x_StdPeriph_Driver
+  77:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @{
+  78:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /** @defgroup DMA 
+  81:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @brief DMA driver modules
+  82:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @{
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+  84:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+  85:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /* Private typedef -----------------------------------------------------------*/
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /* Private define ------------------------------------------------------------*/
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** #define CCR_CLEAR_MASK   ((uint32_t)0xFFFF800F) /* DMA Channel config registers Masks */
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** #define FLAG_Mask        ((uint32_t)0x10000000) /* DMA2 FLAG mask */
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+  90:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /* DMA1 Channelx interrupt pending bit masks */
+  92:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** #define DMA1_CHANNEL1_IT_MASK    ((uint32_t)(DMA_ISR_GIF1 | DMA_ISR_TCIF1 | DMA_ISR_HTIF1 | DMA_ISR
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** #define DMA1_CHANNEL2_IT_MASK    ((uint32_t)(DMA_ISR_GIF2 | DMA_ISR_TCIF2 | DMA_ISR_HTIF2 | DMA_ISR
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** #define DMA1_CHANNEL3_IT_MASK    ((uint32_t)(DMA_ISR_GIF3 | DMA_ISR_TCIF3 | DMA_ISR_HTIF3 | DMA_ISR
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** #define DMA1_CHANNEL4_IT_MASK    ((uint32_t)(DMA_ISR_GIF4 | DMA_ISR_TCIF4 | DMA_ISR_HTIF4 | DMA_ISR
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** #define DMA1_CHANNEL5_IT_MASK    ((uint32_t)(DMA_ISR_GIF5 | DMA_ISR_TCIF5 | DMA_ISR_HTIF5 | DMA_ISR
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** #define DMA1_CHANNEL6_IT_MASK    ((uint32_t)(DMA_ISR_GIF6 | DMA_ISR_TCIF6 | DMA_ISR_HTIF6 | DMA_ISR
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** #define DMA1_CHANNEL7_IT_MASK    ((uint32_t)(DMA_ISR_GIF7 | DMA_ISR_TCIF7 | DMA_ISR_HTIF7 | DMA_ISR
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 100:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /* DMA2 Channelx interrupt pending bit masks */
+ 101:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** #define DMA2_CHANNEL1_IT_MASK    ((uint32_t)(DMA_ISR_GIF1 | DMA_ISR_TCIF1 | DMA_ISR_HTIF1 | DMA_ISR
+ 102:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** #define DMA2_CHANNEL2_IT_MASK    ((uint32_t)(DMA_ISR_GIF2 | DMA_ISR_TCIF2 | DMA_ISR_HTIF2 | DMA_ISR
+ 103:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** #define DMA2_CHANNEL3_IT_MASK    ((uint32_t)(DMA_ISR_GIF3 | DMA_ISR_TCIF3 | DMA_ISR_HTIF3 | DMA_ISR
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** #define DMA2_CHANNEL4_IT_MASK    ((uint32_t)(DMA_ISR_GIF4 | DMA_ISR_TCIF4 | DMA_ISR_HTIF4 | DMA_ISR
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** #define DMA2_CHANNEL5_IT_MASK    ((uint32_t)(DMA_ISR_GIF5 | DMA_ISR_TCIF5 | DMA_ISR_HTIF5 | DMA_ISR
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /* Private macro -------------------------------------------------------------*/
+ 108:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /* Private variables ---------------------------------------------------------*/
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /* Private function prototypes -----------------------------------------------*/
+ 110:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /* Private functions ---------------------------------------------------------*/
+ 111:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 112:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /** @defgroup DMA_Private_Functions 
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @{
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /** @defgroup  DMA_Group1 Initialization and Configuration functions
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****  *  @brief   Initialization and Configuration functions
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****  *
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** @verbatim
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****  ===============================================================================
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****               ##### Initialization and Configuration functions #####
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****  ===============================================================================
+ 123:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     [..] This subsection provides functions allowing to initialize the DMA channel 
+ 124:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          source and destination addresses, incrementation and data sizes, transfer 
+ 125:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          direction, buffer size, circular/normal mode selection, memory-to-memory 
+ 126:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          mode selection and channel priority value.
+ 127:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     [..] The DMA_Init() function follows the DMA configuration procedures as described 
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          in reference manual (RM00316).
+ 129:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** @endverbatim
+ 131:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @{
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+ 133:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /**
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @brief  Deinitializes the DMAy Channelx registers to their default reset
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *         values.
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @param  DMAy_Channelx: where y can be 1 or 2 to select the DMA and 
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *         x can be 1 to 7 for DMA1 and 1 to 5 for DMA2 to select the DMA Channel.
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @retval None
+ 140:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** void DMA_DeInit(DMA_Channel_TypeDef* DMAy_Channelx)
+ 142:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** {
+  26              		.loc 1 142 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  31              	.LVL0:
+ 143:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Check the parameters */
+ 144:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_ALL_PERIPH(DMAy_Channelx));
+ 145:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 146:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Disable the selected DMAy Channelx */
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMAy_Channelx->CCR &= (uint16_t)(~DMA_CCR_EN);
+  32              		.loc 1 147 0
+  33 0000 0268     		ldr	r2, [r0, #0]
+  34 0002 4FF6FE73 		movw	r3, #65534
+  35 0006 1340     		ands	r3, r3, r2
+  36 0008 0360     		str	r3, [r0, #0]
+ 148:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 149:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Reset DMAy Channelx control register */
+ 150:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMAy_Channelx->CCR  = 0;
+  37              		.loc 1 150 0
+  38 000a 0023     		movs	r3, #0
+  39 000c 0360     		str	r3, [r0, #0]
+ 151:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 152:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Reset DMAy Channelx remaining bytes register */
+ 153:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMAy_Channelx->CNDTR = 0;
+  40              		.loc 1 153 0
+  41 000e 4360     		str	r3, [r0, #4]
+ 154:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 155:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Reset DMAy Channelx peripheral address register */
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMAy_Channelx->CPAR  = 0;
+  42              		.loc 1 156 0
+  43 0010 8360     		str	r3, [r0, #8]
+ 157:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 158:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Reset DMAy Channelx memory address register */
+ 159:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMAy_Channelx->CMAR = 0;
+  44              		.loc 1 159 0
+  45 0012 C360     		str	r3, [r0, #12]
+ 160:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 161:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   if (DMAy_Channelx == DMA1_Channel1)
+  46              		.loc 1 161 0
+  47 0014 2C4B     		ldr	r3, .L19
+  48 0016 9842     		cmp	r0, r3
+  49 0018 00D1     		bne	.L2
+  50 001a 26E0     		b	.L14
+  51              	.L2:
+ 162:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 163:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Reset interrupt pending bits for DMA1 Channel1 */
+ 164:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMA1->IFCR |= DMA1_CHANNEL1_IT_MASK;
+ 165:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 166:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else if (DMAy_Channelx == DMA1_Channel2)
+  52              		.loc 1 166 0
+  53 001c 2B4B     		ldr	r3, .L19+4
+  54 001e 9842     		cmp	r0, r3
+  55 0020 00D1     		bne	.L4
+  56 0022 2CE0     		b	.L15
+  57              	.L4:
+ 167:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Reset interrupt pending bits for DMA1 Channel2 */
+ 169:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMA1->IFCR |= DMA1_CHANNEL2_IT_MASK;
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 171:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else if (DMAy_Channelx == DMA1_Channel3)
+  58              		.loc 1 171 0
+  59 0024 2A4B     		ldr	r3, .L19+8
+  60 0026 9842     		cmp	r0, r3
+  61 0028 00D1     		bne	.L5
+  62 002a 32E0     		b	.L16
+  63              	.L5:
+ 172:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Reset interrupt pending bits for DMA1 Channel3 */
+ 174:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMA1->IFCR |= DMA1_CHANNEL3_IT_MASK;
+ 175:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else if (DMAy_Channelx == DMA1_Channel4)
+  64              		.loc 1 176 0
+  65 002c 294B     		ldr	r3, .L19+12
+  66 002e 9842     		cmp	r0, r3
+  67 0030 00D1     		bne	.L6
+  68 0032 38E0     		b	.L17
+  69              	.L6:
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 178:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Reset interrupt pending bits for DMA1 Channel4 */
+ 179:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMA1->IFCR |= DMA1_CHANNEL4_IT_MASK;
+ 180:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 181:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else if (DMAy_Channelx == DMA1_Channel5)
+  70              		.loc 1 181 0
+  71 0034 284B     		ldr	r3, .L19+16
+  72 0036 9842     		cmp	r0, r3
+  73 0038 00D1     		bne	.L7
+  74 003a 3EE0     		b	.L18
+  75              	.L7:
+ 182:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 183:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Reset interrupt pending bits for DMA1 Channel5 */
+ 184:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMA1->IFCR |= DMA1_CHANNEL5_IT_MASK;
+ 185:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else if (DMAy_Channelx == DMA1_Channel6)
+  76              		.loc 1 186 0
+  77 003c 274B     		ldr	r3, .L19+20
+  78 003e 9842     		cmp	r0, r3
+  79 0040 06D1     		bne	.L8
+ 187:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 188:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Reset interrupt pending bits for DMA1 Channel6 */
+ 189:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMA1->IFCR |= DMA1_CHANNEL6_IT_MASK;
+  80              		.loc 1 189 0
+  81 0042 53F8682C 		ldr	r2, [r3, #-104]
+  82 0046 42F47002 		orr	r2, r2, #15728640
+  83 004a 43F8682C 		str	r2, [r3, #-104]
+  84 004e 7047     		bx	lr
+  85              	.L8:
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 191:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else if (DMAy_Channelx == DMA1_Channel7)
+  86              		.loc 1 191 0
+  87 0050 234B     		ldr	r3, .L19+24
+  88 0052 9842     		cmp	r0, r3
+  89 0054 06D1     		bne	.L9
+ 192:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 193:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Reset interrupt pending bits for DMA1 Channel7 */
+ 194:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMA1->IFCR |= DMA1_CHANNEL7_IT_MASK;
+  90              		.loc 1 194 0
+  91 0056 53F87C2C 		ldr	r2, [r3, #-124]
+  92 005a 42F07062 		orr	r2, r2, #251658240
+  93 005e 43F87C2C 		str	r2, [r3, #-124]
+  94 0062 7047     		bx	lr
+  95              	.L9:
+ 195:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 196:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else if (DMAy_Channelx == DMA2_Channel1)
+  96              		.loc 1 196 0
+  97 0064 1F4B     		ldr	r3, .L19+28
+  98 0066 9842     		cmp	r0, r3
+  99 0068 06D1     		bne	.L10
+ 100              	.L14:
+ 197:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 198:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Reset interrupt pending bits for DMA2 Channel1 */
+ 199:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMA2->IFCR |= DMA2_CHANNEL1_IT_MASK;
+ 101              		.loc 1 199 0
+ 102 006a 53F8042C 		ldr	r2, [r3, #-4]
+ 103 006e 42F00F02 		orr	r2, r2, #15
+ 104 0072 43F8042C 		str	r2, [r3, #-4]
+ 105 0076 7047     		bx	lr
+ 106              	.L10:
+ 200:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 201:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else if (DMAy_Channelx == DMA2_Channel2)
+ 107              		.loc 1 201 0
+ 108 0078 1B4B     		ldr	r3, .L19+32
+ 109 007a 9842     		cmp	r0, r3
+ 110 007c 06D1     		bne	.L11
+ 111              	.L15:
+ 202:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 203:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Reset interrupt pending bits for DMA2 Channel2 */
+ 204:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMA2->IFCR |= DMA2_CHANNEL2_IT_MASK;
+ 112              		.loc 1 204 0
+ 113 007e 53F8182C 		ldr	r2, [r3, #-24]
+ 114 0082 42F0F002 		orr	r2, r2, #240
+ 115 0086 43F8182C 		str	r2, [r3, #-24]
+ 116 008a 7047     		bx	lr
+ 117              	.L11:
+ 205:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 206:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else if (DMAy_Channelx == DMA2_Channel3)
+ 118              		.loc 1 206 0
+ 119 008c 174B     		ldr	r3, .L19+36
+ 120 008e 9842     		cmp	r0, r3
+ 121 0090 06D1     		bne	.L12
+ 122              	.L16:
+ 207:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 208:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Reset interrupt pending bits for DMA2 Channel3 */
+ 209:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMA2->IFCR |= DMA2_CHANNEL3_IT_MASK;
+ 123              		.loc 1 209 0
+ 124 0092 53F82C2C 		ldr	r2, [r3, #-44]
+ 125 0096 42F47062 		orr	r2, r2, #3840
+ 126 009a 43F82C2C 		str	r2, [r3, #-44]
+ 127 009e 7047     		bx	lr
+ 128              	.L12:
+ 210:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 211:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else if (DMAy_Channelx == DMA2_Channel4)
+ 129              		.loc 1 211 0
+ 130 00a0 134B     		ldr	r3, .L19+40
+ 131 00a2 9842     		cmp	r0, r3
+ 132 00a4 06D1     		bne	.L13
+ 133              	.L17:
+ 212:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 213:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Reset interrupt pending bits for DMA2 Channel4 */
+ 214:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMA2->IFCR |= DMA2_CHANNEL4_IT_MASK;
+ 134              		.loc 1 214 0
+ 135 00a6 53F8402C 		ldr	r2, [r3, #-64]
+ 136 00aa 42F47042 		orr	r2, r2, #61440
+ 137 00ae 43F8402C 		str	r2, [r3, #-64]
+ 138 00b2 7047     		bx	lr
+ 139              	.L13:
+ 215:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 216:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else
+ 217:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   { 
+ 218:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     if (DMAy_Channelx == DMA2_Channel5)
+ 140              		.loc 1 218 0
+ 141 00b4 0F4B     		ldr	r3, .L19+44
+ 142 00b6 9842     		cmp	r0, r3
+ 143 00b8 05D1     		bne	.L1
+ 144              	.L18:
+ 219:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     {
+ 220:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****       /* Reset interrupt pending bits for DMA2 Channel5 */
+ 221:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****       DMA2->IFCR |= DMA2_CHANNEL5_IT_MASK;
+ 145              		.loc 1 221 0
+ 146 00ba 53F8542C 		ldr	r2, [r3, #-84]
+ 147 00be 42F47022 		orr	r2, r2, #983040
+ 148 00c2 43F8542C 		str	r2, [r3, #-84]
+ 149              	.L1:
+ 150 00c6 7047     		bx	lr
+ 151              	.L20:
+ 152              		.align	2
+ 153              	.L19:
+ 154 00c8 08000240 		.word	1073872904
+ 155 00cc 1C000240 		.word	1073872924
+ 156 00d0 30000240 		.word	1073872944
+ 157 00d4 44000240 		.word	1073872964
+ 158 00d8 58000240 		.word	1073872984
+ 159 00dc 6C000240 		.word	1073873004
+ 160 00e0 80000240 		.word	1073873024
+ 161 00e4 08040240 		.word	1073873928
+ 162 00e8 1C040240 		.word	1073873948
+ 163 00ec 30040240 		.word	1073873968
+ 164 00f0 44040240 		.word	1073873988
+ 165 00f4 58040240 		.word	1073874008
+ 166              		.cfi_endproc
+ 167              	.LFE111:
+ 169              		.align	1
+ 170              		.global	DMA_Init
+ 171              		.thumb
+ 172              		.thumb_func
+ 174              	DMA_Init:
+ 175              	.LFB112:
+ 222:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     }
+ 223:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 224:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** }
+ 225:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 226:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /**
+ 227:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @brief  Initializes the DMAy Channelx according to the specified parameters 
+ 228:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *         in the DMA_InitStruct.
+ 229:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @param  DMAy_Channelx: where y can be 1 or 2 to select the DMA and 
+ 230:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *         x can be 1 to 7 for DMA1 and 1 to 5 for DMA2 to select the DMA Channel.
+ 231:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @param  DMA_InitStruct: pointer to a DMA_InitTypeDef structure that contains
+ 232:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *         the configuration information for the specified DMA Channel.
+ 233:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @retval None
+ 234:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+ 235:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** void DMA_Init(DMA_Channel_TypeDef* DMAy_Channelx, DMA_InitTypeDef* DMA_InitStruct)
+ 236:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** {
+ 176              		.loc 1 236 0
+ 177              		.cfi_startproc
+ 178              		@ args = 0, pretend = 0, frame = 0
+ 179              		@ frame_needed = 0, uses_anonymous_args = 0
+ 180              	.LVL1:
+ 181 00f8 70B5     		push	{r4, r5, r6, lr}
+ 182              	.LCFI0:
+ 183              		.cfi_def_cfa_offset 16
+ 184              		.cfi_offset 4, -16
+ 185              		.cfi_offset 5, -12
+ 186              		.cfi_offset 6, -8
+ 187              		.cfi_offset 14, -4
+ 237:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   uint32_t tmpreg = 0;
+ 238:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 239:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Check the parameters */
+ 240:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_ALL_PERIPH(DMAy_Channelx));
+ 241:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_DIR(DMA_InitStruct->DMA_DIR));
+ 242:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_PERIPHERAL_INC_STATE(DMA_InitStruct->DMA_PeripheralInc));
+ 243:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_MEMORY_INC_STATE(DMA_InitStruct->DMA_MemoryInc));
+ 244:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_PERIPHERAL_DATA_SIZE(DMA_InitStruct->DMA_PeripheralDataSize));
+ 245:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_MEMORY_DATA_SIZE(DMA_InitStruct->DMA_MemoryDataSize));
+ 246:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_MODE(DMA_InitStruct->DMA_Mode));
+ 247:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_PRIORITY(DMA_InitStruct->DMA_Priority));
+ 248:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_M2M_STATE(DMA_InitStruct->DMA_M2M));
+ 249:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 250:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /*--------------------------- DMAy Channelx CCR Configuration ----------------*/
+ 251:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Get the DMAy_Channelx CCR value */
+ 252:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   tmpreg = DMAy_Channelx->CCR;
+ 253:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 254:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Clear MEM2MEM, PL, MSIZE, PSIZE, MINC, PINC, CIRC and DIR bits */
+ 255:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   tmpreg &= CCR_CLEAR_MASK;
+ 256:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 257:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Configure DMAy Channelx: data transfer, data size, priority level and mode */
+ 258:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Set DIR bit according to DMA_DIR value */
+ 259:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Set CIRC bit according to DMA_Mode value */
+ 260:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Set PINC bit according to DMA_PeripheralInc value */
+ 261:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Set MINC bit according to DMA_MemoryInc value */
+ 262:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Set PSIZE bits according to DMA_PeripheralDataSize value */
+ 263:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Set MSIZE bits according to DMA_MemoryDataSize value */
+ 264:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Set PL bits according to DMA_Priority value */
+ 265:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Set the MEM2MEM bit according to DMA_M2M value */
+ 266:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   tmpreg |= DMA_InitStruct->DMA_DIR | DMA_InitStruct->DMA_Mode |
+ 188              		.loc 1 266 0
+ 189 00fa 8C68     		ldr	r4, [r1, #8]
+ 190 00fc 0D6A     		ldr	r5, [r1, #32]
+ 252:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   tmpreg = DMAy_Channelx->CCR;
+ 191              		.loc 1 252 0
+ 192 00fe 0668     		ldr	r6, [r0, #0]
+ 193              	.LVL2:
+ 194              		.loc 1 266 0
+ 195 0100 45EA0402 		orr	r2, r5, r4
+ 196 0104 0C69     		ldr	r4, [r1, #16]
+ 267:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****             DMA_InitStruct->DMA_PeripheralInc | DMA_InitStruct->DMA_MemoryInc |
+ 268:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****             DMA_InitStruct->DMA_PeripheralDataSize | DMA_InitStruct->DMA_MemoryDataSize |
+ 269:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****             DMA_InitStruct->DMA_Priority | DMA_InitStruct->DMA_M2M;
+ 197              		.loc 1 269 0
+ 198 0106 8B6A     		ldr	r3, [r1, #40]
+ 266:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   tmpreg |= DMA_InitStruct->DMA_DIR | DMA_InitStruct->DMA_Mode |
+ 199              		.loc 1 266 0
+ 200 0108 2243     		orrs	r2, r2, r4
+ 267:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****             DMA_InitStruct->DMA_PeripheralInc | DMA_InitStruct->DMA_MemoryInc |
+ 201              		.loc 1 267 0
+ 202 010a 4C69     		ldr	r4, [r1, #20]
+ 255:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   tmpreg &= CCR_CLEAR_MASK;
+ 203              		.loc 1 255 0
+ 204 010c 26F4FF46 		bic	r6, r6, #32640
+ 205              	.LVL3:
+ 267:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****             DMA_InitStruct->DMA_PeripheralInc | DMA_InitStruct->DMA_MemoryInc |
+ 206              		.loc 1 267 0
+ 207 0110 2243     		orrs	r2, r2, r4
+ 208 0112 8C69     		ldr	r4, [r1, #24]
+ 255:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   tmpreg &= CCR_CLEAR_MASK;
+ 209              		.loc 1 255 0
+ 210 0114 26F07006 		bic	r6, r6, #112
+ 211              	.LVL4:
+ 267:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****             DMA_InitStruct->DMA_PeripheralInc | DMA_InitStruct->DMA_MemoryInc |
+ 212              		.loc 1 267 0
+ 213 0118 2243     		orrs	r2, r2, r4
+ 268:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****             DMA_InitStruct->DMA_PeripheralDataSize | DMA_InitStruct->DMA_MemoryDataSize |
+ 214              		.loc 1 268 0
+ 215 011a CC69     		ldr	r4, [r1, #28]
+ 216 011c 1443     		orrs	r4, r4, r2
+ 217 011e 4A6A     		ldr	r2, [r1, #36]
+ 218 0120 2243     		orrs	r2, r2, r4
+ 219              		.loc 1 269 0
+ 220 0122 1343     		orrs	r3, r3, r2
+ 266:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   tmpreg |= DMA_InitStruct->DMA_DIR | DMA_InitStruct->DMA_Mode |
+ 221              		.loc 1 266 0
+ 222 0124 3343     		orrs	r3, r3, r6
+ 223              	.LVL5:
+ 270:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 271:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Write to DMAy Channelx CCR */
+ 272:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMAy_Channelx->CCR = tmpreg;
+ 224              		.loc 1 272 0
+ 225 0126 0360     		str	r3, [r0, #0]
+ 273:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 274:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /*--------------------------- DMAy Channelx CNDTR Configuration --------------*/
+ 275:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Write to DMAy Channelx CNDTR */
+ 276:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMAy_Channelx->CNDTR = DMA_InitStruct->DMA_BufferSize;
+ 226              		.loc 1 276 0
+ 227 0128 8B89     		ldrh	r3, [r1, #12]
+ 228              	.LVL6:
+ 229 012a 4360     		str	r3, [r0, #4]
+ 277:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 278:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /*--------------------------- DMAy Channelx CPAR Configuration ---------------*/
+ 279:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Write to DMAy Channelx CPAR */
+ 280:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMAy_Channelx->CPAR = DMA_InitStruct->DMA_PeripheralBaseAddr;
+ 230              		.loc 1 280 0
+ 231 012c 0B68     		ldr	r3, [r1, #0]
+ 232 012e 8360     		str	r3, [r0, #8]
+ 281:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 282:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /*--------------------------- DMAy Channelx CMAR Configuration ---------------*/
+ 283:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Write to DMAy Channelx CMAR */
+ 284:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMAy_Channelx->CMAR = DMA_InitStruct->DMA_MemoryBaseAddr;
+ 233              		.loc 1 284 0
+ 234 0130 4B68     		ldr	r3, [r1, #4]
+ 235 0132 C360     		str	r3, [r0, #12]
+ 236 0134 70BD     		pop	{r4, r5, r6, pc}
+ 237              		.cfi_endproc
+ 238              	.LFE112:
+ 240              		.align	1
+ 241              		.global	DMA_StructInit
+ 242              		.thumb
+ 243              		.thumb_func
+ 245              	DMA_StructInit:
+ 246              	.LFB113:
+ 285:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** }
+ 286:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 287:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /**
+ 288:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @brief  Fills each DMA_InitStruct member with its default value.
+ 289:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @param  DMA_InitStruct: pointer to a DMA_InitTypeDef structure which will
+ 290:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *         be initialized.
+ 291:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @retval None
+ 292:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+ 293:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** void DMA_StructInit(DMA_InitTypeDef* DMA_InitStruct)
+ 294:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** {
+ 247              		.loc 1 294 0
+ 248              		.cfi_startproc
+ 249              		@ args = 0, pretend = 0, frame = 0
+ 250              		@ frame_needed = 0, uses_anonymous_args = 0
+ 251              		@ link register save eliminated.
+ 252              	.LVL7:
+ 295:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /*-------------- Reset DMA init structure parameters values ------------------*/
+ 296:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Initialize the DMA_PeripheralBaseAddr member */
+ 297:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMA_InitStruct->DMA_PeripheralBaseAddr = 0;
+ 253              		.loc 1 297 0
+ 254 0136 0023     		movs	r3, #0
+ 255 0138 0360     		str	r3, [r0, #0]
+ 298:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Initialize the DMA_MemoryBaseAddr member */
+ 299:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMA_InitStruct->DMA_MemoryBaseAddr = 0;
+ 256              		.loc 1 299 0
+ 257 013a 4360     		str	r3, [r0, #4]
+ 300:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Initialize the DMA_DIR member */
+ 301:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMA_InitStruct->DMA_DIR = DMA_DIR_PeripheralSRC;
+ 258              		.loc 1 301 0
+ 259 013c 8360     		str	r3, [r0, #8]
+ 302:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Initialize the DMA_BufferSize member */
+ 303:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMA_InitStruct->DMA_BufferSize = 0;
+ 260              		.loc 1 303 0
+ 261 013e 8381     		strh	r3, [r0, #12]	@ movhi
+ 304:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Initialize the DMA_PeripheralInc member */
+ 305:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMA_InitStruct->DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+ 262              		.loc 1 305 0
+ 263 0140 0361     		str	r3, [r0, #16]
+ 306:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Initialize the DMA_MemoryInc member */
+ 307:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMA_InitStruct->DMA_MemoryInc = DMA_MemoryInc_Disable;
+ 264              		.loc 1 307 0
+ 265 0142 4361     		str	r3, [r0, #20]
+ 308:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Initialize the DMA_PeripheralDataSize member */
+ 309:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMA_InitStruct->DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+ 266              		.loc 1 309 0
+ 267 0144 8361     		str	r3, [r0, #24]
+ 310:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Initialize the DMA_MemoryDataSize member */
+ 311:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMA_InitStruct->DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+ 268              		.loc 1 311 0
+ 269 0146 C361     		str	r3, [r0, #28]
+ 312:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Initialize the DMA_Mode member */
+ 313:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMA_InitStruct->DMA_Mode = DMA_Mode_Normal;
+ 270              		.loc 1 313 0
+ 271 0148 0362     		str	r3, [r0, #32]
+ 314:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Initialize the DMA_Priority member */
+ 315:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMA_InitStruct->DMA_Priority = DMA_Priority_Low;
+ 272              		.loc 1 315 0
+ 273 014a 4362     		str	r3, [r0, #36]
+ 316:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Initialize the DMA_M2M member */
+ 317:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMA_InitStruct->DMA_M2M = DMA_M2M_Disable;
+ 274              		.loc 1 317 0
+ 275 014c 8362     		str	r3, [r0, #40]
+ 276 014e 7047     		bx	lr
+ 277              		.cfi_endproc
+ 278              	.LFE113:
+ 280              		.align	1
+ 281              		.global	DMA_Cmd
+ 282              		.thumb
+ 283              		.thumb_func
+ 285              	DMA_Cmd:
+ 286              	.LFB114:
+ 318:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** }
+ 319:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 320:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /**
+ 321:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @brief  Enables or disables the specified DMAy Channelx.
+ 322:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @param  DMAy_Channelx: where y can be 1 or 2 to select the DMA and 
+ 323:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *         x can be 1 to 7 for DMA1 and 1 to 5 for DMA2 to select the DMA Channel.
+ 324:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @param  NewState: new state of the DMAy Channelx. 
+ 325:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *         This parameter can be: ENABLE or DISABLE.
+ 326:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @retval None
+ 327:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+ 328:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** void DMA_Cmd(DMA_Channel_TypeDef* DMAy_Channelx, FunctionalState NewState)
+ 329:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** {
+ 287              		.loc 1 329 0
+ 288              		.cfi_startproc
+ 289              		@ args = 0, pretend = 0, frame = 0
+ 290              		@ frame_needed = 0, uses_anonymous_args = 0
+ 291              		@ link register save eliminated.
+ 292              	.LVL8:
+ 330:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Check the parameters */
+ 331:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_ALL_PERIPH(DMAy_Channelx));
+ 332:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 333:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 334:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   if (NewState != DISABLE)
+ 293              		.loc 1 334 0
+ 294 0150 19B1     		cbz	r1, .L24
+ 335:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 336:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Enable the selected DMAy Channelx */
+ 337:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMAy_Channelx->CCR |= DMA_CCR_EN;
+ 295              		.loc 1 337 0
+ 296 0152 0368     		ldr	r3, [r0, #0]
+ 297 0154 43F00103 		orr	r3, r3, #1
+ 298 0158 03E0     		b	.L26
+ 299              	.L24:
+ 338:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 339:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else
+ 340:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 341:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Disable the selected DMAy Channelx */
+ 342:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMAy_Channelx->CCR &= (uint16_t)(~DMA_CCR_EN);
+ 300              		.loc 1 342 0
+ 301 015a 0268     		ldr	r2, [r0, #0]
+ 302 015c 4FF6FE73 		movw	r3, #65534
+ 303 0160 1340     		ands	r3, r3, r2
+ 304              	.L26:
+ 305 0162 0360     		str	r3, [r0, #0]
+ 306 0164 7047     		bx	lr
+ 307              		.cfi_endproc
+ 308              	.LFE114:
+ 310              		.align	1
+ 311              		.global	DMA_SetCurrDataCounter
+ 312              		.thumb
+ 313              		.thumb_func
+ 315              	DMA_SetCurrDataCounter:
+ 316              	.LFB115:
+ 343:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 344:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** }
+ 345:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 346:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /**
+ 347:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @}
+ 348:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+ 349:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   
+ 350:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /** @defgroup DMA_Group2 Data Counter functions
+ 351:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****  *  @brief   Data Counter functions
+ 352:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****  *
+ 353:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** @verbatim  
+ 354:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****  ===============================================================================
+ 355:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****                       ##### Data Counter functions #####
+ 356:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****  ===============================================================================
+ 357:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     [..] This subsection provides function allowing to configure and read the buffer 
+ 358:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          size (number of data to be transferred).The DMA data counter can be written 
+ 359:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          only when the DMA channel is disabled (ie. after transfer complete event).
+ 360:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     [..] The following function can be used to write the Channel data counter value:
+ 361:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          (+) void DMA_SetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx, uint16_t DataNumber).
+ 362:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     [..]
+ 363:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     (@) It is advised to use this function rather than DMA_Init() in situations 
+ 364:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         where only the Data buffer needs to be reloaded.
+ 365:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     [..] The DMA data counter can be read to indicate the number of remaining transfers 
+ 366:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          for the relative DMA channel. This counter is decremented at the end of each 
+ 367:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          data transfer and when the transfer is complete: 
+ 368:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          (+) If Normal mode is selected: the counter is set to 0.
+ 369:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          (+) If Circular mode is selected: the counter is reloaded with the initial 
+ 370:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          value(configured before enabling the DMA channel).
+ 371:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     [..] The following function can be used to read the Channel data counter value:
+ 372:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          (+) uint16_t DMA_GetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx).
+ 373:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 374:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** @endverbatim
+ 375:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @{
+ 376:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+ 377:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 378:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /**
+ 379:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @brief  Sets the number of data units in the current DMAy Channelx transfer.
+ 380:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @param  DMAy_Channelx: where y can be 1 or 2 to select the DMA and 
+ 381:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *         x can be 1 to 7 for DMA1 and 1 to 5 for DMA2 to select the DMA Channel.
+ 382:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @param  DataNumber: The number of data units in the current DMAy Channelx
+ 383:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *         transfer.   
+ 384:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @note   This function can only be used when the DMAy_Channelx is disabled.
+ 385:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @retval None.
+ 386:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+ 387:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** void DMA_SetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx, uint16_t DataNumber)
+ 388:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** {
+ 317              		.loc 1 388 0
+ 318              		.cfi_startproc
+ 319              		@ args = 0, pretend = 0, frame = 0
+ 320              		@ frame_needed = 0, uses_anonymous_args = 0
+ 321              		@ link register save eliminated.
+ 322              	.LVL9:
+ 389:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Check the parameters */
+ 390:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_ALL_PERIPH(DMAy_Channelx));
+ 391:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 392:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /*--------------------------- DMAy Channelx CNDTR Configuration --------------*/
+ 393:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Write to DMAy Channelx CNDTR */
+ 394:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   DMAy_Channelx->CNDTR = DataNumber;
+ 323              		.loc 1 394 0
+ 324 0166 4160     		str	r1, [r0, #4]
+ 325 0168 7047     		bx	lr
+ 326              		.cfi_endproc
+ 327              	.LFE115:
+ 329              		.align	1
+ 330              		.global	DMA_GetCurrDataCounter
+ 331              		.thumb
+ 332              		.thumb_func
+ 334              	DMA_GetCurrDataCounter:
+ 335              	.LFB116:
+ 395:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** }
+ 396:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 397:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /**
+ 398:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @brief  Returns the number of remaining data units in the current
+ 399:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *         DMAy Channelx transfer.
+ 400:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @param  DMAy_Channelx: where y can be 1 or 2 to select the DMA and 
+ 401:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *         x can be 1 to 7 for DMA1 and 1 to 5 for DMA2 to select the DMA Channel.
+ 402:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @retval The number of remaining data units in the current DMAy Channelx
+ 403:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *         transfer.
+ 404:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+ 405:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** uint16_t DMA_GetCurrDataCounter(DMA_Channel_TypeDef* DMAy_Channelx)
+ 406:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** {
+ 336              		.loc 1 406 0
+ 337              		.cfi_startproc
+ 338              		@ args = 0, pretend = 0, frame = 0
+ 339              		@ frame_needed = 0, uses_anonymous_args = 0
+ 340              		@ link register save eliminated.
+ 341              	.LVL10:
+ 407:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Check the parameters */
+ 408:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_ALL_PERIPH(DMAy_Channelx));
+ 409:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Return the number of remaining data units for DMAy Channelx */
+ 410:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   return ((uint16_t)(DMAy_Channelx->CNDTR));
+ 342              		.loc 1 410 0
+ 343 016a 4068     		ldr	r0, [r0, #4]
+ 344              	.LVL11:
+ 411:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** }
+ 345              		.loc 1 411 0
+ 346 016c 80B2     		uxth	r0, r0
+ 347 016e 7047     		bx	lr
+ 348              		.cfi_endproc
+ 349              	.LFE116:
+ 351              		.align	1
+ 352              		.global	DMA_ITConfig
+ 353              		.thumb
+ 354              		.thumb_func
+ 356              	DMA_ITConfig:
+ 357              	.LFB117:
+ 412:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 413:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /**
+ 414:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @}
+ 415:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+ 416:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   
+ 417:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /** @defgroup DMA_Group3 Interrupts and flags management functions
+ 418:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****  *  @brief   Interrupts and flags management functions  
+ 419:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****  *
+ 420:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** @verbatim
+ 421:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****  ===============================================================================
+ 422:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****           ##### Interrupts and flags management functions #####
+ 423:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****  ===============================================================================
+ 424:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     [..] This subsection provides functions allowing to configure the DMA Interrupt 
+ 425:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          sources and check or clear the flags or pending bits status.
+ 426:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          The user should identify which mode will be used in his application to manage 
+ 427:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          the DMA controller events: Polling mode or Interrupt mode. 
+ 428:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   
+ 429:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *** Polling Mode ***
+ 430:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   ====================
+ 431:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     [..] Each DMA channel can be managed through 4 event Flags (y : DMA Controller 
+ 432:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          number, x : DMA channel number):
+ 433:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          (#) DMAy_FLAG_TCx : to indicate that a Transfer Complete event occurred.
+ 434:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          (#) DMAy_FLAG_HTx : to indicate that a Half-Transfer Complete event occurred.
+ 435:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          (#) DMAy_FLAG_TEx : to indicate that a Transfer Error occurred.
+ 436:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          (#) DMAy_FLAG_GLx : to indicate that at least one of the events described 
+ 437:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****              above occurred.
+ 438:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     [..]         
+ 439:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     (@) Clearing DMAy_FLAG_GLx results in clearing all other pending flags of the 
+ 440:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****         same channel (DMAy_FLAG_TCx, DMAy_FLAG_HTx and DMAy_FLAG_TEx).
+ 441:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     [..] In this Mode it is advised to use the following functions:
+ 442:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          (+) FlagStatus DMA_GetFlagStatus(uint32_t DMA_FLAG);
+ 443:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          (+) void DMA_ClearFlag(uint32_t DMA_FLAG);
+ 444:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 445:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *** Interrupt Mode ***
+ 446:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   ======================
+ 447:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     [..] Each DMA channel can be managed through 4 Interrupts:
+ 448:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     (+) Interrupt Source
+ 449:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****        (##) DMA_IT_TC: specifies the interrupt source for the Transfer Complete 
+ 450:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****             event.
+ 451:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****        (##) DMA_IT_HT: specifies the interrupt source for the Half-transfer Complete 
+ 452:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****             event.
+ 453:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****        (##) DMA_IT_TE: specifies the interrupt source for the transfer errors event.
+ 454:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****        (##) DMA_IT_GL: to indicate that at least one of the interrupts described 
+ 455:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****             above occurred.
+ 456:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     -@@- Clearing DMA_IT_GL interrupt results in clearing all other interrupts of 
+ 457:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          the same channel (DMA_IT_TCx, DMA_IT_HT and DMA_IT_TE).
+ 458:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     [..] In this Mode it is advised to use the following functions:
+ 459:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          (+) void DMA_ITConfig(DMA_Channel_TypeDef* DMAy_Channelx, uint32_t DMA_IT, FunctionalState
+ 460:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          (+) ITStatus DMA_GetITStatus(uint32_t DMA_IT);
+ 461:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****          (+) void DMA_ClearITPendingBit(uint32_t DMA_IT);
+ 462:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 463:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** @endverbatim
+ 464:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @{
+ 465:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */ 
+ 466:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 467:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /**
+ 468:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @brief  Enables or disables the specified DMAy Channelx interrupts.
+ 469:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @param  DMAy_Channelx: where y can be 1 or 2 to select the DMA and 
+ 470:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *         x can be 1 to 7 for DMA1 and 1 to 5 for DMA2 to select the DMA Channel.
+ 471:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @param  DMA_IT: specifies the DMA interrupts sources to be enabled
+ 472:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *         or disabled. 
+ 473:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *   This parameter can be any combination of the following values:
+ 474:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA_IT_TC: Transfer complete interrupt mask
+ 475:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA_IT_HT: Half transfer interrupt mask
+ 476:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA_IT_TE: Transfer error interrupt mask
+ 477:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @param  NewState: new state of the specified DMA interrupts.
+ 478:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *         This parameter can be: ENABLE or DISABLE.
+ 479:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @retval None
+ 480:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+ 481:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** void DMA_ITConfig(DMA_Channel_TypeDef* DMAy_Channelx, uint32_t DMA_IT, FunctionalState NewState)
+ 482:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** {
+ 358              		.loc 1 482 0
+ 359              		.cfi_startproc
+ 360              		@ args = 0, pretend = 0, frame = 0
+ 361              		@ frame_needed = 0, uses_anonymous_args = 0
+ 362              		@ link register save eliminated.
+ 363              	.LVL12:
+ 483:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Check the parameters */
+ 484:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_ALL_PERIPH(DMAy_Channelx));
+ 485:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_CONFIG_IT(DMA_IT));
+ 486:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 487:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   
+ 488:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   if (NewState != DISABLE)
+ 489:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 490:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Enable the selected DMA interrupts */
+ 491:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMAy_Channelx->CCR |= DMA_IT;
+ 364              		.loc 1 491 0
+ 365 0170 0368     		ldr	r3, [r0, #0]
+ 488:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   if (NewState != DISABLE)
+ 366              		.loc 1 488 0
+ 367 0172 0AB1     		cbz	r2, .L30
+ 368              		.loc 1 491 0
+ 369 0174 1943     		orrs	r1, r1, r3
+ 370              	.LVL13:
+ 371 0176 01E0     		b	.L32
+ 372              	.LVL14:
+ 373              	.L30:
+ 492:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 493:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else
+ 494:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 495:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Disable the selected DMA interrupts */
+ 496:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMAy_Channelx->CCR &= ~DMA_IT;
+ 374              		.loc 1 496 0
+ 375 0178 23EA0101 		bic	r1, r3, r1
+ 376              	.LVL15:
+ 377              	.L32:
+ 378 017c 0160     		str	r1, [r0, #0]
+ 379 017e 7047     		bx	lr
+ 380              		.cfi_endproc
+ 381              	.LFE117:
+ 383              		.align	1
+ 384              		.global	DMA_GetFlagStatus
+ 385              		.thumb
+ 386              		.thumb_func
+ 388              	DMA_GetFlagStatus:
+ 389              	.LFB118:
+ 497:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 498:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** }
+ 499:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 500:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /**
+ 501:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @brief  Checks whether the specified DMAy Channelx flag is set or not.
+ 502:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @param  DMAy_FLAG: specifies the flag to check.
+ 503:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *   This parameter can be one of the following values:
+ 504:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_GL1: DMA1 Channel1 global flag.
+ 505:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TC1: DMA1 Channel1 transfer complete flag.
+ 506:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_HT1: DMA1 Channel1 half transfer flag.
+ 507:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TE1: DMA1 Channel1 transfer error flag.
+ 508:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_GL2: DMA1 Channel2 global flag.
+ 509:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TC2: DMA1 Channel2 transfer complete flag.
+ 510:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_HT2: DMA1 Channel2 half transfer flag.
+ 511:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TE2: DMA1 Channel2 transfer error flag.
+ 512:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_GL3: DMA1 Channel3 global flag.
+ 513:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TC3: DMA1 Channel3 transfer complete flag.
+ 514:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_HT3: DMA1 Channel3 half transfer flag.
+ 515:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TE3: DMA1 Channel3 transfer error flag.
+ 516:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_GL4: DMA1 Channel4 global flag.
+ 517:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TC4: DMA1 Channel4 transfer complete flag.
+ 518:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_HT4: DMA1 Channel4 half transfer flag.
+ 519:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TE4: DMA1 Channel4 transfer error flag.
+ 520:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_GL5: DMA1 Channel5 global flag.
+ 521:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TC5: DMA1 Channel5 transfer complete flag.
+ 522:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_HT5: DMA1 Channel5 half transfer flag.
+ 523:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TE5: DMA1 Channel5 transfer error flag.
+ 524:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_GL6: DMA1 Channel6 global flag.
+ 525:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TC6: DMA1 Channel6 transfer complete flag.
+ 526:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_HT6: DMA1 Channel6 half transfer flag.
+ 527:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TE6: DMA1 Channel6 transfer error flag.
+ 528:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_GL7: DMA1 Channel7 global flag.
+ 529:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TC7: DMA1 Channel7 transfer complete flag.
+ 530:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_HT7: DMA1 Channel7 half transfer flag.
+ 531:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TE7: DMA1 Channel7 transfer error flag.
+ 532:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_GL1: DMA2 Channel1 global flag.
+ 533:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TC1: DMA2 Channel1 transfer complete flag.
+ 534:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_HT1: DMA2 Channel1 half transfer flag.
+ 535:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TE1: DMA2 Channel1 transfer error flag.
+ 536:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_GL2: DMA2 Channel2 global flag.
+ 537:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TC2: DMA2 Channel2 transfer complete flag.
+ 538:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_HT2: DMA2 Channel2 half transfer flag.
+ 539:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TE2: DMA2 Channel2 transfer error flag.
+ 540:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_GL3: DMA2 Channel3 global flag.
+ 541:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TC3: DMA2 Channel3 transfer complete flag.
+ 542:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_HT3: DMA2 Channel3 half transfer flag.
+ 543:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TE3: DMA2 Channel3 transfer error flag.
+ 544:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_GL4: DMA2 Channel4 global flag.
+ 545:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TC4: DMA2 Channel4 transfer complete flag.
+ 546:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_HT4: DMA2 Channel4 half transfer flag.
+ 547:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TE4: DMA2 Channel4 transfer error flag.
+ 548:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_GL5: DMA2 Channel5 global flag.
+ 549:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TC5: DMA2 Channel5 transfer complete flag.
+ 550:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_HT5: DMA2 Channel5 half transfer flag.
+ 551:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TE5: DMA2 Channel5 transfer error flag.
+ 552:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     
+ 553:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @note
+ 554:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *    The Global flag (DMAy_FLAG_GLx) is set whenever any of the other flags 
+ 555:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *    relative to the same channel is set (Transfer Complete, Half-transfer 
+ 556:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *    Complete or Transfer Error flags: DMAy_FLAG_TCx, DMAy_FLAG_HTx or 
+ 557:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *    DMAy_FLAG_TEx). 
+ 558:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *      
+ 559:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @retval The new state of DMAy_FLAG (SET or RESET).
+ 560:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+ 561:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** FlagStatus DMA_GetFlagStatus(uint32_t DMAy_FLAG)
+ 562:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** {
+ 390              		.loc 1 562 0
+ 391              		.cfi_startproc
+ 392              		@ args = 0, pretend = 0, frame = 0
+ 393              		@ frame_needed = 0, uses_anonymous_args = 0
+ 394              		@ link register save eliminated.
+ 395              	.LVL16:
+ 563:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   FlagStatus bitstatus = RESET;
+ 564:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   uint32_t tmpreg = 0;
+ 565:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   
+ 566:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Check the parameters */
+ 567:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_GET_FLAG(DMAy_FLAG));
+ 568:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 569:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Calculate the used DMAy */
+ 570:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   if ((DMAy_FLAG & FLAG_Mask) != (uint32_t)RESET)
+ 396              		.loc 1 570 0
+ 397 0180 C300     		lsls	r3, r0, #3
+ 571:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 572:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Get DMA2 ISR register value */
+ 573:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     tmpreg = DMA2->ISR ;
+ 398              		.loc 1 573 0
+ 399 0182 4CBF     		ite	mi
+ 400 0184 034B     		ldrmi	r3, .L37
+ 574:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 575:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else
+ 576:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 577:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Get DMA1 ISR register value */
+ 578:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     tmpreg = DMA1->ISR ;
+ 401              		.loc 1 578 0
+ 402 0186 044B     		ldrpl	r3, .L37+4
+ 403 0188 1B68     		ldr	r3, [r3, #0]
+ 404              	.LVL17:
+ 579:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 580:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 581:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Check the status of the specified DMAy flag */
+ 582:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   if ((tmpreg & DMAy_FLAG) != (uint32_t)RESET)
+ 405              		.loc 1 582 0
+ 406 018a 0342     		tst	r3, r0
+ 583:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 584:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* DMAy_FLAG is set */
+ 585:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     bitstatus = SET;
+ 586:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 587:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else
+ 588:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 589:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* DMAy_FLAG is reset */
+ 590:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     bitstatus = RESET;
+ 591:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 592:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   
+ 593:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Return the DMAy_FLAG status */
+ 594:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   return  bitstatus;
+ 595:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** }
+ 407              		.loc 1 595 0
+ 408 018c 0CBF     		ite	eq
+ 409 018e 0020     		moveq	r0, #0
+ 410 0190 0120     		movne	r0, #1
+ 411              	.LVL18:
+ 412 0192 7047     		bx	lr
+ 413              	.L38:
+ 414              		.align	2
+ 415              	.L37:
+ 416 0194 00040240 		.word	1073873920
+ 417 0198 00000240 		.word	1073872896
+ 418              		.cfi_endproc
+ 419              	.LFE118:
+ 421              		.align	1
+ 422              		.global	DMA_ClearFlag
+ 423              		.thumb
+ 424              		.thumb_func
+ 426              	DMA_ClearFlag:
+ 427              	.LFB119:
+ 596:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 597:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /**
+ 598:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @brief  Clears the DMAy Channelx's pending flags.
+ 599:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @param  DMAy_FLAG: specifies the flag to clear.
+ 600:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *   This parameter can be any combination (for the same DMA) of the following values:
+ 601:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_GL1: DMA1 Channel1 global flag.
+ 602:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TC1: DMA1 Channel1 transfer complete flag.
+ 603:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_HT1: DMA1 Channel1 half transfer flag.
+ 604:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TE1: DMA1 Channel1 transfer error flag.
+ 605:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_GL2: DMA1 Channel2 global flag.
+ 606:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TC2: DMA1 Channel2 transfer complete flag.
+ 607:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_HT2: DMA1 Channel2 half transfer flag.
+ 608:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TE2: DMA1 Channel2 transfer error flag.
+ 609:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_GL3: DMA1 Channel3 global flag.
+ 610:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TC3: DMA1 Channel3 transfer complete flag.
+ 611:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_HT3: DMA1 Channel3 half transfer flag.
+ 612:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TE3: DMA1 Channel3 transfer error flag.
+ 613:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_GL4: DMA1 Channel4 global flag.
+ 614:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TC4: DMA1 Channel4 transfer complete flag.
+ 615:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_HT4: DMA1 Channel4 half transfer flag.
+ 616:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TE4: DMA1 Channel4 transfer error flag.
+ 617:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_GL5: DMA1 Channel5 global flag.
+ 618:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TC5: DMA1 Channel5 transfer complete flag.
+ 619:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_HT5: DMA1 Channel5 half transfer flag.
+ 620:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TE5: DMA1 Channel5 transfer error flag.
+ 621:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_GL6: DMA1 Channel6 global flag.
+ 622:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TC6: DMA1 Channel6 transfer complete flag.
+ 623:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_HT6: DMA1 Channel6 half transfer flag.
+ 624:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TE6: DMA1 Channel6 transfer error flag.
+ 625:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_GL7: DMA1 Channel7 global flag.
+ 626:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TC7: DMA1 Channel7 transfer complete flag.
+ 627:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_HT7: DMA1 Channel7 half transfer flag.
+ 628:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_FLAG_TE7: DMA1 Channel7 transfer error flag.
+ 629:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_GL1: DMA2 Channel1 global flag.
+ 630:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TC1: DMA2 Channel1 transfer complete flag.
+ 631:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_HT1: DMA2 Channel1 half transfer flag.
+ 632:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TE1: DMA2 Channel1 transfer error flag.
+ 633:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_GL2: DMA2 Channel2 global flag.
+ 634:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TC2: DMA2 Channel2 transfer complete flag.
+ 635:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_HT2: DMA2 Channel2 half transfer flag.
+ 636:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TE2: DMA2 Channel2 transfer error flag.
+ 637:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_GL3: DMA2 Channel3 global flag.
+ 638:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TC3: DMA2 Channel3 transfer complete flag.
+ 639:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_HT3: DMA2 Channel3 half transfer flag.
+ 640:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TE3: DMA2 Channel3 transfer error flag.
+ 641:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_GL4: DMA2 Channel4 global flag.
+ 642:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TC4: DMA2 Channel4 transfer complete flag.
+ 643:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_HT4: DMA2 Channel4 half transfer flag.
+ 644:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TE4: DMA2 Channel4 transfer error flag.
+ 645:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_GL5: DMA2 Channel5 global flag.
+ 646:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TC5: DMA2 Channel5 transfer complete flag.
+ 647:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_HT5: DMA2 Channel5 half transfer flag.
+ 648:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_FLAG_TE5: DMA2 Channel5 transfer error flag.
+ 649:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *
+ 650:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @note
+ 651:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *    Clearing the Global flag (DMAy_FLAG_GLx) results in clearing all other flags
+ 652:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *    relative to the same channel (Transfer Complete, Half-transfer Complete and
+ 653:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *    Transfer Error flags: DMAy_FLAG_TCx, DMAy_FLAG_HTx and DMAy_FLAG_TEx).
+ 654:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *
+ 655:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @retval None
+ 656:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+ 657:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** void DMA_ClearFlag(uint32_t DMAy_FLAG)
+ 658:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** {
+ 428              		.loc 1 658 0
+ 429              		.cfi_startproc
+ 430              		@ args = 0, pretend = 0, frame = 0
+ 431              		@ frame_needed = 0, uses_anonymous_args = 0
+ 432              		@ link register save eliminated.
+ 433              	.LVL19:
+ 659:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Check the parameters */
+ 660:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_CLEAR_FLAG(DMAy_FLAG));
+ 661:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 662:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /* Calculate the used DMAy */
+ 663:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   if ((DMAy_FLAG & FLAG_Mask) != (uint32_t)RESET)
+ 434              		.loc 1 663 0
+ 435 019c C200     		lsls	r2, r0, #3
+ 664:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 665:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Clear the selected DMAy flags */
+ 666:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMA2->IFCR = DMAy_FLAG;
+ 436              		.loc 1 666 0
+ 437 019e 4CBF     		ite	mi
+ 438 01a0 014B     		ldrmi	r3, .L43
+ 667:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 668:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else
+ 669:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 670:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Clear the selected DMAy flags */
+ 671:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMA1->IFCR = DMAy_FLAG;
+ 439              		.loc 1 671 0
+ 440 01a2 024B     		ldrpl	r3, .L43+4
+ 441 01a4 5860     		str	r0, [r3, #4]
+ 442 01a6 7047     		bx	lr
+ 443              	.L44:
+ 444              		.align	2
+ 445              	.L43:
+ 446 01a8 00040240 		.word	1073873920
+ 447 01ac 00000240 		.word	1073872896
+ 448              		.cfi_endproc
+ 449              	.LFE119:
+ 451              		.align	1
+ 452              		.global	DMA_GetITStatus
+ 453              		.thumb
+ 454              		.thumb_func
+ 456              	DMA_GetITStatus:
+ 457              	.LFB120:
+ 672:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 673:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** }
+ 674:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 675:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /**
+ 676:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @brief  Checks whether the specified DMAy Channelx interrupt has occurred or not.
+ 677:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @param  DMAy_IT: specifies the DMAy interrupt source to check. 
+ 678:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *   This parameter can be one of the following values:
+ 679:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_GL1: DMA1 Channel1 global interrupt.
+ 680:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TC1: DMA1 Channel1 transfer complete interrupt.
+ 681:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_HT1: DMA1 Channel1 half transfer interrupt.
+ 682:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TE1: DMA1 Channel1 transfer error interrupt.
+ 683:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_GL2: DMA1 Channel2 global interrupt.
+ 684:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TC2: DMA1 Channel2 transfer complete interrupt.
+ 685:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_HT2: DMA1 Channel2 half transfer interrupt.
+ 686:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TE2: DMA1 Channel2 transfer error interrupt.
+ 687:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_GL3: DMA1 Channel3 global interrupt.
+ 688:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TC3: DMA1 Channel3 transfer complete interrupt.
+ 689:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_HT3: DMA1 Channel3 half transfer interrupt.
+ 690:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TE3: DMA1 Channel3 transfer error interrupt.
+ 691:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_GL4: DMA1 Channel4 global interrupt.
+ 692:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TC4: DMA1 Channel4 transfer complete interrupt.
+ 693:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_HT4: DMA1 Channel4 half transfer interrupt.
+ 694:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TE4: DMA1 Channel4 transfer error interrupt.
+ 695:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_GL5: DMA1 Channel5 global interrupt.
+ 696:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TC5: DMA1 Channel5 transfer complete interrupt.
+ 697:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_HT5: DMA1 Channel5 half transfer interrupt.
+ 698:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TE5: DMA1 Channel5 transfer error interrupt.
+ 699:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_GL6: DMA1 Channel6 global interrupt.
+ 700:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TC6: DMA1 Channel6 transfer complete interrupt.
+ 701:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_HT6: DMA1 Channel6 half transfer interrupt.
+ 702:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TE6: DMA1 Channel6 transfer error interrupt.
+ 703:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_GL7: DMA1 Channel7 global interrupt.
+ 704:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TC7: DMA1 Channel7 transfer complete interrupt.
+ 705:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_HT7: DMA1 Channel7 half transfer interrupt.
+ 706:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TE7: DMA1 Channel7 transfer error interrupt.
+ 707:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_GL1: DMA2 Channel1 global interrupt.
+ 708:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TC1: DMA2 Channel1 transfer complete interrupt.
+ 709:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_HT1: DMA2 Channel1 half transfer interrupt.
+ 710:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TE1: DMA2 Channel1 transfer error interrupt.
+ 711:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_GL2: DMA2 Channel2 global interrupt.
+ 712:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TC2: DMA2 Channel2 transfer complete interrupt.
+ 713:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_HT2: DMA2 Channel2 half transfer interrupt.
+ 714:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TE2: DMA2 Channel2 transfer error interrupt.
+ 715:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_GL3: DMA2 Channel3 global interrupt.
+ 716:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TC3: DMA2 Channel3 transfer complete interrupt.
+ 717:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_HT3: DMA2 Channel3 half transfer interrupt.
+ 718:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TE3: DMA2 Channel3 transfer error interrupt.
+ 719:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_GL4: DMA2 Channel4 global interrupt.
+ 720:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TC4: DMA2 Channel4 transfer complete interrupt.
+ 721:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_HT4: DMA2 Channel4 half transfer interrupt.
+ 722:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TE4: DMA2 Channel4 transfer error interrupt.
+ 723:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_GL5: DMA2 Channel5 global interrupt.
+ 724:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TC5: DMA2 Channel5 transfer complete interrupt.
+ 725:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_HT5: DMA2 Channel5 half transfer interrupt.
+ 726:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TE5: DMA2 Channel5 transfer error interrupt.
+ 727:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     
+ 728:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @note
+ 729:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *    The Global interrupt (DMAy_FLAG_GLx) is set whenever any of the other 
+ 730:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *    interrupts relative to the same channel is set (Transfer Complete, 
+ 731:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *    Half-transfer Complete or Transfer Error interrupts: DMAy_IT_TCx, 
+ 732:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *    DMAy_IT_HTx or DMAy_IT_TEx). 
+ 733:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *      
+ 734:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @retval The new state of DMAy_IT (SET or RESET).
+ 735:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+ 736:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** ITStatus DMA_GetITStatus(uint32_t DMAy_IT)
+ 737:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** {
+ 458              		.loc 1 737 0
+ 459              		.cfi_startproc
+ 460              		@ args = 0, pretend = 0, frame = 0
+ 461              		@ frame_needed = 0, uses_anonymous_args = 0
+ 462              		@ link register save eliminated.
+ 463              	.LVL20:
+ 738:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   ITStatus bitstatus = RESET;
+ 739:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   uint32_t tmpreg = 0;
+ 740:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 741:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Check the parameters */
+ 742:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_GET_IT(DMAy_IT));
+ 743:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 744:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Calculate the used DMA */
+ 745:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   if ((DMAy_IT & FLAG_Mask) != (uint32_t)RESET)
+ 464              		.loc 1 745 0
+ 465 01b0 C100     		lsls	r1, r0, #3
+ 746:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 747:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Get DMA2 ISR register value */
+ 748:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     tmpreg = DMA2->ISR;
+ 466              		.loc 1 748 0
+ 467 01b2 4CBF     		ite	mi
+ 468 01b4 034B     		ldrmi	r3, .L49
+ 749:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 750:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else
+ 751:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 752:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Get DMA1 ISR register value */
+ 753:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     tmpreg = DMA1->ISR;
+ 469              		.loc 1 753 0
+ 470 01b6 044B     		ldrpl	r3, .L49+4
+ 471 01b8 1B68     		ldr	r3, [r3, #0]
+ 472              	.LVL21:
+ 754:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 755:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 756:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Check the status of the specified DMAy interrupt */
+ 757:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   if ((tmpreg & DMAy_IT) != (uint32_t)RESET)
+ 473              		.loc 1 757 0
+ 474 01ba 0342     		tst	r3, r0
+ 758:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 759:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* DMAy_IT is set */
+ 760:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     bitstatus = SET;
+ 761:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 762:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else
+ 763:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 764:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* DMAy_IT is reset */
+ 765:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     bitstatus = RESET;
+ 766:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 767:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Return the DMAy_IT status */
+ 768:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   return  bitstatus;
+ 769:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** }
+ 475              		.loc 1 769 0
+ 476 01bc 0CBF     		ite	eq
+ 477 01be 0020     		moveq	r0, #0
+ 478 01c0 0120     		movne	r0, #1
+ 479              	.LVL22:
+ 480 01c2 7047     		bx	lr
+ 481              	.L50:
+ 482              		.align	2
+ 483              	.L49:
+ 484 01c4 00040240 		.word	1073873920
+ 485 01c8 00000240 		.word	1073872896
+ 486              		.cfi_endproc
+ 487              	.LFE120:
+ 489              		.align	1
+ 490              		.global	DMA_ClearITPendingBit
+ 491              		.thumb
+ 492              		.thumb_func
+ 494              	DMA_ClearITPendingBit:
+ 495              	.LFB121:
+ 770:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** 
+ 771:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** /**
+ 772:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @brief  Clears the DMAy Channelx's interrupt pending bits.
+ 773:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @param  DMAy_IT: specifies the DMAy interrupt pending bit to clear.
+ 774:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *   This parameter can be any combination (for the same DMA) of the following values:
+ 775:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_GL1: DMA1 Channel1 global interrupt.
+ 776:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TC1: DMA1 Channel1 transfer complete interrupt.
+ 777:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_HT1: DMA1 Channel1 half transfer interrupt.
+ 778:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TE1: DMA1 Channel1 transfer error interrupt.
+ 779:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_GL2: DMA1 Channel2 global interrupt.
+ 780:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TC2: DMA1 Channel2 transfer complete interrupt.
+ 781:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_HT2: DMA1 Channel2 half transfer interrupt.
+ 782:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TE2: DMA1 Channel2 transfer error interrupt.
+ 783:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_GL3: DMA1 Channel3 global interrupt.
+ 784:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TC3: DMA1 Channel3 transfer complete interrupt.
+ 785:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_HT3: DMA1 Channel3 half transfer interrupt.
+ 786:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TE3: DMA1 Channel3 transfer error interrupt.
+ 787:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_GL4: DMA1 Channel4 global interrupt.
+ 788:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TC4: DMA1 Channel4 transfer complete interrupt.
+ 789:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_HT4: DMA1 Channel4 half transfer interrupt.
+ 790:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TE4: DMA1 Channel4 transfer error interrupt.
+ 791:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_GL5: DMA1 Channel5 global interrupt.
+ 792:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TC5: DMA1 Channel5 transfer complete interrupt.
+ 793:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_HT5: DMA1 Channel5 half transfer interrupt.
+ 794:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TE5: DMA1 Channel5 transfer error interrupt.
+ 795:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_GL6: DMA1 Channel6 global interrupt.
+ 796:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TC6: DMA1 Channel6 transfer complete interrupt.
+ 797:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_HT6: DMA1 Channel6 half transfer interrupt.
+ 798:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TE6: DMA1 Channel6 transfer error interrupt.
+ 799:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_GL7: DMA1 Channel7 global interrupt.
+ 800:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TC7: DMA1 Channel7 transfer complete interrupt.
+ 801:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_HT7: DMA1 Channel7 half transfer interrupt.
+ 802:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA1_IT_TE7: DMA1 Channel7 transfer error interrupt.
+ 803:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_GL1: DMA2 Channel1 global interrupt.
+ 804:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TC1: DMA2 Channel1 transfer complete interrupt.
+ 805:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_HT1: DMA2 Channel1 half transfer interrupt.
+ 806:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TE1: DMA2 Channel1 transfer error interrupt.
+ 807:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_GL2: DMA2 Channel2 global interrupt.
+ 808:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TC2: DMA2 Channel2 transfer complete interrupt.
+ 809:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_HT2: DMA2 Channel2 half transfer interrupt.
+ 810:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TE2: DMA2 Channel2 transfer error interrupt.
+ 811:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_GL3: DMA2 Channel3 global interrupt.
+ 812:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TC3: DMA2 Channel3 transfer complete interrupt.
+ 813:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_HT3: DMA2 Channel3 half transfer interrupt.
+ 814:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TE3: DMA2 Channel3 transfer error interrupt.
+ 815:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_GL4: DMA2 Channel4 global interrupt.
+ 816:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TC4: DMA2 Channel4 transfer complete interrupt.
+ 817:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_HT4: DMA2 Channel4 half transfer interrupt.
+ 818:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TE4: DMA2 Channel4 transfer error interrupt.
+ 819:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_GL5: DMA2 Channel5 global interrupt.
+ 820:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TC5: DMA2 Channel5 transfer complete interrupt.
+ 821:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_HT5: DMA2 Channel5 half transfer interrupt.
+ 822:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     @arg DMA2_IT_TE5: DMA2 Channel5 transfer error interrupt.
+ 823:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *     
+ 824:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @note
+ 825:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *    Clearing the Global interrupt (DMAy_IT_GLx) results in clearing all other 
+ 826:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *    interrupts relative to the same channel (Transfer Complete, Half-transfer 
+ 827:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *    Complete and Transfer Error interrupts: DMAy_IT_TCx, DMAy_IT_HTx and 
+ 828:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *    DMAy_IT_TEx).  
+ 829:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   *        
+ 830:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   * @retval None
+ 831:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   */
+ 832:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** void DMA_ClearITPendingBit(uint32_t DMAy_IT)
+ 833:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c **** {
+ 496              		.loc 1 833 0
+ 497              		.cfi_startproc
+ 498              		@ args = 0, pretend = 0, frame = 0
+ 499              		@ frame_needed = 0, uses_anonymous_args = 0
+ 500              		@ link register save eliminated.
+ 501              	.LVL23:
+ 834:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Check the parameters */
+ 835:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   assert_param(IS_DMA_CLEAR_IT(DMAy_IT));
+ 836:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   
+ 837:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   /* Calculate the used DMAy */
+ 838:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   if ((DMAy_IT & FLAG_Mask) != (uint32_t)RESET)
+ 502              		.loc 1 838 0
+ 503 01cc C300     		lsls	r3, r0, #3
+ 839:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 840:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Clear the selected DMAy interrupt pending bits */
+ 841:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMA2->IFCR = DMAy_IT;
+ 504              		.loc 1 841 0
+ 505 01ce 4CBF     		ite	mi
+ 506 01d0 014B     		ldrmi	r3, .L55
+ 842:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   }
+ 843:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   else
+ 844:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****   {
+ 845:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     /* Clear the selected DMAy interrupt pending bits */
+ 846:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dma.c ****     DMA1->IFCR = DMAy_IT;
+ 507              		.loc 1 846 0
+ 508 01d2 024B     		ldrpl	r3, .L55+4
+ 509 01d4 5860     		str	r0, [r3, #4]
+ 510 01d6 7047     		bx	lr
+ 511              	.L56:
+ 512              		.align	2
+ 513              	.L55:
+ 514 01d8 00040240 		.word	1073873920
+ 515 01dc 00000240 		.word	1073872896
+ 516              		.cfi_endproc
+ 517              	.LFE121:
+ 519              	.Letext0:
+ 520              		.file 2 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+ 521              		.file 3 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Device/ST/STM32F30x
+ 522              		.file 4 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+ 523              		.file 5 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Include/core_cm4.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f30x_dma.c
+     /tmp/ccNBIuLW.s:18     .text:00000000 $t
+     /tmp/ccNBIuLW.s:23     .text:00000000 DMA_DeInit
+     /tmp/ccNBIuLW.s:154    .text:000000c8 $d
+     /tmp/ccNBIuLW.s:169    .text:000000f8 $t
+     /tmp/ccNBIuLW.s:174    .text:000000f8 DMA_Init
+     /tmp/ccNBIuLW.s:245    .text:00000136 DMA_StructInit
+     /tmp/ccNBIuLW.s:285    .text:00000150 DMA_Cmd
+     /tmp/ccNBIuLW.s:315    .text:00000166 DMA_SetCurrDataCounter
+     /tmp/ccNBIuLW.s:334    .text:0000016a DMA_GetCurrDataCounter
+     /tmp/ccNBIuLW.s:356    .text:00000170 DMA_ITConfig
+     /tmp/ccNBIuLW.s:388    .text:00000180 DMA_GetFlagStatus
+     /tmp/ccNBIuLW.s:416    .text:00000194 $d
+     /tmp/ccNBIuLW.s:421    .text:0000019c $t
+     /tmp/ccNBIuLW.s:426    .text:0000019c DMA_ClearFlag
+     /tmp/ccNBIuLW.s:446    .text:000001a8 $d
+     /tmp/ccNBIuLW.s:451    .text:000001b0 $t
+     /tmp/ccNBIuLW.s:456    .text:000001b0 DMA_GetITStatus
+     /tmp/ccNBIuLW.s:484    .text:000001c4 $d
+     /tmp/ccNBIuLW.s:489    .text:000001cc $t
+     /tmp/ccNBIuLW.s:494    .text:000001cc DMA_ClearITPendingBit
+     /tmp/ccNBIuLW.s:514    .text:000001d8 $d
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.stm32f30x.h.54.c7b24f715ee55ef38656f44540ae3be6
+                           .group:00000000 wm4.core_cm4.h.32.2441f2e49dd40451ba4254637c879d0c
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.292.5f9271075d54fc48f1e25ff79df85cb2
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_comp.h.31.9bbc5f5f1a849069ea9062fbe7b81435
+                           .group:00000000 wm4.stm32f30x_exti.h.31.22e280aa6e095108654ac8d3c74a2409
+                           .group:00000000 wm4.stm32f30x_flash.h.31.bee86dc3079b7049419bdbeec073e2cd
+                           .group:00000000 wm4.stm32f30x_gpio.h.31.3745297fee3728b346ad4d2a2467e40f
+                           .group:00000000 wm4.stm32f30x_syscfg.h.31.96b023b7dbc3641f358604478433eb5c
+                           .group:00000000 wm4.stm32f30x_i2c.h.31.52025acd7f154308042bf46a2835e9d3
+                           .group:00000000 wm4.stm32f30x_pwr.h.31.cdef322c6e7f25cfc29954045d24e9b8
+                           .group:00000000 wm4.stm32f30x_rcc.h.31.3b94c1144b21d1e4fe780e4d1a02d257
+                           .group:00000000 wm4.stm32f30x_spi.h.31.c1ebebab897d23cecc617ec8ad9fd534
+                           .group:00000000 wm4.stm32f30x_tim.h.31.336f9cd855fb4e2cd819ac260ded6518
+                           .group:00000000 wm4.stm32f30x_usart.h.31.cd85313e29c0a128555b4a7b8ec0f487
+                           .group:00000000 wm4.stm32f30x_misc.h.31.f08b0e9f53f0471613b5131bb95f8725
+                           .group:00000000 wm4.stm32f30x.h.6173.8b641ba1d9b0040eda9120fe8a414b2d
+                           .group:00000000 wm4.stm32f30x_dma.h.96.d7a2ddd10023e12781aa8ff5ac15d212
+
+NO UNDEFINED SYMBOLS

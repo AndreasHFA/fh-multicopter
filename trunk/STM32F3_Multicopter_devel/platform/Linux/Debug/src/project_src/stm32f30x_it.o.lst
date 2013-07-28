@@ -1,0 +1,931 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"stm32f30x_it.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.global	NMI_Handler
+  20              		.thumb
+  21              		.thumb_func
+  23              	NMI_Handler:
+  24              	.LFB111:
+  25              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /**
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   ******************************************************************************
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @file    Project/STM32F30x_StdPeriph_Templates/stm32f30x_it.c 
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @author  MCD Application Team
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @version V1.0.0
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @date    23-October-2012
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @brief   Main Interrupt Service Routines.
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   *          This file provides template for all exceptions handler and 
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   *          peripherals interrupt service routine.
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   ******************************************************************************
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @attention
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   *
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   *
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * You may not use this file except in compliance with the License.
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * You may obtain a copy of the License at:
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   *
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   *
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * Unless required by applicable law or agreed to in writing, software 
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * See the License for the specific language governing permissions and
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * limitations under the License.
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   *
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   ******************************************************************************
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   */
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /* Includes ------------------------------------------------------------------*/
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** #include "stm32f30x_it.h"
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** #include <remote_control.h>
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /** @addtogroup Template_Project
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @{
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   */
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /* Private typedef -----------------------------------------------------------*/
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /* Private define ------------------------------------------------------------*/
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /* Private macro -------------------------------------------------------------*/
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /* Private variables ---------------------------------------------------------*/
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /* Private function prototypes -----------------------------------------------*/
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /* Private functions ---------------------------------------------------------*/
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /******************************************************************************/
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /*            Cortex-M4 Processor Exceptions Handlers                         */
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /******************************************************************************/
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /**
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @brief  This function handles NMI exception.
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @param  None
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @retval None
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   */
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** void NMI_Handler(void)
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** {
+  26              		.loc 1 55 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  31 0000 7047     		bx	lr
+  32              		.cfi_endproc
+  33              	.LFE111:
+  35              		.align	1
+  36              		.global	HardFault_Handler
+  37              		.thumb
+  38              		.thumb_func
+  40              	HardFault_Handler:
+  41              	.LFB112:
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** }
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /**
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @brief  This function handles Hard Fault exception.
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @param  None
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @retval None
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   */
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** void HardFault_Handler(void)
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** {
+  42              		.loc 1 64 0
+  43              		.cfi_startproc
+  44              		@ Volatile: function does not return.
+  45              		@ args = 0, pretend = 0, frame = 0
+  46              		@ frame_needed = 0, uses_anonymous_args = 0
+  47              		@ link register save eliminated.
+  48              	.L3:
+  49 0002 FEE7     		b	.L3
+  50              		.cfi_endproc
+  51              	.LFE112:
+  53              		.align	1
+  54              		.global	MemManage_Handler
+  55              		.thumb
+  56              		.thumb_func
+  58              	MemManage_Handler:
+  59              	.LFB113:
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   /* Go to infinite loop when Hard Fault exception occurs */
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   while (1)
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   {
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   }
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** }
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /**
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @brief  This function handles Memory Manage exception.
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @param  None
+  74:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @retval None
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   */
+  76:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** void MemManage_Handler(void)
+  77:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** {
+  60              		.loc 1 77 0
+  61              		.cfi_startproc
+  62              		@ Volatile: function does not return.
+  63              		@ args = 0, pretend = 0, frame = 0
+  64              		@ frame_needed = 0, uses_anonymous_args = 0
+  65              		@ link register save eliminated.
+  66              	.L5:
+  67 0004 FEE7     		b	.L5
+  68              		.cfi_endproc
+  69              	.LFE113:
+  71              		.align	1
+  72              		.global	BusFault_Handler
+  73              		.thumb
+  74              		.thumb_func
+  76              	BusFault_Handler:
+  77              	.LFB114:
+  78:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   /* Go to infinite loop when Memory Manage exception occurs */
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   while (1)
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   {
+  81:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   }
+  82:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** }
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+  84:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /**
+  85:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @brief  This function handles Bus Fault exception.
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @param  None
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @retval None
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   */
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** void BusFault_Handler(void)
+  90:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** {
+  78              		.loc 1 90 0
+  79              		.cfi_startproc
+  80              		@ Volatile: function does not return.
+  81              		@ args = 0, pretend = 0, frame = 0
+  82              		@ frame_needed = 0, uses_anonymous_args = 0
+  83              		@ link register save eliminated.
+  84              	.L7:
+  85 0006 FEE7     		b	.L7
+  86              		.cfi_endproc
+  87              	.LFE114:
+  89              		.align	1
+  90              		.global	UsageFault_Handler
+  91              		.thumb
+  92              		.thumb_func
+  94              	UsageFault_Handler:
+  95              	.LFB115:
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   /* Go to infinite loop when Bus Fault exception occurs */
+  92:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   while (1)
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   {
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   }
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** }
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /**
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @brief  This function handles Usage Fault exception.
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @param  None
+ 100:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @retval None
+ 101:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   */
+ 102:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** void UsageFault_Handler(void)
+ 103:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** {
+  96              		.loc 1 103 0
+  97              		.cfi_startproc
+  98              		@ Volatile: function does not return.
+  99              		@ args = 0, pretend = 0, frame = 0
+ 100              		@ frame_needed = 0, uses_anonymous_args = 0
+ 101              		@ link register save eliminated.
+ 102              	.L9:
+ 103 0008 FEE7     		b	.L9
+ 104              		.cfi_endproc
+ 105              	.LFE115:
+ 107              		.align	1
+ 108              		.global	DebugMon_Handler
+ 109              		.thumb
+ 110              		.thumb_func
+ 112              	DebugMon_Handler:
+ 113              	.LFB116:
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   /* Go to infinite loop when Usage Fault exception occurs */
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   while (1)
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   {
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   }
+ 108:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** }
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+ 110:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** ///**
+ 111:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //  * @brief  This function handles SVCall exception.
+ 112:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //  * @param  None
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //  * @retval None
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //  */
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //void SVC_Handler(void)
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //{
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //}
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /**
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @brief  This function handles Debug Monitor exception.
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @param  None
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   * @retval None
+ 123:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c ****   */
+ 124:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** void DebugMon_Handler(void)
+ 125:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** {
+ 114              		.loc 1 125 0
+ 115              		.cfi_startproc
+ 116              		@ args = 0, pretend = 0, frame = 0
+ 117              		@ frame_needed = 0, uses_anonymous_args = 0
+ 118              		@ link register save eliminated.
+ 119 000a 7047     		bx	lr
+ 120              		.cfi_endproc
+ 121              	.LFE116:
+ 123              		.align	1
+ 124              		.global	USART2_IRQHandler
+ 125              		.thumb
+ 126              		.thumb_func
+ 128              	USART2_IRQHandler:
+ 129              	.LFB117:
+ 126:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** }
+ 127:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** ///**
+ 129:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //  * @brief  This function handles PendSVC exception.
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //  * @param  None
+ 131:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //  * @retval None
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //  */
+ 133:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //void PendSV_Handler(void)
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //{
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //}
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** ///**
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //  * @brief  This function handles SysTick Handler.
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //  * @param  None
+ 140:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //  * @retval None
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //  */
+ 142:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //void SysTick_Handler(void)
+ 143:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //{
+ 144:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** //}
+ 145:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+ 146:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** // this is the interrupt request handler (IRQ) for ALL USART1 interrupts
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /*USART Reception*/
+ 148:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** void USART2_IRQHandler(void)
+ 149:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** {
+ 130              		.loc 1 149 0
+ 131              		.cfi_startproc
+ 132              		@ args = 0, pretend = 0, frame = 0
+ 133              		@ frame_needed = 0, uses_anonymous_args = 0
+ 134              		.loc 1 149 0
+ 135 000c 38B5     		push	{r3, r4, r5, lr}
+ 136              	.LCFI0:
+ 137              		.cfi_def_cfa_offset 16
+ 138              		.cfi_offset 3, -16
+ 139              		.cfi_offset 4, -12
+ 140              		.cfi_offset 5, -8
+ 141              		.cfi_offset 14, -4
+ 150:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	static unsigned char rxBuffer[5];
+ 151:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	static uint8_t i = 0;
+ 152:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+ 153:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)
+ 142              		.loc 1 153 0
+ 143 000e 1648     		ldr	r0, .L19
+ 144 0010 1649     		ldr	r1, .L19+4
+ 145 0012 FFF7FEFF 		bl	USART_GetITStatus
+ 146              	.LVL0:
+ 147 0016 E0B1     		cbz	r0, .L12
+ 154:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	{
+ 155:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		/* Read one byte from the receive data register */
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		rxBuffer[i] = USART_ReceiveData(USART2);
+ 148              		.loc 1 156 0
+ 149 0018 154C     		ldr	r4, .L19+8
+ 150 001a 1348     		ldr	r0, .L19
+ 151 001c 2578     		ldrb	r5, [r4, #0]	@ zero_extendqisi2
+ 152 001e FFF7FEFF 		bl	USART_ReceiveData
+ 153              	.LVL1:
+ 157:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		if(i >= 4)
+ 154              		.loc 1 157 0
+ 155 0022 2378     		ldrb	r3, [r4, #0]	@ zero_extendqisi2
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		rxBuffer[i] = USART_ReceiveData(USART2);
+ 156              		.loc 1 156 0
+ 157 0024 6519     		adds	r5, r4, r5
+ 158              		.loc 1 157 0
+ 159 0026 032B     		cmp	r3, #3
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		rxBuffer[i] = USART_ReceiveData(USART2);
+ 160              		.loc 1 156 0
+ 161 0028 6870     		strb	r0, [r5, #1]
+ 162              		.loc 1 157 0
+ 163 002a 05D9     		bls	.L13
+ 158:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		{
+ 159:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			//xQueueSendFromISR( usartRxQueue, &msgPointer, &xYieldRequired );
+ 160:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			CalcRXValues(&rxBuffer[0], 55);
+ 164              		.loc 1 160 0
+ 165 002c 601C     		adds	r0, r4, #1
+ 166 002e 3721     		movs	r1, #55
+ 167 0030 FFF7FEFF 		bl	CalcRXValues
+ 168              	.LVL2:
+ 161:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			i = 0;
+ 169              		.loc 1 161 0
+ 170 0034 0023     		movs	r3, #0
+ 171 0036 03E0     		b	.L18
+ 172              	.L13:
+ 162:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		}
+ 163:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		else
+ 164:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		{
+ 165:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			if(rxBuffer[0] == 'A')
+ 173              		.loc 1 165 0
+ 174 0038 6278     		ldrb	r2, [r4, #1]	@ zero_extendqisi2
+ 175 003a 412A     		cmp	r2, #65
+ 176 003c 02D1     		bne	.L14
+ 166:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			{
+ 167:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				i++;
+ 177              		.loc 1 167 0
+ 178 003e 0133     		adds	r3, r3, #1
+ 179              	.L18:
+ 180 0040 2370     		strb	r3, [r4, #0]
+ 181 0042 06E0     		b	.L12
+ 182              	.L14:
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			}
+ 169:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			else
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			{
+ 171:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				i = 0;
+ 183              		.loc 1 171 0
+ 184 0044 0023     		movs	r3, #0
+ 185 0046 2370     		strb	r3, [r4, #0]
+ 172:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				rxBuffer[0] = 0;
+ 186              		.loc 1 172 0
+ 187 0048 6370     		strb	r3, [r4, #1]
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				rxBuffer[1] = 0;
+ 188              		.loc 1 173 0
+ 189 004a A370     		strb	r3, [r4, #2]
+ 174:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				rxBuffer[2] = 0;
+ 190              		.loc 1 174 0
+ 191 004c E370     		strb	r3, [r4, #3]
+ 175:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				rxBuffer[3] = 0;
+ 192              		.loc 1 175 0
+ 193 004e 2371     		strb	r3, [r4, #4]
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				rxBuffer[4] = 0;
+ 194              		.loc 1 176 0
+ 195 0050 6371     		strb	r3, [r4, #5]
+ 196              	.L12:
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			}
+ 178:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		}
+ 179:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	}
+ 180:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	USART_ClearITPendingBit(USART2, USART_IT_RXNE);
+ 197              		.loc 1 180 0
+ 198 0052 0548     		ldr	r0, .L19
+ 199 0054 0549     		ldr	r1, .L19+4
+ 200 0056 FFF7FEFF 		bl	USART_ClearITPendingBit
+ 201              	.LVL3:
+ 181:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	USART_ClearFlag(USART2, USART_IT_RXNE);
+ 202              		.loc 1 181 0
+ 203 005a 0348     		ldr	r0, .L19
+ 204 005c 0349     		ldr	r1, .L19+4
+ 182:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** }
+ 205              		.loc 1 182 0
+ 206 005e BDE83840 		pop	{r3, r4, r5, lr}
+ 181:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	USART_ClearFlag(USART2, USART_IT_RXNE);
+ 207              		.loc 1 181 0
+ 208 0062 FFF7FEBF 		b	USART_ClearFlag
+ 209              	.LVL4:
+ 210              	.L20:
+ 211 0066 00BF     		.align	2
+ 212              	.L19:
+ 213 0068 00440040 		.word	1073759232
+ 214 006c 05010500 		.word	327941
+ 215 0070 00000000 		.word	.LANCHOR0
+ 216              		.cfi_endproc
+ 217              	.LFE117:
+ 219              		.align	1
+ 220              		.global	disableEXTI
+ 221              		.thumb
+ 222              		.thumb_func
+ 224              	disableEXTI:
+ 225              	.LFB118:
+ 183:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+ 184:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** void disableEXTI(uint32_t EXTINr)
+ 185:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** {
+ 226              		.loc 1 185 0
+ 227              		.cfi_startproc
+ 228              		@ args = 0, pretend = 0, frame = 0
+ 229              		@ frame_needed = 0, uses_anonymous_args = 0
+ 230              	.LVL5:
+ 231 0074 10B5     		push	{r4, lr}
+ 232              	.LCFI1:
+ 233              		.cfi_def_cfa_offset 8
+ 234              		.cfi_offset 4, -8
+ 235              		.cfi_offset 14, -4
+ 236              		.loc 1 185 0
+ 237 0076 0446     		mov	r4, r0
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	getEXTI_Config()->EXTI_Line = EXTINr;
+ 238              		.loc 1 186 0
+ 239 0078 FFF7FEFF 		bl	getEXTI_Config
+ 240              	.LVL6:
+ 241 007c 0460     		str	r4, [r0, #0]
+ 187:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	getEXTI_Config()->EXTI_LineCmd = DISABLE;
+ 242              		.loc 1 187 0
+ 243 007e FFF7FEFF 		bl	getEXTI_Config
+ 244              	.LVL7:
+ 245 0082 0023     		movs	r3, #0
+ 246 0084 8371     		strb	r3, [r0, #6]
+ 188:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	EXTI_Init(getEXTI_Config());
+ 247              		.loc 1 188 0
+ 248 0086 FFF7FEFF 		bl	getEXTI_Config
+ 249              	.LVL8:
+ 189:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** }
+ 250              		.loc 1 189 0
+ 251 008a BDE81040 		pop	{r4, lr}
+ 188:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	EXTI_Init(getEXTI_Config());
+ 252              		.loc 1 188 0
+ 253 008e FFF7FEBF 		b	EXTI_Init
+ 254              	.LVL9:
+ 255              		.cfi_endproc
+ 256              	.LFE118:
+ 258              		.align	1
+ 259              		.global	enableEXTI
+ 260              		.thumb
+ 261              		.thumb_func
+ 263              	enableEXTI:
+ 264              	.LFB119:
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+ 191:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** void enableEXTI(uint32_t EXTINr)
+ 192:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** {
+ 265              		.loc 1 192 0
+ 266              		.cfi_startproc
+ 267              		@ args = 0, pretend = 0, frame = 0
+ 268              		@ frame_needed = 0, uses_anonymous_args = 0
+ 269              	.LVL10:
+ 270 0092 10B5     		push	{r4, lr}
+ 271              	.LCFI2:
+ 272              		.cfi_def_cfa_offset 8
+ 273              		.cfi_offset 4, -8
+ 274              		.cfi_offset 14, -4
+ 275              		.loc 1 192 0
+ 276 0094 0446     		mov	r4, r0
+ 193:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	getEXTI_Config()->EXTI_Line = EXTINr;
+ 277              		.loc 1 193 0
+ 278 0096 FFF7FEFF 		bl	getEXTI_Config
+ 279              	.LVL11:
+ 280 009a 0460     		str	r4, [r0, #0]
+ 194:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	getEXTI_Config()->EXTI_LineCmd = ENABLE;
+ 281              		.loc 1 194 0
+ 282 009c FFF7FEFF 		bl	getEXTI_Config
+ 283              	.LVL12:
+ 284 00a0 0123     		movs	r3, #1
+ 285 00a2 8371     		strb	r3, [r0, #6]
+ 195:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	EXTI_Init(getEXTI_Config());
+ 286              		.loc 1 195 0
+ 287 00a4 FFF7FEFF 		bl	getEXTI_Config
+ 288              	.LVL13:
+ 196:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** }
+ 289              		.loc 1 196 0
+ 290 00a8 BDE81040 		pop	{r4, lr}
+ 195:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	EXTI_Init(getEXTI_Config());
+ 291              		.loc 1 195 0
+ 292 00ac FFF7FEBF 		b	EXTI_Init
+ 293              	.LVL14:
+ 294              		.cfi_endproc
+ 295              	.LFE119:
+ 297              		.align	1
+ 298              		.global	EXTI15_10_IRQHandler
+ 299              		.thumb
+ 300              		.thumb_func
+ 302              	EXTI15_10_IRQHandler:
+ 303              	.LFB120:
+ 197:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+ 198:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** /* Interupt Handlers */
+ 199:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** void EXTI15_10_IRQHandler(void)
+ 200:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** {
+ 304              		.loc 1 200 0
+ 305              		.cfi_startproc
+ 306              		@ args = 0, pretend = 0, frame = 0
+ 307              		@ frame_needed = 0, uses_anonymous_args = 0
+ 308 00b0 10B5     		push	{r4, lr}
+ 309              	.LCFI3:
+ 310              		.cfi_def_cfa_offset 8
+ 311              		.cfi_offset 4, -8
+ 312              		.cfi_offset 14, -4
+ 201:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	static uint8_t timNr = 0;
+ 202:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	static uint8_t timStage = 0;
+ 203:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	static unsigned char rxBuffer[6];
+ 204:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 
+ 205:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	switch(timNr)
+ 313              		.loc 1 205 0
+ 314 00b2 4F4B     		ldr	r3, .L40
+ 315 00b4 9A79     		ldrb	r2, [r3, #6]	@ zero_extendqisi2
+ 316 00b6 032A     		cmp	r2, #3
+ 317 00b8 00F28280 		bhi	.L24
+ 318 00bc DFE802F0 		tbb	[pc, r2]
+ 319              	.L29:
+ 320 00c0 02       		.byte	(.L25-.L29)/2
+ 321 00c1 20       		.byte	(.L26-.L29)/2
+ 322 00c2 3F       		.byte	(.L27-.L29)/2
+ 323 00c3 5C       		.byte	(.L28-.L29)/2
+ 324              		.align	1
+ 325              	.L25:
+ 206:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	{
+ 207:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	case 0:
+ 208:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		if (EXTI_GetITStatus(EXTI_Line12) == SET)
+ 326              		.loc 1 208 0
+ 327 00c4 0C20     		movs	r0, #12
+ 328 00c6 FFF7FEFF 		bl	EXTI_GetITStatus
+ 329              	.LVL15:
+ 330 00ca 0128     		cmp	r0, #1
+ 331 00cc 40F08280 		bne	.L31
+ 209:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		{
+ 210:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			if(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_12) == 1)
+ 332              		.loc 1 210 0
+ 333 00d0 4848     		ldr	r0, .L40+4
+ 334 00d2 4FF48051 		mov	r1, #4096
+ 335 00d6 FFF7FEFF 		bl	GPIO_ReadInputDataBit
+ 336              	.LVL16:
+ 337 00da 0128     		cmp	r0, #1
+ 338 00dc 444C     		ldr	r4, .L40
+ 339 00de 00D1     		bne	.L32
+ 340 00e0 57E0     		b	.L39
+ 341              	.L32:
+ 211:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			{
+ 212:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				timStage += 1;
+ 213:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				TIM_SetCounter(TIM4, 0);
+ 214:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			}
+ 215:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			else if (timStage == (timNr+1))
+ 342              		.loc 1 215 0
+ 343 00e2 A279     		ldrb	r2, [r4, #6]	@ zero_extendqisi2
+ 344 00e4 E379     		ldrb	r3, [r4, #7]	@ zero_extendqisi2
+ 345 00e6 0132     		adds	r2, r2, #1
+ 346 00e8 9342     		cmp	r3, r2
+ 347 00ea 73D1     		bne	.L31
+ 216:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			{
+ 217:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				timNr += 1;
+ 218:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				/* add an offset to zero the GAS-value */
+ 219:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				rxBuffer[2] = TIM_GetCounter(TIM4);
+ 348              		.loc 1 219 0
+ 349 00ec 4248     		ldr	r0, .L40+8
+ 217:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				timNr += 1;
+ 350              		.loc 1 217 0
+ 351 00ee A371     		strb	r3, [r4, #6]
+ 352              		.loc 1 219 0
+ 353 00f0 FFF7FEFF 		bl	TIM_GetCounter
+ 354              	.LVL17:
+ 355 00f4 A072     		strb	r0, [r4, #10]
+ 220:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				//GAS = TIM_GetCounter(TIM4);
+ 221:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				disableEXTI(EXTI_Line12);
+ 356              		.loc 1 221 0
+ 357 00f6 0C20     		movs	r0, #12
+ 358 00f8 FFF7FEFF 		bl	disableEXTI
+ 359              	.LVL18:
+ 222:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				enableEXTI(EXTI_Line13);
+ 360              		.loc 1 222 0
+ 361 00fc 0D20     		movs	r0, #13
+ 362 00fe 1BE0     		b	.L37
+ 363              	.L26:
+ 223:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			}
+ 224:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		}
+ 225:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		break;
+ 226:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	case  1:
+ 227:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		if (EXTI_GetITStatus(EXTI_Line13) == SET)
+ 364              		.loc 1 227 0
+ 365 0100 0D20     		movs	r0, #13
+ 366 0102 FFF7FEFF 		bl	EXTI_GetITStatus
+ 367              	.LVL19:
+ 368 0106 0128     		cmp	r0, #1
+ 369 0108 64D1     		bne	.L31
+ 228:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		{
+ 229:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			if(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_13) == 1)
+ 370              		.loc 1 229 0
+ 371 010a 3A48     		ldr	r0, .L40+4
+ 372 010c 4FF40051 		mov	r1, #8192
+ 373 0110 FFF7FEFF 		bl	GPIO_ReadInputDataBit
+ 374              	.LVL20:
+ 375 0114 0128     		cmp	r0, #1
+ 376 0116 364C     		ldr	r4, .L40
+ 377 0118 00D1     		bne	.L34
+ 378 011a 3AE0     		b	.L39
+ 379              	.L34:
+ 230:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			{
+ 231:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				timStage += 1;
+ 232:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				TIM_SetCounter(TIM4, 0);
+ 233:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			}
+ 234:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			else if (timStage == (timNr+1))
+ 380              		.loc 1 234 0
+ 381 011c A279     		ldrb	r2, [r4, #6]	@ zero_extendqisi2
+ 382 011e E379     		ldrb	r3, [r4, #7]	@ zero_extendqisi2
+ 383 0120 0132     		adds	r2, r2, #1
+ 384 0122 9342     		cmp	r3, r2
+ 385 0124 56D1     		bne	.L31
+ 235:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			{
+ 236:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				timNr += 1;
+ 237:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				rxBuffer[3] = TIM_GetCounter(TIM4);
+ 386              		.loc 1 237 0
+ 387 0126 3448     		ldr	r0, .L40+8
+ 236:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				timNr += 1;
+ 388              		.loc 1 236 0
+ 389 0128 A371     		strb	r3, [r4, #6]
+ 390              		.loc 1 237 0
+ 391 012a FFF7FEFF 		bl	TIM_GetCounter
+ 392              	.LVL21:
+ 393 012e E072     		strb	r0, [r4, #11]
+ 238:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				disableEXTI(EXTI_Line13);
+ 394              		.loc 1 238 0
+ 395 0130 0D20     		movs	r0, #13
+ 396 0132 FFF7FEFF 		bl	disableEXTI
+ 397              	.LVL22:
+ 239:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				enableEXTI(EXTI_Line14);
+ 398              		.loc 1 239 0
+ 399 0136 0E20     		movs	r0, #14
+ 400              	.L37:
+ 401 0138 FFF7FEFF 		bl	enableEXTI
+ 402              	.LVL23:
+ 403 013c 4AE0     		b	.L31
+ 404              	.L27:
+ 240:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			}
+ 241:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		}
+ 242:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		break;
+ 243:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	case  2:
+ 244:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		if (EXTI_GetITStatus(EXTI_Line14) == SET)
+ 405              		.loc 1 244 0
+ 406 013e 0E20     		movs	r0, #14
+ 407 0140 FFF7FEFF 		bl	EXTI_GetITStatus
+ 408              	.LVL24:
+ 409 0144 0128     		cmp	r0, #1
+ 410 0146 45D1     		bne	.L31
+ 245:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		{
+ 246:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			if(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_14) == 1)
+ 411              		.loc 1 246 0
+ 412 0148 2A48     		ldr	r0, .L40+4
+ 413 014a 4FF48041 		mov	r1, #16384
+ 414 014e FFF7FEFF 		bl	GPIO_ReadInputDataBit
+ 415              	.LVL25:
+ 416 0152 0128     		cmp	r0, #1
+ 417 0154 264C     		ldr	r4, .L40
+ 418 0156 00D1     		bne	.L35
+ 419 0158 1BE0     		b	.L39
+ 420              	.L35:
+ 247:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			{
+ 248:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				timStage += 1;
+ 249:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				TIM_SetCounter(TIM4, 0);
+ 250:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			}
+ 251:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			else if (timStage == (timNr+1))
+ 421              		.loc 1 251 0
+ 422 015a A279     		ldrb	r2, [r4, #6]	@ zero_extendqisi2
+ 423 015c E379     		ldrb	r3, [r4, #7]	@ zero_extendqisi2
+ 424 015e 0132     		adds	r2, r2, #1
+ 425 0160 9342     		cmp	r3, r2
+ 426 0162 37D1     		bne	.L31
+ 252:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			{
+ 253:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				timNr += 1;
+ 254:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				rxBuffer[4] = TIM_GetCounter(TIM4);
+ 427              		.loc 1 254 0
+ 428 0164 2448     		ldr	r0, .L40+8
+ 253:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				timNr += 1;
+ 429              		.loc 1 253 0
+ 430 0166 A371     		strb	r3, [r4, #6]
+ 431              		.loc 1 254 0
+ 432 0168 FFF7FEFF 		bl	TIM_GetCounter
+ 433              	.LVL26:
+ 434 016c 2073     		strb	r0, [r4, #12]
+ 255:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				disableEXTI(EXTI_Line14);
+ 435              		.loc 1 255 0
+ 436 016e 0E20     		movs	r0, #14
+ 437 0170 FFF7FEFF 		bl	disableEXTI
+ 438              	.LVL27:
+ 256:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				enableEXTI(EXTI_Line15);
+ 439              		.loc 1 256 0
+ 440 0174 0F20     		movs	r0, #15
+ 441 0176 DFE7     		b	.L37
+ 442              	.L28:
+ 257:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			}
+ 258:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		}
+ 259:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		break;
+ 260:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	case  3:
+ 261:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		if (EXTI_GetITStatus(EXTI_Line15) == SET)
+ 443              		.loc 1 261 0
+ 444 0178 0F20     		movs	r0, #15
+ 445 017a FFF7FEFF 		bl	EXTI_GetITStatus
+ 446              	.LVL28:
+ 447 017e 0128     		cmp	r0, #1
+ 448 0180 28D1     		bne	.L31
+ 262:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		{
+ 263:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			if(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_15) == 1)
+ 449              		.loc 1 263 0
+ 450 0182 1C48     		ldr	r0, .L40+4
+ 451 0184 4FF40041 		mov	r1, #32768
+ 452 0188 FFF7FEFF 		bl	GPIO_ReadInputDataBit
+ 453              	.LVL29:
+ 454 018c 0128     		cmp	r0, #1
+ 455 018e 184C     		ldr	r4, .L40
+ 456 0190 07D1     		bne	.L36
+ 457              	.L39:
+ 264:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			{
+ 265:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				timStage += 1;
+ 458              		.loc 1 265 0
+ 459 0192 E379     		ldrb	r3, [r4, #7]	@ zero_extendqisi2
+ 266:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				TIM_SetCounter(TIM4, 0);
+ 460              		.loc 1 266 0
+ 461 0194 1848     		ldr	r0, .L40+8
+ 265:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				timStage += 1;
+ 462              		.loc 1 265 0
+ 463 0196 0133     		adds	r3, r3, #1
+ 464              		.loc 1 266 0
+ 465 0198 0021     		movs	r1, #0
+ 265:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				timStage += 1;
+ 466              		.loc 1 265 0
+ 467 019a E371     		strb	r3, [r4, #7]
+ 468              		.loc 1 266 0
+ 469 019c FFF7FEFF 		bl	TIM_SetCounter
+ 470              	.LVL30:
+ 471 01a0 18E0     		b	.L31
+ 472              	.L36:
+ 267:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			}
+ 268:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			else if (timStage == (timNr+1))
+ 473              		.loc 1 268 0
+ 474 01a2 A279     		ldrb	r2, [r4, #6]	@ zero_extendqisi2
+ 475 01a4 E379     		ldrb	r3, [r4, #7]	@ zero_extendqisi2
+ 476 01a6 0132     		adds	r2, r2, #1
+ 477 01a8 9342     		cmp	r3, r2
+ 478 01aa 13D1     		bne	.L31
+ 269:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			{
+ 270:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				timNr += 1;
+ 271:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				rxBuffer[5] = TIM_GetCounter(TIM4);
+ 479              		.loc 1 271 0
+ 480 01ac 1248     		ldr	r0, .L40+8
+ 270:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				timNr += 1;
+ 481              		.loc 1 270 0
+ 482 01ae A371     		strb	r3, [r4, #6]
+ 483              		.loc 1 271 0
+ 484 01b0 FFF7FEFF 		bl	TIM_GetCounter
+ 485              	.LVL31:
+ 486 01b4 6073     		strb	r0, [r4, #13]
+ 272:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				disableEXTI(EXTI_Line15);
+ 487              		.loc 1 272 0
+ 488 01b6 0F20     		movs	r0, #15
+ 489 01b8 FFF7FEFF 		bl	disableEXTI
+ 490              	.LVL32:
+ 273:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 				enableEXTI(EXTI_Line12);
+ 491              		.loc 1 273 0
+ 492 01bc 0C20     		movs	r0, #12
+ 493 01be BBE7     		b	.L37
+ 494              	.L24:
+ 274:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 			}
+ 275:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		}
+ 276:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		break;
+ 277:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	default:
+ 278:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		timNr = 0;
+ 495              		.loc 1 278 0
+ 496 01c0 0021     		movs	r1, #0
+ 279:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		timStage = 0;
+ 280:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		TIM_SetCounter(TIM4, 0);
+ 497              		.loc 1 280 0
+ 498 01c2 0D48     		ldr	r0, .L40+8
+ 278:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		timNr = 0;
+ 499              		.loc 1 278 0
+ 500 01c4 9971     		strb	r1, [r3, #6]
+ 279:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		timStage = 0;
+ 501              		.loc 1 279 0
+ 502 01c6 D971     		strb	r1, [r3, #7]
+ 503              		.loc 1 280 0
+ 504 01c8 FFF7FEFF 		bl	TIM_SetCounter
+ 505              	.LVL33:
+ 281:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		CalcRXValues(&rxBuffer[0], 75);
+ 506              		.loc 1 281 0
+ 507 01cc 0B48     		ldr	r0, .L40+12
+ 508 01ce 4B21     		movs	r1, #75
+ 509 01d0 FFF7FEFF 		bl	CalcRXValues
+ 510              	.LVL34:
+ 511              	.L31:
+ 282:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 		break;
+ 283:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	}
+ 284:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	EXTI_ClearITPendingBit(EXTI_Line12);
+ 512              		.loc 1 284 0
+ 513 01d4 0C20     		movs	r0, #12
+ 514 01d6 FFF7FEFF 		bl	EXTI_ClearITPendingBit
+ 515              	.LVL35:
+ 285:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	EXTI_ClearITPendingBit(EXTI_Line13);
+ 516              		.loc 1 285 0
+ 517 01da 0D20     		movs	r0, #13
+ 518 01dc FFF7FEFF 		bl	EXTI_ClearITPendingBit
+ 519              	.LVL36:
+ 286:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	EXTI_ClearITPendingBit(EXTI_Line14);
+ 520              		.loc 1 286 0
+ 521 01e0 0E20     		movs	r0, #14
+ 522 01e2 FFF7FEFF 		bl	EXTI_ClearITPendingBit
+ 523              	.LVL37:
+ 287:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	EXTI_ClearITPendingBit(EXTI_Line15);
+ 524              		.loc 1 287 0
+ 525 01e6 0F20     		movs	r0, #15
+ 288:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** }
+ 526              		.loc 1 288 0
+ 527 01e8 BDE81040 		pop	{r4, lr}
+ 287:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32f30x_it.c **** 	EXTI_ClearITPendingBit(EXTI_Line15);
+ 528              		.loc 1 287 0
+ 529 01ec FFF7FEBF 		b	EXTI_ClearITPendingBit
+ 530              	.LVL38:
+ 531              	.L41:
+ 532              		.align	2
+ 533              	.L40:
+ 534 01f0 00000000 		.word	.LANCHOR0
+ 535 01f4 000C0048 		.word	1207962624
+ 536 01f8 00080040 		.word	1073743872
+ 537 01fc 08000000 		.word	.LANCHOR0+8
+ 538              		.cfi_endproc
+ 539              	.LFE120:
+ 541              		.bss
+ 542              		.set	.LANCHOR0,. + 0
+ 545              	i.8567:
+ 546 0000 00       		.space	1
+ 549              	rxBuffer.8566:
+ 550 0001 00000000 		.space	5
+ 550      00
+ 553              	timNr.8577:
+ 554 0006 00       		.space	1
+ 557              	timStage.8578:
+ 558 0007 00       		.space	1
+ 561              	rxBuffer.8579:
+ 562 0008 00000000 		.space	6
+ 562      0000
+ 563              		.text
+ 564              	.Letext0:
+ 565              		.file 2 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+ 566              		.file 3 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Device/ST/STM32F30x
+ 567              		.file 4 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+ 568              		.file 5 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+ 569              		.file 6 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_inc/remote_contro
+ 570              		.file 7 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+ 571              		.file 8 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+ 572              		.file 9 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Include/core_cm4.h"
+ 573              		.file 10 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_inc/stm32_config
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f30x_it.c
+     /tmp/ccW7pFFi.s:18     .text:00000000 $t
+     /tmp/ccW7pFFi.s:23     .text:00000000 NMI_Handler
+     /tmp/ccW7pFFi.s:40     .text:00000002 HardFault_Handler
+     /tmp/ccW7pFFi.s:58     .text:00000004 MemManage_Handler
+     /tmp/ccW7pFFi.s:76     .text:00000006 BusFault_Handler
+     /tmp/ccW7pFFi.s:94     .text:00000008 UsageFault_Handler
+     /tmp/ccW7pFFi.s:112    .text:0000000a DebugMon_Handler
+     /tmp/ccW7pFFi.s:128    .text:0000000c USART2_IRQHandler
+     /tmp/ccW7pFFi.s:213    .text:00000068 $d
+     /tmp/ccW7pFFi.s:219    .text:00000074 $t
+     /tmp/ccW7pFFi.s:224    .text:00000074 disableEXTI
+     /tmp/ccW7pFFi.s:263    .text:00000092 enableEXTI
+     /tmp/ccW7pFFi.s:302    .text:000000b0 EXTI15_10_IRQHandler
+     /tmp/ccW7pFFi.s:320    .text:000000c0 $d
+     /tmp/ccW7pFFi.s:324    .text:000000c4 $t
+     /tmp/ccW7pFFi.s:534    .text:000001f0 $d
+     /tmp/ccW7pFFi.s:545    .bss:00000000 i.8567
+     /tmp/ccW7pFFi.s:546    .bss:00000000 $d
+     /tmp/ccW7pFFi.s:549    .bss:00000001 rxBuffer.8566
+     /tmp/ccW7pFFi.s:553    .bss:00000006 timNr.8577
+     /tmp/ccW7pFFi.s:557    .bss:00000007 timStage.8578
+     /tmp/ccW7pFFi.s:561    .bss:00000008 rxBuffer.8579
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.stm32f30x.h.54.c7b24f715ee55ef38656f44540ae3be6
+                           .group:00000000 wm4.core_cm4.h.32.2441f2e49dd40451ba4254637c879d0c
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.292.5f9271075d54fc48f1e25ff79df85cb2
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_comp.h.31.9bbc5f5f1a849069ea9062fbe7b81435
+                           .group:00000000 wm4.stm32f30x_dma.h.31.73d173fa6d60026d432f3cf1d2fc4407
+                           .group:00000000 wm4.stm32f30x_exti.h.31.22e280aa6e095108654ac8d3c74a2409
+                           .group:00000000 wm4.stm32f30x_flash.h.31.bee86dc3079b7049419bdbeec073e2cd
+                           .group:00000000 wm4.stm32f30x_gpio.h.31.3745297fee3728b346ad4d2a2467e40f
+                           .group:00000000 wm4.stm32f30x_syscfg.h.31.96b023b7dbc3641f358604478433eb5c
+                           .group:00000000 wm4.stm32f30x_i2c.h.31.52025acd7f154308042bf46a2835e9d3
+                           .group:00000000 wm4.stm32f30x_pwr.h.31.cdef322c6e7f25cfc29954045d24e9b8
+                           .group:00000000 wm4.stm32f30x_rcc.h.31.3b94c1144b21d1e4fe780e4d1a02d257
+                           .group:00000000 wm4.stm32f30x_spi.h.31.c1ebebab897d23cecc617ec8ad9fd534
+                           .group:00000000 wm4.stm32f30x_tim.h.31.336f9cd855fb4e2cd819ac260ded6518
+                           .group:00000000 wm4.stm32f30x_usart.h.31.cd85313e29c0a128555b4a7b8ec0f487
+                           .group:00000000 wm4.stm32f30x_misc.h.31.f08b0e9f53f0471613b5131bb95f8725
+                           .group:00000000 wm4.stm32f30x.h.6173.8b641ba1d9b0040eda9120fe8a414b2d
+                           .group:00000000 wm4.newlib.h.8.e1d498e57c12962fc6d7be5061a6981a
+                           .group:00000000 wm4.config.h.148.52fe83653334d06815a0c57b59a3e584
+                           .group:00000000 wm4._ansi.h.23.95dee4059009fe3ab635a191bb73dc66
+                           .group:00000000 wm4.stdio.h.31.f48311dde756a2aec27351b58a280fb9
+                           .group:00000000 wm4.stddef.h.187.9e651b6b8b16e149c1353259404973ea
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._default_types.h.6.1dbd2e581fd590860c7c17f21d147e91
+                           .group:00000000 wm4.lock.h.2.9bc98482741e5e2a9450b12934a684ea
+                           .group:00000000 wm4.stddef.h.349.31f4c5baff3fa2689010b32028da9c47
+                           .group:00000000 wm4.reent.h.16.58b23a9f0faf0e7f2dfe7e2d33154afd
+                           .group:00000000 wm4.types.h.23.0d949686bbcadd1621462d4fa1f884f9
+                           .group:00000000 wm4.stddef.h.40.cf962ebbec441b3ac67502735f0765db
+                           .group:00000000 wm4.types.h.2.e9cec8c90ab35f77d9f499e06ae02400
+                           .group:00000000 wm4.types.h.80.f2bfdfeee9f340633702c07fad9b5e01
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.63.1f4bc553faa62c5c69dd9cb47f9f1417
+                           .group:00000000 wm4.stdlib.h.18.6f6153fd5cb89acd58c0f0ab1f77e147
+                           .group:00000000 wm4.stddef.h.161.e50ff8a9d5d1abbc15641da28ac571bf
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.58.3943707ca024393181a6211b2c8a1625
+                           .group:00000000 wm4.ctype.h.2.fecd14bb6f4e162ef31748cc97760e21
+                           .group:00000000 wm4.math.h.49.5da716593b937b9fb02bef6ed6537c13
+
+UNDEFINED SYMBOLS
+USART_GetITStatus
+USART_ReceiveData
+CalcRXValues
+USART_ClearITPendingBit
+USART_ClearFlag
+getEXTI_Config
+EXTI_Init
+EXTI_GetITStatus
+GPIO_ReadInputDataBit
+TIM_GetCounter
+TIM_SetCounter
+EXTI_ClearITPendingBit

@@ -1,0 +1,8 @@
+GPIOA:	Pin2, Pin3 			UART RX/TX
+	Pin5, Pin6, Pin7		SPI (onboard Gyro)
+GPIOE:	Pin3				SPI (onboard Gyro)
+GPIOB:	Pin6, Pin7			I2C (onboard Acc, Magnetometer)
+GPIOC:	Pin6, Pin7, Pin8, Pin9		4 Channel PWM Out
+GPIOD:	Pin12, Pin13, Pin14, Pin15	EXTI (4 Channel Receiver Input)
+
+

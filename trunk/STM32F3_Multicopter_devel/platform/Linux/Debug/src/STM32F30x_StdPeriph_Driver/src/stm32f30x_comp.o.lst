@@ -1,0 +1,823 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"stm32f30x_comp.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.global	COMP_DeInit
+  20              		.thumb
+  21              		.thumb_func
+  23              	COMP_DeInit:
+  24              	.LFB111:
+  25              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /**
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   ******************************************************************************
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @file    stm32f30x_comp.c
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @author  MCD Application Team
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @version V1.0.1
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @date    23-October-2012
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @brief   This file provides firmware functions to manage the following 
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *          functionalities of the 7 analog comparators (COMP1, COMP2...COMP7) peripheral: 
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *           + Comparators configuration
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *           + Window mode control
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   @verbatim
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****    
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   ==============================================================================
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****                         ##### COMP Peripheral features #####
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   ==============================================================================
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   [..]       
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       The device integrates 7 analog comparators COMP1, COMP2...COMP7:
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       (#) The non inverting input and inverting input can be set to GPIO pins
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****           as shown in table1. COMP Inputs below.
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       (#) The COMP output is internally is available using COMP_GetOutputLevel()
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****           and can be set on GPIO pins. Refer to table 2. COMP Outputs below.
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       (#) The COMP output can be redirected to embedded timers (TIM1, TIM2, TIM3...)
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****           Refer to table 3. COMP Outputs redirection to embedded timers below.
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       (#) The comparators COMP1 and COMP2, COMP3 and COMP4, COMP5 and COMP6 can be combined in wind
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****           mode and only COMP1, COMP3 and COMP5 non inverting input can be used as non-inverting inp
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       (#) The seven comparators have interrupt capability with wake-up
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****           from Sleep and Stop modes (through the EXTI controller):
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****           (++) COMP1 is internally connected to EXTI Line 21
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****           (++) COMP2 is internally connected to EXTI Line 22
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****           (++) COMP3 is internally connected to EXTI Line 29
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****           (++) COMP4 is internally connected to EXTI Line 30
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****           (++) COMP5 is internally connected to EXTI Line 31
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****           (++) COMP6 is internally connected to EXTI Line 32
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****           (++) COMP7 is internally connected to EXTI Line 33
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  [..] Table 1. COMP Inputs
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  +------------------------------------------------------------------------------------------+     
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                 |                | COMP1 | COMP2 | COMP3 | COMP4 | COMP5 | COMP6 | COMP7 |
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |-----------------|----------------|---------------|---------------------------------------|
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                 | 1/4 VREFINT    |  OK   |  OK   |  OK   |  OK   |  OK   |  OK   |  OK   |
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                 | 1/2 VREFINT    |  OK   |  OK   |  OK   |  OK   |  OK   |  OK   |  OK   |
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                 | 3/4 VREFINT    |  OK   |  OK   |  OK   |  OK   |  OK   |  OK   |  OK   |
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  | Inverting Input | VREFINT        |  OK   |  OK   |  OK   |  OK   |  OK   |  OK   |  OK   |
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                 | DAC1 OUT (PA4) |  OK   |  OK   |  OK   |  OK   |  OK   |  OK   |  OK   |
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                 | DAC2 OUT (PA5) |  OK   |  OK   |  OK   |  OK   |  OK   |  OK   |  OK   |
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                 | IO1            |  PA0  |  PA2  |  PD15 |  PE8  |  PD13 |  PD10 |  PC0  |
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                 | IO2            |  ---  |  ---  |  PB12 |  PB2  |  PB10 |  PB15 |  ---  |
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |-----------------|----------------|-------|-------|-------|-------|-------|-------|-------|
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  Non Inverting  | IO1            |  PA1  |  PA7  |  PB14 |  PB0  |  PD12 |  PD11 |  PA0  |
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |    Input        | IO2            |  ---  |  PA3  |  PD14 |  PE7  |  PB13 |  PB11 |  PC1  |
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  +------------------------------------------------------------------------------------------+  
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  [..] Table 2. COMP Outputs
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  +-------------------------------------------------------+     
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  | COMP1 | COMP2 | COMP3 | COMP4 | COMP5 | COMP6 | COMP7 |
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |-------|-------|-------|-------|-------|-------|-------|
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  PA0  |  PA2  |  PB1  |  PC8  |  PC7  |  PA10 |  PC2  |
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  PF4  |  PA7  |  ---  |  PA8  |  PA9  |  PC6  |  ---  |
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  PA6  |  PA12 |  ---  |  ---  |  ---  |  ---  |  ---  |
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  PA11 |  PB9  |  ---  |  ---  |  ---  |  ---  |  ---  |
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  PB8  |  ---  |  ---  |  ---  |  ---  |  ---  |  ---  |
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  +-------------------------------------------------------+
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  [..] Table 3. COMP Outputs redirection to embedded timers
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  +-------------------------------------------------------------------------------------------------
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |     COMP1      |     COMP2      |     COMP3      |     COMP4      |     COMP5      |     COMP6  
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |----------------|----------------|----------------|----------------|----------------|------------
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  TIM1 BKIN     |  TIM1 BKIN     |  TIM1 BKIN     |  TIM1 BKIN     |  TIM1 BKIN     |  TIM1 BKIN 
+  74:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                |                |                |                |                |            
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  TIM1 BKIN2    |  TIM1 BKIN2    |  TIM1 BKIN2    |  TIM1 BKIN2    |  TIM1 BKIN2    |  TIM1 BKIN2
+  76:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                |                |                |                |                |            
+  77:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  TIM8 BKIN     |  TIM8 BKIN     |  TIM8 BKIN     |  TIM8 BKIN     |  TIM8 BKIN     |  TIM8 BKIN 
+  78:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                |                |                |                |                |            
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  TIM8 BKIN2    |  TIM8 BKIN2    |  TIM8 BKIN2    |  TIM8 BKIN2    |  TIM8 BKIN2    |  TIM8 BKIN2
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                |                |                |                |                |            
+  81:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  TIM1 BKIN2    |  TIM1 BKIN2    |  TIM1 BKIN2    |  TIM1 BKIN2    |  TIM1 BKIN2    |  TIM1 BKIN2
+  82:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |     +          |     +          |     +          |     +          |     +          |     +      
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  TIM8BKIN2     |  TIM8BKIN2     |  TIM8BKIN2     |  TIM8BKIN2     |  TIM8BKIN2     |  TIM8BKIN2 
+  84:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                |                |                |                |                |            
+  85:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  TIM1 OCREFCLR |  TIM1 OCREFCLR |  TIM1 OCREFCLR |  TIM8 OCREFCLR |  TIM8 OCREFCLR |  TIM8 OCREF
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                |                |                |                |                |            
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  TIM1 IC1      |  TIM1 IC1      |  TIM2 OCREFCLR |  TIM3 IC3      |  TIM2 IC1      |  TIM2 IC2  
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                |                |                |                |                |            
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  TIM2 IC4      |  TIM2 IC4      |  TIM3 IC2      |  TIM3 OCREFCLR |  TIM3 OCREFCLR |  TIM2 OCREF
+  90:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                |                |                |                |                |            
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  TIM2 OCREFCLR |  TIM2 OCREFCLR |  TIM4 IC1      |  TIM4 IC2      |  TIM4 IC3      |  TIM16 OCRE
+  92:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                |                |                |                |                |            
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  TIM3 IC1      |  TIM3 IC1      |  TIM15 IC1     |  TIM15 OCREFCLR|  TIM16 BKIN    |  TIM16 IC1 
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                |                |                |                |                |            
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  TIM3 OCREFCLR |  TIM3 OCREFCLR |  TIM15 BKIN    |  TIM15 IC2     |  TIM17 IC1     |  TIM4 IC4  
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  +-------------------------------------------------------------------------------------------------
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  [..] Table 4. COMP Outputs blanking sources
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  +-------------------------------------------------------------------------------------------------
+ 100:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |     COMP1      |     COMP2      |     COMP3      |     COMP4      |     COMP5      |     COMP6  
+ 101:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |----------------|----------------|----------------|----------------|----------------|------------
+ 102:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  TIM1 OC5      |  TIM1 OC5      |  TIM1 OC5      |  TIM3 OC4      |  TIM3 OC3      |  TIM2 OC4  
+ 103:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                |                |                |                |                |            
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  TIM2 OC3      |  TIM2 OC3      |  --------      |  TIM8 OC5      |  TIM8 OC5      |  TIM8 OC5  
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                |                |                |                |                |            
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |  TIM3 OC3      |  TIM3 OC3      |  TIM2 OC4      |  TIM15 OC1     |  TIM8 BKIN     |  TIM15 OC2 
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  |                |                |                |                |                |            
+ 108:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  +-------------------------------------------------------------------------------------------------
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 110:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   
+ 111:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****                          ##### How to use this driver #####
+ 112:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   ==============================================================================
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   [..]
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   This driver provides functions to configure and program the Comparators 
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   of all STM32F30x devices.
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   To use the comparator, perform the following steps:
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   (#) Enable the SYSCFG APB clock to get write access to comparator
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       register using RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   (#) Configure the comparator input in analog mode using GPIO_Init()
+ 123:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   
+ 124:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   (#) Configure the comparator output in alternate function mode
+ 125:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       using GPIO_Init() and use GPIO_PinAFConfig() function to map the
+ 126:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       comparator output to the GPIO pin
+ 127:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   (#) Configure the comparator using COMP_Init() function:
+ 129:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       (++) Select the inverting input
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       (++) Select the non-inverting input
+ 131:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       (++) Select the output polarity  
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       (++) Select the output redirection
+ 133:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       (++) Select the hysteresis level
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       (++) Select the power mode
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   (#) Enable the comparator using COMP_Cmd() function
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   (#) If required enable the COMP interrupt by configuring and enabling
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       EXTI line in Interrupt mode and selecting the desired sensitivity
+ 140:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       level using EXTI_Init() function. After that enable the comparator
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****       interrupt vector using NVIC_Init() function.
+ 142:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 143:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   @endverbatim
+ 144:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *    
+ 145:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   ******************************************************************************
+ 146:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @attention
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *
+ 148:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+ 149:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *
+ 150:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+ 151:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * You may not use this file except in compliance with the License.
+ 152:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * You may obtain a copy of the License at:
+ 153:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *
+ 154:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+ 155:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * Unless required by applicable law or agreed to in writing, software 
+ 157:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+ 158:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ 159:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * See the License for the specific language governing permissions and
+ 160:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * limitations under the License.
+ 161:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *
+ 162:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   ******************************************************************************
+ 163:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   */ 
+ 164:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 165:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /* Includes ------------------------------------------------------------------*/
+ 166:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** #include "stm32f30x_comp.h"
+ 167:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /** @addtogroup STM32F30x_StdPeriph_Driver
+ 169:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @{
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   */
+ 171:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 172:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /** @defgroup COMP 
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @brief COMP driver modules
+ 174:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @{
+ 175:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   */ 
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /* Private typedef -----------------------------------------------------------*/
+ 178:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /* Private define ------------------------------------------------------------*/
+ 179:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /* CSR register Mask */
+ 180:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** #define COMP_CSR_CLEAR_MASK              ((uint32_t)0x00000003)
+ 181:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 182:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /* Private macro -------------------------------------------------------------*/
+ 183:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /* Private variables ---------------------------------------------------------*/
+ 184:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /* Private function prototypes -----------------------------------------------*/
+ 185:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /* Private functions ---------------------------------------------------------*/
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 187:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /** @defgroup COMP_Private_Functions
+ 188:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @{
+ 189:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   */
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 191:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /** @defgroup COMP_Group1 Initialization and Configuration functions
+ 192:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  *  @brief   Initialization and Configuration functions 
+ 193:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  *
+ 194:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** @verbatim   
+ 195:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  ===============================================================================
+ 196:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****             ##### Initialization and Configuration functions #####
+ 197:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  ===============================================================================  
+ 198:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 199:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** @endverbatim
+ 200:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @{
+ 201:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   */
+ 202:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****    
+ 203:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /**
+ 204:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @brief  Deinitializes COMP peripheral registers to their default reset values.
+ 205:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @note   Deinitialization can't be performed if the COMP configuration is locked.
+ 206:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         To unlock the configuration, perform a system reset.
+ 207:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @param  COMP_Selection: the selected comparator. 
+ 208:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *          This parameter can be COMP_Selection_COMPx where x can be 1 to 7
+ 209:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *          to select the COMP peripheral.
+ 210:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @param  None
+ 211:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @retval None
+ 212:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   */
+ 213:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** void COMP_DeInit(uint32_t COMP_Selection)
+ 214:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** {
+  26              		.loc 1 214 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  31              	.LVL0:
+ 215:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /*!< Set COMP_CSR register to reset value */
+ 216:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *(__IO uint32_t *) (COMP_BASE + COMP_Selection) = ((uint32_t)0x00000000);
+  32              		.loc 1 216 0
+  33 0000 014B     		ldr	r3, .L2
+  34 0002 0022     		movs	r2, #0
+  35 0004 C250     		str	r2, [r0, r3]
+  36 0006 7047     		bx	lr
+  37              	.L3:
+  38              		.align	2
+  39              	.L2:
+  40 0008 1C000140 		.word	1073807388
+  41              		.cfi_endproc
+  42              	.LFE111:
+  44              		.align	1
+  45              		.global	COMP_Init
+  46              		.thumb
+  47              		.thumb_func
+  49              	COMP_Init:
+  50              	.LFB112:
+ 217:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** }
+ 218:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 219:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /**
+ 220:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @brief  Initializes the COMP peripheral according to the specified parameters
+ 221:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         in COMP_InitStruct
+ 222:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @note   If the selected comparator is locked, initialization can't be performed.
+ 223:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         To unlock the configuration, perform a system reset.
+ 224:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @note   By default, PA1 is selected as COMP1 non inverting input.
+ 225:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         To use PA4 as COMP1 non inverting input call COMP_SwitchCmd() after COMP_Init()
+ 226:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @param  COMP_Selection: the selected comparator. 
+ 227:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *          This parameter can be COMP_Selection_COMPx where x can be 1 to 7
+ 228:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *          to select the COMP peripheral.
+ 229:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @param  COMP_InitStruct: pointer to an COMP_InitTypeDef structure that contains 
+ 230:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         the configuration information for the specified COMP peripheral.
+ 231:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *           - COMP_InvertingInput specifies the inverting input of COMP
+ 232:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *           - COMP_NonInvertingInput specifies the non inverting input of COMP
+ 233:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *           - COMP_Output connect COMP output to selected timer
+ 234:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *             input (Input capture / Output Compare Reference Clear / Break Input)
+ 235:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *           - COMP_BlankingSrce specifies the blanking source of COMP
+ 236:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *           - COMP_OutputPol select output polarity
+ 237:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *           - COMP_Hysteresis configures COMP hysteresis value
+ 238:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *           - COMP_Mode configures COMP power mode
+ 239:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @retval None
+ 240:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   */
+ 241:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** void COMP_Init(uint32_t COMP_Selection, COMP_InitTypeDef* COMP_InitStruct)
+ 242:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** {
+  51              		.loc 1 242 0
+  52              		.cfi_startproc
+  53              		@ args = 0, pretend = 0, frame = 0
+  54              		@ frame_needed = 0, uses_anonymous_args = 0
+  55              	.LVL1:
+  56 000c 70B5     		push	{r4, r5, r6, lr}
+  57              	.LCFI0:
+  58              		.cfi_def_cfa_offset 16
+  59              		.cfi_offset 4, -16
+  60              		.cfi_offset 5, -12
+  61              		.cfi_offset 6, -8
+  62              		.cfi_offset 14, -4
+ 243:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   uint32_t tmpreg = 0;
+ 244:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 245:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /* Check the parameters */
+ 246:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   assert_param(IS_COMP_ALL_PERIPH(COMP_Selection));
+ 247:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   assert_param(IS_COMP_INVERTING_INPUT(COMP_InitStruct->COMP_InvertingInput));
+ 248:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   assert_param(IS_COMP_NONINVERTING_INPUT(COMP_InitStruct->COMP_NonInvertingInput));
+ 249:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   assert_param(IS_COMP_OUTPUT(COMP_InitStruct->COMP_Output));
+ 250:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   assert_param(IS_COMP_BLANKING_SOURCE(COMP_InitStruct->COMP_BlankingSrce));
+ 251:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   assert_param(IS_COMP_OUTPUT_POL(COMP_InitStruct->COMP_OutputPol));
+ 252:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   assert_param(IS_COMP_HYSTERESIS(COMP_InitStruct->COMP_Hysteresis));
+ 253:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   assert_param(IS_COMP_MODE(COMP_InitStruct->COMP_Mode));
+ 254:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 255:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /*!< Get the COMPx_CSR register value */
+ 256:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   tmpreg = *(__IO uint32_t *) (COMP_BASE + COMP_Selection);
+ 257:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 258:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /*!< Clear the COMP1SW1, COMPxINSEL, COMPxOUTSEL, COMPxPOL, COMPxHYST and COMPxMODE bits */
+ 259:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   tmpreg &= (uint32_t) (COMP_CSR_CLEAR_MASK);
+ 260:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 261:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /*!< Configure COMP: inverting input, output redirection, hysteresis value and power mode */
+ 262:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /*!< Set COMPxINSEL bits according to COMP_InitStruct->COMP_InvertingInput value */
+ 263:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /*!< Set COMPxNONINSEL bits according to COMP_InitStruct->COMP_NonInvertingInput value */
+ 264:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /*!< Set COMPxBLANKING bits according to COMP_InitStruct->COMP_BlankingSrce value */
+ 265:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /*!< Set COMPxOUTSEL bits according to COMP_InitStruct->COMP_Output value */
+ 266:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /*!< Set COMPxPOL bit according to COMP_InitStruct->COMP_OutputPol value */
+ 267:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /*!< Set COMPxHYST bits according to COMP_InitStruct->COMP_Hysteresis value */
+ 268:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /*!< Set COMPxMODE bits according to COMP_InitStruct->COMP_Mode value */
+ 269:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   tmpreg |= (uint32_t)(COMP_InitStruct->COMP_InvertingInput | COMP_InitStruct->COMP_NonInvertingInp
+  63              		.loc 1 269 0
+  64 000e 91E83000 		ldmia	r1, {r4, r5}
+  65 0012 45EA0402 		orr	r2, r5, r4
+  66 0016 8C68     		ldr	r4, [r1, #8]
+ 256:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   tmpreg = *(__IO uint32_t *) (COMP_BASE + COMP_Selection);
+  67              		.loc 1 256 0
+  68 0018 074B     		ldr	r3, .L5
+  69              		.loc 1 269 0
+  70 001a 2243     		orrs	r2, r2, r4
+ 270:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****                         COMP_InitStruct->COMP_Output | COMP_InitStruct->COMP_OutputPol | COMP_InitS
+  71              		.loc 1 270 0
+  72 001c 0C69     		ldr	r4, [r1, #16]
+ 256:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   tmpreg = *(__IO uint32_t *) (COMP_BASE + COMP_Selection);
+  73              		.loc 1 256 0
+  74 001e C658     		ldr	r6, [r0, r3]
+  75              	.LVL2:
+  76              		.loc 1 270 0
+  77 0020 2243     		orrs	r2, r2, r4
+  78 0022 CC68     		ldr	r4, [r1, #12]
+ 259:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   tmpreg &= (uint32_t) (COMP_CSR_CLEAR_MASK);
+  79              		.loc 1 259 0
+  80 0024 06F00306 		and	r6, r6, #3
+  81              	.LVL3:
+  82              		.loc 1 270 0
+  83 0028 1443     		orrs	r4, r4, r2
+  84 002a 4A69     		ldr	r2, [r1, #20]
+ 269:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   tmpreg |= (uint32_t)(COMP_InitStruct->COMP_InvertingInput | COMP_InitStruct->COMP_NonInvertingInp
+  85              		.loc 1 269 0
+  86 002c 8969     		ldr	r1, [r1, #24]
+  87              	.LVL4:
+  88              		.loc 1 270 0
+  89 002e 2243     		orrs	r2, r2, r4
+ 269:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   tmpreg |= (uint32_t)(COMP_InitStruct->COMP_InvertingInput | COMP_InitStruct->COMP_NonInvertingInp
+  90              		.loc 1 269 0
+  91 0030 0A43     		orrs	r2, r2, r1
+  92 0032 3243     		orrs	r2, r2, r6
+  93              	.LVL5:
+ 271:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****                         COMP_InitStruct->COMP_Hysteresis | COMP_InitStruct->COMP_Mode);
+ 272:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 273:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /*!< Write to COMPx_CSR register */
+ 274:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *(__IO uint32_t *) (COMP_BASE + COMP_Selection) = tmpreg;
+  94              		.loc 1 274 0
+  95 0034 C250     		str	r2, [r0, r3]
+  96 0036 70BD     		pop	{r4, r5, r6, pc}
+  97              	.L6:
+  98              		.align	2
+  99              	.L5:
+ 100 0038 1C000140 		.word	1073807388
+ 101              		.cfi_endproc
+ 102              	.LFE112:
+ 104              		.align	1
+ 105              		.global	COMP_StructInit
+ 106              		.thumb
+ 107              		.thumb_func
+ 109              	COMP_StructInit:
+ 110              	.LFB113:
+ 275:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** }
+ 276:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 277:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /**
+ 278:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @brief  Fills each COMP_InitStruct member with its default value.
+ 279:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @param  COMP_InitStruct: pointer to an COMP_InitTypeDef structure which will 
+ 280:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         be initialized.
+ 281:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @retval None
+ 282:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   */
+ 283:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** void COMP_StructInit(COMP_InitTypeDef* COMP_InitStruct)
+ 284:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** {
+ 111              		.loc 1 284 0
+ 112              		.cfi_startproc
+ 113              		@ args = 0, pretend = 0, frame = 0
+ 114              		@ frame_needed = 0, uses_anonymous_args = 0
+ 115              		@ link register save eliminated.
+ 116              	.LVL6:
+ 285:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   COMP_InitStruct->COMP_InvertingInput = COMP_InvertingInput_1_4VREFINT;
+ 117              		.loc 1 285 0
+ 118 003c 0023     		movs	r3, #0
+ 119 003e 0360     		str	r3, [r0, #0]
+ 286:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   COMP_InitStruct->COMP_NonInvertingInput = COMP_NonInvertingInput_IO1;
+ 120              		.loc 1 286 0
+ 121 0040 4360     		str	r3, [r0, #4]
+ 287:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   COMP_InitStruct->COMP_Output = COMP_Output_None;
+ 122              		.loc 1 287 0
+ 123 0042 8360     		str	r3, [r0, #8]
+ 288:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   COMP_InitStruct->COMP_BlankingSrce = COMP_BlankingSrce_None;
+ 124              		.loc 1 288 0
+ 125 0044 C360     		str	r3, [r0, #12]
+ 289:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   COMP_InitStruct->COMP_OutputPol = COMP_OutputPol_NonInverted;
+ 126              		.loc 1 289 0
+ 127 0046 0361     		str	r3, [r0, #16]
+ 290:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   COMP_InitStruct->COMP_Hysteresis = COMP_Hysteresis_No;
+ 128              		.loc 1 290 0
+ 129 0048 4361     		str	r3, [r0, #20]
+ 291:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   COMP_InitStruct->COMP_Mode = COMP_Mode_UltraLowPower;
+ 130              		.loc 1 291 0
+ 131 004a 0C23     		movs	r3, #12
+ 132 004c 8361     		str	r3, [r0, #24]
+ 133 004e 7047     		bx	lr
+ 134              		.cfi_endproc
+ 135              	.LFE113:
+ 137              		.align	1
+ 138              		.global	COMP_Cmd
+ 139              		.thumb
+ 140              		.thumb_func
+ 142              	COMP_Cmd:
+ 143              	.LFB114:
+ 292:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** }
+ 293:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 294:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /**
+ 295:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @brief  Enable or disable the COMP peripheral.
+ 296:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @note   If the selected comparator is locked, enable/disable can't be performed.
+ 297:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         To unlock the configuration, perform a system reset.
+ 298:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @param  COMP_Selection: the selected comparator. 
+ 299:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *          This parameter can be COMP_Selection_COMPx where x can be 1 to 7
+ 300:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *          to select the COMP peripheral.
+ 301:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @param  NewState: new state of the COMP peripheral.
+ 302:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         This parameter can be: ENABLE or DISABLE.
+ 303:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         When enabled, the comparator compares the non inverting input with 
+ 304:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *                       the inverting input and the comparison result is available
+ 305:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *                       on comparator output.
+ 306:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         When disabled, the comparator doesn't perform comparison and the 
+ 307:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *                        output level is low.
+ 308:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @retval None
+ 309:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   */
+ 310:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** void COMP_Cmd(uint32_t COMP_Selection, FunctionalState NewState)
+ 311:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** {
+ 144              		.loc 1 311 0
+ 145              		.cfi_startproc
+ 146              		@ args = 0, pretend = 0, frame = 0
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148              		@ link register save eliminated.
+ 149              	.LVL7:
+ 150 0050 044B     		ldr	r3, .L12
+ 312:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /* Check the parameters */
+ 313:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   assert_param(IS_COMP_ALL_PERIPH(COMP_Selection));
+ 314:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 315:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 316:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   if (NewState != DISABLE)
+ 317:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   {
+ 318:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****     /* Enable the selected COMPx peripheral */
+ 319:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****     *(__IO uint32_t *) (COMP_BASE + COMP_Selection) |= (uint32_t) (COMP_CSR_COMPxEN);
+ 151              		.loc 1 319 0
+ 152 0052 C258     		ldr	r2, [r0, r3]
+ 316:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   if (NewState != DISABLE)
+ 153              		.loc 1 316 0
+ 154 0054 11B1     		cbz	r1, .L9
+ 155              		.loc 1 319 0
+ 156 0056 42F00102 		orr	r2, r2, #1
+ 157 005a 01E0     		b	.L11
+ 158              	.L9:
+ 320:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   }
+ 321:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   else
+ 322:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   {
+ 323:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****     /* Disable the selected COMP peripheral  */
+ 324:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****     *(__IO uint32_t *) (COMP_BASE + COMP_Selection) &= (uint32_t)(~COMP_CSR_COMPxEN);
+ 159              		.loc 1 324 0
+ 160 005c 22F00102 		bic	r2, r2, #1
+ 161              	.L11:
+ 162 0060 C250     		str	r2, [r0, r3]
+ 163 0062 7047     		bx	lr
+ 164              	.L13:
+ 165              		.align	2
+ 166              	.L12:
+ 167 0064 1C000140 		.word	1073807388
+ 168              		.cfi_endproc
+ 169              	.LFE114:
+ 171              		.align	1
+ 172              		.global	COMP_SwitchCmd
+ 173              		.thumb
+ 174              		.thumb_func
+ 176              	COMP_SwitchCmd:
+ 177              	.LFB115:
+ 325:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   }
+ 326:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** }
+ 327:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 328:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /**
+ 329:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @brief  Close or Open the SW1 switch.
+ 330:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @note   If the COMP1 is locked, Close/Open the SW1 switch can't be performed.
+ 331:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         To unlock the configuration, perform a system reset.  
+ 332:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @note   This switch is solely intended to redirect signals onto high
+ 333:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         impedance input, such as COMP1 non-inverting input (highly resistive switch)
+ 334:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @param  NewState: New state of the analog switch.
+ 335:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *   This parameter can be 
+ 336:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *     ENABLE so the SW1 is closed; PA1 is connected to PA4
+ 337:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *     or DISABLE so the SW1 switch is open; PA1 is disconnected from PA4
+ 338:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @retval None
+ 339:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   */
+ 340:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** void COMP_SwitchCmd(uint32_t COMP_Selection, FunctionalState NewState)
+ 341:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** {
+ 178              		.loc 1 341 0
+ 179              		.cfi_startproc
+ 180              		@ args = 0, pretend = 0, frame = 0
+ 181              		@ frame_needed = 0, uses_anonymous_args = 0
+ 182              		@ link register save eliminated.
+ 183              	.LVL8:
+ 184 0068 044B     		ldr	r3, .L18
+ 342:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /* Check the parameter */
+ 343:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 344:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 345:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   if (NewState != DISABLE)
+ 346:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   {
+ 347:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****     /* Close SW1 switch */
+ 348:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****     *(__IO uint32_t *) (COMP_BASE + COMP_Selection) |= (uint32_t) (COMP_CSR_COMP1SW1);
+ 185              		.loc 1 348 0
+ 186 006a C258     		ldr	r2, [r0, r3]
+ 345:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   if (NewState != DISABLE)
+ 187              		.loc 1 345 0
+ 188 006c 11B1     		cbz	r1, .L15
+ 189              		.loc 1 348 0
+ 190 006e 42F00202 		orr	r2, r2, #2
+ 191 0072 01E0     		b	.L17
+ 192              	.L15:
+ 349:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   }
+ 350:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   else
+ 351:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   {
+ 352:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****     /* Open SW1 switch */
+ 353:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****     *(__IO uint32_t *) (COMP_BASE + COMP_Selection) &= (uint32_t)(~COMP_CSR_COMP1SW1);
+ 193              		.loc 1 353 0
+ 194 0074 22F00202 		bic	r2, r2, #2
+ 195              	.L17:
+ 196 0078 C250     		str	r2, [r0, r3]
+ 197 007a 7047     		bx	lr
+ 198              	.L19:
+ 199              		.align	2
+ 200              	.L18:
+ 201 007c 1C000140 		.word	1073807388
+ 202              		.cfi_endproc
+ 203              	.LFE115:
+ 205              		.align	1
+ 206              		.global	COMP_GetOutputLevel
+ 207              		.thumb
+ 208              		.thumb_func
+ 210              	COMP_GetOutputLevel:
+ 211              	.LFB116:
+ 354:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   }
+ 355:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** }
+ 356:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 357:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /**
+ 358:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @brief  Return the output level (high or low) of the selected comparator. 
+ 359:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         The output level depends on the selected polarity.
+ 360:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         If the polarity is not inverted:
+ 361:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *           - Comparator output is low when the non-inverting input is at a lower
+ 362:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *             voltage than the inverting input
+ 363:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *           - Comparator output is high when the non-inverting input is at a higher
+ 364:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *             voltage than the inverting input
+ 365:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         If the polarity is inverted:
+ 366:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *           - Comparator output is high when the non-inverting input is at a lower
+ 367:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *             voltage than the inverting input
+ 368:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *           - Comparator output is low when the non-inverting input is at a higher
+ 369:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *             voltage than the inverting input
+ 370:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @param  COMP_Selection: the selected comparator. 
+ 371:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *          This parameter can be COMP_Selection_COMPx where x can be 1 to 7
+ 372:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *          to select the COMP peripheral.
+ 373:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @retval Returns the selected comparator output level: low or high.
+ 374:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *       
+ 375:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   */
+ 376:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** uint32_t COMP_GetOutputLevel(uint32_t COMP_Selection)
+ 377:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** {
+ 212              		.loc 1 377 0
+ 213              		.cfi_startproc
+ 214              		@ args = 0, pretend = 0, frame = 0
+ 215              		@ frame_needed = 0, uses_anonymous_args = 0
+ 216              		@ link register save eliminated.
+ 217              	.LVL9:
+ 378:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   uint32_t compout = 0x0;
+ 379:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 380:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /* Check the parameters */
+ 381:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   assert_param(IS_COMP_ALL_PERIPH(COMP_Selection));
+ 382:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 383:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /* Check if selected comparator output is high */
+ 384:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   if ((*(__IO uint32_t *) (COMP_BASE + COMP_Selection) & (COMP_CSR_COMPxOUT)) != 0)
+ 218              		.loc 1 384 0
+ 219 0080 024B     		ldr	r3, .L23
+ 220 0082 C058     		ldr	r0, [r0, r3]
+ 221              	.LVL10:
+ 385:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   {
+ 386:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****     compout = COMP_OutputLevel_High;
+ 387:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   }
+ 388:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   else
+ 389:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   {
+ 390:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****     compout = COMP_OutputLevel_Low;
+ 391:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   }
+ 392:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 393:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /* Return the comparator output level */
+ 394:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   return (uint32_t)(compout);
+ 395:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** }
+ 222              		.loc 1 395 0
+ 223 0084 00F08040 		and	r0, r0, #1073741824
+ 224              	.LVL11:
+ 225 0088 7047     		bx	lr
+ 226              	.L24:
+ 227 008a 00BF     		.align	2
+ 228              	.L23:
+ 229 008c 1C000140 		.word	1073807388
+ 230              		.cfi_endproc
+ 231              	.LFE116:
+ 233              		.align	1
+ 234              		.global	COMP_WindowCmd
+ 235              		.thumb
+ 236              		.thumb_func
+ 238              	COMP_WindowCmd:
+ 239              	.LFB117:
+ 396:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 397:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /**
+ 398:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @}
+ 399:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   */
+ 400:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 401:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /** @defgroup COMP_Group2 Window mode control function
+ 402:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  *  @brief   Window mode control function 
+ 403:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  *
+ 404:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** @verbatim   
+ 405:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  ===============================================================================
+ 406:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****                     ##### Window mode control function #####
+ 407:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  ===============================================================================  
+ 408:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 409:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** @endverbatim
+ 410:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @{
+ 411:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   */
+ 412:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 413:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /**
+ 414:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @brief  Enables or disables the window mode.
+ 415:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         Window mode for comparators makes use of two comparators:
+ 416:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         COMP1 and COM2, COMP3 and COMP4, COMP5 and COMP6.
+ 417:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         In window mode, COMPx and COMPx-1 (where x can be 2, 4 or 6)
+ 418:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         non inverting inputs are connected together and only COMPx-1 non
+ 419:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         inverting input can be used.
+ 420:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         e.g When window mode enabled for COMP4, COMP3 non inverting input (PB14 or PD14)
+ 421:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *             is to be used.
+ 422:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @note   If the COMPx is locked, ENABLE/DISABLE the window mode can't be performed.
+ 423:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         To unlock the configuration, perform a system reset.
+ 424:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @param  COMP_Selection: the selected comparator.
+ 425:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *          This parameter can be COMP_Selection_COMPx where x can be 2, 4 or 6
+ 426:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *          to select the COMP peripheral.
+ 427:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * param   NewState: new state of the window mode.
+ 428:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *   This parameter can be ENABLE or DISABLE.
+ 429:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *        When enbaled, COMPx and COMPx-1 non inverting inputs are connected together.
+ 430:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *        When disabled, COMPx and COMPx-1 non inverting inputs are disconnected.
+ 431:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @retval None
+ 432:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   */
+ 433:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** void COMP_WindowCmd(uint32_t COMP_Selection, FunctionalState NewState)
+ 434:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** {
+ 240              		.loc 1 434 0
+ 241              		.cfi_startproc
+ 242              		@ args = 0, pretend = 0, frame = 0
+ 243              		@ frame_needed = 0, uses_anonymous_args = 0
+ 244              		@ link register save eliminated.
+ 245              	.LVL12:
+ 246 0090 044B     		ldr	r3, .L29
+ 435:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /* Check the parameters */
+ 436:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 437:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   assert_param(IS_COMP_WINDOW(COMP_Selection));
+ 438:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   
+ 439:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   if (NewState != DISABLE)
+ 440:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   {
+ 441:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****     /* Enable the window mode */
+ 442:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****     *(__IO uint32_t *) (COMP_BASE + COMP_Selection) |= (uint32_t) COMP_CSR_COMPxWNDWEN;
+ 247              		.loc 1 442 0
+ 248 0092 C258     		ldr	r2, [r0, r3]
+ 439:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   if (NewState != DISABLE)
+ 249              		.loc 1 439 0
+ 250 0094 11B1     		cbz	r1, .L26
+ 251              		.loc 1 442 0
+ 252 0096 42F40072 		orr	r2, r2, #512
+ 253 009a 01E0     		b	.L28
+ 254              	.L26:
+ 443:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   }
+ 444:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   else
+ 445:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   {
+ 446:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****     /* Disable the window mode */
+ 447:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****     *(__IO uint32_t *) (COMP_BASE + COMP_Selection) &= (uint32_t)(~COMP_CSR_COMPxWNDWEN);
+ 255              		.loc 1 447 0
+ 256 009c 22F40072 		bic	r2, r2, #512
+ 257              	.L28:
+ 258 00a0 C250     		str	r2, [r0, r3]
+ 259 00a2 7047     		bx	lr
+ 260              	.L30:
+ 261              		.align	2
+ 262              	.L29:
+ 263 00a4 1C000140 		.word	1073807388
+ 264              		.cfi_endproc
+ 265              	.LFE117:
+ 267              		.align	1
+ 268              		.global	COMP_LockConfig
+ 269              		.thumb
+ 270              		.thumb_func
+ 272              	COMP_LockConfig:
+ 273              	.LFB118:
+ 448:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   }
+ 449:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** }
+ 450:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 451:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /**
+ 452:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @}
+ 453:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   */
+ 454:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 455:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /** @defgroup COMP_Group3 COMP configuration locking function
+ 456:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  *  @brief   COMP1, COMP2,...COMP7 configuration locking function
+ 457:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  *           COMP1, COMP2,...COMP7 configuration can be locked each separately.
+ 458:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  *           Unlocking is performed by system reset.
+ 459:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  *
+ 460:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** @verbatim   
+ 461:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  ===============================================================================
+ 462:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****                    ##### Configuration Lock function #####
+ 463:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****  ===============================================================================  
+ 464:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 465:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** @endverbatim
+ 466:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @{
+ 467:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   */
+ 468:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 469:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** /**
+ 470:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @brief  Lock the selected comparator (COMP1/COMP2) configuration.
+ 471:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @note   Locking the configuration means that all control bits are read-only.
+ 472:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *         To unlock the comparator configuration, perform a system reset.
+ 473:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @param  COMP_Selection: the selected comparator. 
+ 474:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *          This parameter can be COMP_Selection_COMPx where x can be 1 to 7
+ 475:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *          to select the COMP peripheral.
+ 476:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   * @retval None
+ 477:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   */
+ 478:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** void COMP_LockConfig(uint32_t COMP_Selection)
+ 479:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** {
+ 274              		.loc 1 479 0
+ 275              		.cfi_startproc
+ 276              		@ args = 0, pretend = 0, frame = 0
+ 277              		@ frame_needed = 0, uses_anonymous_args = 0
+ 278              		@ link register save eliminated.
+ 279              	.LVL13:
+ 480:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /* Check the parameter */
+ 481:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   assert_param(IS_COMP_ALL_PERIPH(COMP_Selection));
+ 482:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c **** 
+ 483:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   /* Set the lock bit corresponding to selected comparator */
+ 484:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_comp.c ****   *(__IO uint32_t *) (COMP_BASE + COMP_Selection) |= (uint32_t) (COMP_CSR_COMPxLOCK);
+ 280              		.loc 1 484 0
+ 281 00a8 024B     		ldr	r3, .L32
+ 282 00aa C258     		ldr	r2, [r0, r3]
+ 283 00ac 42F00042 		orr	r2, r2, #-2147483648
+ 284 00b0 C250     		str	r2, [r0, r3]
+ 285 00b2 7047     		bx	lr
+ 286              	.L33:
+ 287              		.align	2
+ 288              	.L32:
+ 289 00b4 1C000140 		.word	1073807388
+ 290              		.cfi_endproc
+ 291              	.LFE118:
+ 293              	.Letext0:
+ 294              		.file 2 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+ 295              		.file 3 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Device/ST/STM32F30x
+ 296              		.file 4 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+ 297              		.file 5 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Include/core_cm4.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f30x_comp.c
+     /tmp/ccVQ8Je1.s:18     .text:00000000 $t
+     /tmp/ccVQ8Je1.s:23     .text:00000000 COMP_DeInit
+     /tmp/ccVQ8Je1.s:40     .text:00000008 $d
+     /tmp/ccVQ8Je1.s:44     .text:0000000c $t
+     /tmp/ccVQ8Je1.s:49     .text:0000000c COMP_Init
+     /tmp/ccVQ8Je1.s:100    .text:00000038 $d
+     /tmp/ccVQ8Je1.s:104    .text:0000003c $t
+     /tmp/ccVQ8Je1.s:109    .text:0000003c COMP_StructInit
+     /tmp/ccVQ8Je1.s:142    .text:00000050 COMP_Cmd
+     /tmp/ccVQ8Je1.s:167    .text:00000064 $d
+     /tmp/ccVQ8Je1.s:171    .text:00000068 $t
+     /tmp/ccVQ8Je1.s:176    .text:00000068 COMP_SwitchCmd
+     /tmp/ccVQ8Je1.s:201    .text:0000007c $d
+     /tmp/ccVQ8Je1.s:205    .text:00000080 $t
+     /tmp/ccVQ8Je1.s:210    .text:00000080 COMP_GetOutputLevel
+     /tmp/ccVQ8Je1.s:229    .text:0000008c $d
+     /tmp/ccVQ8Je1.s:233    .text:00000090 $t
+     /tmp/ccVQ8Je1.s:238    .text:00000090 COMP_WindowCmd
+     /tmp/ccVQ8Je1.s:263    .text:000000a4 $d
+     /tmp/ccVQ8Je1.s:267    .text:000000a8 $t
+     /tmp/ccVQ8Je1.s:272    .text:000000a8 COMP_LockConfig
+     /tmp/ccVQ8Je1.s:289    .text:000000b4 $d
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.stm32f30x.h.54.c7b24f715ee55ef38656f44540ae3be6
+                           .group:00000000 wm4.core_cm4.h.32.2441f2e49dd40451ba4254637c879d0c
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.292.5f9271075d54fc48f1e25ff79df85cb2
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_dma.h.31.73d173fa6d60026d432f3cf1d2fc4407
+                           .group:00000000 wm4.stm32f30x_exti.h.31.22e280aa6e095108654ac8d3c74a2409
+                           .group:00000000 wm4.stm32f30x_flash.h.31.bee86dc3079b7049419bdbeec073e2cd
+                           .group:00000000 wm4.stm32f30x_gpio.h.31.3745297fee3728b346ad4d2a2467e40f
+                           .group:00000000 wm4.stm32f30x_syscfg.h.31.96b023b7dbc3641f358604478433eb5c
+                           .group:00000000 wm4.stm32f30x_i2c.h.31.52025acd7f154308042bf46a2835e9d3
+                           .group:00000000 wm4.stm32f30x_pwr.h.31.cdef322c6e7f25cfc29954045d24e9b8
+                           .group:00000000 wm4.stm32f30x_rcc.h.31.3b94c1144b21d1e4fe780e4d1a02d257
+                           .group:00000000 wm4.stm32f30x_spi.h.31.c1ebebab897d23cecc617ec8ad9fd534
+                           .group:00000000 wm4.stm32f30x_tim.h.31.336f9cd855fb4e2cd819ac260ded6518
+                           .group:00000000 wm4.stm32f30x_usart.h.31.cd85313e29c0a128555b4a7b8ec0f487
+                           .group:00000000 wm4.stm32f30x_misc.h.31.f08b0e9f53f0471613b5131bb95f8725
+                           .group:00000000 wm4.stm32f30x.h.6173.8b641ba1d9b0040eda9120fe8a414b2d
+                           .group:00000000 wm4.stm32f30x_comp.h.91.06ae44150aaaa82c077b71df8db3541a
+
+NO UNDEFINED SYMBOLS

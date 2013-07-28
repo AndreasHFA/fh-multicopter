@@ -1,0 +1,821 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"stm32f30x_crc.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.global	CRC_DeInit
+  20              		.thumb
+  21              		.thumb_func
+  23              	CRC_DeInit:
+  24              	.LFB111:
+  25              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /**
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   ******************************************************************************
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @file    stm32f30x_crc.c
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @author  MCD Application Team
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @version V1.0.1
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @date    23-October-2012
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @brief   This file provides firmware functions to manage the following 
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *          functionalities of CRC computation unit peripheral:
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *            + Configuration of the CRC computation unit
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *            + CRC computation of one/many 32-bit data
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *            + CRC Independent register (IDR) access
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   @verbatim
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****     
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****  ===============================================================================
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****                       ##### How to use this driver #####
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****  ===============================================================================
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****     [..] 
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****     (#) Enable CRC AHB clock using RCC_AHBPeriphClockCmd(RCC_AHBPeriph_CRC, ENABLE)
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****         function.
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****     (#) Select the polynomial size: 7-bit, 8-bit, 16-bit or 32-bit.
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****     (#) Set the polynomial coefficients using CRC_SetPolynomial();  
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****     (#) If required, select the reverse operation on input data 
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****         using CRC_ReverseInputDataSelect();  
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****     (#) If required, enable the reverse operation on output data
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****         using CRC_ReverseOutputDataCmd(Enable);
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****     (#) If required, set the initialization remainder value using
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****         CRC_SetInitRegister();
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****     (#) use CRC_CalcCRC() function to compute the CRC of a 32-bit data
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****         or use CRC_CalcBlockCRC() function to compute the CRC if a 32-bit 
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****         data buffer.
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   @endverbatim
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   ******************************************************************************
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @attention
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * You may not use this file except in compliance with the License.
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * You may obtain a copy of the License at:
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * Unless required by applicable law or agreed to in writing, software 
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * See the License for the specific language governing permissions and
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * limitations under the License.
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   ******************************************************************************
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /* Includes ------------------------------------------------------------------*/
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** #include "stm32f30x_crc.h"
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /** @addtogroup STM32F30x_StdPeriph_Driver
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @{
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /** @defgroup CRC 
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @brief CRC driver modules
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @{
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /* Private typedef -----------------------------------------------------------*/
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /* Private define ------------------------------------------------------------*/
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /* Private macro -------------------------------------------------------------*/
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /* Private variables ---------------------------------------------------------*/
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /* Private function prototypes -----------------------------------------------*/
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /* Private functions ---------------------------------------------------------*/
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+  74:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /** @defgroup CRC_Private_Functions
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @{
+  76:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+  77:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+  78:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /** @defgroup CRC_Group1 Configuration of the CRC computation unit functions
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****  *  @brief   Configuration of the CRC computation unit functions 
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****  *
+  81:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** @verbatim
+  82:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****  ===============================================================================
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****                   ##### CRC configuration functions #####
+  84:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****  ===============================================================================
+  85:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** @endverbatim
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @{
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+  90:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /**
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @brief  Deinitializes CRC peripheral registers to their default reset values.
+  92:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @param  None
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @retval None
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** void CRC_DeInit(void)
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** {
+  26              		.loc 1 96 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   /* Set DR register to reset value */
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   CRC->DR = 0xFFFFFFFF;
+  31              		.loc 1 98 0
+  32 0000 054B     		ldr	r3, .L2
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   /* Set the POL register to the reset value: 0x04C11DB7 */
+ 100:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   CRC->POL = 0x04C11DB7;
+  33              		.loc 1 100 0
+  34 0002 0649     		ldr	r1, .L2+4
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   CRC->DR = 0xFFFFFFFF;
+  35              		.loc 1 98 0
+  36 0004 4FF0FF32 		mov	r2, #-1
+  37 0008 1A60     		str	r2, [r3, #0]
+  38              		.loc 1 100 0
+  39 000a 5961     		str	r1, [r3, #20]
+ 101:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   /* Reset IDR register */
+ 102:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   CRC->IDR = 0x00;
+  40              		.loc 1 102 0
+  41 000c 0021     		movs	r1, #0
+  42 000e 1971     		strb	r1, [r3, #4]
+ 103:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   /* Set INIT register to reset value */
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   CRC->INIT = 0xFFFFFFFF;
+  43              		.loc 1 104 0
+  44 0010 1A61     		str	r2, [r3, #16]
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   /* Reset the CRC calculation unit */
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   CRC->CR = CRC_CR_RESET;
+  45              		.loc 1 106 0
+  46 0012 0122     		movs	r2, #1
+  47 0014 9A60     		str	r2, [r3, #8]
+  48 0016 7047     		bx	lr
+  49              	.L3:
+  50              		.align	2
+  51              	.L2:
+  52 0018 00300240 		.word	1073885184
+  53 001c B71DC104 		.word	79764919
+  54              		.cfi_endproc
+  55              	.LFE111:
+  57              		.align	1
+  58              		.global	CRC_ResetDR
+  59              		.thumb
+  60              		.thumb_func
+  62              	CRC_ResetDR:
+  63              	.LFB112:
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** }
+ 108:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /**
+ 110:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @brief  Resets the CRC calculation unit and sets INIT register content in DR register.
+ 111:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @param  None
+ 112:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @retval None
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** void CRC_ResetDR(void)
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** {
+  64              		.loc 1 115 0
+  65              		.cfi_startproc
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68              		@ link register save eliminated.
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   /* Reset CRC generator */
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   CRC->CR |= CRC_CR_RESET;
+  69              		.loc 1 117 0
+  70 0020 024B     		ldr	r3, .L5
+  71 0022 9A68     		ldr	r2, [r3, #8]
+  72 0024 42F00102 		orr	r2, r2, #1
+  73 0028 9A60     		str	r2, [r3, #8]
+  74 002a 7047     		bx	lr
+  75              	.L6:
+  76              		.align	2
+  77              	.L5:
+  78 002c 00300240 		.word	1073885184
+  79              		.cfi_endproc
+  80              	.LFE112:
+  82              		.align	1
+  83              		.global	CRC_PolynomialSizeSelect
+  84              		.thumb
+  85              		.thumb_func
+  87              	CRC_PolynomialSizeSelect:
+  88              	.LFB113:
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** }
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /**
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @brief  Selects the polynomial size.
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @param  CRC_PolSize: Specifies the polynomial size.
+ 123:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *         This parameter can be:
+ 124:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *          @arg CRC_PolSize_7: 7-bit polynomial for CRC calculation
+ 125:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *          @arg CRC_PolSize_8: 8-bit polynomial for CRC calculation
+ 126:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *          @arg CRC_PolSize_16: 16-bit polynomial for CRC calculation
+ 127:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *          @arg CRC_PolSize_32: 32-bit polynomial for CRC calculation
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @retval None
+ 129:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** void CRC_PolynomialSizeSelect(uint32_t CRC_PolSize)
+ 131:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** {
+  89              		.loc 1 131 0
+  90              		.cfi_startproc
+  91              		@ args = 0, pretend = 0, frame = 0
+  92              		@ frame_needed = 0, uses_anonymous_args = 0
+  93              		@ link register save eliminated.
+  94              	.LVL0:
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   uint32_t tmpcr = 0;
+ 133:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   /* Check the parameter */
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   assert_param(IS_CRC_POL_SIZE(CRC_PolSize));
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   /* Get CR register value */
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   tmpcr = CRC->CR;
+  95              		.loc 1 138 0
+  96 0030 034B     		ldr	r3, .L8
+  97 0032 9A68     		ldr	r2, [r3, #8]
+  98              	.LVL1:
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 140:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   /* Reset POL_SIZE bits */
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   tmpcr &= (uint32_t)~((uint32_t)CRC_CR_POLSIZE);
+  99              		.loc 1 141 0
+ 100 0034 22F01802 		bic	r2, r2, #24
+ 101              	.LVL2:
+ 142:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   /* Set the polynomial size */
+ 143:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   tmpcr |= (uint32_t)CRC_PolSize;
+ 102              		.loc 1 143 0
+ 103 0038 1043     		orrs	r0, r0, r2
+ 104              	.LVL3:
+ 144:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 145:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   /* Write to CR register */
+ 146:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   CRC->CR = (uint32_t)tmpcr;
+ 105              		.loc 1 146 0
+ 106 003a 9860     		str	r0, [r3, #8]
+ 107 003c 7047     		bx	lr
+ 108              	.L9:
+ 109 003e 00BF     		.align	2
+ 110              	.L8:
+ 111 0040 00300240 		.word	1073885184
+ 112              		.cfi_endproc
+ 113              	.LFE113:
+ 115              		.align	1
+ 116              		.global	CRC_ReverseInputDataSelect
+ 117              		.thumb
+ 118              		.thumb_func
+ 120              	CRC_ReverseInputDataSelect:
+ 121              	.LFB114:
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** }
+ 148:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 149:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /**
+ 150:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @brief  Selects the reverse operation to be performed on input data.
+ 151:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @param  CRC_ReverseInputData: Specifies the reverse operation on input data.
+ 152:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *         This parameter can be:
+ 153:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *          @arg CRC_ReverseInputData_No: No reverse operation is performed
+ 154:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *          @arg CRC_ReverseInputData_8bits: reverse operation performed on 8 bits
+ 155:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *          @arg CRC_ReverseInputData_16bits: reverse operation performed on 16 bits
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *          @arg CRC_ReverseInputData_32bits: reverse operation performed on 32 bits
+ 157:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @retval None
+ 158:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+ 159:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** void CRC_ReverseInputDataSelect(uint32_t CRC_ReverseInputData)
+ 160:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** {
+ 122              		.loc 1 160 0
+ 123              		.cfi_startproc
+ 124              		@ args = 0, pretend = 0, frame = 0
+ 125              		@ frame_needed = 0, uses_anonymous_args = 0
+ 126              		@ link register save eliminated.
+ 127              	.LVL4:
+ 161:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   uint32_t tmpcr = 0;
+ 162:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 163:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   /* Check the parameter */
+ 164:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   assert_param(IS_CRC_REVERSE_INPUT_DATA(CRC_ReverseInputData));
+ 165:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 166:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   /* Get CR register value */
+ 167:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   tmpcr = CRC->CR;
+ 128              		.loc 1 167 0
+ 129 0044 034B     		ldr	r3, .L11
+ 130 0046 9A68     		ldr	r2, [r3, #8]
+ 131              	.LVL5:
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 169:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   /* Reset REV_IN bits */
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   tmpcr &= (uint32_t)~((uint32_t)CRC_CR_REV_IN);
+ 132              		.loc 1 170 0
+ 133 0048 22F06002 		bic	r2, r2, #96
+ 134              	.LVL6:
+ 171:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   /* Set the reverse operation */
+ 172:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   tmpcr |= (uint32_t)CRC_ReverseInputData;
+ 135              		.loc 1 172 0
+ 136 004c 1043     		orrs	r0, r0, r2
+ 137              	.LVL7:
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 174:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   /* Write to CR register */
+ 175:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   CRC->CR = (uint32_t)tmpcr;
+ 138              		.loc 1 175 0
+ 139 004e 9860     		str	r0, [r3, #8]
+ 140 0050 7047     		bx	lr
+ 141              	.L12:
+ 142 0052 00BF     		.align	2
+ 143              	.L11:
+ 144 0054 00300240 		.word	1073885184
+ 145              		.cfi_endproc
+ 146              	.LFE114:
+ 148              		.align	1
+ 149              		.global	CRC_ReverseOutputDataCmd
+ 150              		.thumb
+ 151              		.thumb_func
+ 153              	CRC_ReverseOutputDataCmd:
+ 154              	.LFB115:
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** }
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 178:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /**
+ 179:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @brief  Enables or disable the reverse operation on output data.
+ 180:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *         The reverse operation on output data is performed on 32-bit.
+ 181:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @param  NewState: new state of the reverse operation on output data.
+ 182:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *   This parameter can be: ENABLE or DISABLE.
+ 183:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @retval None
+ 184:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+ 185:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** void CRC_ReverseOutputDataCmd(FunctionalState NewState)
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** {
+ 155              		.loc 1 186 0
+ 156              		.cfi_startproc
+ 157              		@ args = 0, pretend = 0, frame = 0
+ 158              		@ frame_needed = 0, uses_anonymous_args = 0
+ 159              		@ link register save eliminated.
+ 160              	.LVL8:
+ 161 0058 044B     		ldr	r3, .L17
+ 187:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   /* Check the parameters */
+ 188:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 189:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   if (NewState != DISABLE)
+ 191:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   {
+ 192:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****     /* Enable reverse operation on output data */
+ 193:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****     CRC->CR |= CRC_CR_REV_OUT;
+ 162              		.loc 1 193 0
+ 163 005a 9A68     		ldr	r2, [r3, #8]
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   if (NewState != DISABLE)
+ 164              		.loc 1 190 0
+ 165 005c 10B1     		cbz	r0, .L14
+ 166              		.loc 1 193 0
+ 167 005e 42F08002 		orr	r2, r2, #128
+ 168 0062 01E0     		b	.L16
+ 169              	.L14:
+ 194:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   }
+ 195:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   else
+ 196:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   {
+ 197:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****     /* Disable reverse operation on output data */
+ 198:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****     CRC->CR &= (uint32_t)~((uint32_t)CRC_CR_REV_OUT);
+ 170              		.loc 1 198 0
+ 171 0064 22F08002 		bic	r2, r2, #128
+ 172              	.L16:
+ 173 0068 9A60     		str	r2, [r3, #8]
+ 174 006a 7047     		bx	lr
+ 175              	.L18:
+ 176              		.align	2
+ 177              	.L17:
+ 178 006c 00300240 		.word	1073885184
+ 179              		.cfi_endproc
+ 180              	.LFE115:
+ 182              		.align	1
+ 183              		.global	CRC_SetInitRegister
+ 184              		.thumb
+ 185              		.thumb_func
+ 187              	CRC_SetInitRegister:
+ 188              	.LFB116:
+ 199:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   }
+ 200:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** }
+ 201:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 202:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /**
+ 203:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @brief  Initializes the INIT register.
+ 204:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @note   After resetting CRC calculation unit, CRC_InitValue is stored in DR register
+ 205:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @param  CRC_InitValue: Programmable initial CRC value
+ 206:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @retval None
+ 207:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+ 208:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** void CRC_SetInitRegister(uint32_t CRC_InitValue)
+ 209:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** {
+ 189              		.loc 1 209 0
+ 190              		.cfi_startproc
+ 191              		@ args = 0, pretend = 0, frame = 0
+ 192              		@ frame_needed = 0, uses_anonymous_args = 0
+ 193              		@ link register save eliminated.
+ 194              	.LVL9:
+ 210:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   CRC->INIT = CRC_InitValue;
+ 195              		.loc 1 210 0
+ 196 0070 014B     		ldr	r3, .L20
+ 197 0072 1861     		str	r0, [r3, #16]
+ 198 0074 7047     		bx	lr
+ 199              	.L21:
+ 200 0076 00BF     		.align	2
+ 201              	.L20:
+ 202 0078 00300240 		.word	1073885184
+ 203              		.cfi_endproc
+ 204              	.LFE116:
+ 206              		.align	1
+ 207              		.global	CRC_SetPolynomial
+ 208              		.thumb
+ 209              		.thumb_func
+ 211              	CRC_SetPolynomial:
+ 212              	.LFB117:
+ 211:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** }
+ 212:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 213:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /**
+ 214:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @brief  Initializes the polynomail coefficients.
+ 215:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @param  CRC_Pol: Polynomial to be used for CRC calculation.
+ 216:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @retval None
+ 217:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+ 218:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** void CRC_SetPolynomial(uint32_t CRC_Pol)
+ 219:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** {
+ 213              		.loc 1 219 0
+ 214              		.cfi_startproc
+ 215              		@ args = 0, pretend = 0, frame = 0
+ 216              		@ frame_needed = 0, uses_anonymous_args = 0
+ 217              		@ link register save eliminated.
+ 218              	.LVL10:
+ 220:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   CRC->POL = CRC_Pol;
+ 219              		.loc 1 220 0
+ 220 007c 014B     		ldr	r3, .L23
+ 221 007e 5861     		str	r0, [r3, #20]
+ 222 0080 7047     		bx	lr
+ 223              	.L24:
+ 224 0082 00BF     		.align	2
+ 225              	.L23:
+ 226 0084 00300240 		.word	1073885184
+ 227              		.cfi_endproc
+ 228              	.LFE117:
+ 230              		.align	1
+ 231              		.global	CRC_CalcCRC
+ 232              		.thumb
+ 233              		.thumb_func
+ 235              	CRC_CalcCRC:
+ 236              	.LFB118:
+ 221:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** }
+ 222:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 223:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /**
+ 224:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @}
+ 225:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+ 226:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 227:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /** @defgroup CRC_Group2 CRC computation of one/many 32-bit data functions
+ 228:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****  *  @brief   CRC computation of one/many 32-bit data functions
+ 229:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****  *
+ 230:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** @verbatim
+ 231:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****  ===============================================================================
+ 232:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****                       ##### CRC computation functions #####
+ 233:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****  ===============================================================================
+ 234:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 235:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** @endverbatim
+ 236:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @{
+ 237:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+ 238:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 239:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /**
+ 240:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @brief  Computes the 32-bit CRC of a given data word(32-bit).
+ 241:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @param  CRC_Data: data word(32-bit) to compute its CRC
+ 242:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @retval 32-bit CRC
+ 243:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+ 244:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** uint32_t CRC_CalcCRC(uint32_t CRC_Data)
+ 245:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** {
+ 237              		.loc 1 245 0
+ 238              		.cfi_startproc
+ 239              		@ args = 0, pretend = 0, frame = 0
+ 240              		@ frame_needed = 0, uses_anonymous_args = 0
+ 241              		@ link register save eliminated.
+ 242              	.LVL11:
+ 246:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   CRC->DR = CRC_Data;
+ 243              		.loc 1 246 0
+ 244 0088 014B     		ldr	r3, .L26
+ 245 008a 1860     		str	r0, [r3, #0]
+ 247:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   
+ 248:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   return (CRC->DR);
+ 246              		.loc 1 248 0
+ 247 008c 1868     		ldr	r0, [r3, #0]
+ 248              	.LVL12:
+ 249:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** }
+ 249              		.loc 1 249 0
+ 250 008e 7047     		bx	lr
+ 251              	.L27:
+ 252              		.align	2
+ 253              	.L26:
+ 254 0090 00300240 		.word	1073885184
+ 255              		.cfi_endproc
+ 256              	.LFE118:
+ 258              		.align	1
+ 259              		.global	CRC_CalcCRC16bits
+ 260              		.thumb
+ 261              		.thumb_func
+ 263              	CRC_CalcCRC16bits:
+ 264              	.LFB119:
+ 250:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 251:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /**
+ 252:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @brief  Computes the 16-bit CRC of a given 16-bit data.
+ 253:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @param  CRC_Data: data half-word(16-bit) to compute its CRC
+ 254:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @retval 16-bit CRC
+ 255:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+ 256:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** uint32_t CRC_CalcCRC16bits(uint16_t CRC_Data)
+ 257:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** {
+ 265              		.loc 1 257 0
+ 266              		.cfi_startproc
+ 267              		@ args = 0, pretend = 0, frame = 0
+ 268              		@ frame_needed = 0, uses_anonymous_args = 0
+ 269              		@ link register save eliminated.
+ 270              	.LVL13:
+ 258:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *(uint16_t*)(CRC_BASE) = (uint16_t) CRC_Data;
+ 271              		.loc 1 258 0
+ 272 0094 014B     		ldr	r3, .L29
+ 273 0096 1880     		strh	r0, [r3, #0]	@ movhi
+ 259:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   
+ 260:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   return (CRC->DR);
+ 274              		.loc 1 260 0
+ 275 0098 1868     		ldr	r0, [r3, #0]
+ 276              	.LVL14:
+ 261:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** }
+ 277              		.loc 1 261 0
+ 278 009a 7047     		bx	lr
+ 279              	.L30:
+ 280              		.align	2
+ 281              	.L29:
+ 282 009c 00300240 		.word	1073885184
+ 283              		.cfi_endproc
+ 284              	.LFE119:
+ 286              		.align	1
+ 287              		.global	CRC_CalcCRC8bits
+ 288              		.thumb
+ 289              		.thumb_func
+ 291              	CRC_CalcCRC8bits:
+ 292              	.LFB120:
+ 262:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 263:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /**
+ 264:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @brief  Computes the 8-bit CRC of a given 8-bit data.
+ 265:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @param  CRC_Data: 8-bit data to compute its CRC
+ 266:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @retval 8-bit CRC
+ 267:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+ 268:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** uint32_t CRC_CalcCRC8bits(uint8_t CRC_Data)
+ 269:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** {
+ 293              		.loc 1 269 0
+ 294              		.cfi_startproc
+ 295              		@ args = 0, pretend = 0, frame = 0
+ 296              		@ frame_needed = 0, uses_anonymous_args = 0
+ 297              		@ link register save eliminated.
+ 298              	.LVL15:
+ 270:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   *(uint8_t*)(CRC_BASE) = (uint8_t) CRC_Data;
+ 299              		.loc 1 270 0
+ 300 00a0 014B     		ldr	r3, .L32
+ 301 00a2 1870     		strb	r0, [r3, #0]
+ 271:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 272:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   return (CRC->DR);
+ 302              		.loc 1 272 0
+ 303 00a4 1868     		ldr	r0, [r3, #0]
+ 304              	.LVL16:
+ 273:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** }
+ 305              		.loc 1 273 0
+ 306 00a6 7047     		bx	lr
+ 307              	.L33:
+ 308              		.align	2
+ 309              	.L32:
+ 310 00a8 00300240 		.word	1073885184
+ 311              		.cfi_endproc
+ 312              	.LFE120:
+ 314              		.align	1
+ 315              		.global	CRC_CalcBlockCRC
+ 316              		.thumb
+ 317              		.thumb_func
+ 319              	CRC_CalcBlockCRC:
+ 320              	.LFB121:
+ 274:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 275:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /**
+ 276:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @brief  Computes the 32-bit CRC of a given buffer of data word(32-bit).
+ 277:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @param  pBuffer: pointer to the buffer containing the data to be computed
+ 278:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @param  BufferLength: length of the buffer to be computed
+ 279:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @retval 32-bit CRC
+ 280:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+ 281:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** uint32_t CRC_CalcBlockCRC(uint32_t pBuffer[], uint32_t BufferLength)
+ 282:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** {
+ 321              		.loc 1 282 0
+ 322              		.cfi_startproc
+ 323              		@ args = 0, pretend = 0, frame = 0
+ 324              		@ frame_needed = 0, uses_anonymous_args = 0
+ 325              	.LVL17:
+ 326 00ac 10B5     		push	{r4, lr}
+ 327              	.LCFI0:
+ 328              		.cfi_def_cfa_offset 8
+ 329              		.cfi_offset 4, -8
+ 330              		.cfi_offset 14, -4
+ 283:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   uint32_t index = 0;
+ 284:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   
+ 285:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   for(index = 0; index < BufferLength; index++)
+ 331              		.loc 1 285 0
+ 332 00ae 0023     		movs	r3, #0
+ 333 00b0 054C     		ldr	r4, .L37
+ 334 00b2 03E0     		b	.L35
+ 335              	.LVL18:
+ 336              	.L36:
+ 286:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   {
+ 287:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****     CRC->DR = pBuffer[index];
+ 337              		.loc 1 287 0 discriminator 2
+ 338 00b4 50F82320 		ldr	r2, [r0, r3, lsl #2]
+ 285:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   for(index = 0; index < BufferLength; index++)
+ 339              		.loc 1 285 0 discriminator 2
+ 340 00b8 0133     		adds	r3, r3, #1
+ 341              	.LVL19:
+ 342              		.loc 1 287 0 discriminator 2
+ 343 00ba 2260     		str	r2, [r4, #0]
+ 344              	.LVL20:
+ 345              	.L35:
+ 285:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   for(index = 0; index < BufferLength; index++)
+ 346              		.loc 1 285 0 discriminator 1
+ 347 00bc 8B42     		cmp	r3, r1
+ 348 00be F9D1     		bne	.L36
+ 288:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   }
+ 289:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   return (CRC->DR);
+ 349              		.loc 1 289 0
+ 350 00c0 014B     		ldr	r3, .L37
+ 351              	.LVL21:
+ 352 00c2 1868     		ldr	r0, [r3, #0]
+ 353              	.LVL22:
+ 290:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** }
+ 354              		.loc 1 290 0
+ 355 00c4 10BD     		pop	{r4, pc}
+ 356              	.L38:
+ 357 00c6 00BF     		.align	2
+ 358              	.L37:
+ 359 00c8 00300240 		.word	1073885184
+ 360              		.cfi_endproc
+ 361              	.LFE121:
+ 363              		.align	1
+ 364              		.global	CRC_GetCRC
+ 365              		.thumb
+ 366              		.thumb_func
+ 368              	CRC_GetCRC:
+ 369              	.LFB122:
+ 291:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 292:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /**
+ 293:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @brief  Returns the current CRC value.
+ 294:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @param  None
+ 295:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @retval 32-bit CRC
+ 296:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+ 297:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** uint32_t CRC_GetCRC(void)
+ 298:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** {
+ 370              		.loc 1 298 0
+ 371              		.cfi_startproc
+ 372              		@ args = 0, pretend = 0, frame = 0
+ 373              		@ frame_needed = 0, uses_anonymous_args = 0
+ 374              		@ link register save eliminated.
+ 299:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   return (CRC->DR);
+ 375              		.loc 1 299 0
+ 376 00cc 014B     		ldr	r3, .L40
+ 377 00ce 1868     		ldr	r0, [r3, #0]
+ 300:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** }
+ 378              		.loc 1 300 0
+ 379 00d0 7047     		bx	lr
+ 380              	.L41:
+ 381 00d2 00BF     		.align	2
+ 382              	.L40:
+ 383 00d4 00300240 		.word	1073885184
+ 384              		.cfi_endproc
+ 385              	.LFE122:
+ 387              		.align	1
+ 388              		.global	CRC_SetIDRegister
+ 389              		.thumb
+ 390              		.thumb_func
+ 392              	CRC_SetIDRegister:
+ 393              	.LFB123:
+ 301:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 302:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /**
+ 303:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @}
+ 304:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+ 305:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 306:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /** @defgroup CRC_Group3 CRC Independent Register (IDR) access functions
+ 307:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****  *  @brief   CRC Independent Register (IDR) access (write/read) functions
+ 308:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****  *
+ 309:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** @verbatim
+ 310:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****  ===============================================================================
+ 311:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****            ##### CRC Independent Register (IDR) access functions #####
+ 312:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****  ===============================================================================
+ 313:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 314:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** @endverbatim
+ 315:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @{
+ 316:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+ 317:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 318:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /**
+ 319:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @brief  Stores an 8-bit data in the Independent Data(ID) register.
+ 320:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @param  CRC_IDValue: 8-bit value to be stored in the ID register 					
+ 321:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @retval None
+ 322:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+ 323:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** void CRC_SetIDRegister(uint8_t CRC_IDValue)
+ 324:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** {
+ 394              		.loc 1 324 0
+ 395              		.cfi_startproc
+ 396              		@ args = 0, pretend = 0, frame = 0
+ 397              		@ frame_needed = 0, uses_anonymous_args = 0
+ 398              		@ link register save eliminated.
+ 399              	.LVL23:
+ 325:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   CRC->IDR = CRC_IDValue;
+ 400              		.loc 1 325 0
+ 401 00d8 014B     		ldr	r3, .L43
+ 402 00da 1871     		strb	r0, [r3, #4]
+ 403 00dc 7047     		bx	lr
+ 404              	.L44:
+ 405 00de 00BF     		.align	2
+ 406              	.L43:
+ 407 00e0 00300240 		.word	1073885184
+ 408              		.cfi_endproc
+ 409              	.LFE123:
+ 411              		.align	1
+ 412              		.global	CRC_GetIDRegister
+ 413              		.thumb
+ 414              		.thumb_func
+ 416              	CRC_GetIDRegister:
+ 417              	.LFB124:
+ 326:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** }
+ 327:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** 
+ 328:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** /**
+ 329:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @brief  Returns the 8-bit data stored in the Independent Data(ID) register
+ 330:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @param  None
+ 331:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   * @retval 8-bit value of the ID register 
+ 332:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   */
+ 333:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** uint8_t CRC_GetIDRegister(void)
+ 334:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** {
+ 418              		.loc 1 334 0
+ 419              		.cfi_startproc
+ 420              		@ args = 0, pretend = 0, frame = 0
+ 421              		@ frame_needed = 0, uses_anonymous_args = 0
+ 422              		@ link register save eliminated.
+ 335:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c ****   return (CRC->IDR);
+ 423              		.loc 1 335 0
+ 424 00e4 014B     		ldr	r3, .L46
+ 425 00e6 1879     		ldrb	r0, [r3, #4]	@ zero_extendqisi2
+ 336:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_crc.c **** }
+ 426              		.loc 1 336 0
+ 427 00e8 7047     		bx	lr
+ 428              	.L47:
+ 429 00ea 00BF     		.align	2
+ 430              	.L46:
+ 431 00ec 00300240 		.word	1073885184
+ 432              		.cfi_endproc
+ 433              	.LFE124:
+ 435              	.Letext0:
+ 436              		.file 2 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+ 437              		.file 3 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Device/ST/STM32F30x
+ 438              		.file 4 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Include/core_cm4.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f30x_crc.c
+     /tmp/cchMgLzp.s:18     .text:00000000 $t
+     /tmp/cchMgLzp.s:23     .text:00000000 CRC_DeInit
+     /tmp/cchMgLzp.s:52     .text:00000018 $d
+     /tmp/cchMgLzp.s:57     .text:00000020 $t
+     /tmp/cchMgLzp.s:62     .text:00000020 CRC_ResetDR
+     /tmp/cchMgLzp.s:78     .text:0000002c $d
+     /tmp/cchMgLzp.s:82     .text:00000030 $t
+     /tmp/cchMgLzp.s:87     .text:00000030 CRC_PolynomialSizeSelect
+     /tmp/cchMgLzp.s:111    .text:00000040 $d
+     /tmp/cchMgLzp.s:115    .text:00000044 $t
+     /tmp/cchMgLzp.s:120    .text:00000044 CRC_ReverseInputDataSelect
+     /tmp/cchMgLzp.s:144    .text:00000054 $d
+     /tmp/cchMgLzp.s:148    .text:00000058 $t
+     /tmp/cchMgLzp.s:153    .text:00000058 CRC_ReverseOutputDataCmd
+     /tmp/cchMgLzp.s:178    .text:0000006c $d
+     /tmp/cchMgLzp.s:182    .text:00000070 $t
+     /tmp/cchMgLzp.s:187    .text:00000070 CRC_SetInitRegister
+     /tmp/cchMgLzp.s:202    .text:00000078 $d
+     /tmp/cchMgLzp.s:206    .text:0000007c $t
+     /tmp/cchMgLzp.s:211    .text:0000007c CRC_SetPolynomial
+     /tmp/cchMgLzp.s:226    .text:00000084 $d
+     /tmp/cchMgLzp.s:230    .text:00000088 $t
+     /tmp/cchMgLzp.s:235    .text:00000088 CRC_CalcCRC
+     /tmp/cchMgLzp.s:254    .text:00000090 $d
+     /tmp/cchMgLzp.s:258    .text:00000094 $t
+     /tmp/cchMgLzp.s:263    .text:00000094 CRC_CalcCRC16bits
+     /tmp/cchMgLzp.s:282    .text:0000009c $d
+     /tmp/cchMgLzp.s:286    .text:000000a0 $t
+     /tmp/cchMgLzp.s:291    .text:000000a0 CRC_CalcCRC8bits
+     /tmp/cchMgLzp.s:310    .text:000000a8 $d
+     /tmp/cchMgLzp.s:314    .text:000000ac $t
+     /tmp/cchMgLzp.s:319    .text:000000ac CRC_CalcBlockCRC
+     /tmp/cchMgLzp.s:359    .text:000000c8 $d
+     /tmp/cchMgLzp.s:363    .text:000000cc $t
+     /tmp/cchMgLzp.s:368    .text:000000cc CRC_GetCRC
+     /tmp/cchMgLzp.s:383    .text:000000d4 $d
+     /tmp/cchMgLzp.s:387    .text:000000d8 $t
+     /tmp/cchMgLzp.s:392    .text:000000d8 CRC_SetIDRegister
+     /tmp/cchMgLzp.s:407    .text:000000e0 $d
+     /tmp/cchMgLzp.s:411    .text:000000e4 $t
+     /tmp/cchMgLzp.s:416    .text:000000e4 CRC_GetIDRegister
+     /tmp/cchMgLzp.s:431    .text:000000ec $d
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.stm32f30x.h.54.c7b24f715ee55ef38656f44540ae3be6
+                           .group:00000000 wm4.core_cm4.h.32.2441f2e49dd40451ba4254637c879d0c
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.292.5f9271075d54fc48f1e25ff79df85cb2
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_comp.h.31.9bbc5f5f1a849069ea9062fbe7b81435
+                           .group:00000000 wm4.stm32f30x_dma.h.31.73d173fa6d60026d432f3cf1d2fc4407
+                           .group:00000000 wm4.stm32f30x_exti.h.31.22e280aa6e095108654ac8d3c74a2409
+                           .group:00000000 wm4.stm32f30x_flash.h.31.bee86dc3079b7049419bdbeec073e2cd
+                           .group:00000000 wm4.stm32f30x_gpio.h.31.3745297fee3728b346ad4d2a2467e40f
+                           .group:00000000 wm4.stm32f30x_syscfg.h.31.96b023b7dbc3641f358604478433eb5c
+                           .group:00000000 wm4.stm32f30x_i2c.h.31.52025acd7f154308042bf46a2835e9d3
+                           .group:00000000 wm4.stm32f30x_pwr.h.31.cdef322c6e7f25cfc29954045d24e9b8
+                           .group:00000000 wm4.stm32f30x_rcc.h.31.3b94c1144b21d1e4fe780e4d1a02d257
+                           .group:00000000 wm4.stm32f30x_spi.h.31.c1ebebab897d23cecc617ec8ad9fd534
+                           .group:00000000 wm4.stm32f30x_tim.h.31.336f9cd855fb4e2cd819ac260ded6518
+                           .group:00000000 wm4.stm32f30x_usart.h.31.cd85313e29c0a128555b4a7b8ec0f487
+                           .group:00000000 wm4.stm32f30x_misc.h.31.f08b0e9f53f0471613b5131bb95f8725
+                           .group:00000000 wm4.stm32f30x.h.6173.8b641ba1d9b0040eda9120fe8a414b2d
+                           .group:00000000 wm4.stm32f30x_crc.h.54.66d4c5e565e18566aebd9abfd4bcd4b0
+
+NO UNDEFINED SYMBOLS

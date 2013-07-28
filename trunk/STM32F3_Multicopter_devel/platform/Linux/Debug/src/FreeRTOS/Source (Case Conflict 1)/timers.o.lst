@@ -1,0 +1,1745 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.eabi_attribute 28, 1
+   5              		.fpu fpv4-sp-d16
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 4
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.thumb
+  16              		.file	"timers.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.align	1
+  21              		.thumb
+  22              		.thumb_func
+  24              	prvCheckForValidListAndQueue:
+  25              	.LFB11:
+  26              		.file 1 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/tim
+   1:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*
+   2:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     FreeRTOS V7.3.0 - Copyright (C) 2012 Real Time Engineers Ltd.
+   3:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+   4:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     FEATURES AND PORTS ARE ADDED TO FREERTOS ALL THE TIME.  PLEASE VISIT 
+   5:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
+   6:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+   7:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     ***************************************************************************
+   8:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *                                                                       *
+   9:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *    FreeRTOS tutorial books are available in pdf and paperback.        *
+  10:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *    Complete, revised, and edited pdf reference manuals are also       *
+  11:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *    available.                                                         *
+  12:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *                                                                       *
+  13:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *    Purchasing FreeRTOS documentation will not only help you, by       *
+  14:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *    ensuring you get running as quickly as possible and with an        *
+  15:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *    in-depth knowledge of how to use FreeRTOS, it will also help       *
+  16:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *    the FreeRTOS project to continue with its mission of providing     *
+  17:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *    professional grade, cross platform, de facto standard solutions    *
+  18:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *    for microcontrollers - completely free of charge!                  *
+  19:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *                                                                       *
+  20:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *    >>> See http://www.FreeRTOS.org/Documentation for details. <<<     *
+  21:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *                                                                       *
+  22:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *    Thank you for using FreeRTOS, and thank you for your support!      *
+  23:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *                                                                       *
+  24:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     ***************************************************************************
+  25:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+  26:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+  27:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     This file is part of the FreeRTOS distribution.
+  28:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+  29:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     FreeRTOS is free software; you can redistribute it and/or modify it under
+  30:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     the terms of the GNU General Public License (version 2) as published by the
+  31:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     Free Software Foundation AND MODIFIED BY the FreeRTOS exception.
+  32:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     >>>NOTE<<< The modification to the GPL is included to allow you to
+  33:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     distribute a combined work that includes FreeRTOS without being obliged to
+  34:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     provide the source code for proprietary components outside of the FreeRTOS
+  35:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     kernel.  FreeRTOS is distributed in the hope that it will be useful, but
+  36:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+  37:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+  38:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     more details. You should have received a copy of the GNU General Public
+  39:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     License and the FreeRTOS license exception along with FreeRTOS; if not it
+  40:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     can be viewed here: http://www.freertos.org/a00114.html and also obtained
+  41:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     by writing to Richard Barry, contact details for whom are available on the
+  42:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     FreeRTOS WEB site.
+  43:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+  44:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     1 tab == 4 spaces!
+  45:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     
+  46:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     ***************************************************************************
+  47:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *                                                                       *
+  48:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *    Having a problem?  Start by reading the FAQ "My application does   *
+  49:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *    not run, what could be wrong?"                                     *
+  50:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *                                                                       *
+  51:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *    http://www.FreeRTOS.org/FAQHelp.html                               *
+  52:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****      *                                                                       *
+  53:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     ***************************************************************************
+  54:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+  55:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     
+  56:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     http://www.FreeRTOS.org - Documentation, training, latest versions, license 
+  57:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     and contact details.  
+  58:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     
+  59:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
+  60:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     including FreeRTOS+Trace - an indispensable productivity tool.
+  61:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+  62:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     Real Time Engineers ltd license FreeRTOS to High Integrity Systems, who sell 
+  63:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     the code with commercial support, indemnification, and middleware, under 
+  64:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     the OpenRTOS brand: http://www.OpenRTOS.com.  High Integrity Systems also
+  65:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     provide a safety engineered and independently SIL3 certified version under 
+  66:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****     the SafeRTOS brand: http://www.SafeRTOS.com.
+  67:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** */
+  68:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+  69:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /* Defining MPU_WRAPPERS_INCLUDED_FROM_API_FILE prevents task.h from redefining
+  70:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** all the API functions to use the MPU wrappers.  That should only be done when
+  71:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** task.h is included from an application file. */
+  72:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** #define MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+  73:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+  74:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** #include "FreeRTOS.h"
+  75:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** #include "task.h"
+  76:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** #include "queue.h"
+  77:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** #include "timers.h"
+  78:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+  79:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** #undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+  80:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+  81:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /* This entire source file will be skipped if the application is not configured
+  82:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** to include software timer functionality.  This #if is closed at the very bottom
+  83:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** of this file.  If you want to include software timer functionality then ensure
+  84:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** configUSE_TIMERS is set to 1 in FreeRTOSConfig.h. */
+  85:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** #if ( configUSE_TIMERS == 1 )
+  86:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+  87:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /* Misc definitions. */
+  88:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** #define tmrNO_DELAY		( portTickType ) 0U
+  89:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+  90:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /* The definition of the timers themselves. */
+  91:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** typedef struct tmrTimerControl
+  92:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+  93:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	const signed char		*pcTimerName;		/*<< Text name.  This is not used by the kernel, it is included 
+  94:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	xListItem				xTimerListItem;		/*<< Standard linked list item as used by all kernel features for ev
+  95:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	portTickType			xTimerPeriodInTicks;/*<< How quickly and often the timer expires. */
+  96:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	unsigned portBASE_TYPE	uxAutoReload;		/*<< Set to pdTRUE if the timer should be automatically rest
+  97:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	void 					*pvTimerID;			/*<< An ID to identify the timer.  This allows the timer to be identified 
+  98:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	tmrTIMER_CALLBACK		pxCallbackFunction;	/*<< The function that will be called when the timer expire
+  99:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** } xTIMER;
+ 100:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 101:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /* The definition of messages that can be sent and received on the timer
+ 102:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** queue. */
+ 103:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** typedef struct tmrTimerQueueMessage
+ 104:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 105:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	portBASE_TYPE			xMessageID;			/*<< The command being sent to the timer service task. */
+ 106:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	portTickType			xMessageValue;		/*<< An optional value used by a subset of commands, for example, w
+ 107:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	xTIMER *				pxTimer;			/*<< The timer to which the command will be applied. */
+ 108:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** } xTIMER_MESSAGE;
+ 109:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 110:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 111:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /* The list in which active timers are stored.  Timers are referenced in expire
+ 112:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** time order, with the nearest expiry time at the front of the list.  Only the
+ 113:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** timer service task is allowed to access xActiveTimerList. */
+ 114:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** PRIVILEGED_DATA static xList xActiveTimerList1;
+ 115:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** PRIVILEGED_DATA static xList xActiveTimerList2;
+ 116:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** PRIVILEGED_DATA static xList *pxCurrentTimerList;
+ 117:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** PRIVILEGED_DATA static xList *pxOverflowTimerList;
+ 118:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 119:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /* A queue that is used to send commands to the timer service task. */
+ 120:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** PRIVILEGED_DATA static xQueueHandle xTimerQueue = NULL;
+ 121:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 122:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** #if ( INCLUDE_xTimerGetTimerDaemonTaskHandle == 1 )
+ 123:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 124:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	PRIVILEGED_DATA static xTaskHandle xTimerTaskHandle = NULL;
+ 125:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 126:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** #endif
+ 127:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 128:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*-----------------------------------------------------------*/
+ 129:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 130:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*
+ 131:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * Initialise the infrastructure used by the timer service task if it has not
+ 132:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * been initialised already.
+ 133:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  */
+ 134:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static void prvCheckForValidListAndQueue( void ) PRIVILEGED_FUNCTION;
+ 135:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 136:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*
+ 137:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * The timer service task (daemon).  Timer functionality is controlled by this
+ 138:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * task.  Other tasks communicate with the timer service task using the
+ 139:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * xTimerQueue queue.
+ 140:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  */
+ 141:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static void prvTimerTask( void *pvParameters ) PRIVILEGED_FUNCTION;
+ 142:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 143:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*
+ 144:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * Called by the timer service task to interpret and process a command it
+ 145:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * received on the timer queue.
+ 146:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  */
+ 147:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static void	prvProcessReceivedCommands( void ) PRIVILEGED_FUNCTION;
+ 148:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 149:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*
+ 150:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * Insert the timer into either xActiveTimerList1, or xActiveTimerList2,
+ 151:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * depending on if the expire time causes a timer counter overflow.
+ 152:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  */
+ 153:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static portBASE_TYPE prvInsertTimerInActiveList( xTIMER *pxTimer, portTickType xNextExpiryTime, por
+ 154:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 155:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*
+ 156:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * An active timer has reached its expire time.  Reload the timer if it is an
+ 157:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * auto reload timer, then call its callback.
+ 158:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  */
+ 159:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static void prvProcessExpiredTimer( portTickType xNextExpireTime, portTickType xTimeNow ) PRIVILEGE
+ 160:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 161:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*
+ 162:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * The tick count has overflowed.  Switch the timer lists after ensuring the
+ 163:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * current timer list does not still reference some timers.
+ 164:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  */
+ 165:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static void prvSwitchTimerLists( portTickType xLastTime ) PRIVILEGED_FUNCTION;
+ 166:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 167:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*
+ 168:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * Obtain the current tick count, setting *pxTimerListsWereSwitched to pdTRUE
+ 169:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * if a tick count overflow occurred since prvSampleTimeNow() was last called.
+ 170:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  */
+ 171:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static portTickType prvSampleTimeNow( portBASE_TYPE *pxTimerListsWereSwitched ) PRIVILEGED_FUNCTION
+ 172:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 173:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*
+ 174:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * If the timer list contains any active timers then return the expire time of
+ 175:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * the timer that will expire first and set *pxListWasEmpty to false.  If the
+ 176:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * timer list does not contain any timers then return 0 and set *pxListWasEmpty
+ 177:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * to pdTRUE.
+ 178:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  */
+ 179:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static portTickType prvGetNextExpireTime( portBASE_TYPE *pxListWasEmpty ) PRIVILEGED_FUNCTION;
+ 180:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 181:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*
+ 182:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * If a timer has expired, process it.  Otherwise, block the timer service task
+ 183:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  * until either a timer does expire or a command is received.
+ 184:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c ****  */
+ 185:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static void prvProcessTimerOrBlockTask( portTickType xNextExpireTime, portBASE_TYPE xListWasEmpty )
+ 186:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 187:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*-----------------------------------------------------------*/
+ 188:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 189:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portBASE_TYPE xTimerCreateTimerTask( void )
+ 190:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 191:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portBASE_TYPE xReturn = pdFAIL;
+ 192:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 193:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	/* This function is called when the scheduler is started if
+ 194:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	configUSE_TIMERS is set to 1.  Check that the infrastructure used by the
+ 195:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	timer service task has been created/initialised.  If timers have already
+ 196:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	been created then the initialisation will already have been performed. */
+ 197:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	prvCheckForValidListAndQueue();
+ 198:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 199:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( xTimerQueue != NULL )
+ 200:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 201:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		#if ( INCLUDE_xTimerGetTimerDaemonTaskHandle == 1 )
+ 202:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		{
+ 203:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			/* Create the timer task, storing its handle in xTimerTaskHandle so
+ 204:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			it can be returned by the xTimerGetTimerDaemonTaskHandle() function. */
+ 205:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			xReturn = xTaskCreate( prvTimerTask, ( const signed char * ) "Tmr Svc", ( unsigned short ) confi
+ 206:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		}
+ 207:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		#else
+ 208:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		{
+ 209:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			/* Create the timer task without storing its handle. */
+ 210:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			xReturn = xTaskCreate( prvTimerTask, ( const signed char * ) "Tmr Svc", ( unsigned short ) confi
+ 211:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		}
+ 212:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		#endif
+ 213:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 214:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 215:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	configASSERT( xReturn );
+ 216:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	return xReturn;
+ 217:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 218:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*-----------------------------------------------------------*/
+ 219:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 220:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** xTimerHandle xTimerCreate( const signed char * const pcTimerName, portTickType xTimerPeriodInTicks,
+ 221:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 222:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** xTIMER *pxNewTimer;
+ 223:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 224:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	/* Allocate the timer structure. */
+ 225:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( xTimerPeriodInTicks == ( portTickType ) 0U )
+ 226:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 227:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		pxNewTimer = NULL;
+ 228:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		configASSERT( ( xTimerPeriodInTicks > 0 ) );
+ 229:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 230:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	else
+ 231:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 232:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		pxNewTimer = ( xTIMER * ) pvPortMalloc( sizeof( xTIMER ) );
+ 233:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( pxNewTimer != NULL )
+ 234:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		{
+ 235:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			/* Ensure the infrastructure used by the timer service task has been
+ 236:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			created/initialised. */
+ 237:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			prvCheckForValidListAndQueue();
+ 238:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 239:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			/* Initialise the timer structure members using the function parameters. */
+ 240:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			pxNewTimer->pcTimerName = pcTimerName;
+ 241:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			pxNewTimer->xTimerPeriodInTicks = xTimerPeriodInTicks;
+ 242:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			pxNewTimer->uxAutoReload = uxAutoReload;
+ 243:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			pxNewTimer->pvTimerID = pvTimerID;
+ 244:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			pxNewTimer->pxCallbackFunction = pxCallbackFunction;
+ 245:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			vListInitialiseItem( &( pxNewTimer->xTimerListItem ) );
+ 246:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 247:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			traceTIMER_CREATE( pxNewTimer );
+ 248:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		}
+ 249:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		else
+ 250:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		{
+ 251:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			traceTIMER_CREATE_FAILED();
+ 252:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		}
+ 253:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 254:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 255:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	return ( xTimerHandle ) pxNewTimer;
+ 256:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 257:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*-----------------------------------------------------------*/
+ 258:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 259:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portBASE_TYPE xTimerGenericCommand( xTimerHandle xTimer, portBASE_TYPE xCommandID, portTickType xOp
+ 260:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 261:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portBASE_TYPE xReturn = pdFAIL;
+ 262:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** xTIMER_MESSAGE xMessage;
+ 263:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 264:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	/* Send a message to the timer service task to perform a particular action
+ 265:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	on a particular timer definition. */
+ 266:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( xTimerQueue != NULL )
+ 267:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 268:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		/* Send a command to the timer service task to start the xTimer timer. */
+ 269:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		xMessage.xMessageID = xCommandID;
+ 270:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		xMessage.xMessageValue = xOptionalValue;
+ 271:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		xMessage.pxTimer = ( xTIMER * ) xTimer;
+ 272:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 273:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( pxHigherPriorityTaskWoken == NULL )
+ 274:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		{
+ 275:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			if( xTaskGetSchedulerState() == taskSCHEDULER_RUNNING )
+ 276:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			{
+ 277:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				xReturn = xQueueSendToBack( xTimerQueue, &xMessage, xBlockTime );
+ 278:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			}
+ 279:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			else
+ 280:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			{
+ 281:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				xReturn = xQueueSendToBack( xTimerQueue, &xMessage, tmrNO_DELAY );
+ 282:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			}
+ 283:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		}
+ 284:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		else
+ 285:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		{
+ 286:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			xReturn = xQueueSendToBackFromISR( xTimerQueue, &xMessage, pxHigherPriorityTaskWoken );
+ 287:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		}
+ 288:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 289:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		traceTIMER_COMMAND_SEND( xTimer, xCommandID, xOptionalValue, xReturn );
+ 290:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 291:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 292:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	return xReturn;
+ 293:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 294:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*-----------------------------------------------------------*/
+ 295:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 296:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** #if ( INCLUDE_xTimerGetTimerDaemonTaskHandle == 1 )
+ 297:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 298:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	xTaskHandle xTimerGetTimerDaemonTaskHandle( void )
+ 299:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 300:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		/* If xTimerGetTimerDaemonTaskHandle() is called before the scheduler has been
+ 301:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		started, then xTimerTaskHandle will be NULL. */
+ 302:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		configASSERT( ( xTimerTaskHandle != NULL ) );
+ 303:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		return xTimerTaskHandle;
+ 304:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 305:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 306:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** #endif
+ 307:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*-----------------------------------------------------------*/
+ 308:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 309:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static void prvProcessExpiredTimer( portTickType xNextExpireTime, portTickType xTimeNow )
+ 310:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 311:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** xTIMER *pxTimer;
+ 312:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portBASE_TYPE xResult;
+ 313:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 314:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	/* Remove the timer from the list of active timers.  A check has already
+ 315:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	been performed to ensure the list is not empty. */
+ 316:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	pxTimer = ( xTIMER * ) listGET_OWNER_OF_HEAD_ENTRY( pxCurrentTimerList );
+ 317:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	uxListRemove( &( pxTimer->xTimerListItem ) );
+ 318:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	traceTIMER_EXPIRED( pxTimer );
+ 319:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 320:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	/* If the timer is an auto reload timer then calculate the next
+ 321:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	expiry time and re-insert the timer in the list of active timers. */
+ 322:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( pxTimer->uxAutoReload == ( unsigned portBASE_TYPE ) pdTRUE )
+ 323:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 324:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		/* This is the only time a timer is inserted into a list using
+ 325:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		a time relative to anything other than the current time.  It
+ 326:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		will therefore be inserted into the correct list relative to
+ 327:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		the time this task thinks it is now, even if a command to
+ 328:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		switch lists due to a tick count overflow is already waiting in
+ 329:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		the timer queue. */
+ 330:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( prvInsertTimerInActiveList( pxTimer, ( xNextExpireTime + pxTimer->xTimerPeriodInTicks ), xTim
+ 331:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		{
+ 332:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			/* The timer expired before it was added to the active timer
+ 333:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			list.  Reload it now.  */
+ 334:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			xResult = xTimerGenericCommand( pxTimer, tmrCOMMAND_START, xNextExpireTime, NULL, tmrNO_DELAY );
+ 335:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			configASSERT( xResult );
+ 336:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			( void ) xResult;
+ 337:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		}
+ 338:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 339:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 340:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	/* Call the timer callback. */
+ 341:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	pxTimer->pxCallbackFunction( ( xTimerHandle ) pxTimer );
+ 342:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 343:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*-----------------------------------------------------------*/
+ 344:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 345:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static void prvTimerTask( void *pvParameters )
+ 346:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 347:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portTickType xNextExpireTime;
+ 348:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portBASE_TYPE xListWasEmpty;
+ 349:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 350:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	/* Just to avoid compiler warnings. */
+ 351:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	( void ) pvParameters;
+ 352:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 353:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	for( ;; )
+ 354:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 355:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		/* Query the timers list to see if it contains any timers, and if so,
+ 356:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		obtain the time at which the next timer will expire. */
+ 357:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		xNextExpireTime = prvGetNextExpireTime( &xListWasEmpty );
+ 358:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 359:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		/* If a timer has expired, process it.  Otherwise, block this task
+ 360:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		until either a timer does expire, or a command is received. */
+ 361:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		prvProcessTimerOrBlockTask( xNextExpireTime, xListWasEmpty );
+ 362:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 363:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		/* Empty the command queue. */
+ 364:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		prvProcessReceivedCommands();
+ 365:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 366:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 367:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*-----------------------------------------------------------*/
+ 368:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 369:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static void prvProcessTimerOrBlockTask( portTickType xNextExpireTime, portBASE_TYPE xListWasEmpty )
+ 370:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 371:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portTickType xTimeNow;
+ 372:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portBASE_TYPE xTimerListsWereSwitched;
+ 373:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 374:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	vTaskSuspendAll();
+ 375:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 376:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		/* Obtain the time now to make an assessment as to whether the timer
+ 377:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		has expired or not.  If obtaining the time causes the lists to switch
+ 378:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		then don't process this timer as any timers that remained in the list
+ 379:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		when the lists were switched will have been processed within the
+ 380:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		prvSampelTimeNow() function. */
+ 381:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		xTimeNow = prvSampleTimeNow( &xTimerListsWereSwitched );
+ 382:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( xTimerListsWereSwitched == pdFALSE )
+ 383:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		{
+ 384:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			/* The tick count has not overflowed, has the timer expired? */
+ 385:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			if( ( xListWasEmpty == pdFALSE ) && ( xNextExpireTime <= xTimeNow ) )
+ 386:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			{
+ 387:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				xTaskResumeAll();
+ 388:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				prvProcessExpiredTimer( xNextExpireTime, xTimeNow );
+ 389:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			}
+ 390:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			else
+ 391:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			{
+ 392:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				/* The tick count has not overflowed, and the next expire
+ 393:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				time has not been reached yet.  This task should therefore
+ 394:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				block to wait for the next expire time or a command to be
+ 395:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				received - whichever comes first.  The following line cannot
+ 396:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				be reached unless xNextExpireTime > xTimeNow, except in the
+ 397:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				case when the current timer list is empty. */
+ 398:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				vQueueWaitForMessageRestricted( xTimerQueue, ( xNextExpireTime - xTimeNow ) );
+ 399:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 400:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				if( xTaskResumeAll() == pdFALSE )
+ 401:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				{
+ 402:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 					/* Yield to wait for either a command to arrive, or the block time
+ 403:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 					to expire.  If a command arrived between the critical section being
+ 404:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 					exited and this yield then the yield will not cause the task
+ 405:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 					to block. */
+ 406:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 					portYIELD_WITHIN_API();
+ 407:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				}
+ 408:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			}
+ 409:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		}
+ 410:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		else
+ 411:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		{
+ 412:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			xTaskResumeAll();
+ 413:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		}
+ 414:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 415:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 416:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*-----------------------------------------------------------*/
+ 417:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 418:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static portTickType prvGetNextExpireTime( portBASE_TYPE *pxListWasEmpty )
+ 419:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 420:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portTickType xNextExpireTime;
+ 421:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 422:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	/* Timers are listed in expiry time order, with the head of the list
+ 423:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	referencing the task that will expire first.  Obtain the time at which
+ 424:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	the timer with the nearest expiry time will expire.  If there are no
+ 425:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	active timers then just set the next expire time to 0.  That will cause
+ 426:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	this task to unblock when the tick count overflows, at which point the
+ 427:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	timer lists will be switched and the next expiry time can be
+ 428:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	re-assessed.  */
+ 429:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	*pxListWasEmpty = listLIST_IS_EMPTY( pxCurrentTimerList );
+ 430:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( *pxListWasEmpty == pdFALSE )
+ 431:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 432:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		xNextExpireTime = listGET_ITEM_VALUE_OF_HEAD_ENTRY( pxCurrentTimerList );
+ 433:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 434:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	else
+ 435:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 436:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		/* Ensure the task unblocks when the tick count rolls over. */
+ 437:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		xNextExpireTime = ( portTickType ) 0U;
+ 438:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 439:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 440:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	return xNextExpireTime;
+ 441:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 442:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*-----------------------------------------------------------*/
+ 443:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 444:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static portTickType prvSampleTimeNow( portBASE_TYPE *pxTimerListsWereSwitched )
+ 445:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 446:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portTickType xTimeNow;
+ 447:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** PRIVILEGED_DATA static portTickType xLastTime = ( portTickType ) 0U;
+ 448:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 449:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	xTimeNow = xTaskGetTickCount();
+ 450:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 451:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( xTimeNow < xLastTime )
+ 452:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 453:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		prvSwitchTimerLists( xLastTime );
+ 454:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		*pxTimerListsWereSwitched = pdTRUE;
+ 455:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 456:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	else
+ 457:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 458:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		*pxTimerListsWereSwitched = pdFALSE;
+ 459:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 460:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 461:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	xLastTime = xTimeNow;
+ 462:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 463:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	return xTimeNow;
+ 464:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 465:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*-----------------------------------------------------------*/
+ 466:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 467:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static portBASE_TYPE prvInsertTimerInActiveList( xTIMER *pxTimer, portTickType xNextExpiryTime, por
+ 468:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 469:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portBASE_TYPE xProcessTimerNow = pdFALSE;
+ 470:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 471:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	listSET_LIST_ITEM_VALUE( &( pxTimer->xTimerListItem ), xNextExpiryTime );
+ 472:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	listSET_LIST_ITEM_OWNER( &( pxTimer->xTimerListItem ), pxTimer );
+ 473:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 474:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( xNextExpiryTime <= xTimeNow )
+ 475:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 476:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		/* Has the expiry time elapsed between the command to start/reset a
+ 477:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		timer was issued, and the time the command was processed? */
+ 478:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( ( ( portTickType ) ( xTimeNow - xCommandTime ) ) >= pxTimer->xTimerPeriodInTicks )
+ 479:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		{
+ 480:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			/* The time between a command being issued and the command being
+ 481:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			processed actually exceeds the timers period.  */
+ 482:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			xProcessTimerNow = pdTRUE;
+ 483:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		}
+ 484:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		else
+ 485:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		{
+ 486:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			vListInsert( pxOverflowTimerList, &( pxTimer->xTimerListItem ) );
+ 487:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		}
+ 488:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 489:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	else
+ 490:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 491:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( ( xTimeNow < xCommandTime ) && ( xNextExpiryTime >= xCommandTime ) )
+ 492:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		{
+ 493:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			/* If, since the command was issued, the tick count has overflowed
+ 494:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			but the expiry time has not, then the timer must have already passed
+ 495:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			its expiry time and should be processed immediately. */
+ 496:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			xProcessTimerNow = pdTRUE;
+ 497:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		}
+ 498:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		else
+ 499:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		{
+ 500:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			vListInsert( pxCurrentTimerList, &( pxTimer->xTimerListItem ) );
+ 501:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		}
+ 502:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 503:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 504:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	return xProcessTimerNow;
+ 505:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 506:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*-----------------------------------------------------------*/
+ 507:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 508:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static void	prvProcessReceivedCommands( void )
+ 509:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 510:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** xTIMER_MESSAGE xMessage;
+ 511:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** xTIMER *pxTimer;
+ 512:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portBASE_TYPE xTimerListsWereSwitched, xResult;
+ 513:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portTickType xTimeNow;
+ 514:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 515:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	/* In this case the xTimerListsWereSwitched parameter is not used, but it
+ 516:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	must be present in the function call. */
+ 517:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	xTimeNow = prvSampleTimeNow( &xTimerListsWereSwitched );
+ 518:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 519:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	while( xQueueReceive( xTimerQueue, &xMessage, tmrNO_DELAY ) != pdFAIL )
+ 520:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 521:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		pxTimer = xMessage.pxTimer;
+ 522:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 523:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		/* Is the timer already in a list of active timers?  When the command
+ 524:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		is trmCOMMAND_PROCESS_TIMER_OVERFLOW, the timer will be NULL as the
+ 525:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		command is to the task rather than to an individual timer. */
+ 526:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( pxTimer != NULL )
+ 527:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		{
+ 528:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			if( listIS_CONTAINED_WITHIN( NULL, &( pxTimer->xTimerListItem ) ) == pdFALSE )
+ 529:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			{
+ 530:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				/* The timer is in a list, remove it. */
+ 531:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				uxListRemove( &( pxTimer->xTimerListItem ) );
+ 532:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			}
+ 533:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		}
+ 534:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 535:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		traceTIMER_COMMAND_RECEIVED( pxTimer, xMessage.xMessageID, xMessage.xMessageValue );
+ 536:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 537:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		switch( xMessage.xMessageID )
+ 538:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		{
+ 539:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			case tmrCOMMAND_START :
+ 540:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				/* Start or restart a timer. */
+ 541:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				if( prvInsertTimerInActiveList( pxTimer,  xMessage.xMessageValue + pxTimer->xTimerPeriodInTicks
+ 542:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				{
+ 543:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 					/* The timer expired before it was added to the active timer
+ 544:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 					list.  Process it now. */
+ 545:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 					pxTimer->pxCallbackFunction( ( xTimerHandle ) pxTimer );
+ 546:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 547:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 					if( pxTimer->uxAutoReload == ( unsigned portBASE_TYPE ) pdTRUE )
+ 548:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 					{
+ 549:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 						xResult = xTimerGenericCommand( pxTimer, tmrCOMMAND_START, xMessage.xMessageValue + pxTimer->
+ 550:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 						configASSERT( xResult );
+ 551:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 						( void ) xResult;
+ 552:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 					}
+ 553:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				}
+ 554:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				break;
+ 555:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 556:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			case tmrCOMMAND_STOP :
+ 557:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				/* The timer has already been removed from the active list.
+ 558:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				There is nothing to do here. */
+ 559:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				break;
+ 560:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 561:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			case tmrCOMMAND_CHANGE_PERIOD :
+ 562:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				pxTimer->xTimerPeriodInTicks = xMessage.xMessageValue;
+ 563:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				configASSERT( ( pxTimer->xTimerPeriodInTicks > 0 ) );
+ 564:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				prvInsertTimerInActiveList( pxTimer, ( xTimeNow + pxTimer->xTimerPeriodInTicks ), xTimeNow, xTi
+ 565:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				break;
+ 566:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 567:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			case tmrCOMMAND_DELETE :
+ 568:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				/* The timer has already been removed from the active list,
+ 569:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				just free up the memory. */
+ 570:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				vPortFree( pxTimer );
+ 571:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				break;
+ 572:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 573:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			default	:
+ 574:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				/* Don't expect to get here. */
+ 575:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				break;
+ 576:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		}
+ 577:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 578:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 579:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*-----------------------------------------------------------*/
+ 580:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 581:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static void prvSwitchTimerLists( portTickType xLastTime )
+ 582:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 583:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portTickType xNextExpireTime, xReloadTime;
+ 584:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** xList *pxTemp;
+ 585:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** xTIMER *pxTimer;
+ 586:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portBASE_TYPE xResult;
+ 587:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 588:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	/* Remove compiler warnings if configASSERT() is not defined. */
+ 589:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	( void ) xLastTime;
+ 590:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 591:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	/* The tick count has overflowed.  The timer lists must be switched.
+ 592:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	If there are any timers still referenced from the current timer list
+ 593:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	then they must have expired and should be processed before the lists
+ 594:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	are switched. */
+ 595:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	while( listLIST_IS_EMPTY( pxCurrentTimerList ) == pdFALSE )
+ 596:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 597:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		xNextExpireTime = listGET_ITEM_VALUE_OF_HEAD_ENTRY( pxCurrentTimerList );
+ 598:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 599:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		/* Remove the timer from the list. */
+ 600:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		pxTimer = ( xTIMER * ) listGET_OWNER_OF_HEAD_ENTRY( pxCurrentTimerList );
+ 601:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		uxListRemove( &( pxTimer->xTimerListItem ) );
+ 602:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 603:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		/* Execute its callback, then send a command to restart the timer if
+ 604:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		it is an auto-reload timer.  It cannot be restarted here as the lists
+ 605:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		have not yet been switched. */
+ 606:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		pxTimer->pxCallbackFunction( ( xTimerHandle ) pxTimer );
+ 607:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 608:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( pxTimer->uxAutoReload == ( unsigned portBASE_TYPE ) pdTRUE )
+ 609:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		{
+ 610:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			/* Calculate the reload value, and if the reload value results in
+ 611:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			the timer going into the same timer list then it has already expired
+ 612:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			and the timer should be re-inserted into the current list so it is
+ 613:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			processed again within this loop.  Otherwise a command should be sent
+ 614:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			to restart the timer to ensure it is only inserted into a list after
+ 615:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			the lists have been swapped. */
+ 616:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			xReloadTime = ( xNextExpireTime + pxTimer->xTimerPeriodInTicks );
+ 617:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			if( xReloadTime > xNextExpireTime )
+ 618:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			{
+ 619:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				listSET_LIST_ITEM_VALUE( &( pxTimer->xTimerListItem ), xReloadTime );
+ 620:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				listSET_LIST_ITEM_OWNER( &( pxTimer->xTimerListItem ), pxTimer );
+ 621:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				vListInsert( pxCurrentTimerList, &( pxTimer->xTimerListItem ) );
+ 622:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			}
+ 623:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			else
+ 624:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			{
+ 625:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				xResult = xTimerGenericCommand( pxTimer, tmrCOMMAND_START, xNextExpireTime, NULL, tmrNO_DELAY )
+ 626:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				configASSERT( xResult );
+ 627:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				( void ) xResult;
+ 628:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			}
+ 629:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		}
+ 630:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 631:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 632:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	pxTemp = pxCurrentTimerList;
+ 633:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	pxCurrentTimerList = pxOverflowTimerList;
+ 634:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	pxOverflowTimerList = pxTemp;
+ 635:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 636:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*-----------------------------------------------------------*/
+ 637:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 638:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static void prvCheckForValidListAndQueue( void )
+ 639:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+  27              		.loc 1 639 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 24
+  34              		.cfi_offset 3, -24
+  35              		.cfi_offset 4, -20
+  36              		.cfi_offset 5, -16
+  37              		.cfi_offset 6, -12
+  38              		.cfi_offset 7, -8
+  39              		.cfi_offset 14, -4
+ 640:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	/* Check that the list from which active timers are referenced, and the
+ 641:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	queue used to communicate with the timer service, have been
+ 642:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	initialised. */
+ 643:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	taskENTER_CRITICAL();
+ 644:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 645:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( xTimerQueue == NULL )
+  40              		.loc 1 645 0
+  41 0002 0D4C     		ldr	r4, .L3
+ 643:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	taskENTER_CRITICAL();
+  42              		.loc 1 643 0
+  43 0004 FFF7FEFF 		bl	vPortEnterCritical
+  44              	.LVL0:
+  45              		.loc 1 645 0
+  46 0008 2568     		ldr	r5, [r4, #0]
+  47 000a 85B9     		cbnz	r5, .L2
+ 646:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		{
+ 647:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			vListInitialise( &xActiveTimerList1 );
+  48              		.loc 1 647 0
+  49 000c 271D     		adds	r7, r4, #4
+  50 000e 3846     		mov	r0, r7
+ 648:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			vListInitialise( &xActiveTimerList2 );
+  51              		.loc 1 648 0
+  52 0010 04F11806 		add	r6, r4, #24
+ 647:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			vListInitialise( &xActiveTimerList1 );
+  53              		.loc 1 647 0
+  54 0014 FFF7FEFF 		bl	vListInitialise
+  55              	.LVL1:
+  56              		.loc 1 648 0
+  57 0018 3046     		mov	r0, r6
+  58 001a FFF7FEFF 		bl	vListInitialise
+  59              	.LVL2:
+ 649:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			pxCurrentTimerList = &xActiveTimerList1;
+ 650:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			pxOverflowTimerList = &xActiveTimerList2;
+ 651:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			xTimerQueue = xQueueCreate( ( unsigned portBASE_TYPE ) configTIMER_QUEUE_LENGTH, sizeof( xTIMER_
+  60              		.loc 1 651 0
+  61 001e 0520     		movs	r0, #5
+  62 0020 0C21     		movs	r1, #12
+  63 0022 2A46     		mov	r2, r5
+ 649:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			pxCurrentTimerList = &xActiveTimerList1;
+  64              		.loc 1 649 0
+  65 0024 E762     		str	r7, [r4, #44]
+ 650:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			pxOverflowTimerList = &xActiveTimerList2;
+  66              		.loc 1 650 0
+  67 0026 2663     		str	r6, [r4, #48]
+  68              		.loc 1 651 0
+  69 0028 FFF7FEFF 		bl	xQueueGenericCreate
+  70              	.LVL3:
+  71 002c 2060     		str	r0, [r4, #0]
+  72              	.L2:
+ 652:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		}
+ 653:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 654:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	taskEXIT_CRITICAL();
+ 655:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+  73              		.loc 1 655 0
+  74 002e BDE8F840 		pop	{r3, r4, r5, r6, r7, lr}
+ 654:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	taskEXIT_CRITICAL();
+  75              		.loc 1 654 0
+  76 0032 FFF7FEBF 		b	vPortExitCritical
+  77              	.LVL4:
+  78              	.L4:
+  79 0036 00BF     		.align	2
+  80              	.L3:
+  81 0038 00000000 		.word	.LANCHOR0
+  82              		.cfi_endproc
+  83              	.LFE11:
+  85              		.align	1
+  86              		.thumb
+  87              		.thumb_func
+  89              	prvInsertTimerInActiveList:
+  90              	.LFB8:
+ 468:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+  91              		.loc 1 468 0
+  92              		.cfi_startproc
+  93              		@ args = 0, pretend = 0, frame = 0
+  94              		@ frame_needed = 0, uses_anonymous_args = 0
+  95              	.LVL5:
+  96 003c 10B5     		push	{r4, lr}
+  97              	.LCFI1:
+  98              		.cfi_def_cfa_offset 8
+  99              		.cfi_offset 4, -8
+ 100              		.cfi_offset 14, -4
+ 468:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 101              		.loc 1 468 0
+ 102 003e 0446     		mov	r4, r0
+ 474:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( xNextExpiryTime <= xTimeNow )
+ 103              		.loc 1 474 0
+ 104 0040 9142     		cmp	r1, r2
+ 471:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	listSET_LIST_ITEM_VALUE( &( pxTimer->xTimerListItem ), xNextExpiryTime );
+ 105              		.loc 1 471 0
+ 106 0042 4160     		str	r1, [r0, #4]
+ 472:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	listSET_LIST_ITEM_OWNER( &( pxTimer->xTimerListItem ), pxTimer );
+ 107              		.loc 1 472 0
+ 108 0044 2061     		str	r0, [r4, #16]
+ 474:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( xNextExpiryTime <= xTimeNow )
+ 109              		.loc 1 474 0
+ 110 0046 06D8     		bhi	.L6
+ 478:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( ( ( portTickType ) ( xTimeNow - xCommandTime ) ) >= pxTimer->xTimerPeriodInTicks )
+ 111              		.loc 1 478 0
+ 112 0048 8169     		ldr	r1, [r0, #24]
+ 113              	.LVL6:
+ 114 004a D21A     		subs	r2, r2, r3
+ 115              	.LVL7:
+ 116 004c 8A42     		cmp	r2, r1
+ 117 004e 0DD2     		bcs	.L10
+ 118              	.LVL8:
+ 119              	.LBB4:
+ 120              	.LBB5:
+ 486:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			vListInsert( pxOverflowTimerList, &( pxTimer->xTimerListItem ) );
+ 121              		.loc 1 486 0
+ 122 0050 074B     		ldr	r3, .L12
+ 123              	.LVL9:
+ 124 0052 186B     		ldr	r0, [r3, #48]
+ 125              	.LVL10:
+ 126 0054 05E0     		b	.L11
+ 127              	.LVL11:
+ 128              	.L6:
+ 129              	.LBE5:
+ 130              	.LBE4:
+ 491:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( ( xTimeNow < xCommandTime ) && ( xNextExpiryTime >= xCommandTime ) )
+ 131              		.loc 1 491 0
+ 132 0056 9A42     		cmp	r2, r3
+ 133 0058 01D2     		bcs	.L8
+ 491:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( ( xTimeNow < xCommandTime ) && ( xNextExpiryTime >= xCommandTime ) )
+ 134              		.loc 1 491 0 is_stmt 0 discriminator 1
+ 135 005a 9942     		cmp	r1, r3
+ 136 005c 06D2     		bcs	.L10
+ 137              	.L8:
+ 500:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			vListInsert( pxCurrentTimerList, &( pxTimer->xTimerListItem ) );
+ 138              		.loc 1 500 0 is_stmt 1
+ 139 005e 044B     		ldr	r3, .L12
+ 140              	.LVL12:
+ 141 0060 D86A     		ldr	r0, [r3, #44]
+ 142              	.LVL13:
+ 143              	.L11:
+ 144 0062 211D     		adds	r1, r4, #4
+ 145 0064 FFF7FEFF 		bl	vListInsert
+ 146              	.LVL14:
+ 469:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portBASE_TYPE xProcessTimerNow = pdFALSE;
+ 147              		.loc 1 469 0
+ 148 0068 0020     		movs	r0, #0
+ 149 006a 10BD     		pop	{r4, pc}
+ 150              	.LVL15:
+ 151              	.L10:
+ 482:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			xProcessTimerNow = pdTRUE;
+ 152              		.loc 1 482 0
+ 153 006c 0120     		movs	r0, #1
+ 154              	.LVL16:
+ 505:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 155              		.loc 1 505 0
+ 156 006e 10BD     		pop	{r4, pc}
+ 157              	.L13:
+ 158              		.align	2
+ 159              	.L12:
+ 160 0070 00000000 		.word	.LANCHOR0
+ 161              		.cfi_endproc
+ 162              	.LFE8:
+ 164              		.align	1
+ 165              		.global	xTimerCreateTimerTask
+ 166              		.thumb
+ 167              		.thumb_func
+ 169              	xTimerCreateTimerTask:
+ 170              	.LFB0:
+ 190:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 171              		.loc 1 190 0
+ 172              		.cfi_startproc
+ 173              		@ args = 0, pretend = 0, frame = 0
+ 174              		@ frame_needed = 0, uses_anonymous_args = 0
+ 175              	.LVL17:
+ 176 0074 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 177              	.LCFI2:
+ 178              		.cfi_def_cfa_offset 24
+ 179              		.cfi_offset 0, -24
+ 180              		.cfi_offset 1, -20
+ 181              		.cfi_offset 2, -16
+ 182              		.cfi_offset 3, -12
+ 183              		.cfi_offset 4, -8
+ 184              		.cfi_offset 14, -4
+ 197:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	prvCheckForValidListAndQueue();
+ 185              		.loc 1 197 0
+ 186 0076 FFF7C3FF 		bl	prvCheckForValidListAndQueue
+ 187              	.LVL18:
+ 199:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( xTimerQueue != NULL )
+ 188              		.loc 1 199 0
+ 189 007a 0B4B     		ldr	r3, .L23
+ 190 007c 1B68     		ldr	r3, [r3, #0]
+ 191 007e 13B9     		cbnz	r3, .L15
+ 192              	.LVL19:
+ 193              	.L17:
+ 215:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	configASSERT( xReturn );
+ 194              		.loc 1 215 0
+ 195 0080 FFF7FEFF 		bl	ulPortSetInterruptMask
+ 196              	.LVL20:
+ 197 0084 0DE0     		b	.L16
+ 198              	.LVL21:
+ 199              	.L15:
+ 210:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			xReturn = xTaskCreate( prvTimerTask, ( const signed char * ) "Tmr Svc", ( unsigned short ) confi
+ 200              		.loc 1 210 0
+ 201 0086 0323     		movs	r3, #3
+ 202 0088 0093     		str	r3, [sp, #0]
+ 203 008a 0023     		movs	r3, #0
+ 204 008c 0193     		str	r3, [sp, #4]
+ 205 008e 0293     		str	r3, [sp, #8]
+ 206 0090 0393     		str	r3, [sp, #12]
+ 207 0092 0648     		ldr	r0, .L23+4
+ 208 0094 0649     		ldr	r1, .L23+8
+ 209 0096 4FF4A072 		mov	r2, #320
+ 210 009a FFF7FEFF 		bl	xTaskGenericCreate
+ 211              	.LVL22:
+ 215:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	configASSERT( xReturn );
+ 212              		.loc 1 215 0
+ 213 009e 08B9     		cbnz	r0, .L22
+ 214 00a0 EEE7     		b	.L17
+ 215              	.LVL23:
+ 216              	.L16:
+ 217 00a2 FEE7     		b	.L16
+ 218              	.LVL24:
+ 219              	.L22:
+ 217:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 220              		.loc 1 217 0
+ 221 00a4 05B0     		add	sp, sp, #20
+ 222 00a6 00BD     		pop	{pc}
+ 223              	.L24:
+ 224              		.align	2
+ 225              	.L23:
+ 226 00a8 00000000 		.word	.LANCHOR0
+ 227 00ac 00000000 		.word	prvTimerTask
+ 228 00b0 00000000 		.word	.LC0
+ 229              		.cfi_endproc
+ 230              	.LFE0:
+ 232              		.align	1
+ 233              		.global	xTimerCreate
+ 234              		.thumb
+ 235              		.thumb_func
+ 237              	xTimerCreate:
+ 238              	.LFB1:
+ 221:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 239              		.loc 1 221 0
+ 240              		.cfi_startproc
+ 241              		@ args = 4, pretend = 0, frame = 0
+ 242              		@ frame_needed = 0, uses_anonymous_args = 0
+ 243              	.LVL25:
+ 244 00b4 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 245              	.LCFI3:
+ 246              		.cfi_def_cfa_offset 24
+ 247              		.cfi_offset 4, -24
+ 248              		.cfi_offset 5, -20
+ 249              		.cfi_offset 6, -16
+ 250              		.cfi_offset 7, -12
+ 251              		.cfi_offset 8, -8
+ 252              		.cfi_offset 14, -4
+ 221:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 253              		.loc 1 221 0
+ 254 00b8 8046     		mov	r8, r0
+ 255 00ba 1746     		mov	r7, r2
+ 256 00bc 1E46     		mov	r6, r3
+ 225:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( xTimerPeriodInTicks == ( portTickType ) 0U )
+ 257              		.loc 1 225 0
+ 258 00be 0D46     		mov	r5, r1
+ 259 00c0 11B9     		cbnz	r1, .L26
+ 260              	.LVL26:
+ 228:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		configASSERT( ( xTimerPeriodInTicks > 0 ) );
+ 261              		.loc 1 228 0 discriminator 1
+ 262 00c2 FFF7FEFF 		bl	ulPortSetInterruptMask
+ 263              	.LVL27:
+ 264              	.L27:
+ 265 00c6 FEE7     		b	.L27
+ 266              	.LVL28:
+ 267              	.L26:
+ 232:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		pxNewTimer = ( xTIMER * ) pvPortMalloc( sizeof( xTIMER ) );
+ 268              		.loc 1 232 0
+ 269 00c8 2820     		movs	r0, #40
+ 270              	.LVL29:
+ 271 00ca FFF7FEFF 		bl	pvPortMalloc
+ 272              	.LVL30:
+ 233:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( pxNewTimer != NULL )
+ 273              		.loc 1 233 0
+ 274 00ce 0446     		mov	r4, r0
+ 275 00d0 58B1     		cbz	r0, .L28
+ 237:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			prvCheckForValidListAndQueue();
+ 276              		.loc 1 237 0
+ 277 00d2 FFF795FF 		bl	prvCheckForValidListAndQueue
+ 278              	.LVL31:
+ 244:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			pxNewTimer->pxCallbackFunction = pxCallbackFunction;
+ 279              		.loc 1 244 0
+ 280 00d6 069B     		ldr	r3, [sp, #24]
+ 240:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			pxNewTimer->pcTimerName = pcTimerName;
+ 281              		.loc 1 240 0
+ 282 00d8 C4F80080 		str	r8, [r4, #0]
+ 241:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			pxNewTimer->xTimerPeriodInTicks = xTimerPeriodInTicks;
+ 283              		.loc 1 241 0
+ 284 00dc A561     		str	r5, [r4, #24]
+ 242:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			pxNewTimer->uxAutoReload = uxAutoReload;
+ 285              		.loc 1 242 0
+ 286 00de E761     		str	r7, [r4, #28]
+ 243:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			pxNewTimer->pvTimerID = pvTimerID;
+ 287              		.loc 1 243 0
+ 288 00e0 2662     		str	r6, [r4, #32]
+ 244:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			pxNewTimer->pxCallbackFunction = pxCallbackFunction;
+ 289              		.loc 1 244 0
+ 290 00e2 6362     		str	r3, [r4, #36]
+ 245:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			vListInitialiseItem( &( pxNewTimer->xTimerListItem ) );
+ 291              		.loc 1 245 0
+ 292 00e4 201D     		adds	r0, r4, #4
+ 293 00e6 FFF7FEFF 		bl	vListInitialiseItem
+ 294              	.LVL32:
+ 295              	.L28:
+ 256:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 296              		.loc 1 256 0
+ 297 00ea 2046     		mov	r0, r4
+ 298 00ec BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 299              		.cfi_endproc
+ 300              	.LFE1:
+ 302              		.align	1
+ 303              		.global	xTimerGenericCommand
+ 304              		.thumb
+ 305              		.thumb_func
+ 307              	xTimerGenericCommand:
+ 308              	.LFB2:
+ 260:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 309              		.loc 1 260 0
+ 310              		.cfi_startproc
+ 311              		@ args = 4, pretend = 0, frame = 16
+ 312              		@ frame_needed = 0, uses_anonymous_args = 0
+ 313              	.LVL33:
+ 314 00f0 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
+ 315              	.LCFI4:
+ 316              		.cfi_def_cfa_offset 32
+ 317              		.cfi_offset 0, -32
+ 318              		.cfi_offset 1, -28
+ 319              		.cfi_offset 2, -24
+ 320              		.cfi_offset 3, -20
+ 321              		.cfi_offset 4, -16
+ 322              		.cfi_offset 5, -12
+ 323              		.cfi_offset 6, -8
+ 324              		.cfi_offset 14, -4
+ 266:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( xTimerQueue != NULL )
+ 325              		.loc 1 266 0
+ 326 00f2 0F4D     		ldr	r5, .L38
+ 260:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 327              		.loc 1 260 0
+ 328 00f4 0646     		mov	r6, r0
+ 266:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( xTimerQueue != NULL )
+ 329              		.loc 1 266 0
+ 330 00f6 2868     		ldr	r0, [r5, #0]
+ 331              	.LVL34:
+ 260:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 332              		.loc 1 260 0
+ 333 00f8 1C46     		mov	r4, r3
+ 266:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( xTimerQueue != NULL )
+ 334              		.loc 1 266 0
+ 335 00fa B8B1     		cbz	r0, .L33
+ 269:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		xMessage.xMessageID = xCommandID;
+ 336              		.loc 1 269 0
+ 337 00fc 0191     		str	r1, [sp, #4]
+ 270:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		xMessage.xMessageValue = xOptionalValue;
+ 338              		.loc 1 270 0
+ 339 00fe 0292     		str	r2, [sp, #8]
+ 271:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		xMessage.pxTimer = ( xTIMER * ) xTimer;
+ 340              		.loc 1 271 0
+ 341 0100 0396     		str	r6, [sp, #12]
+ 273:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( pxHigherPriorityTaskWoken == NULL )
+ 342              		.loc 1 273 0
+ 343 0102 73B9     		cbnz	r3, .L34
+ 275:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			if( xTaskGetSchedulerState() == taskSCHEDULER_RUNNING )
+ 344              		.loc 1 275 0
+ 345 0104 FFF7FEFF 		bl	xTaskGetSchedulerState
+ 346              	.LVL35:
+ 347 0108 0128     		cmp	r0, #1
+ 281:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				xReturn = xQueueSendToBack( xTimerQueue, &xMessage, tmrNO_DELAY );
+ 348              		.loc 1 281 0
+ 349 010a 18BF     		it	ne
+ 350 010c 2246     		movne	r2, r4
+ 277:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				xReturn = xQueueSendToBack( xTimerQueue, &xMessage, xBlockTime );
+ 351              		.loc 1 277 0
+ 352 010e 2868     		ldr	r0, [r5, #0]
+ 353 0110 08BF     		it	eq
+ 354 0112 089A     		ldreq	r2, [sp, #32]
+ 355 0114 01A9     		add	r1, sp, #4
+ 356 0116 0CBF     		ite	eq
+ 357 0118 2346     		moveq	r3, r4
+ 281:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				xReturn = xQueueSendToBack( xTimerQueue, &xMessage, tmrNO_DELAY );
+ 358              		.loc 1 281 0
+ 359 011a 1346     		movne	r3, r2
+ 360 011c FFF7FEFF 		bl	xQueueGenericSend
+ 361              	.LVL36:
+ 362 0120 04E0     		b	.L33
+ 363              	.LVL37:
+ 364              	.L34:
+ 286:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			xReturn = xQueueSendToBackFromISR( xTimerQueue, &xMessage, pxHigherPriorityTaskWoken );
+ 365              		.loc 1 286 0
+ 366 0122 1A46     		mov	r2, r3
+ 367              	.LVL38:
+ 368 0124 01A9     		add	r1, sp, #4
+ 369              	.LVL39:
+ 370 0126 0023     		movs	r3, #0
+ 371              	.LVL40:
+ 372 0128 FFF7FEFF 		bl	xQueueGenericSendFromISR
+ 373              	.LVL41:
+ 374              	.L33:
+ 293:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 375              		.loc 1 293 0
+ 376 012c 04B0     		add	sp, sp, #16
+ 377 012e 70BD     		pop	{r4, r5, r6, pc}
+ 378              	.L39:
+ 379              		.align	2
+ 380              	.L38:
+ 381 0130 00000000 		.word	.LANCHOR0
+ 382              		.cfi_endproc
+ 383              	.LFE2:
+ 385              		.align	1
+ 386              		.thumb
+ 387              		.thumb_func
+ 389              	prvSwitchTimerLists.isra.1:
+ 390              	.LFB15:
+ 581:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** static void prvSwitchTimerLists( portTickType xLastTime )
+ 391              		.loc 1 581 0
+ 392              		.cfi_startproc
+ 393              		@ args = 0, pretend = 0, frame = 0
+ 394              		@ frame_needed = 0, uses_anonymous_args = 0
+ 395 0134 2DE9F341 		push	{r0, r1, r4, r5, r6, r7, r8, lr}
+ 396              	.LCFI5:
+ 397              		.cfi_def_cfa_offset 32
+ 398              		.cfi_offset 0, -32
+ 399              		.cfi_offset 1, -28
+ 400              		.cfi_offset 4, -24
+ 401              		.cfi_offset 5, -20
+ 402              		.cfi_offset 6, -16
+ 403              		.cfi_offset 7, -12
+ 404              		.cfi_offset 8, -8
+ 405              		.cfi_offset 14, -4
+ 595:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	while( listLIST_IS_EMPTY( pxCurrentTimerList ) == pdFALSE )
+ 406              		.loc 1 595 0
+ 407 0138 194E     		ldr	r6, .L50
+ 625:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				xResult = xTimerGenericCommand( pxTimer, tmrCOMMAND_START, xNextExpireTime, NULL, tmrNO_DELAY )
+ 408              		.loc 1 625 0
+ 409 013a 4FF00008 		mov	r8, #0
+ 410 013e 24E0     		b	.L49
+ 411              	.L46:
+ 597:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		xNextExpireTime = listGET_ITEM_VALUE_OF_HEAD_ENTRY( pxCurrentTimerList );
+ 412              		.loc 1 597 0
+ 413 0140 DA68     		ldr	r2, [r3, #12]
+ 414 0142 1568     		ldr	r5, [r2, #0]
+ 415              	.LVL42:
+ 600:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		pxTimer = ( xTIMER * ) listGET_OWNER_OF_HEAD_ENTRY( pxCurrentTimerList );
+ 416              		.loc 1 600 0
+ 417 0144 DB68     		ldr	r3, [r3, #12]
+ 418 0146 DC68     		ldr	r4, [r3, #12]
+ 419              	.LVL43:
+ 601:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		uxListRemove( &( pxTimer->xTimerListItem ) );
+ 420              		.loc 1 601 0
+ 421 0148 271D     		adds	r7, r4, #4
+ 422 014a 3846     		mov	r0, r7
+ 423 014c FFF7FEFF 		bl	uxListRemove
+ 424              	.LVL44:
+ 606:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		pxTimer->pxCallbackFunction( ( xTimerHandle ) pxTimer );
+ 425              		.loc 1 606 0
+ 426 0150 636A     		ldr	r3, [r4, #36]
+ 427 0152 2046     		mov	r0, r4
+ 428 0154 9847     		blx	r3
+ 429              	.LVL45:
+ 608:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( pxTimer->uxAutoReload == ( unsigned portBASE_TYPE ) pdTRUE )
+ 430              		.loc 1 608 0
+ 431 0156 E369     		ldr	r3, [r4, #28]
+ 432 0158 012B     		cmp	r3, #1
+ 433 015a 16D1     		bne	.L49
+ 616:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			xReloadTime = ( xNextExpireTime + pxTimer->xTimerPeriodInTicks );
+ 434              		.loc 1 616 0
+ 435 015c A369     		ldr	r3, [r4, #24]
+ 436 015e EB18     		adds	r3, r5, r3
+ 437              	.LVL46:
+ 617:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			if( xReloadTime > xNextExpireTime )
+ 438              		.loc 1 617 0
+ 439 0160 AB42     		cmp	r3, r5
+ 440 0162 06D9     		bls	.L43
+ 619:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				listSET_LIST_ITEM_VALUE( &( pxTimer->xTimerListItem ), xReloadTime );
+ 441              		.loc 1 619 0
+ 442 0164 6360     		str	r3, [r4, #4]
+ 620:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				listSET_LIST_ITEM_OWNER( &( pxTimer->xTimerListItem ), pxTimer );
+ 443              		.loc 1 620 0
+ 444 0166 2461     		str	r4, [r4, #16]
+ 621:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				vListInsert( pxCurrentTimerList, &( pxTimer->xTimerListItem ) );
+ 445              		.loc 1 621 0
+ 446 0168 F06A     		ldr	r0, [r6, #44]
+ 447 016a 3946     		mov	r1, r7
+ 448 016c FFF7FEFF 		bl	vListInsert
+ 449              	.LVL47:
+ 450 0170 0BE0     		b	.L49
+ 451              	.LVL48:
+ 452              	.L43:
+ 625:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				xResult = xTimerGenericCommand( pxTimer, tmrCOMMAND_START, xNextExpireTime, NULL, tmrNO_DELAY )
+ 453              		.loc 1 625 0
+ 454 0172 0021     		movs	r1, #0
+ 455 0174 CDF80080 		str	r8, [sp, #0]
+ 456 0178 2046     		mov	r0, r4
+ 457 017a 2A46     		mov	r2, r5
+ 458 017c 0B46     		mov	r3, r1
+ 459              	.LVL49:
+ 460 017e FFF7FEFF 		bl	xTimerGenericCommand
+ 461              	.LVL50:
+ 626:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				configASSERT( xResult );
+ 462              		.loc 1 626 0
+ 463 0182 10B9     		cbnz	r0, .L49
+ 464 0184 FFF7FEFF 		bl	ulPortSetInterruptMask
+ 465              	.LVL51:
+ 466              	.L45:
+ 467 0188 FEE7     		b	.L45
+ 468              	.LVL52:
+ 469              	.L49:
+ 595:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	while( listLIST_IS_EMPTY( pxCurrentTimerList ) == pdFALSE )
+ 470              		.loc 1 595 0
+ 471 018a F36A     		ldr	r3, [r6, #44]
+ 472 018c 044A     		ldr	r2, .L50
+ 473 018e 1968     		ldr	r1, [r3, #0]
+ 474 0190 0029     		cmp	r1, #0
+ 475 0192 D5D1     		bne	.L46
+ 476              	.LVL53:
+ 633:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	pxCurrentTimerList = pxOverflowTimerList;
+ 477              		.loc 1 633 0
+ 478 0194 116B     		ldr	r1, [r2, #48]
+ 634:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	pxOverflowTimerList = pxTemp;
+ 479              		.loc 1 634 0
+ 480 0196 1363     		str	r3, [r2, #48]
+ 633:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	pxCurrentTimerList = pxOverflowTimerList;
+ 481              		.loc 1 633 0
+ 482 0198 D162     		str	r1, [r2, #44]
+ 635:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 483              		.loc 1 635 0
+ 484 019a BDE8FC81 		pop	{r2, r3, r4, r5, r6, r7, r8, pc}
+ 485              	.L51:
+ 486 019e 00BF     		.align	2
+ 487              	.L50:
+ 488 01a0 00000000 		.word	.LANCHOR0
+ 489              		.cfi_endproc
+ 490              	.LFE15:
+ 492              		.align	1
+ 493              		.thumb
+ 494              		.thumb_func
+ 496              	prvTimerTask:
+ 497              	.LFB4:
+ 346:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 498              		.loc 1 346 0
+ 499              		.cfi_startproc
+ 500              		@ args = 0, pretend = 0, frame = 16
+ 501              		@ frame_needed = 0, uses_anonymous_args = 0
+ 502              	.LVL54:
+ 503 01a4 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 504              	.LCFI6:
+ 505              		.cfi_def_cfa_offset 28
+ 506              		.cfi_offset 4, -28
+ 507              		.cfi_offset 5, -24
+ 508              		.cfi_offset 6, -20
+ 509              		.cfi_offset 7, -16
+ 510              		.cfi_offset 8, -12
+ 511              		.cfi_offset 9, -8
+ 512              		.cfi_offset 14, -4
+ 513              	.LBB18:
+ 514              	.LBB19:
+ 429:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	*pxListWasEmpty = listLIST_IS_EMPTY( pxCurrentTimerList );
+ 515              		.loc 1 429 0
+ 516 01a8 524D     		ldr	r5, .L86
+ 517              	.LBE19:
+ 518              	.LBE18:
+ 346:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 519              		.loc 1 346 0
+ 520 01aa 87B0     		sub	sp, sp, #28
+ 521              	.LCFI7:
+ 522              		.cfi_def_cfa_offset 56
+ 523 01ac A846     		mov	r8, r5
+ 524              	.LVL55:
+ 525              	.L74:
+ 526              	.LBB21:
+ 527              	.LBB20:
+ 429:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	*pxListWasEmpty = listLIST_IS_EMPTY( pxCurrentTimerList );
+ 528              		.loc 1 429 0 discriminator 1
+ 529 01ae EB6A     		ldr	r3, [r5, #44]
+ 530 01b0 1A68     		ldr	r2, [r3, #0]
+ 531 01b2 D2F10109 		rsbs	r9, r2, #1
+ 532 01b6 38BF     		it	cc
+ 533 01b8 4FF00009 		movcc	r9, #0
+ 534              	.LVL56:
+ 430:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( *pxListWasEmpty == pdFALSE )
+ 535              		.loc 1 430 0 discriminator 1
+ 536 01bc B9F1000F 		cmp	r9, #0
+ 537 01c0 02D1     		bne	.L75
+ 432:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		xNextExpireTime = listGET_ITEM_VALUE_OF_HEAD_ENTRY( pxCurrentTimerList );
+ 538              		.loc 1 432 0
+ 539 01c2 DB68     		ldr	r3, [r3, #12]
+ 540 01c4 1E68     		ldr	r6, [r3, #0]
+ 541              	.LVL57:
+ 542 01c6 00E0     		b	.L53
+ 543              	.LVL58:
+ 544              	.L75:
+ 437:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		xNextExpireTime = ( portTickType ) 0U;
+ 545              		.loc 1 437 0
+ 546 01c8 0026     		movs	r6, #0
+ 547              	.L53:
+ 548              	.LVL59:
+ 549              	.LBE20:
+ 550              	.LBE21:
+ 551              	.LBB22:
+ 552              	.LBB23:
+ 374:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	vTaskSuspendAll();
+ 553              		.loc 1 374 0
+ 554 01ca FFF7FEFF 		bl	vTaskSuspendAll
+ 555              	.LVL60:
+ 556              	.LBB24:
+ 557              	.LBB25:
+ 449:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	xTimeNow = xTaskGetTickCount();
+ 558              		.loc 1 449 0
+ 559 01ce FFF7FEFF 		bl	xTaskGetTickCount
+ 560              	.LVL61:
+ 451:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( xTimeNow < xLastTime )
+ 561              		.loc 1 451 0
+ 562 01d2 D8F83430 		ldr	r3, [r8, #52]
+ 563 01d6 9842     		cmp	r0, r3
+ 449:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	xTimeNow = xTaskGetTickCount();
+ 564              		.loc 1 449 0
+ 565 01d8 0746     		mov	r7, r0
+ 566              	.LVL62:
+ 451:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( xTimeNow < xLastTime )
+ 567              		.loc 1 451 0
+ 568 01da 03D2     		bcs	.L76
+ 453:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		prvSwitchTimerLists( xLastTime );
+ 569              		.loc 1 453 0
+ 570 01dc FFF7AAFF 		bl	prvSwitchTimerLists.isra.1
+ 571              	.LVL63:
+ 454:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		*pxTimerListsWereSwitched = pdTRUE;
+ 572              		.loc 1 454 0
+ 573 01e0 0123     		movs	r3, #1
+ 574 01e2 00E0     		b	.L54
+ 575              	.LVL64:
+ 576              	.L76:
+ 458:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		*pxTimerListsWereSwitched = pdFALSE;
+ 577              		.loc 1 458 0
+ 578 01e4 0023     		movs	r3, #0
+ 579              	.LVL65:
+ 580              	.L54:
+ 461:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	xLastTime = xTimeNow;
+ 581              		.loc 1 461 0
+ 582 01e6 6F63     		str	r7, [r5, #52]
+ 583              	.LBE25:
+ 584              	.LBE24:
+ 382:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( xTimerListsWereSwitched == pdFALSE )
+ 585              		.loc 1 382 0
+ 586 01e8 002B     		cmp	r3, #0
+ 587 01ea 33D1     		bne	.L55
+ 385:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			if( ( xListWasEmpty == pdFALSE ) && ( xNextExpireTime <= xTimeNow ) )
+ 588              		.loc 1 385 0
+ 589 01ec B9F1000F 		cmp	r9, #0
+ 590 01f0 25D1     		bne	.L56
+ 591 01f2 BE42     		cmp	r6, r7
+ 592 01f4 23D8     		bhi	.L56
+ 387:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				xTaskResumeAll();
+ 593              		.loc 1 387 0
+ 594 01f6 FFF7FEFF 		bl	xTaskResumeAll
+ 595              	.LVL66:
+ 596              	.LBB26:
+ 597              	.LBB27:
+ 316:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	pxTimer = ( xTIMER * ) listGET_OWNER_OF_HEAD_ENTRY( pxCurrentTimerList );
+ 598              		.loc 1 316 0
+ 599 01fa EB6A     		ldr	r3, [r5, #44]
+ 600 01fc DB68     		ldr	r3, [r3, #12]
+ 601 01fe DC68     		ldr	r4, [r3, #12]
+ 602              	.LVL67:
+ 317:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	uxListRemove( &( pxTimer->xTimerListItem ) );
+ 603              		.loc 1 317 0
+ 604 0200 201D     		adds	r0, r4, #4
+ 605 0202 FFF7FEFF 		bl	uxListRemove
+ 606              	.LVL68:
+ 322:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( pxTimer->uxAutoReload == ( unsigned portBASE_TYPE ) pdTRUE )
+ 607              		.loc 1 322 0
+ 608 0206 E369     		ldr	r3, [r4, #28]
+ 609 0208 012B     		cmp	r3, #1
+ 610 020a 14D1     		bne	.L57
+ 330:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( prvInsertTimerInActiveList( pxTimer, ( xNextExpireTime + pxTimer->xTimerPeriodInTicks ), xTim
+ 611              		.loc 1 330 0
+ 612 020c A169     		ldr	r1, [r4, #24]
+ 613 020e 2046     		mov	r0, r4
+ 614 0210 7118     		adds	r1, r6, r1
+ 615 0212 3A46     		mov	r2, r7
+ 616 0214 3346     		mov	r3, r6
+ 617 0216 FFF711FF 		bl	prvInsertTimerInActiveList
+ 618              	.LVL69:
+ 619 021a 0128     		cmp	r0, #1
+ 620 021c 0BD1     		bne	.L57
+ 334:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			xResult = xTimerGenericCommand( pxTimer, tmrCOMMAND_START, xNextExpireTime, NULL, tmrNO_DELAY );
+ 621              		.loc 1 334 0
+ 622 021e CDF80090 		str	r9, [sp, #0]
+ 623 0222 2046     		mov	r0, r4
+ 624 0224 4946     		mov	r1, r9
+ 625 0226 3246     		mov	r2, r6
+ 626 0228 4B46     		mov	r3, r9
+ 627 022a FFF7FEFF 		bl	xTimerGenericCommand
+ 628              	.LVL70:
+ 335:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			configASSERT( xResult );
+ 629              		.loc 1 335 0
+ 630 022e 10B9     		cbnz	r0, .L57
+ 631 0230 FFF7FEFF 		bl	ulPortSetInterruptMask
+ 632              	.LVL71:
+ 633              	.L58:
+ 634 0234 FEE7     		b	.L58
+ 635              	.L57:
+ 341:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	pxTimer->pxCallbackFunction( ( xTimerHandle ) pxTimer );
+ 636              		.loc 1 341 0
+ 637 0236 636A     		ldr	r3, [r4, #36]
+ 638 0238 2046     		mov	r0, r4
+ 639 023a 9847     		blx	r3
+ 640              	.LVL72:
+ 641 023c 0CE0     		b	.L59
+ 642              	.LVL73:
+ 643              	.L56:
+ 644              	.LBE27:
+ 645              	.LBE26:
+ 398:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				vQueueWaitForMessageRestricted( xTimerQueue, ( xNextExpireTime - xTimeNow ) );
+ 646              		.loc 1 398 0
+ 647 023e D8F80000 		ldr	r0, [r8, #0]
+ 648 0242 F11B     		subs	r1, r6, r7
+ 649 0244 FFF7FEFF 		bl	vQueueWaitForMessageRestricted
+ 650              	.LVL74:
+ 400:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				if( xTaskResumeAll() == pdFALSE )
+ 651              		.loc 1 400 0
+ 652 0248 FFF7FEFF 		bl	xTaskResumeAll
+ 653              	.LVL75:
+ 654 024c 20B9     		cbnz	r0, .L59
+ 406:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 					portYIELD_WITHIN_API();
+ 655              		.loc 1 406 0
+ 656 024e FFF7FEFF 		bl	vPortYieldFromISR
+ 657              	.LVL76:
+ 658 0252 01E0     		b	.L59
+ 659              	.LVL77:
+ 660              	.L55:
+ 412:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			xTaskResumeAll();
+ 661              		.loc 1 412 0
+ 662 0254 FFF7FEFF 		bl	xTaskResumeAll
+ 663              	.LVL78:
+ 664              	.L59:
+ 665              	.LBE23:
+ 666              	.LBE22:
+ 667              	.LBB28:
+ 668              	.LBB29:
+ 669              	.LBB30:
+ 670              	.LBB31:
+ 449:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	xTimeNow = xTaskGetTickCount();
+ 671              		.loc 1 449 0
+ 672 0258 FFF7FEFF 		bl	xTaskGetTickCount
+ 673              	.LVL79:
+ 451:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( xTimeNow < xLastTime )
+ 674              		.loc 1 451 0
+ 675 025c 6B6B     		ldr	r3, [r5, #52]
+ 676 025e 9842     		cmp	r0, r3
+ 449:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	xTimeNow = xTaskGetTickCount();
+ 677              		.loc 1 449 0
+ 678 0260 0646     		mov	r6, r0
+ 679              	.LVL80:
+ 451:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	if( xTimeNow < xLastTime )
+ 680              		.loc 1 451 0
+ 681 0262 01D2     		bcs	.L60
+ 453:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		prvSwitchTimerLists( xLastTime );
+ 682              		.loc 1 453 0
+ 683 0264 FFF766FF 		bl	prvSwitchTimerLists.isra.1
+ 684              	.LVL81:
+ 685              	.L60:
+ 461:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	xLastTime = xTimeNow;
+ 686              		.loc 1 461 0
+ 687 0268 C8F83460 		str	r6, [r8, #52]
+ 688 026c 38E0     		b	.L85
+ 689              	.LVL82:
+ 690              	.L73:
+ 691              	.LBE31:
+ 692              	.LBE30:
+ 521:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		pxTimer = xMessage.pxTimer;
+ 693              		.loc 1 521 0
+ 694 026e 059C     		ldr	r4, [sp, #20]
+ 695              	.LVL83:
+ 526:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		if( pxTimer != NULL )
+ 696              		.loc 1 526 0
+ 697 0270 24B1     		cbz	r4, .L62
+ 528:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 			if( listIS_CONTAINED_WITHIN( NULL, &( pxTimer->xTimerListItem ) ) == pdFALSE )
+ 698              		.loc 1 528 0
+ 699 0272 6369     		ldr	r3, [r4, #20]
+ 700 0274 13B1     		cbz	r3, .L62
+ 531:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				uxListRemove( &( pxTimer->xTimerListItem ) );
+ 701              		.loc 1 531 0
+ 702 0276 201D     		adds	r0, r4, #4
+ 703 0278 FFF7FEFF 		bl	uxListRemove
+ 704              	.LVL84:
+ 705              	.L62:
+ 537:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		switch( xMessage.xMessageID )
+ 706              		.loc 1 537 0
+ 707 027c 039F     		ldr	r7, [sp, #12]
+ 708 027e 022F     		cmp	r7, #2
+ 709 0280 1ED0     		beq	.L65
+ 710 0282 032F     		cmp	r7, #3
+ 711 0284 29D0     		beq	.L66
+ 712 0286 5FBB     		cbnz	r7, .L85
+ 541:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				if( prvInsertTimerInActiveList( pxTimer,  xMessage.xMessageValue + pxTimer->xTimerPeriodInTicks
+ 713              		.loc 1 541 0
+ 714 0288 049B     		ldr	r3, [sp, #16]
+ 715 028a A169     		ldr	r1, [r4, #24]
+ 716 028c 2046     		mov	r0, r4
+ 717 028e 5918     		adds	r1, r3, r1
+ 718 0290 3246     		mov	r2, r6
+ 719 0292 FFF7D3FE 		bl	prvInsertTimerInActiveList
+ 720              	.LVL85:
+ 721 0296 0128     		cmp	r0, #1
+ 722 0298 22D1     		bne	.L85
+ 545:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 					pxTimer->pxCallbackFunction( ( xTimerHandle ) pxTimer );
+ 723              		.loc 1 545 0
+ 724 029a 636A     		ldr	r3, [r4, #36]
+ 725 029c 2046     		mov	r0, r4
+ 726 029e 9847     		blx	r3
+ 727              	.LVL86:
+ 547:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 					if( pxTimer->uxAutoReload == ( unsigned portBASE_TYPE ) pdTRUE )
+ 728              		.loc 1 547 0
+ 729 02a0 E369     		ldr	r3, [r4, #28]
+ 730 02a2 012B     		cmp	r3, #1
+ 731 02a4 1CD1     		bne	.L85
+ 549:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 						xResult = xTimerGenericCommand( pxTimer, tmrCOMMAND_START, xMessage.xMessageValue + pxTimer->
+ 732              		.loc 1 549 0
+ 733 02a6 A269     		ldr	r2, [r4, #24]
+ 734 02a8 049B     		ldr	r3, [sp, #16]
+ 735 02aa 0097     		str	r7, [sp, #0]
+ 736 02ac D218     		adds	r2, r2, r3
+ 737 02ae 2046     		mov	r0, r4
+ 738 02b0 3946     		mov	r1, r7
+ 739 02b2 3B46     		mov	r3, r7
+ 740 02b4 FFF7FEFF 		bl	xTimerGenericCommand
+ 741              	.LVL87:
+ 550:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 						configASSERT( xResult );
+ 742              		.loc 1 550 0
+ 743 02b8 90B9     		cbnz	r0, .L85
+ 744 02ba FFF7FEFF 		bl	ulPortSetInterruptMask
+ 745              	.LVL88:
+ 746              	.L70:
+ 747 02be FEE7     		b	.L70
+ 748              	.L65:
+ 562:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				pxTimer->xTimerPeriodInTicks = xMessage.xMessageValue;
+ 749              		.loc 1 562 0
+ 750 02c0 0499     		ldr	r1, [sp, #16]
+ 751 02c2 A161     		str	r1, [r4, #24]
+ 563:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				configASSERT( ( pxTimer->xTimerPeriodInTicks > 0 ) );
+ 752              		.loc 1 563 0
+ 753 02c4 11B9     		cbnz	r1, .L71
+ 754 02c6 FFF7FEFF 		bl	ulPortSetInterruptMask
+ 755              	.LVL89:
+ 756              	.L72:
+ 757 02ca FEE7     		b	.L72
+ 758              	.L71:
+ 564:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				prvInsertTimerInActiveList( pxTimer, ( xTimeNow + pxTimer->xTimerPeriodInTicks ), xTimeNow, xTi
+ 759              		.loc 1 564 0
+ 760 02cc 2046     		mov	r0, r4
+ 761 02ce 7118     		adds	r1, r6, r1
+ 762 02d0 3246     		mov	r2, r6
+ 763 02d2 3346     		mov	r3, r6
+ 764 02d4 FFF7B2FE 		bl	prvInsertTimerInActiveList
+ 765              	.LVL90:
+ 766 02d8 02E0     		b	.L85
+ 767              	.L66:
+ 570:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 				vPortFree( pxTimer );
+ 768              		.loc 1 570 0
+ 769 02da 2046     		mov	r0, r4
+ 770 02dc FFF7FEFF 		bl	vPortFree
+ 771              	.LVL91:
+ 772              	.L85:
+ 519:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	while( xQueueReceive( xTimerQueue, &xMessage, tmrNO_DELAY ) != pdFAIL )
+ 773              		.loc 1 519 0
+ 774 02e0 0022     		movs	r2, #0
+ 775 02e2 2868     		ldr	r0, [r5, #0]
+ 776 02e4 03A9     		add	r1, sp, #12
+ 777 02e6 1346     		mov	r3, r2
+ 778 02e8 FFF7FEFF 		bl	xQueueGenericReceive
+ 779              	.LVL92:
+ 780 02ec 0028     		cmp	r0, #0
+ 781 02ee BED1     		bne	.L73
+ 782 02f0 5DE7     		b	.L74
+ 783              	.L87:
+ 784 02f2 00BF     		.align	2
+ 785              	.L86:
+ 786 02f4 00000000 		.word	.LANCHOR0
+ 787              	.LBE29:
+ 788              	.LBE28:
+ 789              		.cfi_endproc
+ 790              	.LFE4:
+ 792              		.align	1
+ 793              		.global	xTimerIsTimerActive
+ 794              		.thumb
+ 795              		.thumb_func
+ 797              	xTimerIsTimerActive:
+ 798              	.LFB12:
+ 656:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*-----------------------------------------------------------*/
+ 657:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 658:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portBASE_TYPE xTimerIsTimerActive( xTimerHandle xTimer )
+ 659:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 799              		.loc 1 659 0
+ 800              		.cfi_startproc
+ 801              		@ args = 0, pretend = 0, frame = 0
+ 802              		@ frame_needed = 0, uses_anonymous_args = 0
+ 803              	.LVL93:
+ 804 02f8 10B5     		push	{r4, lr}
+ 805              	.LCFI8:
+ 806              		.cfi_def_cfa_offset 8
+ 807              		.cfi_offset 4, -8
+ 808              		.cfi_offset 14, -4
+ 809              		.loc 1 659 0
+ 810 02fa 0446     		mov	r4, r0
+ 811              	.LVL94:
+ 660:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** portBASE_TYPE xTimerIsInActiveList;
+ 661:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** xTIMER *pxTimer = ( xTIMER * ) xTimer;
+ 662:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 663:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	/* Is the timer in the list of active timers? */
+ 664:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	taskENTER_CRITICAL();
+ 812              		.loc 1 664 0
+ 813 02fc FFF7FEFF 		bl	vPortEnterCritical
+ 814              	.LVL95:
+ 665:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	{
+ 666:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		/* Checking to see if it is in the NULL list in effect checks to see if
+ 667:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		it is referenced from either the current or the overflow timer lists in
+ 668:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		one go, but the logic has to be reversed, hence the '!'. */
+ 669:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 		xTimerIsInActiveList = !( listIS_CONTAINED_WITHIN( NULL, &( pxTimer->xTimerListItem ) ) );
+ 815              		.loc 1 669 0
+ 816 0300 6469     		ldr	r4, [r4, #20]
+ 817              	.LVL96:
+ 818 0302 0034     		adds	r4, r4, #0
+ 819 0304 18BF     		it	ne
+ 820 0306 0124     		movne	r4, #1
+ 821              	.LVL97:
+ 670:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	}
+ 671:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	taskEXIT_CRITICAL();
+ 822              		.loc 1 671 0
+ 823 0308 FFF7FEFF 		bl	vPortExitCritical
+ 824              	.LVL98:
+ 672:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 673:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	return xTimerIsInActiveList;
+ 674:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 825              		.loc 1 674 0
+ 826 030c 2046     		mov	r0, r4
+ 827 030e 10BD     		pop	{r4, pc}
+ 828              		.cfi_endproc
+ 829              	.LFE12:
+ 831              		.align	1
+ 832              		.global	pvTimerGetTimerID
+ 833              		.thumb
+ 834              		.thumb_func
+ 836              	pvTimerGetTimerID:
+ 837              	.LFB13:
+ 675:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** /*-----------------------------------------------------------*/
+ 676:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 677:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** void *pvTimerGetTimerID( xTimerHandle xTimer )
+ 678:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** {
+ 838              		.loc 1 678 0
+ 839              		.cfi_startproc
+ 840              		@ args = 0, pretend = 0, frame = 0
+ 841              		@ frame_needed = 0, uses_anonymous_args = 0
+ 842              		@ link register save eliminated.
+ 843              	.LVL99:
+ 679:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** xTIMER *pxTimer = ( xTIMER * ) xTimer;
+ 680:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 
+ 681:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** 	return pxTimer->pvTimerID;
+ 682:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/source/timers.c **** }
+ 844              		.loc 1 682 0
+ 845 0310 006A     		ldr	r0, [r0, #32]
+ 846              	.LVL100:
+ 847 0312 7047     		bx	lr
+ 848              		.cfi_endproc
+ 849              	.LFE13:
+ 851              		.section	.rodata.str1.1,"aMS",%progbits,1
+ 852              	.LC0:
+ 853 0000 546D7220 		.ascii	"Tmr Svc\000"
+ 853      53766300 
+ 854              		.bss
+ 855              		.align	2
+ 856              		.set	.LANCHOR0,. + 0
+ 859              	xTimerQueue:
+ 860 0000 00000000 		.space	4
+ 863              	xActiveTimerList1:
+ 864 0004 00000000 		.space	20
+ 864      00000000 
+ 864      00000000 
+ 864      00000000 
+ 864      00000000 
+ 867              	xActiveTimerList2:
+ 868 0018 00000000 		.space	20
+ 868      00000000 
+ 868      00000000 
+ 868      00000000 
+ 868      00000000 
+ 871              	pxCurrentTimerList:
+ 872 002c 00000000 		.space	4
+ 875              	pxOverflowTimerList:
+ 876 0030 00000000 		.space	4
+ 879              	xLastTime.4428:
+ 880 0034 00000000 		.space	4
+ 881              		.text
+ 882              	.Letext0:
+ 883              		.file 2 "/home/franz/sat/bin/../lib/gcc/arm-none-eabi/4.7.2/include/stddef.h"
+ 884              		.file 3 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/include/pr
+ 885              		.file 4 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/p
+ 886              		.file 5 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/include/li
+ 887              		.file 6 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/include/ta
+ 888              		.file 7 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/include/qu
+ 889              		.file 8 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/include/ti
+ 890              		.file 9 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/include/po
+DEFINED SYMBOLS
+                            *ABS*:00000000 timers.c
+     /tmp/cc4fBLah.s:20     .text:00000000 $t
+     /tmp/cc4fBLah.s:24     .text:00000000 prvCheckForValidListAndQueue
+     /tmp/cc4fBLah.s:81     .text:00000038 $d
+     /tmp/cc4fBLah.s:85     .text:0000003c $t
+     /tmp/cc4fBLah.s:89     .text:0000003c prvInsertTimerInActiveList
+     /tmp/cc4fBLah.s:160    .text:00000070 $d
+     /tmp/cc4fBLah.s:164    .text:00000074 $t
+     /tmp/cc4fBLah.s:169    .text:00000074 xTimerCreateTimerTask
+     /tmp/cc4fBLah.s:226    .text:000000a8 $d
+     /tmp/cc4fBLah.s:496    .text:000001a4 prvTimerTask
+     /tmp/cc4fBLah.s:232    .text:000000b4 $t
+     /tmp/cc4fBLah.s:237    .text:000000b4 xTimerCreate
+     /tmp/cc4fBLah.s:307    .text:000000f0 xTimerGenericCommand
+     /tmp/cc4fBLah.s:381    .text:00000130 $d
+     /tmp/cc4fBLah.s:385    .text:00000134 $t
+     /tmp/cc4fBLah.s:389    .text:00000134 prvSwitchTimerLists.isra.1
+     /tmp/cc4fBLah.s:488    .text:000001a0 $d
+     /tmp/cc4fBLah.s:492    .text:000001a4 $t
+     /tmp/cc4fBLah.s:786    .text:000002f4 $d
+     /tmp/cc4fBLah.s:792    .text:000002f8 $t
+     /tmp/cc4fBLah.s:797    .text:000002f8 xTimerIsTimerActive
+     /tmp/cc4fBLah.s:836    .text:00000310 pvTimerGetTimerID
+     /tmp/cc4fBLah.s:855    .bss:00000000 $d
+     /tmp/cc4fBLah.s:859    .bss:00000000 xTimerQueue
+     /tmp/cc4fBLah.s:863    .bss:00000004 xActiveTimerList1
+     /tmp/cc4fBLah.s:867    .bss:00000018 xActiveTimerList2
+     /tmp/cc4fBLah.s:871    .bss:0000002c pxCurrentTimerList
+     /tmp/cc4fBLah.s:875    .bss:00000030 pxOverflowTimerList
+     /tmp/cc4fBLah.s:879    .bss:00000034 xLastTime.4428
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4eaffbadb3a087d856021b8a18f9e221
+                           .group:00000000 wm4.stddef.h.40.50cf36416e06376af8a9dca28536f2e4
+                           .group:00000000 wm4.projdefs.h.70.dbccf9a6ca737be695addf5321434443
+                           .group:00000000 wm4.FreeRTOSConfig.h.79.bfdec03d0f0e76f8a4cb6847c22dabd7
+                           .group:00000000 wm4.portmacro.h.71.4b486245a22132630e6590c20a5362d9
+                           .group:00000000 wm4.portable.h.326.d973d87d91a2870806201c5c4493d578
+                           .group:00000000 wm4.mpu_wrappers.h.70.805d5308b530bfb35337fa0cda53b379
+                           .group:00000000 wm4.FreeRTOS.h.153.2856cce34c845bc23d0e3eff29cca38b
+                           .group:00000000 wm4.list.h.99.4794e53f44ef377a7e8b918fd5c142a2
+                           .group:00000000 wm4.task.h.87.ccd4c448460750abd1f398251d355800
+                           .group:00000000 wm4.queue.h.71.fe66d9d56b7c40ef3d82aeb62a8658ce
+                           .group:00000000 wm4.timers.h.88.1f6aa39fa72d19a328c2630c34ca71fc
+
+UNDEFINED SYMBOLS
+vPortEnterCritical
+vListInitialise
+xQueueGenericCreate
+vPortExitCritical
+vListInsert
+ulPortSetInterruptMask
+xTaskGenericCreate
+pvPortMalloc
+vListInitialiseItem
+xTaskGetSchedulerState
+xQueueGenericSend
+xQueueGenericSendFromISR
+uxListRemove
+vTaskSuspendAll
+xTaskGetTickCount
+xTaskResumeAll
+vQueueWaitForMessageRestricted
+vPortYieldFromISR
+vPortFree
+xQueueGenericReceive
