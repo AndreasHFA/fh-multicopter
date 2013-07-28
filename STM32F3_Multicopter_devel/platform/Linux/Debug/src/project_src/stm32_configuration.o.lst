@@ -1,0 +1,2529 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"stm32_configuration.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.global	RCC_Configuration
+  20              		.thumb
+  21              		.thumb_func
+  23              	RCC_Configuration:
+  24              	.LFB111:
+  25              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configu
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** /*
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****  * stm32_configuration.c
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****  *
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****  *  Created on: Nov 16, 2012
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****  *      Author: franz
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****  */
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** #include <stm32_configuration.h>
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** void RCC_Configuration(void)
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+  26              		.loc 1 12 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30 0000 08B5     		push	{r3, lr}
+  31              	.LCFI0:
+  32              		.cfi_def_cfa_offset 8
+  33              		.cfi_offset 3, -8
+  34              		.cfi_offset 14, -4
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Enable I2C1 periph */
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	RCC_APB1PeriphClockCmd( RCC_APB1Periph_I2C1 |
+  35              		.loc 1 14 0
+  36 0002 0121     		movs	r1, #1
+  37 0004 0848     		ldr	r0, .L2
+  38 0006 FFF7FEFF 		bl	RCC_APB1PeriphClockCmd
+  39              	.LVL0:
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 							RCC_APB1Periph_USART2 |
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 							RCC_APB1Periph_USART3 |
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 							RCC_APB1Periph_TIM2 |
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 							RCC_APB1Periph_TIM3 |
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 							RCC_APB1Periph_TIM4, ENABLE);
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Enable the SPI periph */
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1 |
+  40              		.loc 1 21 0
+  41 000a 0121     		movs	r1, #1
+  42 000c 41F20100 		movw	r0, #4097
+  43 0010 FFF7FEFF 		bl	RCC_APB2PeriphClockCmd
+  44              	.LVL1:
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 						   RCC_APB2Periph_SYSCFG, ENABLE);
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Enable Periph clock enable, SPI, GPIOs */
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA |
+  45              		.loc 1 25 0
+  46 0014 0548     		ldr	r0, .L2+4
+  47 0016 0121     		movs	r1, #1
+  48 0018 FFF7FEFF 		bl	RCC_AHBPeriphClockCmd
+  49              	.LVL2:
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 						  RCC_AHBPeriph_GPIOB |
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 						  RCC_AHBPeriph_GPIOC |
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 						  RCC_AHBPeriph_GPIOD |
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 						  RCC_AHBPeriph_GPIOE |
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 						  RCC_AHBPeriph_ADC12 |
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 						  RCC_AHBPeriph_DMA1, ENABLE);
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Configure the ADC clock */
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	RCC_ADCCLKConfig(RCC_ADC12PLLCLK_Div2);
+  50              		.loc 1 34 0
+  51 001c 4FF48870 		mov	r0, #272
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** }
+  52              		.loc 1 35 0
+  53 0020 BDE80840 		pop	{r3, lr}
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	RCC_ADCCLKConfig(RCC_ADC12PLLCLK_Div2);
+  54              		.loc 1 34 0
+  55 0024 FFF7FEBF 		b	RCC_ADCCLKConfig
+  56              	.LVL3:
+  57              	.L3:
+  58              		.align	2
+  59              	.L2:
+  60 0028 07002600 		.word	2490375
+  61 002c 01003E10 		.word	272498689
+  62              		.cfi_endproc
+  63              	.LFE111:
+  65              		.align	1
+  66              		.global	NVIC_Configuration
+  67              		.thumb
+  68              		.thumb_func
+  70              	NVIC_Configuration:
+  71              	.LFB112:
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** void NVIC_Configuration(void)
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+  72              		.loc 1 41 0
+  73              		.cfi_startproc
+  74              		@ args = 0, pretend = 0, frame = 8
+  75              		@ frame_needed = 0, uses_anonymous_args = 0
+  76 0030 37B5     		push	{r0, r1, r2, r4, r5, lr}
+  77              	.LCFI1:
+  78              		.cfi_def_cfa_offset 24
+  79              		.cfi_offset 0, -24
+  80              		.cfi_offset 1, -20
+  81              		.cfi_offset 2, -16
+  82              		.cfi_offset 4, -12
+  83              		.cfi_offset 5, -8
+  84              		.cfi_offset 14, -4
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitTypeDef NVIC_InitStructure;
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	#ifdef  VECT_TAB_RAM
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	  /* Set the Vector Table base location at 0x20000000 */
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	  NVIC_SetVectorTable(NVIC_VectTab_RAM, 0x0);
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	#else  /* VECT_TAB_FLASH  */
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	  /* Set the Vector Table base location at 0x08000000 */
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	  NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x0);
+  85              		.loc 1 49 0
+  86 0032 0021     		movs	r1, #0
+  87 0034 4FF00060 		mov	r0, #134217728
+  88 0038 FFF7FEFF 		bl	NVIC_SetVectorTable
+  89              	.LVL4:
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	#endif
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_PriorityGroupConfig( NVIC_PriorityGroup_4 );
+  90              		.loc 1 52 0
+  91 003c 4FF44070 		mov	r0, #768
+  92 0040 FFF7FEFF 		bl	NVIC_PriorityGroupConfig
+  93              	.LVL5:
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Enable the USARTx Interrupt */
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
+  94              		.loc 1 55 0
+  95 0044 2623     		movs	r3, #38
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 14;	// Je höher desto niedriger
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;			// FreeRtos desto höher desto höher
+  96              		.loc 1 57 0
+  97 0046 0025     		movs	r5, #0
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  98              		.loc 1 58 0
+  99 0048 0124     		movs	r4, #1
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
+ 100              		.loc 1 55 0
+ 101 004a 8DF80430 		strb	r3, [sp, #4]
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_Init(&NVIC_InitStructure);
+ 102              		.loc 1 59 0
+ 103 004e 01A8     		add	r0, sp, #4
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 14;	// Je höher desto niedriger
+ 104              		.loc 1 56 0
+ 105 0050 0E23     		movs	r3, #14
+ 106 0052 8DF80530 		strb	r3, [sp, #5]
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;			// FreeRtos desto höher desto höher
+ 107              		.loc 1 57 0
+ 108 0056 8DF80650 		strb	r5, [sp, #6]
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+ 109              		.loc 1 58 0
+ 110 005a 8DF80740 		strb	r4, [sp, #7]
+ 111              		.loc 1 59 0
+ 112 005e FFF7FEFF 		bl	NVIC_Init
+ 113              	.LVL6:
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Config the USART3 Interrupt*/
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
+ 114              		.loc 1 62 0
+ 115 0062 2723     		movs	r3, #39
+ 116 0064 8DF80430 		strb	r3, [sp, #4]
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 10;  // wie war das noch mal mit den Interr
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_Init(&NVIC_InitStructure);
+ 117              		.loc 1 66 0
+ 118 0068 01A8     		add	r0, sp, #4
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 10;  // wie war das noch mal mit den Interr
+ 119              		.loc 1 63 0
+ 120 006a 0A23     		movs	r3, #10
+ 121 006c 8DF80530 		strb	r3, [sp, #5]
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+ 122              		.loc 1 64 0
+ 123 0070 8DF80650 		strb	r5, [sp, #6]
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+ 124              		.loc 1 65 0
+ 125 0074 8DF80740 		strb	r4, [sp, #7]
+ 126              		.loc 1 66 0
+ 127 0078 FFF7FEFF 		bl	NVIC_Init
+ 128              	.LVL7:
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Enable and set EXTI0 Interrupt to the lowest priority */
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;
+ 129              		.loc 1 69 0
+ 130 007c 2823     		movs	r3, #40
+ 131 007e 8DF80430 		strb	r3, [sp, #4]
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 13;
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_Init(&NVIC_InitStructure);
+ 132              		.loc 1 73 0
+ 133 0082 01A8     		add	r0, sp, #4
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 13;
+ 134              		.loc 1 70 0
+ 135 0084 0D23     		movs	r3, #13
+ 136 0086 8DF80530 		strb	r3, [sp, #5]
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+ 137              		.loc 1 71 0
+ 138 008a 8DF80650 		strb	r5, [sp, #6]
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+ 139              		.loc 1 72 0
+ 140 008e 8DF80740 		strb	r4, [sp, #7]
+ 141              		.loc 1 73 0
+ 142 0092 FFF7FEFF 		bl	NVIC_Init
+ 143              	.LVL8:
+  74:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** }
+ 144              		.loc 1 74 0
+ 145 0096 3EBD     		pop	{r1, r2, r3, r4, r5, pc}
+ 146              		.cfi_endproc
+ 147              	.LFE112:
+ 149              		.align	1
+ 150              		.global	GPIO_Configuration
+ 151              		.thumb
+ 152              		.thumb_func
+ 154              	GPIO_Configuration:
+ 155              	.LFB113:
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+  76:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+  77:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+  78:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** void GPIO_Configuration(void)
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 156              		.loc 1 79 0
+ 157              		.cfi_startproc
+ 158              		@ args = 0, pretend = 0, frame = 16
+ 159              		@ frame_needed = 0, uses_anonymous_args = 0
+ 160 0098 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 161              	.LCFI2:
+ 162              		.cfi_def_cfa_offset 36
+ 163              		.cfi_offset 4, -36
+ 164              		.cfi_offset 5, -32
+ 165              		.cfi_offset 6, -28
+ 166              		.cfi_offset 7, -24
+ 167              		.cfi_offset 8, -20
+ 168              		.cfi_offset 9, -16
+ 169              		.cfi_offset 10, -12
+ 170              		.cfi_offset 11, -8
+ 171              		.cfi_offset 14, -4
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/************************GPIO***************************/
+  81:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitTypeDef GPIO_InitStructure;
+  82:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Configure PE14 and PE15 in output pushpull mode */
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9 |
+  84:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 								  GPIO_Pin_10 | GPIO_Pin_11 |
+  85:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 								  GPIO_Pin_12 | GPIO_Pin_13 |
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 								  GPIO_Pin_14 | GPIO_Pin_15;
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  90:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOE, &GPIO_InitStructure);
+ 172              		.loc 1 91 0
+ 173 009c DFF860C2 		ldr	ip, .L6+4
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 174              		.loc 1 79 0
+ 175 00a0 85B0     		sub	sp, sp, #20
+ 176              	.LCFI3:
+ 177              		.cfi_def_cfa_offset 56
+  92:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOC, &GPIO_InitStructure);
+ 178              		.loc 1 98 0
+ 179 00a2 DFF86082 		ldr	r8, .L6+8
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 180              		.loc 1 88 0
+ 181 00a6 0024     		movs	r4, #0
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOE, &GPIO_InitStructure);
+ 182              		.loc 1 91 0
+ 183 00a8 6046     		mov	r0, ip
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 184              		.loc 1 89 0
+ 185 00aa 0326     		movs	r6, #3
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+ 186              		.loc 1 87 0
+ 187 00ac 4FF00109 		mov	r9, #1
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9 |
+ 188              		.loc 1 83 0
+ 189 00b0 4FF47F43 		mov	r3, #65280
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOE, &GPIO_InitStructure);
+ 190              		.loc 1 91 0
+ 191 00b4 02A9     		add	r1, sp, #8
+ 192 00b6 CDF800C0 		str	ip, [sp, #0]
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9 |
+ 193              		.loc 1 83 0
+ 194 00ba 0293     		str	r3, [sp, #8]
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+ 195              		.loc 1 87 0
+ 196 00bc 8DF80C90 		strb	r9, [sp, #12]
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 197              		.loc 1 88 0
+ 198 00c0 8DF80E40 		strb	r4, [sp, #14]
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 199              		.loc 1 89 0
+ 200 00c4 8DF80D60 		strb	r6, [sp, #13]
+  90:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+ 201              		.loc 1 90 0
+ 202 00c8 8DF80F40 		strb	r4, [sp, #15]
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOE, &GPIO_InitStructure);
+ 203              		.loc 1 91 0
+ 204 00cc FFF7FEFF 		bl	GPIO_Init
+ 205              	.LVL9:
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
+ 206              		.loc 1 93 0
+ 207 00d0 4FF40063 		mov	r3, #2048
+ 208              		.loc 1 98 0
+ 209 00d4 4046     		mov	r0, r8
+ 210 00d6 02A9     		add	r1, sp, #8
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 100:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/************************END GPIO***************************/
+ 101:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 102:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/****************************USART****************************/
+ 103:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* GPIOA Configuration:  USART2 TX on PA2 */
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3;
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+ 211              		.loc 1 105 0
+ 212 00d8 0225     		movs	r5, #2
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
+ 213              		.loc 1 93 0
+ 214 00da 0293     		str	r3, [sp, #8]
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+ 215              		.loc 1 94 0
+ 216 00dc 8DF80C90 		strb	r9, [sp, #12]
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 217              		.loc 1 95 0
+ 218 00e0 8DF80E40 		strb	r4, [sp, #14]
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 219              		.loc 1 96 0
+ 220 00e4 8DF80D60 		strb	r6, [sp, #13]
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+ 221              		.loc 1 97 0
+ 222 00e8 8DF80F40 		strb	r4, [sp, #15]
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOC, &GPIO_InitStructure);
+ 223              		.loc 1 98 0
+ 224 00ec FFF7FEFF 		bl	GPIO_Init
+ 225              	.LVL10:
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3;
+ 226              		.loc 1 104 0
+ 227 00f0 0C23     		movs	r3, #12
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 108:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOA, &GPIO_InitStructure);
+ 228              		.loc 1 109 0
+ 229 00f2 02A9     		add	r1, sp, #8
+ 230 00f4 4FF09040 		mov	r0, #1207959552
+ 110:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 111:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Connect USART2 pins to AF2 */
+ 112:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	// TX = PA2
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	// RX = PA3
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_7);
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, GPIO_AF_7);
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* GPIOB Configuration:  USART3 RX on PB11 and TX on PB10 */
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11;
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 123:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;
+ 124:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOB, &GPIO_InitStructure);
+ 231              		.loc 1 124 0
+ 232 00f8 804F     		ldr	r7, .L6
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3;
+ 233              		.loc 1 104 0
+ 234 00fa 0293     		str	r3, [sp, #8]
+ 108:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;
+ 235              		.loc 1 108 0
+ 236 00fc 8DF80F90 		strb	r9, [sp, #15]
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+ 237              		.loc 1 105 0
+ 238 0100 8DF80C50 		strb	r5, [sp, #12]
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 239              		.loc 1 106 0
+ 240 0104 8DF80D60 		strb	r6, [sp, #13]
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 241              		.loc 1 107 0
+ 242 0108 8DF80E40 		strb	r4, [sp, #14]
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOA, &GPIO_InitStructure);
+ 243              		.loc 1 109 0
+ 244 010c FFF7FEFF 		bl	GPIO_Init
+ 245              	.LVL11:
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_7);
+ 246              		.loc 1 114 0
+ 247 0110 2946     		mov	r1, r5
+ 248 0112 0722     		movs	r2, #7
+ 249 0114 4FF09040 		mov	r0, #1207959552
+ 250 0118 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 251              	.LVL12:
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, GPIO_AF_7);
+ 252              		.loc 1 115 0
+ 253 011c 0722     		movs	r2, #7
+ 254 011e 3146     		mov	r1, r6
+ 255 0120 4FF09040 		mov	r0, #1207959552
+ 256 0124 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 257              	.LVL13:
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11;
+ 258              		.loc 1 119 0
+ 259 0128 4FF44063 		mov	r3, #3072
+ 260              		.loc 1 124 0
+ 261 012c 3846     		mov	r0, r7
+ 262 012e 02A9     		add	r1, sp, #8
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11;
+ 263              		.loc 1 119 0
+ 264 0130 0293     		str	r3, [sp, #8]
+ 123:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;
+ 265              		.loc 1 123 0
+ 266 0132 8DF80F90 		strb	r9, [sp, #15]
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+ 267              		.loc 1 120 0
+ 268 0136 8DF80C50 		strb	r5, [sp, #12]
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 269              		.loc 1 121 0
+ 270 013a 8DF80D60 		strb	r6, [sp, #13]
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 271              		.loc 1 122 0
+ 272 013e 8DF80E40 		strb	r4, [sp, #14]
+ 273              		.loc 1 124 0
+ 274 0142 FFF7FEFF 		bl	GPIO_Init
+ 275              	.LVL14:
+ 125:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 126:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Connect USART3 pins to AF7  */
+ 127:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOB, GPIO_PinSource10, GPIO_AF_7);
+ 276              		.loc 1 127 0
+ 277 0146 3846     		mov	r0, r7
+ 278 0148 0A21     		movs	r1, #10
+ 279 014a 0722     		movs	r2, #7
+ 280 014c FFF7FEFF 		bl	GPIO_PinAFConfig
+ 281              	.LVL15:
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOB, GPIO_PinSource11, GPIO_AF_7);
+ 282              		.loc 1 128 0
+ 283 0150 3846     		mov	r0, r7
+ 284 0152 0B21     		movs	r1, #11
+ 285 0154 0722     		movs	r2, #7
+ 286 0156 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 287              	.LVL16:
+ 129:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 131:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/*************************END USART***************************/
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 133:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/******************************* SPI config ********************************/
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource5, GPIO_AF_5);
+ 288              		.loc 1 134 0
+ 289 015a 0521     		movs	r1, #5
+ 290 015c 0A46     		mov	r2, r1
+ 291 015e 4FF09040 		mov	r0, #1207959552
+ 292 0162 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 293              	.LVL17:
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource6, GPIO_AF_5);
+ 294              		.loc 1 135 0
+ 295 0166 0621     		movs	r1, #6
+ 296 0168 0522     		movs	r2, #5
+ 297 016a 4FF09040 		mov	r0, #1207959552
+ 298 016e FFF7FEFF 		bl	GPIO_PinAFConfig
+ 299              	.LVL18:
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource7, GPIO_AF_5);
+ 300              		.loc 1 136 0
+ 301 0172 0522     		movs	r2, #5
+ 302 0174 0721     		movs	r1, #7
+ 303 0176 4FF09040 		mov	r0, #1207959552
+ 304 017a FFF7FEFF 		bl	GPIO_PinAFConfig
+ 305              	.LVL19:
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 140:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;//GPIO_PuPd_DOWN;
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 142:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 143:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* SPI SCK pin configuration */
+ 144:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
+ 306              		.loc 1 144 0
+ 307 017e 2023     		movs	r3, #32
+ 145:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOA, &GPIO_InitStructure);
+ 308              		.loc 1 145 0
+ 309 0180 02A9     		add	r1, sp, #8
+ 310 0182 4FF09040 		mov	r0, #1207959552
+ 144:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
+ 311              		.loc 1 144 0
+ 312 0186 0293     		str	r3, [sp, #8]
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+ 313              		.loc 1 138 0
+ 314 0188 8DF80C50 		strb	r5, [sp, #12]
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 315              		.loc 1 139 0
+ 316 018c 8DF80E40 		strb	r4, [sp, #14]
+ 140:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;//GPIO_PuPd_DOWN;
+ 317              		.loc 1 140 0
+ 318 0190 8DF80F40 		strb	r4, [sp, #15]
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 319              		.loc 1 141 0
+ 320 0194 8DF80D60 		strb	r6, [sp, #13]
+ 321              		.loc 1 145 0
+ 322 0198 FFF7FEFF 		bl	GPIO_Init
+ 323              	.LVL20:
+ 146:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* SPI MISO pin configuration */
+ 148:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+ 324              		.loc 1 148 0
+ 325 019c 4023     		movs	r3, #64
+ 149:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOA, &GPIO_InitStructure);
+ 326              		.loc 1 149 0
+ 327 019e 02A9     		add	r1, sp, #8
+ 328 01a0 4FF09040 		mov	r0, #1207959552
+ 148:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+ 329              		.loc 1 148 0
+ 330 01a4 0293     		str	r3, [sp, #8]
+ 331              		.loc 1 149 0
+ 332 01a6 0193     		str	r3, [sp, #4]
+ 150:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 151:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* SPI  MOSI pin configuration */
+ 152:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_7;
+ 333              		.loc 1 152 0
+ 334 01a8 4FF0800B 		mov	fp, #128
+ 149:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOA, &GPIO_InitStructure);
+ 335              		.loc 1 149 0
+ 336 01ac FFF7FEFF 		bl	GPIO_Init
+ 337              	.LVL21:
+ 153:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOA, &GPIO_InitStructure);
+ 338              		.loc 1 153 0
+ 339 01b0 02A9     		add	r1, sp, #8
+ 340 01b2 4FF09040 		mov	r0, #1207959552
+ 152:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_7;
+ 341              		.loc 1 152 0
+ 342 01b6 CDF808B0 		str	fp, [sp, #8]
+ 343              		.loc 1 153 0
+ 344 01ba FFF7FEFF 		bl	GPIO_Init
+ 345              	.LVL22:
+ 154:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 155:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Configure GPIO PIN for Lis Chip select */
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3 ;
+ 157:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+ 158:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 159:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 160:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOE, &GPIO_InitStructure);
+ 346              		.loc 1 160 0
+ 347 01be DDF800C0 		ldr	ip, [sp, #0]
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3 ;
+ 348              		.loc 1 156 0
+ 349 01c2 4FF0080A 		mov	sl, #8
+ 350              		.loc 1 160 0
+ 351 01c6 6046     		mov	r0, ip
+ 352 01c8 0DEB0A01 		add	r1, sp, sl
+ 157:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+ 353              		.loc 1 157 0
+ 354 01cc 8DF80C90 		strb	r9, [sp, #12]
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3 ;
+ 355              		.loc 1 156 0
+ 356 01d0 CDF808A0 		str	sl, [sp, #8]
+ 158:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 357              		.loc 1 158 0
+ 358 01d4 8DF80E40 		strb	r4, [sp, #14]
+ 159:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 359              		.loc 1 159 0
+ 360 01d8 8DF80D60 		strb	r6, [sp, #13]
+ 361              		.loc 1 160 0
+ 362 01dc FFF7FEFF 		bl	GPIO_Init
+ 363              	.LVL23:
+ 161:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/******************************* END SPI ********************************/
+ 162:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 163:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/****************************** I2C *************************************/
+ 164:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOB, GPIO_PinSource6 , GPIO_AF_4 );
+ 364              		.loc 1 164 0
+ 365 01e0 3846     		mov	r0, r7
+ 366 01e2 0621     		movs	r1, #6
+ 367 01e4 0422     		movs	r2, #4
+ 368 01e6 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 369              	.LVL24:
+ 165:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOB, GPIO_PinSource7 , GPIO_AF_4 );
+ 370              		.loc 1 165 0
+ 371 01ea 0422     		movs	r2, #4
+ 372 01ec 3846     		mov	r0, r7
+ 373 01ee 0721     		movs	r1, #7
+ 374 01f0 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 375              	.LVL25:
+ 166:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 167:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 169:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_DOWN;
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 171:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 172:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* I2C SCK pin configuration */
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+ 376              		.loc 1 173 0
+ 377 01f4 019B     		ldr	r3, [sp, #4]
+ 174:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOB, &GPIO_InitStructure);
+ 378              		.loc 1 174 0
+ 379 01f6 3846     		mov	r0, r7
+ 380 01f8 0DEB0A01 		add	r1, sp, sl
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+ 381              		.loc 1 173 0
+ 382 01fc 0293     		str	r3, [sp, #8]
+ 167:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+ 383              		.loc 1 167 0
+ 384 01fe 8DF80C50 		strb	r5, [sp, #12]
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 385              		.loc 1 168 0
+ 386 0202 8DF80E40 		strb	r4, [sp, #14]
+ 169:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_DOWN;
+ 387              		.loc 1 169 0
+ 388 0206 8DF80F50 		strb	r5, [sp, #15]
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 389              		.loc 1 170 0
+ 390 020a 8DF80D60 		strb	r6, [sp, #13]
+ 391              		.loc 1 174 0
+ 392 020e FFF7FEFF 		bl	GPIO_Init
+ 393              	.LVL26:
+ 175:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* I2C SDA pin configuration */
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_7;
+ 178:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOB, &GPIO_InitStructure);
+ 394              		.loc 1 178 0
+ 395 0212 3846     		mov	r0, r7
+ 396 0214 0DEB0A01 		add	r1, sp, sl
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_7;
+ 397              		.loc 1 177 0
+ 398 0218 CDF808B0 		str	fp, [sp, #8]
+ 399              		.loc 1 178 0
+ 400 021c FFF7FEFF 		bl	GPIO_Init
+ 401              	.LVL27:
+ 179:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/****************************** END I2C **********************************/
+ 180:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 181:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/****************************** TIM3 PWM OUT *****************************/
+ 182:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* GPIOA Configuration: Channel 1, 2, 3 and 4 as alternate function push-pull */
+ 183:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9;
+ 402              		.loc 1 183 0
+ 403 0220 4FF47073 		mov	r3, #960
+ 184:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+ 185:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 187:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;
+ 188:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOC, &GPIO_InitStructure);
+ 404              		.loc 1 188 0
+ 405 0224 4046     		mov	r0, r8
+ 406 0226 0DEB0A01 		add	r1, sp, sl
+ 183:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9;
+ 407              		.loc 1 183 0
+ 408 022a 0293     		str	r3, [sp, #8]
+ 187:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;
+ 409              		.loc 1 187 0
+ 410 022c 8DF80F90 		strb	r9, [sp, #15]
+ 184:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+ 411              		.loc 1 184 0
+ 412 0230 8DF80C50 		strb	r5, [sp, #12]
+ 185:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 413              		.loc 1 185 0
+ 414 0234 8DF80D60 		strb	r6, [sp, #13]
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 415              		.loc 1 186 0
+ 416 0238 8DF80E40 		strb	r4, [sp, #14]
+ 417              		.loc 1 188 0
+ 418 023c FFF7FEFF 		bl	GPIO_Init
+ 419              	.LVL28:
+ 189:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_2);
+ 420              		.loc 1 190 0
+ 421 0240 4046     		mov	r0, r8
+ 422 0242 0621     		movs	r1, #6
+ 423 0244 2A46     		mov	r2, r5
+ 424 0246 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 425              	.LVL29:
+ 191:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_2);
+ 426              		.loc 1 191 0
+ 427 024a 4046     		mov	r0, r8
+ 428 024c 0721     		movs	r1, #7
+ 429 024e 2A46     		mov	r2, r5
+ 430 0250 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 431              	.LVL30:
+ 192:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOC, GPIO_PinSource8, GPIO_AF_2);
+ 432              		.loc 1 192 0
+ 433 0254 4046     		mov	r0, r8
+ 434 0256 5146     		mov	r1, sl
+ 435 0258 2A46     		mov	r2, r5
+ 436 025a FFF7FEFF 		bl	GPIO_PinAFConfig
+ 437              	.LVL31:
+ 193:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOC, GPIO_PinSource9, GPIO_AF_2);
+ 438              		.loc 1 193 0
+ 439 025e 2A46     		mov	r2, r5
+ 440 0260 4046     		mov	r0, r8
+ 441 0262 0921     		movs	r1, #9
+ 442 0264 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 443              	.LVL32:
+ 194:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/****************************** END TIM3 PWM OUT *************************/
+ 195:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 196:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/****************************** TIM2 PWM OUT *****************************/
+ 197:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* GPIOA Configuration: Channel 1, 2, 3 and 4 as alternate function push-pull */
+ 198:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_6 | GPIO_Pin_7;
+ 199:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+ 200:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 201:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 202:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP ;
+ 444              		.loc 1 202 0
+ 445 0268 8DF80F90 		strb	r9, [sp, #15]
+ 203:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOD, &GPIO_InitStructure);
+ 446              		.loc 1 203 0
+ 447 026c DFF89890 		ldr	r9, .L6+12
+ 198:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_6 | GPIO_Pin_7;
+ 448              		.loc 1 198 0
+ 449 0270 D823     		movs	r3, #216
+ 450              		.loc 1 203 0
+ 451 0272 4846     		mov	r0, r9
+ 452 0274 0DEB0A01 		add	r1, sp, sl
+ 198:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_6 | GPIO_Pin_7;
+ 453              		.loc 1 198 0
+ 454 0278 0293     		str	r3, [sp, #8]
+ 199:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+ 455              		.loc 1 199 0
+ 456 027a 8DF80C50 		strb	r5, [sp, #12]
+ 200:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 457              		.loc 1 200 0
+ 458 027e 8DF80D60 		strb	r6, [sp, #13]
+ 201:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 459              		.loc 1 201 0
+ 460 0282 8DF80E40 		strb	r4, [sp, #14]
+ 461              		.loc 1 203 0
+ 462 0286 FFF7FEFF 		bl	GPIO_Init
+ 463              	.LVL33:
+ 204:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 205:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOD, GPIO_PinSource3, GPIO_AF_2);
+ 464              		.loc 1 205 0
+ 465 028a 4846     		mov	r0, r9
+ 466 028c 3146     		mov	r1, r6
+ 467 028e 2A46     		mov	r2, r5
+ 468 0290 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 469              	.LVL34:
+ 206:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOD, GPIO_PinSource4, GPIO_AF_2);
+ 470              		.loc 1 206 0
+ 471 0294 4846     		mov	r0, r9
+ 472 0296 0421     		movs	r1, #4
+ 473 0298 2A46     		mov	r2, r5
+ 474 029a FFF7FEFF 		bl	GPIO_PinAFConfig
+ 475              	.LVL35:
+ 207:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOD, GPIO_PinSource6, GPIO_AF_2);
+ 476              		.loc 1 207 0
+ 477 029e 4846     		mov	r0, r9
+ 478 02a0 0621     		movs	r1, #6
+ 479 02a2 2A46     		mov	r2, r5
+ 480 02a4 FFF7FEFF 		bl	GPIO_PinAFConfig
+ 481              	.LVL36:
+ 208:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_PinAFConfig(GPIOD, GPIO_PinSource7, GPIO_AF_2);
+ 482              		.loc 1 208 0
+ 483 02a8 2A46     		mov	r2, r5
+ 484 02aa 4846     		mov	r0, r9
+ 485 02ac 0721     		movs	r1, #7
+ 486 02ae FFF7FEFF 		bl	GPIO_PinAFConfig
+ 487              	.LVL37:
+ 209:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/****************************** END TIM3 PWM OUT *************************/
+ 210:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 211:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* EXTI Lines */
+ 212:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+ 488              		.loc 1 212 0
+ 489 02b2 4FF47043 		mov	r3, #61440
+ 213:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IN;
+ 214:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+ 215:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOD, &GPIO_InitStructure);
+ 490              		.loc 1 215 0
+ 491 02b6 4846     		mov	r0, r9
+ 492 02b8 0DEB0A01 		add	r1, sp, sl
+ 212:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+ 493              		.loc 1 212 0
+ 494 02bc 0293     		str	r3, [sp, #8]
+ 213:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IN;
+ 495              		.loc 1 213 0
+ 496 02be 8DF80C40 		strb	r4, [sp, #12]
+ 214:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+ 497              		.loc 1 214 0
+ 498 02c2 8DF80F40 		strb	r4, [sp, #15]
+ 499              		.loc 1 215 0
+ 500 02c6 FFF7FEFF 		bl	GPIO_Init
+ 501              	.LVL38:
+ 216:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 217:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* ADC Config */
+ 218:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Configure ADC Channels as analog input */
+ 219:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5 ;
+ 502              		.loc 1 219 0
+ 503 02ca 3023     		movs	r3, #48
+ 220:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+ 221:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+ 222:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOC, &GPIO_InitStructure);
+ 504              		.loc 1 222 0
+ 505 02cc 4046     		mov	r0, r8
+ 506 02ce 0DEB0A01 		add	r1, sp, sl
+ 219:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5 ;
+ 507              		.loc 1 219 0
+ 508 02d2 0293     		str	r3, [sp, #8]
+ 220:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+ 509              		.loc 1 220 0
+ 510 02d4 8DF80C60 		strb	r6, [sp, #12]
+ 221:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+ 511              		.loc 1 221 0
+ 512 02d8 8DF80F40 		strb	r4, [sp, #15]
+ 513              		.loc 1 222 0
+ 514 02dc FFF7FEFF 		bl	GPIO_Init
+ 515              	.LVL39:
+ 223:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 224:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 ;
+ 516              		.loc 1 224 0
+ 517 02e0 0423     		movs	r3, #4
+ 225:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+ 226:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+ 227:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_Init(GPIOB, &GPIO_InitStructure);
+ 518              		.loc 1 227 0
+ 519 02e2 3846     		mov	r0, r7
+ 520 02e4 0DEB0A01 		add	r1, sp, sl
+ 224:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 ;
+ 521              		.loc 1 224 0
+ 522 02e8 0293     		str	r3, [sp, #8]
+ 225:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+ 523              		.loc 1 225 0
+ 524 02ea 8DF80C60 		strb	r6, [sp, #12]
+ 226:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+ 525              		.loc 1 226 0
+ 526 02ee 8DF80F40 		strb	r4, [sp, #15]
+ 527              		.loc 1 227 0
+ 528 02f2 FFF7FEFF 		bl	GPIO_Init
+ 529              	.LVL40:
+ 228:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** }
+ 530              		.loc 1 228 0
+ 531 02f6 05B0     		add	sp, sp, #20
+ 532 02f8 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 533              	.L7:
+ 534              		.align	2
+ 535              	.L6:
+ 536 02fc 00040048 		.word	1207960576
+ 537 0300 00100048 		.word	1207963648
+ 538 0304 00080048 		.word	1207961600
+ 539 0308 000C0048 		.word	1207962624
+ 540              		.cfi_endproc
+ 541              	.LFE113:
+ 543              		.align	1
+ 544              		.global	USART_Configuration
+ 545              		.thumb
+ 546              		.thumb_func
+ 548              	USART_Configuration:
+ 549              	.LFB114:
+ 229:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 230:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 231:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** void USART_Configuration(void)
+ 232:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 550              		.loc 1 232 0
+ 551              		.cfi_startproc
+ 552              		@ args = 0, pretend = 0, frame = 24
+ 553              		@ frame_needed = 0, uses_anonymous_args = 0
+ 554 030c 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 555              	.LCFI4:
+ 556              		.cfi_def_cfa_offset 24
+ 557              		.cfi_offset 4, -24
+ 558              		.cfi_offset 5, -20
+ 559              		.cfi_offset 6, -16
+ 560              		.cfi_offset 7, -12
+ 561              		.cfi_offset 8, -8
+ 562              		.cfi_offset 14, -4
+ 233:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitTypeDef USART_InitStructure;
+ 234:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 235:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_BaudRate = 115200;
+ 236:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+ 237:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_StopBits = USART_StopBits_1;
+ 238:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_Parity = USART_Parity_No;
+ 239:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+ 240:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
+ 241:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_Init(USART2, &USART_InitStructure);
+ 563              		.loc 1 241 0
+ 564 0310 1C4D     		ldr	r5, .L9
+ 232:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 565              		.loc 1 232 0
+ 566 0312 86B0     		sub	sp, sp, #24
+ 567              	.LCFI5:
+ 568              		.cfi_def_cfa_offset 48
+ 242:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 243:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_ITConfig(USART2, USART_IT_RXNE, ENABLE); // enable the USART1 receive interrupt
+ 569              		.loc 1 243 0
+ 570 0314 1C4E     		ldr	r6, .L9+4
+ 236:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+ 571              		.loc 1 236 0
+ 572 0316 0024     		movs	r4, #0
+ 235:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_BaudRate = 115200;
+ 573              		.loc 1 235 0
+ 574 0318 4FF4E138 		mov	r8, #115200
+ 240:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
+ 575              		.loc 1 240 0
+ 576 031c 0C27     		movs	r7, #12
+ 241:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_Init(USART2, &USART_InitStructure);
+ 577              		.loc 1 241 0
+ 578 031e 2846     		mov	r0, r5
+ 579 0320 6946     		mov	r1, sp
+ 235:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_BaudRate = 115200;
+ 580              		.loc 1 235 0
+ 581 0322 CDF80080 		str	r8, [sp, #0]
+ 236:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+ 582              		.loc 1 236 0
+ 583 0326 0194     		str	r4, [sp, #4]
+ 237:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_StopBits = USART_StopBits_1;
+ 584              		.loc 1 237 0
+ 585 0328 0294     		str	r4, [sp, #8]
+ 238:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_Parity = USART_Parity_No;
+ 586              		.loc 1 238 0
+ 587 032a 0394     		str	r4, [sp, #12]
+ 239:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+ 588              		.loc 1 239 0
+ 589 032c 0594     		str	r4, [sp, #20]
+ 240:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
+ 590              		.loc 1 240 0
+ 591 032e 0497     		str	r7, [sp, #16]
+ 241:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_Init(USART2, &USART_InitStructure);
+ 592              		.loc 1 241 0
+ 593 0330 FFF7FEFF 		bl	USART_Init
+ 594              	.LVL41:
+ 595              		.loc 1 243 0
+ 596 0334 0122     		movs	r2, #1
+ 597 0336 2846     		mov	r0, r5
+ 598 0338 3146     		mov	r1, r6
+ 599 033a FFF7FEFF 		bl	USART_ITConfig
+ 600              	.LVL42:
+ 244:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 245:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_Cmd(USART2, ENABLE); // enable USART2
+ 601              		.loc 1 245 0
+ 602 033e 2846     		mov	r0, r5
+ 603 0340 0121     		movs	r1, #1
+ 246:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 247:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 248:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/*
+ 249:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	 * Configure USART 3
+ 250:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	 * */
+ 251:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	//USART_InitTypeDef USART_InitStructure;
+ 252:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_BaudRate = 115200;
+ 253:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+ 254:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_StopBits = USART_StopBits_1;
+ 255:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_Parity = USART_Parity_No;
+ 256:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+ 257:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
+ 258:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_Init(USART3, &USART_InitStructure);
+ 604              		.loc 1 258 0
+ 605 0342 05F58065 		add	r5, r5, #1024
+ 245:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_Cmd(USART2, ENABLE); // enable USART2
+ 606              		.loc 1 245 0
+ 607 0346 FFF7FEFF 		bl	USART_Cmd
+ 608              	.LVL43:
+ 609              		.loc 1 258 0
+ 610 034a 2846     		mov	r0, r5
+ 611 034c 6946     		mov	r1, sp
+ 252:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_BaudRate = 115200;
+ 612              		.loc 1 252 0
+ 613 034e CDF80080 		str	r8, [sp, #0]
+ 253:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+ 614              		.loc 1 253 0
+ 615 0352 0194     		str	r4, [sp, #4]
+ 254:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_StopBits = USART_StopBits_1;
+ 616              		.loc 1 254 0
+ 617 0354 0294     		str	r4, [sp, #8]
+ 255:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_Parity = USART_Parity_No;
+ 618              		.loc 1 255 0
+ 619 0356 0394     		str	r4, [sp, #12]
+ 256:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+ 620              		.loc 1 256 0
+ 621 0358 0594     		str	r4, [sp, #20]
+ 257:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_InitStructure.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
+ 622              		.loc 1 257 0
+ 623 035a 0497     		str	r7, [sp, #16]
+ 624              		.loc 1 258 0
+ 625 035c FFF7FEFF 		bl	USART_Init
+ 626              	.LVL44:
+ 259:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 260:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_ITConfig(USART3, USART_IT_RXNE, DISABLE);
+ 627              		.loc 1 260 0
+ 628 0360 2846     		mov	r0, r5
+ 629 0362 3146     		mov	r1, r6
+ 630 0364 2246     		mov	r2, r4
+ 631 0366 FFF7FEFF 		bl	USART_ITConfig
+ 632              	.LVL45:
+ 261:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_ITConfig(USART3, USART_IT_TXE, DISABLE);
+ 633              		.loc 1 261 0
+ 634 036a 2846     		mov	r0, r5
+ 635 036c 0749     		ldr	r1, .L9+8
+ 636 036e 2246     		mov	r2, r4
+ 637 0370 FFF7FEFF 		bl	USART_ITConfig
+ 638              	.LVL46:
+ 262:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 263:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	USART_Cmd(USART3, ENABLE); // enable USART3
+ 639              		.loc 1 263 0
+ 640 0374 2846     		mov	r0, r5
+ 641 0376 0121     		movs	r1, #1
+ 642 0378 FFF7FEFF 		bl	USART_Cmd
+ 643              	.LVL47:
+ 264:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** }
+ 644              		.loc 1 264 0
+ 645 037c 06B0     		add	sp, sp, #24
+ 646 037e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 647              	.L10:
+ 648 0382 00BF     		.align	2
+ 649              	.L9:
+ 650 0384 00440040 		.word	1073759232
+ 651 0388 05010500 		.word	327941
+ 652 038c 07010700 		.word	459015
+ 653              		.cfi_endproc
+ 654              	.LFE114:
+ 656              		.align	1
+ 657              		.global	SPI_Configuration
+ 658              		.thumb
+ 659              		.thumb_func
+ 661              	SPI_Configuration:
+ 662              	.LFB115:
+ 265:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 266:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 267:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** void SPI_Configuration(void)
+ 268:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 663              		.loc 1 268 0
+ 664              		.cfi_startproc
+ 665              		@ args = 0, pretend = 0, frame = 24
+ 666              		@ frame_needed = 0, uses_anonymous_args = 0
+ 667 0390 10B5     		push	{r4, lr}
+ 668              	.LCFI6:
+ 669              		.cfi_def_cfa_offset 8
+ 670              		.cfi_offset 4, -8
+ 671              		.cfi_offset 14, -4
+ 269:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_InitTypeDef  SPI_InitStructure;
+ 270:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* SPI configuration -------------------------------------------------------*/
+ 271:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_I2S_DeInit(SPI1);
+ 672              		.loc 1 271 0
+ 673 0392 174C     		ldr	r4, .L12
+ 268:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 674              		.loc 1 268 0
+ 675 0394 86B0     		sub	sp, sp, #24
+ 676              	.LCFI7:
+ 677              		.cfi_def_cfa_offset 32
+ 678              		.loc 1 271 0
+ 679 0396 2046     		mov	r0, r4
+ 680 0398 FFF7FEFF 		bl	SPI_I2S_DeInit
+ 681              	.LVL48:
+ 272:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
+ 682              		.loc 1 272 0
+ 683 039c 0023     		movs	r3, #0
+ 273:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;
+ 684              		.loc 1 273 0
+ 685 039e 4FF4E062 		mov	r2, #1792
+ 272:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
+ 686              		.loc 1 272 0
+ 687 03a2 ADF80430 		strh	r3, [sp, #4]	@ movhi
+ 688              		.loc 1 273 0
+ 689 03a6 ADF80820 		strh	r2, [sp, #8]	@ movhi
+ 274:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;
+ 690              		.loc 1 274 0
+ 691 03aa ADF80A30 		strh	r3, [sp, #10]	@ movhi
+ 275:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;
+ 692              		.loc 1 275 0
+ 693 03ae ADF80C30 		strh	r3, [sp, #12]	@ movhi
+ 276:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
+ 277:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
+ 278:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
+ 694              		.loc 1 278 0
+ 695 03b2 ADF81230 		strh	r3, [sp, #18]	@ movhi
+ 276:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
+ 696              		.loc 1 276 0
+ 697 03b6 4FF40072 		mov	r2, #512
+ 279:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_InitStructure.SPI_CRCPolynomial = 7;
+ 698              		.loc 1 279 0
+ 699 03ba 0723     		movs	r3, #7
+ 276:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
+ 700              		.loc 1 276 0
+ 701 03bc ADF80E20 		strh	r2, [sp, #14]	@ movhi
+ 702              		.loc 1 279 0
+ 703 03c0 ADF81430 		strh	r3, [sp, #20]	@ movhi
+ 277:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
+ 704              		.loc 1 277 0
+ 705 03c4 1022     		movs	r2, #16
+ 280:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
+ 706              		.loc 1 280 0
+ 707 03c6 4FF48273 		mov	r3, #260
+ 281:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_Init(SPI1, &SPI_InitStructure);
+ 708              		.loc 1 281 0
+ 709 03ca 2046     		mov	r0, r4
+ 710 03cc 01A9     		add	r1, sp, #4
+ 277:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
+ 711              		.loc 1 277 0
+ 712 03ce ADF81020 		strh	r2, [sp, #16]	@ movhi
+ 280:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
+ 713              		.loc 1 280 0
+ 714 03d2 ADF80630 		strh	r3, [sp, #6]	@ movhi
+ 715              		.loc 1 281 0
+ 716 03d6 FFF7FEFF 		bl	SPI_Init
+ 717              	.LVL49:
+ 282:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 283:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Configure the RX FIFO Threshold */
+ 284:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_RxFIFOThresholdConfig(SPI1, SPI_RxFIFOThreshold_QF);
+ 718              		.loc 1 284 0
+ 719 03da 2046     		mov	r0, r4
+ 720 03dc 4FF48051 		mov	r1, #4096
+ 721 03e0 FFF7FEFF 		bl	SPI_RxFIFOThresholdConfig
+ 722              	.LVL50:
+ 285:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Enable SPI1  */
+ 286:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SPI_Cmd(SPI1, ENABLE);
+ 723              		.loc 1 286 0
+ 724 03e4 2046     		mov	r0, r4
+ 725 03e6 0121     		movs	r1, #1
+ 726 03e8 FFF7FEFF 		bl	SPI_Cmd
+ 727              	.LVL51:
+ 287:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** }
+ 728              		.loc 1 287 0
+ 729 03ec 06B0     		add	sp, sp, #24
+ 730 03ee 10BD     		pop	{r4, pc}
+ 731              	.L13:
+ 732              		.align	2
+ 733              	.L12:
+ 734 03f0 00300140 		.word	1073819648
+ 735              		.cfi_endproc
+ 736              	.LFE115:
+ 738              		.align	1
+ 739              		.global	I2C_Configuration
+ 740              		.thumb
+ 741              		.thumb_func
+ 743              	I2C_Configuration:
+ 744              	.LFB116:
+ 288:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 289:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 290:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** void I2C_Configuration(void)
+ 291:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 745              		.loc 1 291 0
+ 746              		.cfi_startproc
+ 747              		@ args = 0, pretend = 0, frame = 32
+ 748              		@ frame_needed = 0, uses_anonymous_args = 0
+ 749 03f4 10B5     		push	{r4, lr}
+ 750              	.LCFI8:
+ 751              		.cfi_def_cfa_offset 8
+ 752              		.cfi_offset 4, -8
+ 753              		.cfi_offset 14, -4
+ 292:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	I2C_InitTypeDef  I2C_InitStructure;
+ 293:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 294:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	I2C_DeInit(I2C1);
+ 754              		.loc 1 294 0
+ 755 03f6 0C4C     		ldr	r4, .L15
+ 291:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 756              		.loc 1 291 0
+ 757 03f8 88B0     		sub	sp, sp, #32
+ 758              	.LCFI9:
+ 759              		.cfi_def_cfa_offset 40
+ 760              		.loc 1 294 0
+ 761 03fa 2046     		mov	r0, r4
+ 762 03fc FFF7FEFF 		bl	I2C_DeInit
+ 763              	.LVL52:
+ 295:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 296:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     /* I2C configuration -------------------------------------------------------*/
+ 297:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     I2C_InitStructure.I2C_Mode = I2C_Mode_I2C;
+ 764              		.loc 1 297 0
+ 765 0400 0023     		movs	r3, #0
+ 766 0402 0493     		str	r3, [sp, #16]
+ 298:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     I2C_InitStructure.I2C_AnalogFilter = I2C_AnalogFilter_Enable;
+ 767              		.loc 1 298 0
+ 768 0404 0293     		str	r3, [sp, #8]
+ 299:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     I2C_InitStructure.I2C_DigitalFilter = 0x00;
+ 769              		.loc 1 299 0
+ 770 0406 0393     		str	r3, [sp, #12]
+ 300:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     I2C_InitStructure.I2C_OwnAddress1 = 0x00;
+ 771              		.loc 1 300 0
+ 772 0408 0593     		str	r3, [sp, #20]
+ 301:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     I2C_InitStructure.I2C_Ack = I2C_Ack_Enable;
+ 773              		.loc 1 301 0
+ 774 040a 0693     		str	r3, [sp, #24]
+ 302:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     I2C_InitStructure.I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit;
+ 775              		.loc 1 302 0
+ 776 040c 0793     		str	r3, [sp, #28]
+ 303:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     I2C_InitStructure.I2C_Timing = 0x00902025;
+ 777              		.loc 1 303 0
+ 778 040e 074B     		ldr	r3, .L15+4
+ 779 0410 08A9     		add	r1, sp, #32
+ 780 0412 41F81C3D 		str	r3, [r1, #-28]!
+ 304:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 305:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     /* Apply LSM303DLHC_I2C configuration after enabling it */
+ 306:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     I2C_Init(I2C1, &I2C_InitStructure);
+ 781              		.loc 1 306 0
+ 782 0416 2046     		mov	r0, r4
+ 783 0418 FFF7FEFF 		bl	I2C_Init
+ 784              	.LVL53:
+ 307:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 308:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     /* LSM303DLHC_I2C Peripheral Enable */
+ 309:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     I2C_Cmd(I2C1, ENABLE);
+ 785              		.loc 1 309 0
+ 786 041c 2046     		mov	r0, r4
+ 787 041e 0121     		movs	r1, #1
+ 788 0420 FFF7FEFF 		bl	I2C_Cmd
+ 789              	.LVL54:
+ 310:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** }
+ 790              		.loc 1 310 0
+ 791 0424 08B0     		add	sp, sp, #32
+ 792 0426 10BD     		pop	{r4, pc}
+ 793              	.L16:
+ 794              		.align	2
+ 795              	.L15:
+ 796 0428 00540040 		.word	1073763328
+ 797 042c 25209000 		.word	9445413
+ 798              		.cfi_endproc
+ 799              	.LFE116:
+ 801              		.align	1
+ 802              		.global	DMA_Configuration
+ 803              		.thumb
+ 804              		.thumb_func
+ 806              	DMA_Configuration:
+ 807              	.LFB117:
+ 311:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 312:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 313:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** void DMA_Configuration(uint8_t *buffer)
+ 314:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 808              		.loc 1 314 0
+ 809              		.cfi_startproc
+ 810              		@ args = 0, pretend = 0, frame = 48
+ 811              		@ frame_needed = 0, uses_anonymous_args = 0
+ 812              	.LVL55:
+ 813 0430 30B5     		push	{r4, r5, lr}
+ 814              	.LCFI10:
+ 815              		.cfi_def_cfa_offset 12
+ 816              		.cfi_offset 4, -12
+ 817              		.cfi_offset 5, -8
+ 818              		.cfi_offset 14, -4
+ 315:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	DMA_DeInit(DMA1_Channel7);
+ 819              		.loc 1 315 0
+ 820 0432 0F4C     		ldr	r4, .L18
+ 314:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 821              		.loc 1 314 0
+ 822 0434 8DB0     		sub	sp, sp, #52
+ 823              	.LCFI11:
+ 824              		.cfi_def_cfa_offset 64
+ 314:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 825              		.loc 1 314 0
+ 826 0436 0546     		mov	r5, r0
+ 827              		.loc 1 315 0
+ 828 0438 2046     		mov	r0, r4
+ 829              	.LVL56:
+ 830 043a FFF7FEFF 		bl	DMA_DeInit
+ 831              	.LVL57:
+ 316:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitTypeDef DMA_InitStructure;
+ 317:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&I2C1->RXDR;
+ 832              		.loc 1 317 0
+ 833 043e 0D4B     		ldr	r3, .L18+4
+ 318:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_MemoryBaseAddr     = (uint32_t)buffer;
+ 319:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_BufferSize         = 6;
+ 320:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_DIR                = DMA_DIR_PeripheralSRC;
+ 321:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_PeripheralInc      = DMA_PeripheralInc_Disable;
+ 322:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_MemoryInc          = DMA_MemoryInc_Enable;
+ 834              		.loc 1 322 0
+ 835 0440 8022     		movs	r2, #128
+ 317:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&I2C1->RXDR;
+ 836              		.loc 1 317 0
+ 837 0442 0193     		str	r3, [sp, #4]
+ 838              		.loc 1 322 0
+ 839 0444 0692     		str	r2, [sp, #24]
+ 319:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_BufferSize         = 6;
+ 840              		.loc 1 319 0
+ 841 0446 0623     		movs	r3, #6
+ 323:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+ 324:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_MemoryDataSize     = DMA_MemoryDataSize_Byte;
+ 325:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_Mode               = DMA_Mode_Circular;
+ 842              		.loc 1 325 0
+ 843 0448 2022     		movs	r2, #32
+ 319:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_BufferSize         = 6;
+ 844              		.loc 1 319 0
+ 845 044a ADF81030 		strh	r3, [sp, #16]	@ movhi
+ 846              		.loc 1 325 0
+ 847 044e 0992     		str	r2, [sp, #36]
+ 320:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_DIR                = DMA_DIR_PeripheralSRC;
+ 848              		.loc 1 320 0
+ 849 0450 0023     		movs	r3, #0
+ 326:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_Priority           = DMA_Priority_VeryHigh;
+ 850              		.loc 1 326 0
+ 851 0452 4FF44052 		mov	r2, #12288
+ 327:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_M2M                = DMA_M2M_Disable;
+ 328:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_Init(DMA1_Channel7, &DMA_InitStructure);
+ 852              		.loc 1 328 0
+ 853 0456 2046     		mov	r0, r4
+ 854 0458 01A9     		add	r1, sp, #4
+ 318:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_MemoryBaseAddr     = (uint32_t)buffer;
+ 855              		.loc 1 318 0
+ 856 045a 0295     		str	r5, [sp, #8]
+ 320:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_DIR                = DMA_DIR_PeripheralSRC;
+ 857              		.loc 1 320 0
+ 858 045c 0393     		str	r3, [sp, #12]
+ 321:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_PeripheralInc      = DMA_PeripheralInc_Disable;
+ 859              		.loc 1 321 0
+ 860 045e 0593     		str	r3, [sp, #20]
+ 323:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+ 861              		.loc 1 323 0
+ 862 0460 0793     		str	r3, [sp, #28]
+ 324:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_MemoryDataSize     = DMA_MemoryDataSize_Byte;
+ 863              		.loc 1 324 0
+ 864 0462 0893     		str	r3, [sp, #32]
+ 326:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_Priority           = DMA_Priority_VeryHigh;
+ 865              		.loc 1 326 0
+ 866 0464 0A92     		str	r2, [sp, #40]
+ 327:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     DMA_InitStructure.DMA_M2M                = DMA_M2M_Disable;
+ 867              		.loc 1 327 0
+ 868 0466 0B93     		str	r3, [sp, #44]
+ 869              		.loc 1 328 0
+ 870 0468 FFF7FEFF 		bl	DMA_Init
+ 871              	.LVL58:
+ 329:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 330:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c ****     //DMA_Cmd(DMA1_Channel1, ENABLE);
+ 331:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** }
+ 872              		.loc 1 331 0
+ 873 046c 0DB0     		add	sp, sp, #52
+ 874 046e 30BD     		pop	{r4, r5, pc}
+ 875              	.L19:
+ 876              		.align	2
+ 877              	.L18:
+ 878 0470 80000240 		.word	1073873024
+ 879 0474 24540040 		.word	1073763364
+ 880              		.cfi_endproc
+ 881              	.LFE117:
+ 883              		.align	1
+ 884              		.global	TIM2_PWM_Configuration
+ 885              		.thumb
+ 886              		.thumb_func
+ 888              	TIM2_PWM_Configuration:
+ 889              	.LFB118:
+ 332:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 333:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 334:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** void TIM2_PWM_Configuration(void)
+ 335:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 890              		.loc 1 335 0
+ 891              		.cfi_startproc
+ 892              		@ args = 0, pretend = 0, frame = 16
+ 893              		@ frame_needed = 0, uses_anonymous_args = 0
+ 894              	.LVL59:
+ 895 0478 F0B5     		push	{r4, r5, r6, r7, lr}
+ 896              	.LCFI12:
+ 897              		.cfi_def_cfa_offset 20
+ 898              		.cfi_offset 4, -20
+ 899              		.cfi_offset 5, -16
+ 900              		.cfi_offset 6, -12
+ 901              		.cfi_offset 7, -8
+ 902              		.cfi_offset 14, -4
+ 336:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	uint16_t PrescalerValue = 0;
+ 337:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
+ 338:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	static TIM_OCInitTypeDef  TIM_OCInitStructure;
+ 339:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 340:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Compute the prescaler value */
+ 341:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	PrescalerValue = (uint16_t) (SystemCoreClock / (50000*PRESCALEVALUE)) - 1;
+ 903              		.loc 1 341 0
+ 904 047a 304B     		ldr	r3, .L21
+ 335:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 905              		.loc 1 335 0
+ 906 047c 85B0     		sub	sp, sp, #20
+ 907              	.LCFI13:
+ 908              		.cfi_def_cfa_offset 40
+ 909              		.loc 1 341 0
+ 910 047e 1C68     		ldr	r4, [r3, #0]
+ 911 0480 2F4B     		ldr	r3, .L21+4
+ 342:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 343:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Time base configuration */
+ 344:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructInit(&TIM_TimeBaseStructure);
+ 912              		.loc 1 344 0
+ 913 0482 01A8     		add	r0, sp, #4
+ 341:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	PrescalerValue = (uint16_t) (SystemCoreClock / (50000*PRESCALEVALUE)) - 1;
+ 914              		.loc 1 341 0
+ 915 0484 B4FBF3F4 		udiv	r4, r4, r3
+ 916 0488 013C     		subs	r4, r4, #1
+ 917              	.LVL60:
+ 918              		.loc 1 344 0
+ 919 048a FFF7FEFF 		bl	TIM_TimeBaseStructInit
+ 920              	.LVL61:
+ 345:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_Period = 1000;
+ 346:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_Prescaler = PrescalerValue;
+ 921              		.loc 1 346 0
+ 922 048e ADF80440 		strh	r4, [sp, #4]	@ movhi
+ 347:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+ 348:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+ 349:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
+ 350:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 351:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* PWM1 Mode configuration: Channel1 */
+ 352:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+ 923              		.loc 1 352 0
+ 924 0492 2C4C     		ldr	r4, .L21+8
+ 925              	.LVL62:
+ 347:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+ 926              		.loc 1 347 0
+ 927 0494 0027     		movs	r7, #0
+ 345:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_Period = 1000;
+ 928              		.loc 1 345 0
+ 929 0496 4FF47A73 		mov	r3, #1000
+ 349:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
+ 930              		.loc 1 349 0
+ 931 049a 01A9     		add	r1, sp, #4
+ 932 049c 4FF08040 		mov	r0, #1073741824
+ 353:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+ 933              		.loc 1 353 0
+ 934 04a0 0125     		movs	r5, #1
+ 354:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_Pulse = 50*PRESCALEVALUE;
+ 935              		.loc 1 354 0
+ 936 04a2 4FF49676 		mov	r6, #300
+ 345:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_Period = 1000;
+ 937              		.loc 1 345 0
+ 938 04a6 0293     		str	r3, [sp, #8]
+ 347:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+ 939              		.loc 1 347 0
+ 940 04a8 ADF80C70 		strh	r7, [sp, #12]	@ movhi
+ 348:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+ 941              		.loc 1 348 0
+ 942 04ac ADF80670 		strh	r7, [sp, #6]	@ movhi
+ 349:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
+ 943              		.loc 1 349 0
+ 944 04b0 FFF7FEFF 		bl	TIM_TimeBaseInit
+ 945              	.LVL63:
+ 352:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+ 946              		.loc 1 352 0
+ 947 04b4 6023     		movs	r3, #96
+ 355:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+ 356:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OC1Init(TIM2, &TIM_OCInitStructure);
+ 948              		.loc 1 356 0
+ 949 04b6 2146     		mov	r1, r4
+ 950 04b8 4FF08040 		mov	r0, #1073741824
+ 352:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+ 951              		.loc 1 352 0
+ 952 04bc 2360     		str	r3, [r4, #0]
+ 353:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+ 953              		.loc 1 353 0
+ 954 04be A580     		strh	r5, [r4, #4]	@ movhi
+ 354:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_Pulse = 50*PRESCALEVALUE;
+ 955              		.loc 1 354 0
+ 956 04c0 A660     		str	r6, [r4, #8]
+ 355:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+ 957              		.loc 1 355 0
+ 958 04c2 A781     		strh	r7, [r4, #12]	@ movhi
+ 959              		.loc 1 356 0
+ 960 04c4 FFF7FEFF 		bl	TIM_OC1Init
+ 961              	.LVL64:
+ 357:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OC1PreloadConfig(TIM2, TIM_OCPreload_Enable);
+ 962              		.loc 1 357 0
+ 963 04c8 0821     		movs	r1, #8
+ 964 04ca 4FF08040 		mov	r0, #1073741824
+ 965 04ce FFF7FEFF 		bl	TIM_OC1PreloadConfig
+ 966              	.LVL65:
+ 358:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 359:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* PWM1 Mode configuration: Channel2 */
+ 360:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+ 361:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_Pulse = 50*PRESCALEVALUE;
+ 362:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OC2Init(TIM2, &TIM_OCInitStructure);
+ 967              		.loc 1 362 0
+ 968 04d2 2146     		mov	r1, r4
+ 969 04d4 4FF08040 		mov	r0, #1073741824
+ 360:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+ 970              		.loc 1 360 0
+ 971 04d8 A580     		strh	r5, [r4, #4]	@ movhi
+ 361:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_Pulse = 50*PRESCALEVALUE;
+ 972              		.loc 1 361 0
+ 973 04da A660     		str	r6, [r4, #8]
+ 974              		.loc 1 362 0
+ 975 04dc FFF7FEFF 		bl	TIM_OC2Init
+ 976              	.LVL66:
+ 363:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OC2PreloadConfig(TIM2, TIM_OCPreload_Enable);
+ 977              		.loc 1 363 0
+ 978 04e0 0821     		movs	r1, #8
+ 979 04e2 4FF08040 		mov	r0, #1073741824
+ 980 04e6 FFF7FEFF 		bl	TIM_OC2PreloadConfig
+ 981              	.LVL67:
+ 364:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 365:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* PWM1 Mode configuration: Channel3 */
+ 366:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+ 367:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_Pulse = 50*PRESCALEVALUE;
+ 368:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OC3Init(TIM2, &TIM_OCInitStructure);
+ 982              		.loc 1 368 0
+ 983 04ea 2146     		mov	r1, r4
+ 984 04ec 4FF08040 		mov	r0, #1073741824
+ 366:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+ 985              		.loc 1 366 0
+ 986 04f0 A580     		strh	r5, [r4, #4]	@ movhi
+ 367:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_Pulse = 50*PRESCALEVALUE;
+ 987              		.loc 1 367 0
+ 988 04f2 A660     		str	r6, [r4, #8]
+ 989              		.loc 1 368 0
+ 990 04f4 FFF7FEFF 		bl	TIM_OC3Init
+ 991              	.LVL68:
+ 369:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OC3PreloadConfig(TIM2, TIM_OCPreload_Enable);
+ 992              		.loc 1 369 0
+ 993 04f8 0821     		movs	r1, #8
+ 994 04fa 4FF08040 		mov	r0, #1073741824
+ 995 04fe FFF7FEFF 		bl	TIM_OC3PreloadConfig
+ 996              	.LVL69:
+ 370:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 371:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* PWM1 Mode configuration: Channel4 */
+ 372:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+ 373:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_Pulse = 50*PRESCALEVALUE;
+ 374:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OC4Init(TIM2, &TIM_OCInitStructure);
+ 997              		.loc 1 374 0
+ 998 0502 2146     		mov	r1, r4
+ 999 0504 4FF08040 		mov	r0, #1073741824
+ 372:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+ 1000              		.loc 1 372 0
+ 1001 0508 A580     		strh	r5, [r4, #4]	@ movhi
+ 373:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_Pulse = 50*PRESCALEVALUE;
+ 1002              		.loc 1 373 0
+ 1003 050a A660     		str	r6, [r4, #8]
+ 1004              		.loc 1 374 0
+ 1005 050c FFF7FEFF 		bl	TIM_OC4Init
+ 1006              	.LVL70:
+ 375:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OC4PreloadConfig(TIM2, TIM_OCPreload_Enable);
+ 1007              		.loc 1 375 0
+ 1008 0510 0821     		movs	r1, #8
+ 1009 0512 4FF08040 		mov	r0, #1073741824
+ 1010 0516 FFF7FEFF 		bl	TIM_OC4PreloadConfig
+ 1011              	.LVL71:
+ 376:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 377:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_ARRPreloadConfig(TIM2, ENABLE);
+ 1012              		.loc 1 377 0
+ 1013 051a 2946     		mov	r1, r5
+ 1014 051c 4FF08040 		mov	r0, #1073741824
+ 1015 0520 FFF7FEFF 		bl	TIM_ARRPreloadConfig
+ 1016              	.LVL72:
+ 378:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_CtrlPWMOutputs(TIM2, ENABLE);
+ 1017              		.loc 1 378 0
+ 1018 0524 2946     		mov	r1, r5
+ 1019 0526 4FF08040 		mov	r0, #1073741824
+ 1020 052a FFF7FEFF 		bl	TIM_CtrlPWMOutputs
+ 1021              	.LVL73:
+ 379:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 380:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* TIM3 enable counter */
+ 381:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_Cmd(TIM2, ENABLE);
+ 1022              		.loc 1 381 0
+ 1023 052e 4FF08040 		mov	r0, #1073741824
+ 1024 0532 2946     		mov	r1, r5
+ 1025 0534 FFF7FEFF 		bl	TIM_Cmd
+ 1026              	.LVL74:
+ 382:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** }
+ 1027              		.loc 1 382 0
+ 1028 0538 05B0     		add	sp, sp, #20
+ 1029 053a F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1030              	.L22:
+ 1031              		.align	2
+ 1032              	.L21:
+ 1033 053c 00000000 		.word	SystemCoreClock
+ 1034 0540 E0930400 		.word	300000
+ 1035 0544 00000000 		.word	.LANCHOR0
+ 1036              		.cfi_endproc
+ 1037              	.LFE118:
+ 1039              		.align	1
+ 1040              		.global	TIM3_PWM_Configuration
+ 1041              		.thumb
+ 1042              		.thumb_func
+ 1044              	TIM3_PWM_Configuration:
+ 1045              	.LFB119:
+ 383:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 384:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 385:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** void TIM3_PWM_Configuration(void)
+ 386:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 1046              		.loc 1 386 0
+ 1047              		.cfi_startproc
+ 1048              		@ args = 0, pretend = 0, frame = 16
+ 1049              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1050              	.LVL75:
+ 1051 0548 2DE9FF41 		push	{r0, r1, r2, r3, r4, r5, r6, r7, r8, lr}
+ 1052              	.LCFI14:
+ 1053              		.cfi_def_cfa_offset 40
+ 1054              		.cfi_offset 0, -40
+ 1055              		.cfi_offset 1, -36
+ 1056              		.cfi_offset 2, -32
+ 1057              		.cfi_offset 3, -28
+ 1058              		.cfi_offset 4, -24
+ 1059              		.cfi_offset 5, -20
+ 1060              		.cfi_offset 6, -16
+ 1061              		.cfi_offset 7, -12
+ 1062              		.cfi_offset 8, -8
+ 1063              		.cfi_offset 14, -4
+ 387:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	uint16_t PrescalerValue = 0;
+ 388:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
+ 389:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	static TIM_OCInitTypeDef  TIM_OCInitStructure;
+ 390:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 391:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Compute the prescaler value */
+ 392:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	PrescalerValue = (uint16_t) (SystemCoreClock / (50000*PRESCALEVALUE)) - 1;
+ 1064              		.loc 1 392 0
+ 1065 054c 2D4B     		ldr	r3, .L24
+ 393:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 394:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Time base configuration */
+ 395:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructInit(&TIM_TimeBaseStructure);
+ 1066              		.loc 1 395 0
+ 1067 054e 01A8     		add	r0, sp, #4
+ 392:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	PrescalerValue = (uint16_t) (SystemCoreClock / (50000*PRESCALEVALUE)) - 1;
+ 1068              		.loc 1 392 0
+ 1069 0550 1C68     		ldr	r4, [r3, #0]
+ 1070 0552 2D4B     		ldr	r3, .L24+4
+ 396:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_Period = 1000;
+ 397:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_Prescaler = PrescalerValue;
+ 398:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+ 399:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+ 400:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
+ 401:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 402:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* PWM1 Mode configuration: Channel1 */
+ 403:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+ 1071              		.loc 1 403 0
+ 1072 0554 2D4D     		ldr	r5, .L24+8
+ 392:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	PrescalerValue = (uint16_t) (SystemCoreClock / (50000*PRESCALEVALUE)) - 1;
+ 1073              		.loc 1 392 0
+ 1074 0556 B4FBF3F4 		udiv	r4, r4, r3
+ 1075 055a 013C     		subs	r4, r4, #1
+ 1076              	.LVL76:
+ 395:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructInit(&TIM_TimeBaseStructure);
+ 1077              		.loc 1 395 0
+ 1078 055c FFF7FEFF 		bl	TIM_TimeBaseStructInit
+ 1079              	.LVL77:
+ 397:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_Prescaler = PrescalerValue;
+ 1080              		.loc 1 397 0
+ 1081 0560 ADF80440 		strh	r4, [sp, #4]	@ movhi
+ 400:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
+ 1082              		.loc 1 400 0
+ 1083 0564 2A4C     		ldr	r4, .L24+12
+ 1084              	.LVL78:
+ 398:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+ 1085              		.loc 1 398 0
+ 1086 0566 0027     		movs	r7, #0
+ 396:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_Period = 1000;
+ 1087              		.loc 1 396 0
+ 1088 0568 4FF47A73 		mov	r3, #1000
+ 400:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
+ 1089              		.loc 1 400 0
+ 1090 056c 2046     		mov	r0, r4
+ 1091 056e 01A9     		add	r1, sp, #4
+ 396:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_Period = 1000;
+ 1092              		.loc 1 396 0
+ 1093 0570 0293     		str	r3, [sp, #8]
+ 398:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+ 1094              		.loc 1 398 0
+ 1095 0572 ADF80C70 		strh	r7, [sp, #12]	@ movhi
+ 399:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+ 1096              		.loc 1 399 0
+ 1097 0576 ADF80670 		strh	r7, [sp, #6]	@ movhi
+ 400:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
+ 1098              		.loc 1 400 0
+ 1099 057a FFF7FEFF 		bl	TIM_TimeBaseInit
+ 1100              	.LVL79:
+ 404:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+ 405:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_Pulse = 50*PRESCALEVALUE;
+ 406:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+ 1101              		.loc 1 406 0
+ 1102 057e 2F84     		strh	r7, [r5, #32]	@ movhi
+ 407:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OC1Init(TIM3, &TIM_OCInitStructure);
+ 1103              		.loc 1 407 0
+ 1104 0580 05F11407 		add	r7, r5, #20
+ 403:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+ 1105              		.loc 1 403 0
+ 1106 0584 6023     		movs	r3, #96
+ 404:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+ 1107              		.loc 1 404 0
+ 1108 0586 0126     		movs	r6, #1
+ 405:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_Pulse = 50*PRESCALEVALUE;
+ 1109              		.loc 1 405 0
+ 1110 0588 4FF49678 		mov	r8, #300
+ 1111              		.loc 1 407 0
+ 1112 058c 2046     		mov	r0, r4
+ 1113 058e 3946     		mov	r1, r7
+ 403:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
+ 1114              		.loc 1 403 0
+ 1115 0590 6B61     		str	r3, [r5, #20]
+ 404:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+ 1116              		.loc 1 404 0
+ 1117 0592 2E83     		strh	r6, [r5, #24]	@ movhi
+ 405:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_Pulse = 50*PRESCALEVALUE;
+ 1118              		.loc 1 405 0
+ 1119 0594 C5F81C80 		str	r8, [r5, #28]
+ 1120              		.loc 1 407 0
+ 1121 0598 FFF7FEFF 		bl	TIM_OC1Init
+ 1122              	.LVL80:
+ 408:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OC1PreloadConfig(TIM3, TIM_OCPreload_Enable);
+ 1123              		.loc 1 408 0
+ 1124 059c 2046     		mov	r0, r4
+ 1125 059e 0821     		movs	r1, #8
+ 1126 05a0 FFF7FEFF 		bl	TIM_OC1PreloadConfig
+ 1127              	.LVL81:
+ 409:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 410:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* PWM1 Mode configuration: Channel2 */
+ 411:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+ 412:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_Pulse = 50*PRESCALEVALUE;
+ 413:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OC2Init(TIM3, &TIM_OCInitStructure);
+ 1128              		.loc 1 413 0
+ 1129 05a4 2046     		mov	r0, r4
+ 1130 05a6 3946     		mov	r1, r7
+ 411:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+ 1131              		.loc 1 411 0
+ 1132 05a8 2E83     		strh	r6, [r5, #24]	@ movhi
+ 412:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_Pulse = 50*PRESCALEVALUE;
+ 1133              		.loc 1 412 0
+ 1134 05aa C5F81C80 		str	r8, [r5, #28]
+ 1135              		.loc 1 413 0
+ 1136 05ae FFF7FEFF 		bl	TIM_OC2Init
+ 1137              	.LVL82:
+ 414:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OC2PreloadConfig(TIM3, TIM_OCPreload_Enable);
+ 1138              		.loc 1 414 0
+ 1139 05b2 2046     		mov	r0, r4
+ 1140 05b4 0821     		movs	r1, #8
+ 1141 05b6 FFF7FEFF 		bl	TIM_OC2PreloadConfig
+ 1142              	.LVL83:
+ 415:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 416:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* PWM1 Mode configuration: Channel3 */
+ 417:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+ 418:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_Pulse = 50*PRESCALEVALUE;
+ 419:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OC3Init(TIM3, &TIM_OCInitStructure);
+ 1143              		.loc 1 419 0
+ 1144 05ba 2046     		mov	r0, r4
+ 1145 05bc 3946     		mov	r1, r7
+ 417:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+ 1146              		.loc 1 417 0
+ 1147 05be 2E83     		strh	r6, [r5, #24]	@ movhi
+ 418:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_Pulse = 50*PRESCALEVALUE;
+ 1148              		.loc 1 418 0
+ 1149 05c0 C5F81C80 		str	r8, [r5, #28]
+ 1150              		.loc 1 419 0
+ 1151 05c4 FFF7FEFF 		bl	TIM_OC3Init
+ 1152              	.LVL84:
+ 420:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OC3PreloadConfig(TIM3, TIM_OCPreload_Enable);
+ 1153              		.loc 1 420 0
+ 1154 05c8 2046     		mov	r0, r4
+ 1155 05ca 0821     		movs	r1, #8
+ 1156 05cc FFF7FEFF 		bl	TIM_OC3PreloadConfig
+ 1157              	.LVL85:
+ 421:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 422:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* PWM1 Mode configuration: Channel4 */
+ 423:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+ 424:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_Pulse = 50*PRESCALEVALUE;
+ 425:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OC4Init(TIM3, &TIM_OCInitStructure);
+ 1158              		.loc 1 425 0
+ 1159 05d0 2046     		mov	r0, r4
+ 1160 05d2 3946     		mov	r1, r7
+ 423:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+ 1161              		.loc 1 423 0
+ 1162 05d4 2E83     		strh	r6, [r5, #24]	@ movhi
+ 424:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OCInitStructure.TIM_Pulse = 50*PRESCALEVALUE;
+ 1163              		.loc 1 424 0
+ 1164 05d6 C5F81C80 		str	r8, [r5, #28]
+ 1165              		.loc 1 425 0
+ 1166 05da FFF7FEFF 		bl	TIM_OC4Init
+ 1167              	.LVL86:
+ 426:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_OC4PreloadConfig(TIM3, TIM_OCPreload_Enable);
+ 1168              		.loc 1 426 0
+ 1169 05de 2046     		mov	r0, r4
+ 1170 05e0 0821     		movs	r1, #8
+ 1171 05e2 FFF7FEFF 		bl	TIM_OC4PreloadConfig
+ 1172              	.LVL87:
+ 427:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 428:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_ARRPreloadConfig(TIM3, ENABLE);
+ 1173              		.loc 1 428 0
+ 1174 05e6 2046     		mov	r0, r4
+ 1175 05e8 3146     		mov	r1, r6
+ 1176 05ea FFF7FEFF 		bl	TIM_ARRPreloadConfig
+ 1177              	.LVL88:
+ 429:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_CtrlPWMOutputs(TIM3, ENABLE);
+ 1178              		.loc 1 429 0
+ 1179 05ee 2046     		mov	r0, r4
+ 1180 05f0 3146     		mov	r1, r6
+ 1181 05f2 FFF7FEFF 		bl	TIM_CtrlPWMOutputs
+ 1182              	.LVL89:
+ 430:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 431:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* TIM3 enable counter */
+ 432:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_Cmd(TIM3, ENABLE);
+ 1183              		.loc 1 432 0
+ 1184 05f6 2046     		mov	r0, r4
+ 1185 05f8 3146     		mov	r1, r6
+ 1186 05fa FFF7FEFF 		bl	TIM_Cmd
+ 1187              	.LVL90:
+ 433:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** }
+ 1188              		.loc 1 433 0
+ 1189 05fe BDE8FF81 		pop	{r0, r1, r2, r3, r4, r5, r6, r7, r8, pc}
+ 1190              	.L25:
+ 1191 0602 00BF     		.align	2
+ 1192              	.L24:
+ 1193 0604 00000000 		.word	SystemCoreClock
+ 1194 0608 E0930400 		.word	300000
+ 1195 060c 00000000 		.word	.LANCHOR0
+ 1196 0610 00040040 		.word	1073742848
+ 1197              		.cfi_endproc
+ 1198              	.LFE119:
+ 1200              		.align	1
+ 1201              		.global	TIM4_Configuration
+ 1202              		.thumb
+ 1203              		.thumb_func
+ 1205              	TIM4_Configuration:
+ 1206              	.LFB120:
+ 434:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 435:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 436:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** void TIM4_Configuration(void)
+ 437:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 1207              		.loc 1 437 0
+ 1208              		.cfi_startproc
+ 1209              		@ args = 0, pretend = 0, frame = 16
+ 1210              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1211              	.LVL91:
+ 1212 0614 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 1213              	.LCFI15:
+ 1214              		.cfi_def_cfa_offset 24
+ 1215              		.cfi_offset 0, -24
+ 1216              		.cfi_offset 1, -20
+ 1217              		.cfi_offset 2, -16
+ 1218              		.cfi_offset 3, -12
+ 1219              		.cfi_offset 4, -8
+ 1220              		.cfi_offset 14, -4
+ 438:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	uint16_t PrescalerValue = 0;
+ 439:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
+ 440:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 441:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Compute the prescaler value */
+ 442:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	PrescalerValue = (uint16_t) (SystemCoreClock / (50000)) - 1;
+ 1221              		.loc 1 442 0
+ 1222 0616 0F4B     		ldr	r3, .L27
+ 443:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Time base configuration */
+ 444:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructInit(&TIM_TimeBaseStructure);
+ 1223              		.loc 1 444 0
+ 1224 0618 01A8     		add	r0, sp, #4
+ 442:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	PrescalerValue = (uint16_t) (SystemCoreClock / (50000)) - 1;
+ 1225              		.loc 1 442 0
+ 1226 061a 1C68     		ldr	r4, [r3, #0]
+ 1227 061c 4CF25033 		movw	r3, #50000
+ 1228 0620 B4FBF3F4 		udiv	r4, r4, r3
+ 1229 0624 013C     		subs	r4, r4, #1
+ 1230              	.LVL92:
+ 1231              		.loc 1 444 0
+ 1232 0626 FFF7FEFF 		bl	TIM_TimeBaseStructInit
+ 1233              	.LVL93:
+ 445:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_Period = 1000;
+ 446:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_Prescaler = PrescalerValue;
+ 1234              		.loc 1 446 0
+ 1235 062a ADF80440 		strh	r4, [sp, #4]	@ movhi
+ 447:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+ 448:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+ 449:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
+ 1236              		.loc 1 449 0
+ 1237 062e 0A4C     		ldr	r4, .L27+4
+ 1238              	.LVL94:
+ 445:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_Period = 1000;
+ 1239              		.loc 1 445 0
+ 1240 0630 4FF47A73 		mov	r3, #1000
+ 1241 0634 0293     		str	r3, [sp, #8]
+ 1242              		.loc 1 449 0
+ 1243 0636 2046     		mov	r0, r4
+ 447:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+ 1244              		.loc 1 447 0
+ 1245 0638 0023     		movs	r3, #0
+ 1246              		.loc 1 449 0
+ 1247 063a 01A9     		add	r1, sp, #4
+ 447:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+ 1248              		.loc 1 447 0
+ 1249 063c ADF80C30 		strh	r3, [sp, #12]	@ movhi
+ 448:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+ 1250              		.loc 1 448 0
+ 1251 0640 ADF80630 		strh	r3, [sp, #6]	@ movhi
+ 1252              		.loc 1 449 0
+ 1253 0644 FFF7FEFF 		bl	TIM_TimeBaseInit
+ 1254              	.LVL95:
+ 450:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 451:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* TIM3 enable counter */
+ 452:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	TIM_Cmd(TIM4, ENABLE);
+ 1255              		.loc 1 452 0
+ 1256 0648 2046     		mov	r0, r4
+ 1257 064a 0121     		movs	r1, #1
+ 1258 064c FFF7FEFF 		bl	TIM_Cmd
+ 1259              	.LVL96:
+ 453:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** }
+ 1260              		.loc 1 453 0
+ 1261 0650 1FBD     		pop	{r0, r1, r2, r3, r4, pc}
+ 1262              	.L28:
+ 1263 0652 00BF     		.align	2
+ 1264              	.L27:
+ 1265 0654 00000000 		.word	SystemCoreClock
+ 1266 0658 00080040 		.word	1073743872
+ 1267              		.cfi_endproc
+ 1268              	.LFE120:
+ 1270              		.align	1
+ 1271              		.global	getEXTI_Config
+ 1272              		.thumb
+ 1273              		.thumb_func
+ 1275              	getEXTI_Config:
+ 1276              	.LFB121:
+ 454:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 455:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 456:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** EXTI_InitTypeDef *getEXTI_Config(void)
+ 457:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 1277              		.loc 1 457 0
+ 1278              		.cfi_startproc
+ 1279              		@ args = 0, pretend = 0, frame = 0
+ 1280              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1281              		@ link register save eliminated.
+ 458:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	static EXTI_InitTypeDef   EXTI_InitStructure;
+ 459:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	return &EXTI_InitStructure;
+ 460:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** }
+ 1282              		.loc 1 460 0
+ 1283 065c 0048     		ldr	r0, .L30
+ 1284 065e 7047     		bx	lr
+ 1285              	.L31:
+ 1286              		.align	2
+ 1287              	.L30:
+ 1288 0660 28000000 		.word	.LANCHOR0+40
+ 1289              		.cfi_endproc
+ 1290              	.LFE121:
+ 1292              		.align	1
+ 1293              		.global	EXTI_Configuration
+ 1294              		.thumb
+ 1295              		.thumb_func
+ 1297              	EXTI_Configuration:
+ 1298              	.LFB122:
+ 461:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 462:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** void EXTI_Configuration(void)
+ 463:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 1299              		.loc 1 463 0
+ 1300              		.cfi_startproc
+ 1301              		@ args = 0, pretend = 0, frame = 0
+ 1302              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1303 0664 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1304              	.LCFI16:
+ 1305              		.cfi_def_cfa_offset 24
+ 1306              		.cfi_offset 4, -24
+ 1307              		.cfi_offset 5, -20
+ 1308              		.cfi_offset 6, -16
+ 1309              		.cfi_offset 7, -12
+ 1310              		.cfi_offset 8, -8
+ 1311              		.cfi_offset 14, -4
+ 464:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitTypeDef   *EXTI_InitStructure = getEXTI_Config();
+ 465:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 466:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Connect EXTI0 Line to PA0 pin */
+ 467:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource12);
+ 1312              		.loc 1 467 0
+ 1313 0668 0320     		movs	r0, #3
+ 1314 066a 0C21     		movs	r1, #12
+ 468:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource13);
+ 469:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource14);
+ 470:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource15);
+ 471:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 472:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Configure EXTI0 line */
+ 473:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Line = EXTI_Line12;
+ 1315              		.loc 1 473 0
+ 1316 066c 214C     		ldr	r4, .L33
+ 467:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource12);
+ 1317              		.loc 1 467 0
+ 1318 066e FFF7FEFF 		bl	SYSCFG_EXTILineConfig
+ 1319              	.LVL97:
+ 468:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource13);
+ 1320              		.loc 1 468 0
+ 1321 0672 0320     		movs	r0, #3
+ 1322 0674 0D21     		movs	r1, #13
+ 1323 0676 FFF7FEFF 		bl	SYSCFG_EXTILineConfig
+ 1324              	.LVL98:
+ 469:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource14);
+ 1325              		.loc 1 469 0
+ 1326 067a 0320     		movs	r0, #3
+ 1327 067c 0E21     		movs	r1, #14
+ 1328 067e FFF7FEFF 		bl	SYSCFG_EXTILineConfig
+ 1329              	.LVL99:
+ 459:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	return &EXTI_InitStructure;
+ 1330              		.loc 1 459 0
+ 1331 0682 04F12805 		add	r5, r4, #40
+ 470:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource15);
+ 1332              		.loc 1 470 0
+ 1333 0686 0F21     		movs	r1, #15
+ 1334 0688 0320     		movs	r0, #3
+ 1335 068a FFF7FEFF 		bl	SYSCFG_EXTILineConfig
+ 1336              	.LVL100:
+ 474:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Mode = EXTI_Mode_Interrupt;
+ 1337              		.loc 1 474 0
+ 1338 068e 4FF00008 		mov	r8, #0
+ 475:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Trigger = EXTI_Trigger_Rising_Falling;
+ 1339              		.loc 1 475 0
+ 1340 0692 1027     		movs	r7, #16
+ 476:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_LineCmd = ENABLE;
+ 1341              		.loc 1 476 0
+ 1342 0694 0126     		movs	r6, #1
+ 473:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Line = EXTI_Line12;
+ 1343              		.loc 1 473 0
+ 1344 0696 0C23     		movs	r3, #12
+ 477:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_Init(EXTI_InitStructure);
+ 1345              		.loc 1 477 0
+ 1346 0698 2846     		mov	r0, r5
+ 473:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Line = EXTI_Line12;
+ 1347              		.loc 1 473 0
+ 1348 069a A362     		str	r3, [r4, #40]
+ 474:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Mode = EXTI_Mode_Interrupt;
+ 1349              		.loc 1 474 0
+ 1350 069c 84F82C80 		strb	r8, [r4, #44]
+ 475:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Trigger = EXTI_Trigger_Rising_Falling;
+ 1351              		.loc 1 475 0
+ 1352 06a0 84F82D70 		strb	r7, [r4, #45]
+ 476:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_LineCmd = ENABLE;
+ 1353              		.loc 1 476 0
+ 1354 06a4 84F82E60 		strb	r6, [r4, #46]
+ 1355              		.loc 1 477 0
+ 1356 06a8 FFF7FEFF 		bl	EXTI_Init
+ 1357              	.LVL101:
+ 478:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 479:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Configure EXTI0 line */
+ 480:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Line = EXTI_Line13;
+ 1358              		.loc 1 480 0
+ 1359 06ac 0D23     		movs	r3, #13
+ 481:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Mode = EXTI_Mode_Interrupt;
+ 482:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Trigger = EXTI_Trigger_Rising_Falling;
+ 483:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_LineCmd = ENABLE;
+ 484:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_Init(EXTI_InitStructure);
+ 1360              		.loc 1 484 0
+ 1361 06ae 2846     		mov	r0, r5
+ 480:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Line = EXTI_Line13;
+ 1362              		.loc 1 480 0
+ 1363 06b0 A362     		str	r3, [r4, #40]
+ 481:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Mode = EXTI_Mode_Interrupt;
+ 1364              		.loc 1 481 0
+ 1365 06b2 84F82C80 		strb	r8, [r4, #44]
+ 482:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Trigger = EXTI_Trigger_Rising_Falling;
+ 1366              		.loc 1 482 0
+ 1367 06b6 84F82D70 		strb	r7, [r4, #45]
+ 483:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_LineCmd = ENABLE;
+ 1368              		.loc 1 483 0
+ 1369 06ba 84F82E60 		strb	r6, [r4, #46]
+ 1370              		.loc 1 484 0
+ 1371 06be FFF7FEFF 		bl	EXTI_Init
+ 1372              	.LVL102:
+ 485:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 486:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Configure EXTI0 line */
+ 487:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Line = EXTI_Line14;
+ 1373              		.loc 1 487 0
+ 1374 06c2 0E23     		movs	r3, #14
+ 488:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Mode = EXTI_Mode_Interrupt;
+ 489:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Trigger = EXTI_Trigger_Rising_Falling;
+ 490:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_LineCmd = ENABLE;
+ 491:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_Init(EXTI_InitStructure);
+ 1375              		.loc 1 491 0
+ 1376 06c4 2846     		mov	r0, r5
+ 487:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Line = EXTI_Line14;
+ 1377              		.loc 1 487 0
+ 1378 06c6 A362     		str	r3, [r4, #40]
+ 488:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Mode = EXTI_Mode_Interrupt;
+ 1379              		.loc 1 488 0
+ 1380 06c8 84F82C80 		strb	r8, [r4, #44]
+ 489:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Trigger = EXTI_Trigger_Rising_Falling;
+ 1381              		.loc 1 489 0
+ 1382 06cc 84F82D70 		strb	r7, [r4, #45]
+ 490:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_LineCmd = ENABLE;
+ 1383              		.loc 1 490 0
+ 1384 06d0 84F82E60 		strb	r6, [r4, #46]
+ 1385              		.loc 1 491 0
+ 1386 06d4 FFF7FEFF 		bl	EXTI_Init
+ 1387              	.LVL103:
+ 492:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 493:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Configure EXTI0 line */
+ 494:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Line = EXTI_Line15;
+ 1388              		.loc 1 494 0
+ 1389 06d8 0F23     		movs	r3, #15
+ 495:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Mode = EXTI_Mode_Interrupt;
+ 496:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Trigger = EXTI_Trigger_Rising_Falling;
+ 497:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_LineCmd = ENABLE;
+ 498:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_Init(EXTI_InitStructure);
+ 1390              		.loc 1 498 0
+ 1391 06da 2846     		mov	r0, r5
+ 494:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Line = EXTI_Line15;
+ 1392              		.loc 1 494 0
+ 1393 06dc A362     		str	r3, [r4, #40]
+ 495:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Mode = EXTI_Mode_Interrupt;
+ 1394              		.loc 1 495 0
+ 1395 06de 84F82C80 		strb	r8, [r4, #44]
+ 496:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_Trigger = EXTI_Trigger_Rising_Falling;
+ 1396              		.loc 1 496 0
+ 1397 06e2 84F82D70 		strb	r7, [r4, #45]
+ 497:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_InitStructure->EXTI_LineCmd = ENABLE;
+ 1398              		.loc 1 497 0
+ 1399 06e6 84F82E60 		strb	r6, [r4, #46]
+ 499:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** }
+ 1400              		.loc 1 499 0
+ 1401 06ea BDE8F041 		pop	{r4, r5, r6, r7, r8, lr}
+ 498:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	EXTI_Init(EXTI_InitStructure);
+ 1402              		.loc 1 498 0
+ 1403 06ee FFF7FEBF 		b	EXTI_Init
+ 1404              	.LVL104:
+ 1405              	.L34:
+ 1406 06f2 00BF     		.align	2
+ 1407              	.L33:
+ 1408 06f4 00000000 		.word	.LANCHOR0
+ 1409              		.cfi_endproc
+ 1410              	.LFE122:
+ 1412              		.align	1
+ 1413              		.global	ADC_Configuration
+ 1414              		.thumb
+ 1415              		.thumb_func
+ 1417              	ADC_Configuration:
+ 1418              	.LFB123:
+ 500:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 501:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 502:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 503:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** void ADC_Configuration(void)
+ 504:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** {
+ 1419              		.loc 1 504 0
+ 1420              		.cfi_startproc
+ 1421              		@ args = 0, pretend = 0, frame = 88
+ 1422              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1423 06f8 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1424              	.LCFI17:
+ 1425              		.cfi_def_cfa_offset 20
+ 1426              		.cfi_offset 4, -20
+ 1427              		.cfi_offset 5, -16
+ 1428              		.cfi_offset 6, -12
+ 1429              		.cfi_offset 7, -8
+ 1430              		.cfi_offset 14, -4
+ 1431 06fa 97B0     		sub	sp, sp, #92
+ 1432              	.LCFI18:
+ 1433              		.cfi_def_cfa_offset 112
+ 505:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	__IO uint16_t  calibration_value = 0;
+ 1434              		.loc 1 505 0
+ 1435 06fc 0024     		movs	r4, #0
+ 506:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 507:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitTypeDef       ADC_InitStructure;
+ 508:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_CommonInitTypeDef ADC_CommonInitStructure;
+ 509:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjectedInitTypeDef ADC_InjInitStructure;
+ 510:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 511:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_StructInit(&ADC_InitStructure);
+ 1436              		.loc 1 511 0
+ 1437 06fe 0EA8     		add	r0, sp, #56
+ 505:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	__IO uint16_t  calibration_value = 0;
+ 1438              		.loc 1 505 0
+ 1439 0700 ADF80640 		strh	r4, [sp, #6]	@ movhi
+ 1440              	.LVL105:
+ 1441              		.loc 1 511 0
+ 1442 0704 FFF7FEFF 		bl	ADC_StructInit
+ 1443              	.LVL106:
+ 512:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 513:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Calibration procedure */
+ 514:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_VoltageRegulatorCmd(ADC2, ENABLE);
+ 1444              		.loc 1 514 0
+ 1445 0708 0121     		movs	r1, #1
+ 1446 070a 3048     		ldr	r0, .L43
+ 1447 070c FFF7FEFF 		bl	ADC_VoltageRegulatorCmd
+ 1448              	.LVL107:
+ 515:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 516:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Insert delay equal to 10 µs */
+ 517:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	Delay(10);
+ 1449              		.loc 1 517 0
+ 1450 0710 0A20     		movs	r0, #10
+ 1451 0712 FFF7FEFF 		bl	Delay
+ 1452              	.LVL108:
+ 518:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 519:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_SelectCalibrationMode(ADC2, ADC_CalibrationMode_Single);
+ 1453              		.loc 1 519 0
+ 1454 0716 2D48     		ldr	r0, .L43
+ 1455 0718 2146     		mov	r1, r4
+ 1456 071a FFF7FEFF 		bl	ADC_SelectCalibrationMode
+ 1457              	.LVL109:
+ 520:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_StartCalibration(ADC2);
+ 1458              		.loc 1 520 0
+ 1459 071e 2B48     		ldr	r0, .L43
+ 1460 0720 FFF7FEFF 		bl	ADC_StartCalibration
+ 1461              	.LVL110:
+ 1462              	.L36:
+ 521:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 522:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	while(ADC_GetCalibrationStatus(ADC2) != RESET );
+ 1463              		.loc 1 522 0 discriminator 1
+ 1464 0724 2948     		ldr	r0, .L43
+ 1465 0726 FFF7FEFF 		bl	ADC_GetCalibrationStatus
+ 1466              	.LVL111:
+ 1467 072a 0446     		mov	r4, r0
+ 1468 072c 0028     		cmp	r0, #0
+ 1469 072e F9D1     		bne	.L36
+ 523:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	calibration_value = ADC_GetCalibrationValue(ADC2);
+ 1470              		.loc 1 523 0
+ 1471 0730 2648     		ldr	r0, .L43
+ 1472 0732 FFF7FEFF 		bl	ADC_GetCalibrationValue
+ 1473              	.LVL112:
+ 524:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 525:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_InjSimul;
+ 1474              		.loc 1 525 0
+ 1475 0736 0526     		movs	r6, #5
+ 1476              	.LVL113:
+ 523:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	calibration_value = ADC_GetCalibrationValue(ADC2);
+ 1477              		.loc 1 523 0
+ 1478 0738 ADF80600 		strh	r0, [sp, #6]	@ movhi
+ 526:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_CommonInitStructure.ADC_Clock = ADC_Clock_AsynClkMode;
+ 527:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
+ 528:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_CommonInitStructure.ADC_DMAMode = ADC_DMAMode_OneShot;
+ 529:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_CommonInitStructure.ADC_TwoSamplingDelay = 0;
+ 530:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_CommonInit(ADC2, &ADC_CommonInitStructure);
+ 1479              		.loc 1 530 0
+ 1480 073c 02A9     		add	r1, sp, #8
+ 1481 073e 2348     		ldr	r0, .L43
+ 1482              	.LVL114:
+ 526:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_CommonInitStructure.ADC_Clock = ADC_Clock_AsynClkMode;
+ 1483              		.loc 1 526 0
+ 1484 0740 0394     		str	r4, [sp, #12]
+ 527:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
+ 1485              		.loc 1 527 0
+ 1486 0742 0494     		str	r4, [sp, #16]
+ 528:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_CommonInitStructure.ADC_DMAMode = ADC_DMAMode_OneShot;
+ 1487              		.loc 1 528 0
+ 1488 0744 0594     		str	r4, [sp, #20]
+ 529:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_CommonInitStructure.ADC_TwoSamplingDelay = 0;
+ 1489              		.loc 1 529 0
+ 1490 0746 8DF81840 		strb	r4, [sp, #24]
+ 525:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_CommonInitStructure.ADC_Mode = ADC_Mode_InjSimul;
+ 1491              		.loc 1 525 0
+ 1492 074a 0296     		str	r6, [sp, #8]
+ 1493              		.loc 1 530 0
+ 1494 074c FFF7FEFF 		bl	ADC_CommonInit
+ 1495              	.LVL115:
+ 531:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 532:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitStructure.ADC_ContinuousConvMode = ADC_ContinuousConvMode_Enable;
+ 1496              		.loc 1 532 0
+ 1497 0750 4FF40053 		mov	r3, #8192
+ 533:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
+ 534:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitStructure.ADC_ExternalTrigConvEvent = ADC_ExternalTrigConvEvent_0;
+ 535:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitStructure.ADC_ExternalTrigEventEdge = ADC_ExternalTrigEventEdge_None;
+ 536:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+ 537:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitStructure.ADC_OverrunMode = ADC_OverrunMode_Disable;
+ 538:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitStructure.ADC_AutoInjMode = ADC_AutoInjec_Enable;
+ 539:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitStructure.ADC_NbrOfRegChannel = 3;
+ 1498              		.loc 1 539 0
+ 1499 0754 0325     		movs	r5, #3
+ 532:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitStructure.ADC_ContinuousConvMode = ADC_ContinuousConvMode_Enable;
+ 1500              		.loc 1 532 0
+ 1501 0756 0E93     		str	r3, [sp, #56]
+ 540:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_Init(ADC2, &ADC_InitStructure);
+ 1502              		.loc 1 540 0
+ 1503 0758 1C48     		ldr	r0, .L43
+ 538:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitStructure.ADC_AutoInjMode = ADC_AutoInjec_Enable;
+ 1504              		.loc 1 538 0
+ 1505 075a 4FF00073 		mov	r3, #33554432
+ 1506              		.loc 1 540 0
+ 1507 075e 0EA9     		add	r1, sp, #56
+ 538:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitStructure.ADC_AutoInjMode = ADC_AutoInjec_Enable;
+ 1508              		.loc 1 538 0
+ 1509 0760 1493     		str	r3, [sp, #80]
+ 533:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
+ 1510              		.loc 1 533 0
+ 1511 0762 0F94     		str	r4, [sp, #60]
+ 534:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitStructure.ADC_ExternalTrigConvEvent = ADC_ExternalTrigConvEvent_0;
+ 1512              		.loc 1 534 0
+ 1513 0764 1094     		str	r4, [sp, #64]
+ 535:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitStructure.ADC_ExternalTrigEventEdge = ADC_ExternalTrigEventEdge_None;
+ 1514              		.loc 1 535 0
+ 1515 0766 1194     		str	r4, [sp, #68]
+ 536:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+ 1516              		.loc 1 536 0
+ 1517 0768 1294     		str	r4, [sp, #72]
+ 537:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitStructure.ADC_OverrunMode = ADC_OverrunMode_Disable;
+ 1518              		.loc 1 537 0
+ 1519 076a 1394     		str	r4, [sp, #76]
+ 541:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 542:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjInitStructure.ADC_ExternalTrigInjecConvEvent = ADC_ExternalTrigInjecConvEvent_0;
+ 543:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjInitStructure.ADC_ExternalTrigInjecEventEdge = ADC_ExternalTrigInjecEventEdge_None;
+ 544:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjInitStructure.ADC_NbrOfInjecChannel = 3;
+ 545:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjInitStructure.ADC_InjecSequence1 = ADC_Channel_5;
+ 546:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjInitStructure.ADC_InjecSequence2 = ADC_Channel_11;
+ 1520              		.loc 1 546 0
+ 1521 076c 0B27     		movs	r7, #11
+ 539:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InitStructure.ADC_NbrOfRegChannel = 3;
+ 1522              		.loc 1 539 0
+ 1523 076e 8DF85450 		strb	r5, [sp, #84]
+ 540:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_Init(ADC2, &ADC_InitStructure);
+ 1524              		.loc 1 540 0
+ 1525 0772 FFF7FEFF 		bl	ADC_Init
+ 1526              	.LVL116:
+ 542:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjInitStructure.ADC_ExternalTrigInjecConvEvent = ADC_ExternalTrigInjecConvEvent_0;
+ 1527              		.loc 1 542 0
+ 1528 0776 0794     		str	r4, [sp, #28]
+ 543:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjInitStructure.ADC_ExternalTrigInjecEventEdge = ADC_ExternalTrigInjecEventEdge_None;
+ 1529              		.loc 1 543 0
+ 1530 0778 0894     		str	r4, [sp, #32]
+ 547:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjInitStructure.ADC_InjecSequence3 = ADC_Channel_12;
+ 548:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjectedInit(ADC2, &ADC_InjInitStructure);
+ 1531              		.loc 1 548 0
+ 1532 077a 1448     		ldr	r0, .L43
+ 547:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjInitStructure.ADC_InjecSequence3 = ADC_Channel_12;
+ 1533              		.loc 1 547 0
+ 1534 077c 0C24     		movs	r4, #12
+ 1535              		.loc 1 548 0
+ 1536 077e 07A9     		add	r1, sp, #28
+ 544:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjInitStructure.ADC_NbrOfInjecChannel = 3;
+ 1537              		.loc 1 544 0
+ 1538 0780 8DF82450 		strb	r5, [sp, #36]
+ 545:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjInitStructure.ADC_InjecSequence1 = ADC_Channel_5;
+ 1539              		.loc 1 545 0
+ 1540 0784 0A96     		str	r6, [sp, #40]
+ 546:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjInitStructure.ADC_InjecSequence2 = ADC_Channel_11;
+ 1541              		.loc 1 546 0
+ 1542 0786 0B97     		str	r7, [sp, #44]
+ 547:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjInitStructure.ADC_InjecSequence3 = ADC_Channel_12;
+ 1543              		.loc 1 547 0
+ 1544 0788 0C94     		str	r4, [sp, #48]
+ 1545              		.loc 1 548 0
+ 1546 078a FFF7FEFF 		bl	ADC_InjectedInit
+ 1547              	.LVL117:
+ 549:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 550:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* ADC1 regular channel7 configuration */
+ 551:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	//ADC_RegularChannelConfig(ADC2, ADC_Channel_5, 1, ADC_SampleTime_7Cycles5);
+ 552:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjectedChannelSampleTimeConfig(ADC2, ADC_Channel_5, ADC_SampleTime_7Cycles5);
+ 1548              		.loc 1 552 0
+ 1549 078e 0F48     		ldr	r0, .L43
+ 1550 0790 3146     		mov	r1, r6
+ 1551 0792 2A46     		mov	r2, r5
+ 1552 0794 FFF7FEFF 		bl	ADC_InjectedChannelSampleTimeConfig
+ 1553              	.LVL118:
+ 553:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjectedChannelSampleTimeConfig(ADC2, ADC_Channel_11,ADC_SampleTime_7Cycles5);
+ 1554              		.loc 1 553 0
+ 1555 0798 0C48     		ldr	r0, .L43
+ 1556 079a 3946     		mov	r1, r7
+ 1557 079c 2A46     		mov	r2, r5
+ 1558 079e FFF7FEFF 		bl	ADC_InjectedChannelSampleTimeConfig
+ 1559              	.LVL119:
+ 554:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_InjectedChannelSampleTimeConfig(ADC2, ADC_Channel_12,ADC_SampleTime_7Cycles5);
+ 1560              		.loc 1 554 0
+ 1561 07a2 0A48     		ldr	r0, .L43
+ 1562 07a4 2146     		mov	r1, r4
+ 1563 07a6 2A46     		mov	r2, r5
+ 1564 07a8 FFF7FEFF 		bl	ADC_InjectedChannelSampleTimeConfig
+ 1565              	.LVL120:
+ 555:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 556:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Enable ADC1 */
+ 557:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_Cmd(ADC2, ENABLE);
+ 1566              		.loc 1 557 0
+ 1567 07ac 0748     		ldr	r0, .L43
+ 1568 07ae 0121     		movs	r1, #1
+ 1569 07b0 FFF7FEFF 		bl	ADC_Cmd
+ 1570              	.LVL121:
+ 1571              	.L37:
+ 558:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 559:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* wait for ADRDY */
+ 560:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	while(!ADC_GetFlagStatus(ADC2, ADC_FLAG_RDY));
+ 1572              		.loc 1 560 0 discriminator 1
+ 1573 07b4 0548     		ldr	r0, .L43
+ 1574 07b6 0121     		movs	r1, #1
+ 1575 07b8 FFF7FEFF 		bl	ADC_GetFlagStatus
+ 1576              	.LVL122:
+ 1577 07bc 0028     		cmp	r0, #0
+ 1578 07be F9D0     		beq	.L37
+ 561:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 562:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	/* Start ADC1 Software Conversion */
+ 563:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 	ADC_StartConversion(ADC2);
+ 1579              		.loc 1 563 0
+ 1580 07c0 0248     		ldr	r0, .L43
+ 1581 07c2 FFF7FEFF 		bl	ADC_StartConversion
+ 1582              	.LVL123:
+ 564:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** 
+ 565:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/stm32_configuration.c **** }
+ 1583              		.loc 1 565 0
+ 1584 07c6 17B0     		add	sp, sp, #92
+ 1585 07c8 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1586              	.L44:
+ 1587 07ca 00BF     		.align	2
+ 1588              	.L43:
+ 1589 07cc 00010050 		.word	1342177536
+ 1590              		.cfi_endproc
+ 1591              	.LFE123:
+ 1593              		.bss
+ 1594              		.align	2
+ 1595              		.set	.LANCHOR0,. + 0
+ 1598              	TIM_OCInitStructure.8544:
+ 1599 0000 00000000 		.space	20
+ 1599      00000000 
+ 1599      00000000 
+ 1599      00000000 
+ 1599      00000000 
+ 1602              	TIM_OCInitStructure.8550:
+ 1603 0014 00000000 		.space	20
+ 1603      00000000 
+ 1603      00000000 
+ 1603      00000000 
+ 1603      00000000 
+ 1606              	EXTI_InitStructure.8559:
+ 1607 0028 00000000 		.space	8
+ 1607      00000000 
+ 1608              		.text
+ 1609              	.Letext0:
+ 1610              		.file 2 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+ 1611              		.file 3 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Device/ST/STM32F30x
+ 1612              		.file 4 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+ 1613              		.file 5 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+ 1614              		.file 6 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+ 1615              		.file 7 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+ 1616              		.file 8 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+ 1617              		.file 9 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+ 1618              		.file 10 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driv
+ 1619              		.file 11 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driv
+ 1620              		.file 12 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driv
+ 1621              		.file 13 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Include/core_cm4.h
+ 1622              		.file 14 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Device/ST/STM32F30
+ 1623              		.file 15 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driv
+ 1624              		.file 16 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driv
+ 1625              		.file 17 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_inc/helperFuncti
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32_configuration.c
+     /tmp/ccwx4ahD.s:18     .text:00000000 $t
+     /tmp/ccwx4ahD.s:23     .text:00000000 RCC_Configuration
+     /tmp/ccwx4ahD.s:60     .text:00000028 $d
+     /tmp/ccwx4ahD.s:65     .text:00000030 $t
+     /tmp/ccwx4ahD.s:70     .text:00000030 NVIC_Configuration
+     /tmp/ccwx4ahD.s:154    .text:00000098 GPIO_Configuration
+     /tmp/ccwx4ahD.s:536    .text:000002fc $d
+     /tmp/ccwx4ahD.s:543    .text:0000030c $t
+     /tmp/ccwx4ahD.s:548    .text:0000030c USART_Configuration
+     /tmp/ccwx4ahD.s:650    .text:00000384 $d
+     /tmp/ccwx4ahD.s:656    .text:00000390 $t
+     /tmp/ccwx4ahD.s:661    .text:00000390 SPI_Configuration
+     /tmp/ccwx4ahD.s:734    .text:000003f0 $d
+     /tmp/ccwx4ahD.s:738    .text:000003f4 $t
+     /tmp/ccwx4ahD.s:743    .text:000003f4 I2C_Configuration
+     /tmp/ccwx4ahD.s:796    .text:00000428 $d
+     /tmp/ccwx4ahD.s:801    .text:00000430 $t
+     /tmp/ccwx4ahD.s:806    .text:00000430 DMA_Configuration
+     /tmp/ccwx4ahD.s:878    .text:00000470 $d
+     /tmp/ccwx4ahD.s:883    .text:00000478 $t
+     /tmp/ccwx4ahD.s:888    .text:00000478 TIM2_PWM_Configuration
+     /tmp/ccwx4ahD.s:1033   .text:0000053c $d
+     /tmp/ccwx4ahD.s:1039   .text:00000548 $t
+     /tmp/ccwx4ahD.s:1044   .text:00000548 TIM3_PWM_Configuration
+     /tmp/ccwx4ahD.s:1193   .text:00000604 $d
+     /tmp/ccwx4ahD.s:1200   .text:00000614 $t
+     /tmp/ccwx4ahD.s:1205   .text:00000614 TIM4_Configuration
+     /tmp/ccwx4ahD.s:1265   .text:00000654 $d
+     /tmp/ccwx4ahD.s:1270   .text:0000065c $t
+     /tmp/ccwx4ahD.s:1275   .text:0000065c getEXTI_Config
+     /tmp/ccwx4ahD.s:1288   .text:00000660 $d
+     /tmp/ccwx4ahD.s:1292   .text:00000664 $t
+     /tmp/ccwx4ahD.s:1297   .text:00000664 EXTI_Configuration
+     /tmp/ccwx4ahD.s:1408   .text:000006f4 $d
+     /tmp/ccwx4ahD.s:1412   .text:000006f8 $t
+     /tmp/ccwx4ahD.s:1417   .text:000006f8 ADC_Configuration
+     /tmp/ccwx4ahD.s:1589   .text:000007cc $d
+     /tmp/ccwx4ahD.s:1594   .bss:00000000 $d
+     /tmp/ccwx4ahD.s:1598   .bss:00000000 TIM_OCInitStructure.8544
+     /tmp/ccwx4ahD.s:1602   .bss:00000014 TIM_OCInitStructure.8550
+     /tmp/ccwx4ahD.s:1606   .bss:00000028 EXTI_InitStructure.8559
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.stm32f30x.h.54.c7b24f715ee55ef38656f44540ae3be6
+                           .group:00000000 wm4.core_cm4.h.32.2441f2e49dd40451ba4254637c879d0c
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.292.5f9271075d54fc48f1e25ff79df85cb2
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_comp.h.31.9bbc5f5f1a849069ea9062fbe7b81435
+                           .group:00000000 wm4.stm32f30x_dma.h.31.73d173fa6d60026d432f3cf1d2fc4407
+                           .group:00000000 wm4.stm32f30x_exti.h.31.22e280aa6e095108654ac8d3c74a2409
+                           .group:00000000 wm4.stm32f30x_flash.h.31.bee86dc3079b7049419bdbeec073e2cd
+                           .group:00000000 wm4.stm32f30x_gpio.h.31.3745297fee3728b346ad4d2a2467e40f
+                           .group:00000000 wm4.stm32f30x_syscfg.h.31.96b023b7dbc3641f358604478433eb5c
+                           .group:00000000 wm4.stm32f30x_i2c.h.31.52025acd7f154308042bf46a2835e9d3
+                           .group:00000000 wm4.stm32f30x_pwr.h.31.cdef322c6e7f25cfc29954045d24e9b8
+                           .group:00000000 wm4.stm32f30x_rcc.h.31.3b94c1144b21d1e4fe780e4d1a02d257
+                           .group:00000000 wm4.stm32f30x_spi.h.31.c1ebebab897d23cecc617ec8ad9fd534
+                           .group:00000000 wm4.stm32f30x_tim.h.31.336f9cd855fb4e2cd819ac260ded6518
+                           .group:00000000 wm4.stm32f30x_usart.h.31.cd85313e29c0a128555b4a7b8ec0f487
+                           .group:00000000 wm4.stm32f30x_misc.h.31.f08b0e9f53f0471613b5131bb95f8725
+                           .group:00000000 wm4.stm32f30x.h.6173.8b641ba1d9b0040eda9120fe8a414b2d
+                           .group:00000000 wm4.newlib.h.8.e1d498e57c12962fc6d7be5061a6981a
+                           .group:00000000 wm4.config.h.148.52fe83653334d06815a0c57b59a3e584
+                           .group:00000000 wm4._ansi.h.23.95dee4059009fe3ab635a191bb73dc66
+                           .group:00000000 wm4.stdio.h.31.f48311dde756a2aec27351b58a280fb9
+                           .group:00000000 wm4.stddef.h.187.9e651b6b8b16e149c1353259404973ea
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._default_types.h.6.1dbd2e581fd590860c7c17f21d147e91
+                           .group:00000000 wm4.lock.h.2.9bc98482741e5e2a9450b12934a684ea
+                           .group:00000000 wm4.stddef.h.349.31f4c5baff3fa2689010b32028da9c47
+                           .group:00000000 wm4.reent.h.16.58b23a9f0faf0e7f2dfe7e2d33154afd
+                           .group:00000000 wm4.types.h.23.0d949686bbcadd1621462d4fa1f884f9
+                           .group:00000000 wm4.stddef.h.40.cf962ebbec441b3ac67502735f0765db
+                           .group:00000000 wm4.types.h.2.e9cec8c90ab35f77d9f499e06ae02400
+                           .group:00000000 wm4.types.h.80.f2bfdfeee9f340633702c07fad9b5e01
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.63.1f4bc553faa62c5c69dd9cb47f9f1417
+                           .group:00000000 wm4.stdlib.h.18.6f6153fd5cb89acd58c0f0ab1f77e147
+                           .group:00000000 wm4.stddef.h.161.e50ff8a9d5d1abbc15641da28ac571bf
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.58.3943707ca024393181a6211b2c8a1625
+                           .group:00000000 wm4.ctype.h.2.fecd14bb6f4e162ef31748cc97760e21
+                           .group:00000000 wm4.math.h.49.5da716593b937b9fb02bef6ed6537c13
+
+UNDEFINED SYMBOLS
+RCC_APB1PeriphClockCmd
+RCC_APB2PeriphClockCmd
+RCC_AHBPeriphClockCmd
+RCC_ADCCLKConfig
+NVIC_SetVectorTable
+NVIC_PriorityGroupConfig
+NVIC_Init
+GPIO_Init
+GPIO_PinAFConfig
+USART_Init
+USART_ITConfig
+USART_Cmd
+SPI_I2S_DeInit
+SPI_Init
+SPI_RxFIFOThresholdConfig
+SPI_Cmd
+I2C_DeInit
+I2C_Init
+I2C_Cmd
+DMA_DeInit
+DMA_Init
+TIM_TimeBaseStructInit
+TIM_TimeBaseInit
+TIM_OC1Init
+TIM_OC1PreloadConfig
+TIM_OC2Init
+TIM_OC2PreloadConfig
+TIM_OC3Init
+TIM_OC3PreloadConfig
+TIM_OC4Init
+TIM_OC4PreloadConfig
+TIM_ARRPreloadConfig
+TIM_CtrlPWMOutputs
+TIM_Cmd
+SystemCoreClock
+SYSCFG_EXTILineConfig
+EXTI_Init
+ADC_StructInit
+ADC_VoltageRegulatorCmd
+Delay
+ADC_SelectCalibrationMode
+ADC_StartCalibration
+ADC_GetCalibrationStatus
+ADC_GetCalibrationValue
+ADC_CommonInit
+ADC_Init
+ADC_InjectedInit
+ADC_InjectedChannelSampleTimeConfig
+ADC_Cmd
+ADC_GetFlagStatus
+ADC_StartConversion

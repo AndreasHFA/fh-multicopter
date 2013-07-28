@@ -1,0 +1,504 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"stm32f30x_misc.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.global	NVIC_PriorityGroupConfig
+  20              		.thumb
+  21              		.thumb_func
+  23              	NVIC_PriorityGroupConfig:
+  24              	.LFB111:
+  25              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** /**
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   ******************************************************************************
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @file    stm32f30x_misc.c
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @author  MCD Application Team
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @version V1.0.1
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @date    23-October-2012
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @brief   This file provides all the miscellaneous firmware functions (add-on
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *          to CMSIS functions).
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *          
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   @verbatim   
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****                                
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****  ===============================================================================      
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****               ##### How to configure Interrupts using driver #####
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****  ===============================================================================      
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     [..] This section provide functions allowing to configure the NVIC interrupts 
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****          (IRQ). The Cortex-M4 exceptions are managed by CMSIS functions.
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****          (#) Configure the NVIC Priority Grouping using NVIC_PriorityGroupConfig()
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****              function according to the following table.
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****              The table below gives the allowed values of the pre-emption priority 
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****              and subpriority according to the Priority Grouping configuration 
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****              performed by NVIC_PriorityGroupConfig function.
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****          
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****          (#) Enable and Configure the priority of the selected IRQ Channels.
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     [..]
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     (@) When the NVIC_PriorityGroup_0 is selected, it will no any nested interrupt,
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****         the IRQ priority will be managed only by subpriority.
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****         The sub-priority is only used to sort pending exception priorities, 
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****         and does not affect active exceptions.
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     (@) Lower priority values gives higher priority.
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     (@) Priority Order:
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****         (#@) Lowest Preemption priority.
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****         (#@) Lowest Subpriority.
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****         (#@) Lowest hardware priority (IRQn position).
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** 
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   @endverbatim
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** 
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   ******************************************************************************
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @attention
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * You may not use this file except in compliance with the License.
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * You may obtain a copy of the License at:
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * Unless required by applicable law or agreed to in writing, software 
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * See the License for the specific language governing permissions and
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * limitations under the License.
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   ******************************************************************************
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   */
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** 
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** /* Includes ------------------------------------------------------------------*/
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** #include "stm32f30x_misc.h"
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** 
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** /** @addtogroup STM32F30x_StdPeriph_Driver
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @{
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   */
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** 
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** /** @defgroup MISC 
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @brief MISC driver modules
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @{
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   */
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** 
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** /* Private typedef -----------------------------------------------------------*/
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** /* Private define ------------------------------------------------------------*/
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** #define AIRCR_VECTKEY_MASK    ((uint32_t)0x05FA0000)
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** 
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** /* Private macro -------------------------------------------------------------*/
+  74:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** /* Private variables ---------------------------------------------------------*/
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** /* Private function prototypes -----------------------------------------------*/
+  76:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** /* Private functions ---------------------------------------------------------*/
+  77:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** 
+  78:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** /** @defgroup MISC_Private_Functions
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @{
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   */
+  81:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** 
+  82:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** /**
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @brief  Configures the priority grouping: pre-emption priority and subpriority.
+  84:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @param  NVIC_PriorityGroup: specifies the priority grouping bits length. 
+  85:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *   This parameter can be one of the following values:
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *     @arg NVIC_PriorityGroup_0: 0 bits for pre-emption priority.
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *                                4 bits for subpriority.
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *     @arg NVIC_PriorityGroup_1: 1 bits for pre-emption priority.
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *                                3 bits for subpriority.
+  90:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *     @arg NVIC_PriorityGroup_2: 2 bits for pre-emption priority.
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *                                2 bits for subpriority.
+  92:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *     @arg NVIC_PriorityGroup_3: 3 bits for pre-emption priority.
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *                                1 bits for subpriority.
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *     @arg NVIC_PriorityGroup_4: 4 bits for pre-emption priority.
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *                                0 bits for subpriority.
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *     @note When NVIC_PriorityGroup_0 is selected, it will no be any nested 
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *           interrupt. This interrupts priority is managed only with subpriority.                
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @retval None
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   */
+ 100:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** void NVIC_PriorityGroupConfig(uint32_t NVIC_PriorityGroup)
+ 101:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** {
+  26              		.loc 1 101 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  31              	.LVL0:
+ 102:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   /* Check the parameters */
+ 103:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   assert_param(IS_NVIC_PRIORITY_GROUP(NVIC_PriorityGroup));
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   /* Set the PRIGROUP[10:8] bits according to NVIC_PriorityGroup value */
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   SCB->AIRCR = AIRCR_VECTKEY_MASK | NVIC_PriorityGroup;
+  32              		.loc 1 106 0
+  33 0000 40F0BF60 		orr	r0, r0, #100139008
+  34              	.LVL1:
+  35 0004 024B     		ldr	r3, .L2
+  36 0006 40F40030 		orr	r0, r0, #131072
+  37 000a D860     		str	r0, [r3, #12]
+  38 000c 7047     		bx	lr
+  39              	.L3:
+  40 000e 00BF     		.align	2
+  41              	.L2:
+  42 0010 00ED00E0 		.word	-536810240
+  43              		.cfi_endproc
+  44              	.LFE111:
+  46              		.align	1
+  47              		.global	NVIC_Init
+  48              		.thumb
+  49              		.thumb_func
+  51              	NVIC_Init:
+  52              	.LFB112:
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** }
+ 108:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** 
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** /**
+ 110:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @brief  Initializes the NVIC peripheral according to the specified
+ 111:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *         parameters in the NVIC_InitStruct.
+ 112:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @note   To configure interrupts priority correctly, the NVIC_PriorityGroupConfig()
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *         function should be called before. 
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @param  NVIC_InitStruct: pointer to a NVIC_InitTypeDef structure that contains
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *         the configuration information for the specified NVIC peripheral.
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @retval None
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   */
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** void NVIC_Init(NVIC_InitTypeDef* NVIC_InitStruct)
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** {
+  53              		.loc 1 119 0
+  54              		.cfi_startproc
+  55              		@ args = 0, pretend = 0, frame = 0
+  56              		@ frame_needed = 0, uses_anonymous_args = 0
+  57              	.LVL2:
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   uint32_t tmppriority = 0x00, tmppre = 0x00, tmpsub = 0x0F;
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   /* Check the parameters */
+ 123:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   assert_param(IS_FUNCTIONAL_STATE(NVIC_InitStruct->NVIC_IRQChannelCmd));
+ 124:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   assert_param(IS_NVIC_PREEMPTION_PRIORITY(NVIC_InitStruct->NVIC_IRQChannelPreemptionPriority));  
+ 125:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   assert_param(IS_NVIC_SUB_PRIORITY(NVIC_InitStruct->NVIC_IRQChannelSubPriority));
+ 126:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     
+ 127:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   if (NVIC_InitStruct->NVIC_IRQChannelCmd != DISABLE)
+  58              		.loc 1 127 0
+  59 0014 C378     		ldrb	r3, [r0, #3]	@ zero_extendqisi2
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** {
+  60              		.loc 1 119 0
+  61 0016 10B5     		push	{r4, lr}
+  62              	.LCFI0:
+  63              		.cfi_def_cfa_offset 8
+  64              		.cfi_offset 4, -8
+  65              		.cfi_offset 14, -4
+  66              		.loc 1 127 0
+  67 0018 FBB1     		cbz	r3, .L5
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   {
+ 129:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     /* Compute the Corresponding IRQ Priority --------------------------------*/    
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     tmppriority = (0x700 - ((SCB->AIRCR) & (uint32_t)0x700))>> 0x08;
+  68              		.loc 1 130 0
+  69 001a 164B     		ldr	r3, .L8
+ 131:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     tmppre = (0x4 - tmppriority);
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     tmpsub = tmpsub >> tmppriority;
+ 133:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** 
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     tmppriority = (uint32_t)NVIC_InitStruct->NVIC_IRQChannelPreemptionPriority << tmppre;
+  70              		.loc 1 134 0
+  71 001c 4178     		ldrb	r1, [r0, #1]	@ zero_extendqisi2
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     tmppriority = (0x700 - ((SCB->AIRCR) & (uint32_t)0x700))>> 0x08;
+  72              		.loc 1 130 0
+  73 001e DB68     		ldr	r3, [r3, #12]
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     tmppriority |=  NVIC_InitStruct->NVIC_IRQChannelSubPriority & tmpsub;
+  74              		.loc 1 135 0
+  75 0020 8478     		ldrb	r4, [r0, #2]	@ zero_extendqisi2
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     tmppriority = (0x700 - ((SCB->AIRCR) & (uint32_t)0x700))>> 0x08;
+  76              		.loc 1 130 0
+  77 0022 DB43     		mvns	r3, r3
+  78 0024 C3F30223 		ubfx	r3, r3, #8, #3
+  79              	.LVL3:
+ 131:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     tmppre = (0x4 - tmppriority);
+  80              		.loc 1 131 0
+  81 0028 C3F10402 		rsb	r2, r3, #4
+  82              	.LVL4:
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     tmppriority = (uint32_t)NVIC_InitStruct->NVIC_IRQChannelPreemptionPriority << tmppre;
+  83              		.loc 1 134 0
+  84 002c 01FA02F1 		lsl	r1, r1, r2
+  85              	.LVL5:
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     tmpsub = tmpsub >> tmppriority;
+  86              		.loc 1 132 0
+  87 0030 0F22     		movs	r2, #15
+  88              	.LVL6:
+  89 0032 22FA03F2 		lsr	r2, r2, r3
+  90              	.LVL7:
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     tmppriority = tmppriority << 0x04;
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****         
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     NVIC->IP[NVIC_InitStruct->NVIC_IRQChannel] = tmppriority;
+  91              		.loc 1 138 0
+  92 0036 0378     		ldrb	r3, [r0, #0]	@ zero_extendqisi2
+  93              	.LVL8:
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     tmppriority |=  NVIC_InitStruct->NVIC_IRQChannelSubPriority & tmpsub;
+  94              		.loc 1 135 0
+  95 0038 2240     		ands	r2, r2, r4
+  96              	.LVL9:
+  97 003a 0A43     		orrs	r2, r2, r1
+  98              	.LVL10:
+  99              		.loc 1 138 0
+ 100 003c 03F16043 		add	r3, r3, #-536870912
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     tmppriority = tmppriority << 0x04;
+ 101              		.loc 1 136 0
+ 102 0040 1201     		lsls	r2, r2, #4
+ 103              	.LVL11:
+ 104              		.loc 1 138 0
+ 105 0042 03F56143 		add	r3, r3, #57600
+ 106 0046 83F80023 		strb	r2, [r3, #768]
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     
+ 140:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     /* Enable the Selected IRQ Channels --------------------------------------*/
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     NVIC->ISER[NVIC_InitStruct->NVIC_IRQChannel >> 0x05] =
+ 107              		.loc 1 141 0
+ 108 004a 0378     		ldrb	r3, [r0, #0]	@ zero_extendqisi2
+ 142:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****       (uint32_t)0x01 << (NVIC_InitStruct->NVIC_IRQChannel & (uint8_t)0x1F);
+ 109              		.loc 1 142 0
+ 110 004c 0122     		movs	r2, #1
+ 111              	.LVL12:
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     NVIC->ISER[NVIC_InitStruct->NVIC_IRQChannel >> 0x05] =
+ 112              		.loc 1 141 0
+ 113 004e 5909     		lsrs	r1, r3, #5
+ 114              		.loc 1 142 0
+ 115 0050 03F01F03 		and	r3, r3, #31
+ 116 0054 02FA03F3 		lsl	r3, r2, r3
+ 117 0058 07E0     		b	.L7
+ 118              	.LVL13:
+ 119              	.L5:
+ 143:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   }
+ 144:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   else
+ 145:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   {
+ 146:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     /* Disable the Selected IRQ Channels -------------------------------------*/
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     NVIC->ICER[NVIC_InitStruct->NVIC_IRQChannel >> 0x05] =
+ 120              		.loc 1 147 0
+ 121 005a 0378     		ldrb	r3, [r0, #0]	@ zero_extendqisi2
+ 148:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****       (uint32_t)0x01 << (NVIC_InitStruct->NVIC_IRQChannel & (uint8_t)0x1F);
+ 122              		.loc 1 148 0
+ 123 005c 0122     		movs	r2, #1
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     NVIC->ICER[NVIC_InitStruct->NVIC_IRQChannel >> 0x05] =
+ 124              		.loc 1 147 0
+ 125 005e 5909     		lsrs	r1, r3, #5
+ 126              		.loc 1 148 0
+ 127 0060 03F01F03 		and	r3, r3, #31
+ 128 0064 02FA03F3 		lsl	r3, r2, r3
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     NVIC->ICER[NVIC_InitStruct->NVIC_IRQChannel >> 0x05] =
+ 129              		.loc 1 147 0
+ 130 0068 2031     		adds	r1, r1, #32
+ 131              	.LVL14:
+ 132              	.L7:
+ 133 006a 034A     		ldr	r2, .L8+4
+ 134 006c 42F82130 		str	r3, [r2, r1, lsl #2]
+ 135 0070 10BD     		pop	{r4, pc}
+ 136              	.L9:
+ 137 0072 00BF     		.align	2
+ 138              	.L8:
+ 139 0074 00ED00E0 		.word	-536810240
+ 140 0078 00E100E0 		.word	-536813312
+ 141              		.cfi_endproc
+ 142              	.LFE112:
+ 144              		.align	1
+ 145              		.global	NVIC_SetVectorTable
+ 146              		.thumb
+ 147              		.thumb_func
+ 149              	NVIC_SetVectorTable:
+ 150              	.LFB113:
+ 149:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   }
+ 150:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** }
+ 151:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** 
+ 152:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** /**
+ 153:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @brief  Sets the vector table location and Offset.
+ 154:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @param  NVIC_VectTab: specifies if the vector table is in RAM or FLASH memory.
+ 155:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *   This parameter can be one of the following values:
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *     @arg NVIC_VectTab_RAM
+ 157:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *     @arg NVIC_VectTab_FLASH
+ 158:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @param  Offset: Vector Table base offset field. This value must be a multiple of 0x200.
+ 159:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @retval None
+ 160:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   */
+ 161:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** void NVIC_SetVectorTable(uint32_t NVIC_VectTab, uint32_t Offset)
+ 162:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** { 
+ 151              		.loc 1 162 0
+ 152              		.cfi_startproc
+ 153              		@ args = 0, pretend = 0, frame = 0
+ 154              		@ frame_needed = 0, uses_anonymous_args = 0
+ 155              		@ link register save eliminated.
+ 156              	.LVL15:
+ 163:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   /* Check the parameters */
+ 164:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   assert_param(IS_NVIC_VECTTAB(NVIC_VectTab));
+ 165:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   assert_param(IS_NVIC_OFFSET(Offset));  
+ 166:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****    
+ 167:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   SCB->VTOR = NVIC_VectTab | (Offset & (uint32_t)0x1FFFFF80);
+ 157              		.loc 1 167 0
+ 158 007c 21F06041 		bic	r1, r1, #-536870912
+ 159              	.LVL16:
+ 160 0080 21F07F01 		bic	r1, r1, #127
+ 161 0084 014B     		ldr	r3, .L11
+ 162 0086 0843     		orrs	r0, r0, r1
+ 163              	.LVL17:
+ 164 0088 9860     		str	r0, [r3, #8]
+ 165 008a 7047     		bx	lr
+ 166              	.L12:
+ 167              		.align	2
+ 168              	.L11:
+ 169 008c 00ED00E0 		.word	-536810240
+ 170              		.cfi_endproc
+ 171              	.LFE113:
+ 173              		.align	1
+ 174              		.global	NVIC_SystemLPConfig
+ 175              		.thumb
+ 176              		.thumb_func
+ 178              	NVIC_SystemLPConfig:
+ 179              	.LFB114:
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** }
+ 169:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** 
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** /**
+ 171:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @brief  Selects the condition for the system to enter low power mode.
+ 172:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @param  LowPowerMode: Specifies the new mode for the system to enter low power mode.
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *   This parameter can be one of the following values:
+ 174:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *     @arg NVIC_LP_SEVONPEND
+ 175:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *     @arg NVIC_LP_SLEEPDEEP
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *     @arg NVIC_LP_SLEEPONEXIT
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @param  NewState: new state of LP condition. This parameter can be: ENABLE or DISABLE.
+ 178:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @retval None
+ 179:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   */
+ 180:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** void NVIC_SystemLPConfig(uint8_t LowPowerMode, FunctionalState NewState)
+ 181:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** {
+ 180              		.loc 1 181 0
+ 181              		.cfi_startproc
+ 182              		@ args = 0, pretend = 0, frame = 0
+ 183              		@ frame_needed = 0, uses_anonymous_args = 0
+ 184              		@ link register save eliminated.
+ 185              	.LVL18:
+ 186 0090 044B     		ldr	r3, .L17
+ 182:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   /* Check the parameters */
+ 183:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   assert_param(IS_NVIC_LP(LowPowerMode));
+ 184:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));  
+ 185:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   if (NewState != DISABLE)
+ 187:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   {
+ 188:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     SCB->SCR |= LowPowerMode;
+ 187              		.loc 1 188 0
+ 188 0092 1A69     		ldr	r2, [r3, #16]
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   if (NewState != DISABLE)
+ 189              		.loc 1 186 0
+ 190 0094 09B1     		cbz	r1, .L14
+ 191              		.loc 1 188 0
+ 192 0096 1043     		orrs	r0, r0, r2
+ 193              	.LVL19:
+ 194 0098 01E0     		b	.L16
+ 195              	.LVL20:
+ 196              	.L14:
+ 189:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   }
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   else
+ 191:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   {
+ 192:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     SCB->SCR &= (uint32_t)(~(uint32_t)LowPowerMode);
+ 197              		.loc 1 192 0
+ 198 009a 22EA0000 		bic	r0, r2, r0
+ 199              	.LVL21:
+ 200              	.L16:
+ 201 009e 1861     		str	r0, [r3, #16]
+ 202 00a0 7047     		bx	lr
+ 203              	.L18:
+ 204 00a2 00BF     		.align	2
+ 205              	.L17:
+ 206 00a4 00ED00E0 		.word	-536810240
+ 207              		.cfi_endproc
+ 208              	.LFE114:
+ 210              		.align	1
+ 211              		.global	SysTick_CLKSourceConfig
+ 212              		.thumb
+ 213              		.thumb_func
+ 215              	SysTick_CLKSourceConfig:
+ 216              	.LFB115:
+ 193:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   }
+ 194:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** }
+ 195:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** 
+ 196:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** /**
+ 197:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @brief  Configures the SysTick clock source.
+ 198:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @param  SysTick_CLKSource: specifies the SysTick clock source.
+ 199:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *   This parameter can be one of the following values:
+ 200:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *     @arg SysTick_CLKSource_HCLK_Div8: AHB clock divided by 8 selected as SysTick clock source.
+ 201:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   *     @arg SysTick_CLKSource_HCLK: AHB clock selected as SysTick clock source.
+ 202:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   * @retval None
+ 203:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   */
+ 204:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** void SysTick_CLKSourceConfig(uint32_t SysTick_CLKSource)
+ 205:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c **** {
+ 217              		.loc 1 205 0
+ 218              		.cfi_startproc
+ 219              		@ args = 0, pretend = 0, frame = 0
+ 220              		@ frame_needed = 0, uses_anonymous_args = 0
+ 221              		@ link register save eliminated.
+ 222              	.LVL22:
+ 223 00a8 044B     		ldr	r3, .L23
+ 206:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   /* Check the parameters */
+ 207:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   assert_param(IS_SYSTICK_CLK_SOURCE(SysTick_CLKSource));
+ 208:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   if (SysTick_CLKSource == SysTick_CLKSource_HCLK)
+ 224              		.loc 1 208 0
+ 225 00aa 0428     		cmp	r0, #4
+ 209:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   {
+ 210:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     SysTick->CTRL |= SysTick_CLKSource_HCLK;
+ 226              		.loc 1 210 0
+ 227 00ac 1A68     		ldr	r2, [r3, #0]
+ 228 00ae 0CBF     		ite	eq
+ 229 00b0 42F00402 		orreq	r2, r2, #4
+ 211:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   }
+ 212:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   else
+ 213:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****   {
+ 214:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_misc.c ****     SysTick->CTRL &= SysTick_CLKSource_HCLK_Div8;
+ 230              		.loc 1 214 0
+ 231 00b4 22F00402 		bicne	r2, r2, #4
+ 232 00b8 1A60     		str	r2, [r3, #0]
+ 233 00ba 7047     		bx	lr
+ 234              	.L24:
+ 235              		.align	2
+ 236              	.L23:
+ 237 00bc 10E000E0 		.word	-536813552
+ 238              		.cfi_endproc
+ 239              	.LFE115:
+ 241              	.Letext0:
+ 242              		.file 2 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+ 243              		.file 3 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Include/core_cm4.h"
+ 244              		.file 4 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Device/ST/STM32F30x
+ 245              		.file 5 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f30x_misc.c
+     /tmp/ccwt6bUf.s:18     .text:00000000 $t
+     /tmp/ccwt6bUf.s:23     .text:00000000 NVIC_PriorityGroupConfig
+     /tmp/ccwt6bUf.s:42     .text:00000010 $d
+     /tmp/ccwt6bUf.s:46     .text:00000014 $t
+     /tmp/ccwt6bUf.s:51     .text:00000014 NVIC_Init
+     /tmp/ccwt6bUf.s:139    .text:00000074 $d
+     /tmp/ccwt6bUf.s:144    .text:0000007c $t
+     /tmp/ccwt6bUf.s:149    .text:0000007c NVIC_SetVectorTable
+     /tmp/ccwt6bUf.s:169    .text:0000008c $d
+     /tmp/ccwt6bUf.s:173    .text:00000090 $t
+     /tmp/ccwt6bUf.s:178    .text:00000090 NVIC_SystemLPConfig
+     /tmp/ccwt6bUf.s:206    .text:000000a4 $d
+     /tmp/ccwt6bUf.s:210    .text:000000a8 $t
+     /tmp/ccwt6bUf.s:215    .text:000000a8 SysTick_CLKSourceConfig
+     /tmp/ccwt6bUf.s:237    .text:000000bc $d
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.stm32f30x.h.54.c7b24f715ee55ef38656f44540ae3be6
+                           .group:00000000 wm4.core_cm4.h.32.2441f2e49dd40451ba4254637c879d0c
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.292.5f9271075d54fc48f1e25ff79df85cb2
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_comp.h.31.9bbc5f5f1a849069ea9062fbe7b81435
+                           .group:00000000 wm4.stm32f30x_dma.h.31.73d173fa6d60026d432f3cf1d2fc4407
+                           .group:00000000 wm4.stm32f30x_exti.h.31.22e280aa6e095108654ac8d3c74a2409
+                           .group:00000000 wm4.stm32f30x_flash.h.31.bee86dc3079b7049419bdbeec073e2cd
+                           .group:00000000 wm4.stm32f30x_gpio.h.31.3745297fee3728b346ad4d2a2467e40f
+                           .group:00000000 wm4.stm32f30x_syscfg.h.31.96b023b7dbc3641f358604478433eb5c
+                           .group:00000000 wm4.stm32f30x_i2c.h.31.52025acd7f154308042bf46a2835e9d3
+                           .group:00000000 wm4.stm32f30x_pwr.h.31.cdef322c6e7f25cfc29954045d24e9b8
+                           .group:00000000 wm4.stm32f30x_rcc.h.31.3b94c1144b21d1e4fe780e4d1a02d257
+                           .group:00000000 wm4.stm32f30x_spi.h.31.c1ebebab897d23cecc617ec8ad9fd534
+                           .group:00000000 wm4.stm32f30x_tim.h.31.336f9cd855fb4e2cd819ac260ded6518
+                           .group:00000000 wm4.stm32f30x_usart.h.31.cd85313e29c0a128555b4a7b8ec0f487
+                           .group:00000000 wm4.stm32f30x.h.6173.8b641ba1d9b0040eda9120fe8a414b2d
+                           .group:00000000 wm4.stm32f30x_misc.h.113.6a52e4fe7c3825a3ab05990f30dddf92
+
+NO UNDEFINED SYMBOLS

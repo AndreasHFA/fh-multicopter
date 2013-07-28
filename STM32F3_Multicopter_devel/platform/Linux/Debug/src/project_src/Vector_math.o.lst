@@ -1,0 +1,425 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"Vector_math.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.global	__aeabi_fmul
+  19              		.global	__aeabi_fadd
+  20              		.align	1
+  21              		.global	VectorDotProduct
+  22              		.thumb
+  23              		.thumb_func
+  25              	VectorDotProduct:
+  26              	.LFB0:
+  27              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** #include <Vector_math.h>
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** //Computes the dot product of two vectors 
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** float VectorDotProduct(float vector1[3],float vector2[3]) 
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** {   
+  28              		.loc 1 6 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 24
+  36              		.cfi_offset 3, -24
+  37              		.cfi_offset 4, -20
+  38              		.cfi_offset 5, -16
+  39              		.cfi_offset 6, -12
+  40              		.cfi_offset 7, -8
+  41              		.cfi_offset 14, -4
+  42              		.loc 1 6 0
+  43 0002 0746     		mov	r7, r0
+  44 0004 0E46     		mov	r6, r1
+  45 0006 0024     		movs	r4, #0
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	int c = 0;
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	float op=0;      
+  46              		.loc 1 8 0
+  47 0008 0025     		movs	r5, #0
+  48              	.LVL1:
+  49              	.L2:
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	for( c = 0 ; c < 3 ; c++ )   
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	{   
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 		op += vector1[c] * vector2[c];   
+  50              		.loc 1 11 0 discriminator 2
+  51 000a 3159     		ldr	r1, [r6, r4]	@ float
+  52 000c 3859     		ldr	r0, [r7, r4]	@ float
+  53 000e FFF7FEFF 		bl	__aeabi_fmul
+  54              	.LVL2:
+  55 0012 0146     		mov	r1, r0
+  56 0014 2846     		mov	r0, r5
+  57 0016 FFF7FEFF 		bl	__aeabi_fadd
+  58              	.LVL3:
+  59 001a 0434     		adds	r4, r4, #4
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	for( c = 0 ; c < 3 ; c++ )   
+  60              		.loc 1 9 0 discriminator 2
+  61 001c 0C2C     		cmp	r4, #12
+  62              		.loc 1 11 0 discriminator 2
+  63 001e 0546     		mov	r5, r0
+  64              	.LVL4:
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	for( c = 0 ; c < 3 ; c++ )   
+  65              		.loc 1 9 0 discriminator 2
+  66 0020 F3D1     		bne	.L2
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	}      
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	return op;  
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** }  
+  67              		.loc 1 14 0
+  68 0022 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+  69              		.cfi_endproc
+  70              	.LFE0:
+  72              		.global	__aeabi_fsub
+  73              		.align	1
+  74              		.global	VectorCrossProduct
+  75              		.thumb
+  76              		.thumb_func
+  78              	VectorCrossProduct:
+  79              	.LFB1:
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** //Computes the cross product of two vectors 
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** void VectorCrossProduct(float vectorOut[3], float v1[3],float v2[3]) 
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** {   
+  80              		.loc 1 18 0
+  81              		.cfi_startproc
+  82              		@ args = 0, pretend = 0, frame = 0
+  83              		@ frame_needed = 0, uses_anonymous_args = 0
+  84              	.LVL5:
+  85 0024 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  86              	.LCFI1:
+  87              		.cfi_def_cfa_offset 24
+  88              		.cfi_offset 3, -24
+  89              		.cfi_offset 4, -20
+  90              		.cfi_offset 5, -16
+  91              		.cfi_offset 6, -12
+  92              		.cfi_offset 7, -8
+  93              		.cfi_offset 14, -4
+  94              		.loc 1 18 0
+  95 0026 0D46     		mov	r5, r1
+  96 0028 0646     		mov	r6, r0
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	vectorOut[0] = (v1[1]*v2[2]) - (v1[2]*v2[1]);   
+  97              		.loc 1 19 0
+  98 002a 4868     		ldr	r0, [r1, #4]	@ float
+  99              	.LVL6:
+ 100 002c 9168     		ldr	r1, [r2, #8]	@ float
+ 101              	.LVL7:
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** {   
+ 102              		.loc 1 18 0
+ 103 002e 1446     		mov	r4, r2
+ 104              		.loc 1 19 0
+ 105 0030 FFF7FEFF 		bl	__aeabi_fmul
+ 106              	.LVL8:
+ 107 0034 6168     		ldr	r1, [r4, #4]	@ float
+ 108 0036 0746     		mov	r7, r0
+ 109 0038 A868     		ldr	r0, [r5, #8]	@ float
+ 110 003a FFF7FEFF 		bl	__aeabi_fmul
+ 111              	.LVL9:
+ 112 003e 0146     		mov	r1, r0
+ 113 0040 3846     		mov	r0, r7
+ 114 0042 FFF7FEFF 		bl	__aeabi_fsub
+ 115              	.LVL10:
+ 116 0046 3060     		str	r0, [r6, #0]	@ float
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	vectorOut[1] = (v1[2]*v2[0]) - (v1[0]*v2[2]);   
+ 117              		.loc 1 20 0
+ 118 0048 2168     		ldr	r1, [r4, #0]	@ float
+ 119 004a A868     		ldr	r0, [r5, #8]	@ float
+ 120 004c FFF7FEFF 		bl	__aeabi_fmul
+ 121              	.LVL11:
+ 122 0050 A168     		ldr	r1, [r4, #8]	@ float
+ 123 0052 0746     		mov	r7, r0
+ 124 0054 2868     		ldr	r0, [r5, #0]	@ float
+ 125 0056 FFF7FEFF 		bl	__aeabi_fmul
+ 126              	.LVL12:
+ 127 005a 0146     		mov	r1, r0
+ 128 005c 3846     		mov	r0, r7
+ 129 005e FFF7FEFF 		bl	__aeabi_fsub
+ 130              	.LVL13:
+ 131 0062 7060     		str	r0, [r6, #4]	@ float
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	vectorOut[2] = (v1[0]*v2[1]) - (v1[1]*v2[0]); 
+ 132              		.loc 1 21 0
+ 133 0064 6168     		ldr	r1, [r4, #4]	@ float
+ 134 0066 2868     		ldr	r0, [r5, #0]	@ float
+ 135 0068 FFF7FEFF 		bl	__aeabi_fmul
+ 136              	.LVL14:
+ 137 006c 2168     		ldr	r1, [r4, #0]	@ float
+ 138 006e 0746     		mov	r7, r0
+ 139 0070 6868     		ldr	r0, [r5, #4]	@ float
+ 140 0072 FFF7FEFF 		bl	__aeabi_fmul
+ 141              	.LVL15:
+ 142 0076 0146     		mov	r1, r0
+ 143 0078 3846     		mov	r0, r7
+ 144 007a FFF7FEFF 		bl	__aeabi_fsub
+ 145              	.LVL16:
+ 146 007e B060     		str	r0, [r6, #8]	@ float
+ 147 0080 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 148              		.cfi_endproc
+ 149              	.LFE1:
+ 151              		.align	1
+ 152              		.global	VectorScale
+ 153              		.thumb
+ 154              		.thumb_func
+ 156              	VectorScale:
+ 157              	.LFB2:
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** }  
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** //Multiply the vector by a scalar.  
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** void VectorScale(float vectorOut[3],float vectorIn[3], float scale2) 
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** {   
+ 158              		.loc 1 26 0
+ 159              		.cfi_startproc
+ 160              		@ args = 0, pretend = 0, frame = 0
+ 161              		@ frame_needed = 0, uses_anonymous_args = 0
+ 162              	.LVL17:
+ 163 0082 70B5     		push	{r4, r5, r6, lr}
+ 164              	.LCFI2:
+ 165              		.cfi_def_cfa_offset 16
+ 166              		.cfi_offset 4, -16
+ 167              		.cfi_offset 5, -12
+ 168              		.cfi_offset 6, -8
+ 169              		.cfi_offset 14, -4
+ 170              		.loc 1 26 0
+ 171 0084 0446     		mov	r4, r0
+ 172 0086 0D46     		mov	r5, r1
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	int c = 0;
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	for( c = 0 ; c < 3 ; c++ )   
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	{    
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 		vectorOut[c] = vectorIn[c] * scale2;    
+ 173              		.loc 1 30 0
+ 174 0088 0868     		ldr	r0, [r1, #0]	@ float
+ 175              	.LVL18:
+ 176 008a 1146     		mov	r1, r2
+ 177              	.LVL19:
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** {   
+ 178              		.loc 1 26 0
+ 179 008c 1646     		mov	r6, r2
+ 180              		.loc 1 30 0
+ 181 008e FFF7FEFF 		bl	__aeabi_fmul
+ 182              	.LVL20:
+ 183 0092 2060     		str	r0, [r4, #0]	@ float
+ 184              	.LVL21:
+ 185 0094 6868     		ldr	r0, [r5, #4]	@ float
+ 186 0096 3146     		mov	r1, r6
+ 187 0098 FFF7FEFF 		bl	__aeabi_fmul
+ 188              	.LVL22:
+ 189 009c 6060     		str	r0, [r4, #4]	@ float
+ 190              	.LVL23:
+ 191 009e A868     		ldr	r0, [r5, #8]	@ float
+ 192 00a0 3146     		mov	r1, r6
+ 193 00a2 FFF7FEFF 		bl	__aeabi_fmul
+ 194              	.LVL24:
+ 195 00a6 A060     		str	r0, [r4, #8]	@ float
+ 196              	.LVL25:
+ 197 00a8 70BD     		pop	{r4, r5, r6, pc}
+ 198              		.cfi_endproc
+ 199              	.LFE2:
+ 201              		.align	1
+ 202              		.global	VectorAdd
+ 203              		.thumb
+ 204              		.thumb_func
+ 206              	VectorAdd:
+ 207              	.LFB3:
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	} 
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** }  
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** void VectorAdd(float vectorOut[3],float vectorIn1[3], float vectorIn2[3]) 
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** {
+ 208              		.loc 1 35 0
+ 209              		.cfi_startproc
+ 210              		@ args = 0, pretend = 0, frame = 0
+ 211              		@ frame_needed = 0, uses_anonymous_args = 0
+ 212              	.LVL26:
+ 213 00aa F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 214              	.LCFI3:
+ 215              		.cfi_def_cfa_offset 24
+ 216              		.cfi_offset 3, -24
+ 217              		.cfi_offset 4, -20
+ 218              		.cfi_offset 5, -16
+ 219              		.cfi_offset 6, -12
+ 220              		.cfi_offset 7, -8
+ 221              		.cfi_offset 14, -4
+ 222              		.loc 1 35 0
+ 223 00ac 0546     		mov	r5, r0
+ 224 00ae 0E46     		mov	r6, r1
+ 225 00b0 1746     		mov	r7, r2
+ 226 00b2 0024     		movs	r4, #0
+ 227              	.LVL27:
+ 228              	.L7:
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	int c = 0;
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c ****    
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	for(c = 0 ; c < 3 ; c++ )   
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	{      
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 		vectorOut[c] = vectorIn1[c] + vectorIn2[c];   
+ 229              		.loc 1 40 0 discriminator 2
+ 230 00b4 3059     		ldr	r0, [r6, r4]	@ float
+ 231 00b6 3959     		ldr	r1, [r7, r4]	@ float
+ 232 00b8 FFF7FEFF 		bl	__aeabi_fadd
+ 233              	.LVL28:
+ 234 00bc 2851     		str	r0, [r5, r4]	@ float
+ 235 00be 0434     		adds	r4, r4, #4
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	for(c = 0 ; c < 3 ; c++ )   
+ 236              		.loc 1 38 0 discriminator 2
+ 237 00c0 0C2C     		cmp	r4, #12
+ 238 00c2 F7D1     		bne	.L7
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	} 
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** } 
+ 239              		.loc 1 42 0
+ 240 00c4 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 241              		.cfi_endproc
+ 242              	.LFE3:
+ 244              		.align	1
+ 245              		.global	MatrixMultiply
+ 246              		.thumb
+ 247              		.thumb_func
+ 249              	MatrixMultiply:
+ 250              	.LFB4:
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** //Multiply two 3x3 matrices. 
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** void MatrixMultiply(float a[3][3], float b[3][3],float mat[3][3]) 
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** {   
+ 251              		.loc 1 48 0
+ 252              		.cfi_startproc
+ 253              		@ args = 0, pretend = 0, frame = 24
+ 254              		@ frame_needed = 0, uses_anonymous_args = 0
+ 255              	.LVL29:
+ 256 00c6 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 257              	.LCFI4:
+ 258              		.cfi_def_cfa_offset 36
+ 259              		.cfi_offset 4, -36
+ 260              		.cfi_offset 5, -32
+ 261              		.cfi_offset 6, -28
+ 262              		.cfi_offset 7, -24
+ 263              		.cfi_offset 8, -20
+ 264              		.cfi_offset 9, -16
+ 265              		.cfi_offset 10, -12
+ 266              		.cfi_offset 11, -8
+ 267              		.cfi_offset 14, -4
+ 268 00ca 8146     		mov	r9, r0
+ 269 00cc 87B0     		sub	sp, sp, #28
+ 270              	.LCFI5:
+ 271              		.cfi_def_cfa_offset 64
+ 272              		.loc 1 48 0
+ 273 00ce 8846     		mov	r8, r1
+ 274 00d0 0746     		mov	r7, r0
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** void MatrixMultiply(float a[3][3], float b[3][3],float mat[3][3]) 
+ 275              		.loc 1 47 0
+ 276 00d2 0025     		movs	r5, #0
+ 277 00d4 25E0     		b	.L10
+ 278              	.LVL30:
+ 279              	.L11:
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	float op[3];    
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	int x = 0;
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	int y = 0;
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	int w = 0;
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	//float test = 0;
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	for(  x = 0 ; x < 3 ; x++ )   
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	{     
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 		for(  y = 0 ; y < 3 ; y++ )     
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 		{       
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 			for(  w = 0 ; w < 3 ; w++ )       
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 			{        
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 				op[w] = a[x][w]*b[w][y];       
+ 280              		.loc 1 61 0 discriminator 1
+ 281 00d6 58F80410 		ldr	r1, [r8, r4]	@ float
+ 282 00da 59F80500 		ldr	r0, [r9, r5]	@ float
+ 283 00de 0192     		str	r2, [sp, #4]
+ 284 00e0 FFF7FEFF 		bl	__aeabi_fmul
+ 285              	.LVL31:
+ 286 00e4 F168     		ldr	r1, [r6, #12]	@ float
+ 287 00e6 8246     		mov	sl, r0
+ 288 00e8 0390     		str	r0, [sp, #12]	@ float
+ 289              	.LVL32:
+ 290 00ea 7868     		ldr	r0, [r7, #4]	@ float
+ 291 00ec FFF7FEFF 		bl	__aeabi_fmul
+ 292              	.LVL33:
+ 293 00f0 0146     		mov	r1, r0
+ 294 00f2 0490     		str	r0, [sp, #16]	@ float
+ 295              	.LVL34:
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 			}        
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 			mat[x][y] = 0;       
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 			mat[x][y] = op[0] + op[1] + op[2];              
+ 296              		.loc 1 64 0 discriminator 1
+ 297 00f4 5046     		mov	r0, sl
+ 298 00f6 FFF7FEFF 		bl	__aeabi_fadd
+ 299              	.LVL35:
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 				op[w] = a[x][w]*b[w][y];       
+ 300              		.loc 1 61 0 discriminator 1
+ 301 00fa B169     		ldr	r1, [r6, #24]	@ float
+ 302              		.loc 1 64 0 discriminator 1
+ 303 00fc 8246     		mov	sl, r0
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 				op[w] = a[x][w]*b[w][y];       
+ 304              		.loc 1 61 0 discriminator 1
+ 305 00fe B868     		ldr	r0, [r7, #8]	@ float
+ 306 0100 FFF7FEFF 		bl	__aeabi_fmul
+ 307              	.LVL36:
+ 308 0104 0146     		mov	r1, r0
+ 309              		.loc 1 64 0 discriminator 1
+ 310 0106 5046     		mov	r0, sl
+ 311 0108 FFF7FEFF 		bl	__aeabi_fadd
+ 312              	.LVL37:
+ 313 010c 4BF80400 		str	r0, [fp, r4]	@ float
+ 314 0110 0434     		adds	r4, r4, #4
+ 315 0112 0436     		adds	r6, r6, #4
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 		for(  y = 0 ; y < 3 ; y++ )     
+ 316              		.loc 1 57 0 discriminator 1
+ 317 0114 0C2C     		cmp	r4, #12
+ 318 0116 019A     		ldr	r2, [sp, #4]
+ 319 0118 DDD1     		bne	.L11
+ 320              	.LVL38:
+ 321 011a 0C35     		adds	r5, r5, #12
+ 322 011c 0C37     		adds	r7, r7, #12
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	for(  x = 0 ; x < 3 ; x++ )   
+ 323              		.loc 1 55 0
+ 324 011e 242D     		cmp	r5, #36
+ 325 0120 04D0     		beq	.L9
+ 326              	.LVL39:
+ 327              	.L10:
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** void MatrixMultiply(float a[3][3], float b[3][3],float mat[3][3]) 
+ 328              		.loc 1 47 0 discriminator 1
+ 329 0122 02EB050B 		add	fp, r2, r5
+ 330 0126 4646     		mov	r6, r8
+ 331 0128 0024     		movs	r4, #0
+ 332 012a D4E7     		b	.L11
+ 333              	.LVL40:
+ 334              	.L9:
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 			//test=mat[x][y];     
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 		}   
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** 	} 
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/Vector_math.c **** } 
+ 335              		.loc 1 68 0
+ 336 012c 07B0     		add	sp, sp, #28
+ 337 012e BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 338              		.cfi_endproc
+ 339              	.LFE4:
+ 341              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 Vector_math.c
+     /tmp/cc2sOhbu.s:20     .text:00000000 $t
+     /tmp/cc2sOhbu.s:25     .text:00000000 VectorDotProduct
+     /tmp/cc2sOhbu.s:78     .text:00000024 VectorCrossProduct
+     /tmp/cc2sOhbu.s:156    .text:00000082 VectorScale
+     /tmp/cc2sOhbu.s:206    .text:000000aa VectorAdd
+     /tmp/cc2sOhbu.s:249    .text:000000c6 MatrixMultiply
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+
+UNDEFINED SYMBOLS
+__aeabi_fmul
+__aeabi_fadd
+__aeabi_fsub

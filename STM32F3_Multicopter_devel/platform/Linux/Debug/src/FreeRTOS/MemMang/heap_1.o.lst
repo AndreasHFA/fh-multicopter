@@ -1,0 +1,396 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.eabi_attribute 28, 1
+   5              		.fpu fpv4-sp-d16
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 4
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.thumb
+  16              		.file	"heap_1.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.align	1
+  21              		.global	pvPortMalloc
+  22              		.thumb
+  23              		.thumb_func
+  25              	pvPortMalloc:
+  26              	.LFB0:
+  27              		.file 1 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/he
+   1:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** /*
+   2:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     FreeRTOS V7.3.0 - Copyright (C) 2012 Real Time Engineers Ltd.
+   3:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+   4:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     FEATURES AND PORTS ARE ADDED TO FREERTOS ALL THE TIME.  PLEASE VISIT 
+   5:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
+   6:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+   7:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     ***************************************************************************
+   8:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *                                                                       *
+   9:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *    FreeRTOS tutorial books are available in pdf and paperback.        *
+  10:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *    Complete, revised, and edited pdf reference manuals are also       *
+  11:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *    available.                                                         *
+  12:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *                                                                       *
+  13:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *    Purchasing FreeRTOS documentation will not only help you, by       *
+  14:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *    ensuring you get running as quickly as possible and with an        *
+  15:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *    in-depth knowledge of how to use FreeRTOS, it will also help       *
+  16:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *    the FreeRTOS project to continue with its mission of providing     *
+  17:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *    professional grade, cross platform, de facto standard solutions    *
+  18:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *    for microcontrollers - completely free of charge!                  *
+  19:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *                                                                       *
+  20:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *    >>> See http://www.FreeRTOS.org/Documentation for details. <<<     *
+  21:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *                                                                       *
+  22:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *    Thank you for using FreeRTOS, and thank you for your support!      *
+  23:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *                                                                       *
+  24:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     ***************************************************************************
+  25:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+  26:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+  27:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     This file is part of the FreeRTOS distribution.
+  28:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+  29:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     FreeRTOS is free software; you can redistribute it and/or modify it under
+  30:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     the terms of the GNU General Public License (version 2) as published by the
+  31:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     Free Software Foundation AND MODIFIED BY the FreeRTOS exception.
+  32:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     >>>NOTE<<< The modification to the GPL is included to allow you to
+  33:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     distribute a combined work that includes FreeRTOS without being obliged to
+  34:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     provide the source code for proprietary components outside of the FreeRTOS
+  35:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     kernel.  FreeRTOS is distributed in the hope that it will be useful, but
+  36:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+  37:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+  38:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     more details. You should have received a copy of the GNU General Public
+  39:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     License and the FreeRTOS license exception along with FreeRTOS; if not it
+  40:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     can be viewed here: http://www.freertos.org/a00114.html and also obtained
+  41:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     by writing to Richard Barry, contact details for whom are available on the
+  42:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     FreeRTOS WEB site.
+  43:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+  44:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     1 tab == 4 spaces!
+  45:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     
+  46:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     ***************************************************************************
+  47:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *                                                                       *
+  48:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *    Having a problem?  Start by reading the FAQ "My application does   *
+  49:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *    not run, what could be wrong?"                                     *
+  50:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *                                                                       *
+  51:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *    http://www.FreeRTOS.org/FAQHelp.html                               *
+  52:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****      *                                                                       *
+  53:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     ***************************************************************************
+  54:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+  55:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     
+  56:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     http://www.FreeRTOS.org - Documentation, training, latest versions, license 
+  57:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     and contact details.  
+  58:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     
+  59:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
+  60:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     including FreeRTOS+Trace - an indispensable productivity tool.
+  61:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+  62:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     Real Time Engineers ltd license FreeRTOS to High Integrity Systems, who sell 
+  63:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     the code with commercial support, indemnification, and middleware, under 
+  64:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     the OpenRTOS brand: http://www.OpenRTOS.com.  High Integrity Systems also
+  65:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     provide a safety engineered and independently SIL3 certified version under 
+  66:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****     the SafeRTOS brand: http://www.SafeRTOS.com.
+  67:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** */
+  68:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+  69:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+  70:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** /*
+  71:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****  * The simplest possible implementation of pvPortMalloc().  Note that this
+  72:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****  * implementation does NOT allow allocated memory to be freed again.
+  73:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****  *
+  74:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****  * See heap_2.c, heap_3.c and heap_4.c for alternative implementations, and the
+  75:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****  * memory management pages of http://www.FreeRTOS.org for more information.
+  76:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c ****  */
+  77:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** #include <stdlib.h>
+  78:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+  79:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** /* Defining MPU_WRAPPERS_INCLUDED_FROM_API_FILE prevents task.h from redefining
+  80:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** all the API functions to use the MPU wrappers.  That should only be done when
+  81:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** task.h is included from an application file. */
+  82:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** #define MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+  83:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+  84:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** #include "FreeRTOS.h"
+  85:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** #include "task.h"
+  86:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+  87:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** #undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
+  88:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+  89:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** /* Allocate the memory for the heap.  The struct is used to force byte
+  90:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** alignment without using any non-portable code. */
+  91:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** static union xRTOS_HEAP
+  92:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** {
+  93:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	#if portBYTE_ALIGNMENT == 8
+  94:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 		volatile portDOUBLE dDummy;
+  95:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	#else
+  96:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 		volatile unsigned long ulDummy;
+  97:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	#endif
+  98:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	unsigned char ucHeap[ configTOTAL_HEAP_SIZE ];
+  99:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** } xHeap;
+ 100:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+ 101:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** static size_t xNextFreeByte = ( size_t ) 0;
+ 102:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** /*-----------------------------------------------------------*/
+ 103:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+ 104:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** void *pvPortMalloc( size_t xWantedSize )
+ 105:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** {
+  28              		.loc 1 105 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 38B5     		push	{r3, r4, r5, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 3, -16
+  37              		.cfi_offset 4, -12
+  38              		.cfi_offset 5, -8
+  39              		.cfi_offset 14, -4
+ 106:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** void *pvReturn = NULL;
+ 107:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+ 108:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	/* Ensure that blocks are always aligned to the required number of bytes. */
+ 109:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	#if portBYTE_ALIGNMENT != 1
+ 110:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 		if( xWantedSize & portBYTE_ALIGNMENT_MASK )
+  40              		.loc 1 110 0
+  41 0002 4307     		lsls	r3, r0, #29
+ 105:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** {
+  42              		.loc 1 105 0
+  43 0004 0546     		mov	r5, r0
+ 111:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 		{
+ 112:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 			/* Byte alignment required. */
+ 113:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 			xWantedSize += ( portBYTE_ALIGNMENT - ( xWantedSize & portBYTE_ALIGNMENT_MASK ) );
+  44              		.loc 1 113 0
+  45 0006 1CBF     		itt	ne
+  46 0008 20F00705 		bicne	r5, r0, #7
+  47 000c 0835     		addne	r5, r5, #8
+  48              	.LVL1:
+ 114:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 		}
+ 115:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	#endif
+ 116:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+ 117:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	vTaskSuspendAll();
+  49              		.loc 1 117 0
+  50 000e FFF7FEFF 		bl	vTaskSuspendAll
+  51              	.LVL2:
+ 118:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	{
+ 119:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 		/* Check there is enough room left for the allocation. */
+ 120:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 		if( ( ( xNextFreeByte + xWantedSize ) < configTOTAL_HEAP_SIZE ) &&
+  52              		.loc 1 120 0
+  53 0012 0A4B     		ldr	r3, .L10
+  54 0014 1A68     		ldr	r2, [r3, #0]
+  55 0016 AD18     		adds	r5, r5, r2
+  56              	.LVL3:
+  57 0018 B5F5205F 		cmp	r5, #10240
+  58 001c 06D2     		bcs	.L6
+  59              		.loc 1 120 0 is_stmt 0 discriminator 1
+  60 001e 9542     		cmp	r5, r2
+  61 0020 04D9     		bls	.L6
+ 121:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 			( ( xNextFreeByte + xWantedSize ) > xNextFreeByte )	)/* Check for overflow. */
+ 122:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 		{
+ 123:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 			/* Return the next free byte then increment the index past this
+ 124:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 			block. */
+ 125:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 			pvReturn = &( xHeap.ucHeap[ xNextFreeByte ] );
+  62              		.loc 1 125 0 is_stmt 1
+  63 0022 03F10804 		add	r4, r3, #8
+  64 0026 A418     		adds	r4, r4, r2
+  65              	.LVL4:
+ 126:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 			xNextFreeByte += xWantedSize;
+  66              		.loc 1 126 0
+  67 0028 1D60     		str	r5, [r3, #0]
+  68 002a 00E0     		b	.L3
+  69              	.LVL5:
+  70              	.L6:
+ 106:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** void *pvReturn = NULL;
+  71              		.loc 1 106 0
+  72 002c 0024     		movs	r4, #0
+  73              	.LVL6:
+  74              	.L3:
+ 127:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 		}
+ 128:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	}
+ 129:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	xTaskResumeAll();
+  75              		.loc 1 129 0
+  76 002e FFF7FEFF 		bl	xTaskResumeAll
+  77              	.LVL7:
+ 130:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+ 131:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	#if( configUSE_MALLOC_FAILED_HOOK == 1 )
+ 132:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	{
+ 133:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 		if( pvReturn == NULL )
+  78              		.loc 1 133 0
+  79 0032 0CB9     		cbnz	r4, .L4
+  80              	.LBB2:
+ 134:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 		{
+ 135:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 			extern void vApplicationMallocFailedHook( void );
+ 136:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 			vApplicationMallocFailedHook();
+  81              		.loc 1 136 0
+  82 0034 FFF7FEFF 		bl	vApplicationMallocFailedHook
+  83              	.LVL8:
+  84              	.L4:
+  85              	.LBE2:
+ 137:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 		}
+ 138:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	}
+ 139:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	#endif
+ 140:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+ 141:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	return pvReturn;
+ 142:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** }
+  86              		.loc 1 142 0
+  87 0038 2046     		mov	r0, r4
+  88 003a 38BD     		pop	{r3, r4, r5, pc}
+  89              	.L11:
+  90              		.align	2
+  91              	.L10:
+  92 003c 00000000 		.word	.LANCHOR0
+  93              		.cfi_endproc
+  94              	.LFE0:
+  96              		.align	1
+  97              		.global	vPortFree
+  98              		.thumb
+  99              		.thumb_func
+ 101              	vPortFree:
+ 102              	.LFB1:
+ 143:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** /*-----------------------------------------------------------*/
+ 144:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+ 145:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** void vPortFree( void *pv )
+ 146:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** {
+ 103              		.loc 1 146 0
+ 104              		.cfi_startproc
+ 105              		@ args = 0, pretend = 0, frame = 0
+ 106              		@ frame_needed = 0, uses_anonymous_args = 0
+ 107              	.LVL9:
+ 108 0040 08B5     		push	{r3, lr}
+ 109              	.LCFI1:
+ 110              		.cfi_def_cfa_offset 8
+ 111              		.cfi_offset 3, -8
+ 112              		.cfi_offset 14, -4
+ 147:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	/* Memory cannot be freed using this scheme.  See heap_2.c, heap_3.c and
+ 148:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	heap_4.c for alternative implementations, and the memory management pages of
+ 149:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	http://www.FreeRTOS.org for more information. */
+ 150:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	( void ) pv;
+ 151:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+ 152:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	/* Force an assert as it is invalid to call this function. */
+ 153:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	configASSERT( pv == NULL );
+ 113              		.loc 1 153 0
+ 114 0042 10B1     		cbz	r0, .L12
+ 115              		.loc 1 153 0 is_stmt 0 discriminator 1
+ 116 0044 FFF7FEFF 		bl	ulPortSetInterruptMask
+ 117              	.LVL10:
+ 118              	.L14:
+ 119 0048 FEE7     		b	.L14
+ 120              	.LVL11:
+ 121              	.L12:
+ 122 004a 08BD     		pop	{r3, pc}
+ 123              		.cfi_endproc
+ 124              	.LFE1:
+ 126              		.align	1
+ 127              		.global	vPortInitialiseBlocks
+ 128              		.thumb
+ 129              		.thumb_func
+ 131              	vPortInitialiseBlocks:
+ 132              	.LFB2:
+ 154:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** }
+ 155:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** /*-----------------------------------------------------------*/
+ 156:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+ 157:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** void vPortInitialiseBlocks( void )
+ 158:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** {
+ 133              		.loc 1 158 0 is_stmt 1
+ 134              		.cfi_startproc
+ 135              		@ args = 0, pretend = 0, frame = 0
+ 136              		@ frame_needed = 0, uses_anonymous_args = 0
+ 137              		@ link register save eliminated.
+ 159:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	/* Only required when static memory is not cleared. */
+ 160:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	xNextFreeByte = ( size_t ) 0;
+ 138              		.loc 1 160 0
+ 139 004c 014B     		ldr	r3, .L16
+ 140 004e 0022     		movs	r2, #0
+ 141 0050 1A60     		str	r2, [r3, #0]
+ 142 0052 7047     		bx	lr
+ 143              	.L17:
+ 144              		.align	2
+ 145              	.L16:
+ 146 0054 00000000 		.word	.LANCHOR0
+ 147              		.cfi_endproc
+ 148              	.LFE2:
+ 150              		.align	1
+ 151              		.global	xPortGetFreeHeapSize
+ 152              		.thumb
+ 153              		.thumb_func
+ 155              	xPortGetFreeHeapSize:
+ 156              	.LFB3:
+ 161:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** }
+ 162:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** /*-----------------------------------------------------------*/
+ 163:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 
+ 164:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** size_t xPortGetFreeHeapSize( void )
+ 165:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** {
+ 157              		.loc 1 165 0
+ 158              		.cfi_startproc
+ 159              		@ args = 0, pretend = 0, frame = 0
+ 160              		@ frame_needed = 0, uses_anonymous_args = 0
+ 161              		@ link register save eliminated.
+ 166:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** 	return ( configTOTAL_HEAP_SIZE - xNextFreeByte );
+ 162              		.loc 1 166 0
+ 163 0058 024B     		ldr	r3, .L19
+ 164 005a 1868     		ldr	r0, [r3, #0]
+ 167:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/MemMang/heap_1.c **** }
+ 165              		.loc 1 167 0
+ 166 005c C0F52050 		rsb	r0, r0, #10240
+ 167 0060 7047     		bx	lr
+ 168              	.L20:
+ 169 0062 00BF     		.align	2
+ 170              	.L19:
+ 171 0064 00000000 		.word	.LANCHOR0
+ 172              		.cfi_endproc
+ 173              	.LFE3:
+ 175              		.bss
+ 176              		.align	3
+ 177              		.set	.LANCHOR0,. + 0
+ 180              	xNextFreeByte:
+ 181 0000 00000000 		.space	4
+ 182 0004 00000000 		.space	4
+ 185              	xHeap:
+ 186 0008 00000000 		.space	10240
+ 186      00000000 
+ 186      00000000 
+ 186      00000000 
+ 186      00000000 
+ 187              		.text
+ 188              	.Letext0:
+ 189              		.file 2 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/include/ta
+ 190              		.file 3 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/p
+ 191              		.file 4 "/home/franz/sat/bin/../lib/gcc/arm-none-eabi/4.7.2/include/stddef.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 heap_1.c
+     /tmp/ccHrb9eJ.s:20     .text:00000000 $t
+     /tmp/ccHrb9eJ.s:25     .text:00000000 pvPortMalloc
+     /tmp/ccHrb9eJ.s:92     .text:0000003c $d
+     /tmp/ccHrb9eJ.s:96     .text:00000040 $t
+     /tmp/ccHrb9eJ.s:101    .text:00000040 vPortFree
+     /tmp/ccHrb9eJ.s:131    .text:0000004c vPortInitialiseBlocks
+     /tmp/ccHrb9eJ.s:146    .text:00000054 $d
+     /tmp/ccHrb9eJ.s:150    .text:00000058 $t
+     /tmp/ccHrb9eJ.s:155    .text:00000058 xPortGetFreeHeapSize
+     /tmp/ccHrb9eJ.s:171    .text:00000064 $d
+     /tmp/ccHrb9eJ.s:176    .bss:00000000 $d
+     /tmp/ccHrb9eJ.s:180    .bss:00000000 xNextFreeByte
+     /tmp/ccHrb9eJ.s:185    .bss:00000008 xHeap
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4eaffbadb3a087d856021b8a18f9e221
+                           .group:00000000 wm4.newlib.h.8.378a545e43bc5669590e42e276a93323
+                           .group:00000000 wm4.features.h.22.b72b3baab2bb2eab3661375590100b6b
+                           .group:00000000 wm4.config.h.197.f6039468f1d0fc1b2f8d10d31d95d32a
+                           .group:00000000 wm4._ansi.h.23.5644b60c990a4800b02a6e654e88f93a
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.187.4c942c37907201cd8bf2c1b2f296b4d5
+                           .group:00000000 wm4._default_types.h.6.5e12cd604db8ce00b62bb2f02708eaf3
+                           .group:00000000 wm4.lock.h.2.9bc98482741e5e2a9450b12934a684ea
+                           .group:00000000 wm4.stddef.h.349.31f4c5baff3fa2689010b32028da9c47
+                           .group:00000000 wm4.reent.h.16.9e42f0e588b85e70b2bf6572af57ce64
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.50.e3cb12f9608797e0cfb3c9615a6071cb
+                           .group:00000000 wm4.stddef.h.40.b60a1c1ee3f272eef5327a730cbabca6
+                           .group:00000000 wm4.projdefs.h.70.dbccf9a6ca737be695addf5321434443
+                           .group:00000000 wm4.FreeRTOSConfig.h.79.bfdec03d0f0e76f8a4cb6847c22dabd7
+                           .group:00000000 wm4.portmacro.h.71.4b486245a22132630e6590c20a5362d9
+                           .group:00000000 wm4.portable.h.326.d973d87d91a2870806201c5c4493d578
+                           .group:00000000 wm4.mpu_wrappers.h.70.805d5308b530bfb35337fa0cda53b379
+                           .group:00000000 wm4.FreeRTOS.h.153.2856cce34c845bc23d0e3eff29cca38b
+                           .group:00000000 wm4.list.h.99.4794e53f44ef377a7e8b918fd5c142a2
+                           .group:00000000 wm4.task.h.87.ccd4c448460750abd1f398251d355800
+
+UNDEFINED SYMBOLS
+vTaskSuspendAll
+xTaskResumeAll
+vApplicationMallocFailedHook
+ulPortSetInterruptMask

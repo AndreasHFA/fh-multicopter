@@ -1,0 +1,1009 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"filter_Lib.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.global	update_intFilter
+  20              		.thumb
+  21              		.thumb_func
+  23              	update_intFilter:
+  24              	.LFB0:
+  25              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c"
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** /*
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****  * filter_Lib.c
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****  *
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****  *  Created on: Nov 1, 2012
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****  *      Author: franz
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****  */
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** #include <filter_Lib.h>
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** #include <math.h>
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** void update_intFilter(intFilter *filter, int lowpassValue, int newMeasurement)
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** {
+  26              		.loc 1 12 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              	.LVL0:
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	filter->r = newMeasurement + filter->r - filter->filtered;
+  31              		.loc 1 13 0
+  32 0000 0368     		ldr	r3, [r0, #0]
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** {
+  33              		.loc 1 12 0
+  34 0002 10B5     		push	{r4, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 4, -8
+  38              		.cfi_offset 14, -4
+  39              		.loc 1 13 0
+  40 0004 4468     		ldr	r4, [r0, #4]
+  41 0006 D218     		adds	r2, r2, r3
+  42              	.LVL1:
+  43 0008 121B     		subs	r2, r2, r4
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	filter->filtered = filter->r>>lowpassValue;
+  44              		.loc 1 14 0
+  45 000a 42FA01F1 		asr	r1, r2, r1
+  46              	.LVL2:
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	filter->r = newMeasurement + filter->r - filter->filtered;
+  47              		.loc 1 13 0
+  48 000e 0260     		str	r2, [r0, #0]
+  49              		.loc 1 14 0
+  50 0010 4160     		str	r1, [r0, #4]
+  51 0012 10BD     		pop	{r4, pc}
+  52              		.cfi_endproc
+  53              	.LFE0:
+  55              		.align	1
+  56              		.global	initAvgValues
+  57              		.thumb
+  58              		.thumb_func
+  60              	initAvgValues:
+  61              	.LFB1:
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** }
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** void initAvgValues(struct movingAverageValues *avg)
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** {
+  62              		.loc 1 18 0
+  63              		.cfi_startproc
+  64              		@ args = 0, pretend = 0, frame = 0
+  65              		@ frame_needed = 0, uses_anonymous_args = 0
+  66              		@ link register save eliminated.
+  67              	.LVL3:
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	int i = 0;
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	avg->countValue = 0;
+  68              		.loc 1 20 0
+  69 0014 0023     		movs	r3, #0
+  70 0016 4361     		str	r3, [r0, #20]
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	for(i = 0;i<MA_VALUE;i++)
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	{
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 		avg->avgArray[i] = 0;
+  71              		.loc 1 23 0
+  72 0018 0360     		str	r3, [r0, #0]
+  73              	.LVL4:
+  74 001a 4360     		str	r3, [r0, #4]
+  75              	.LVL5:
+  76 001c 8360     		str	r3, [r0, #8]
+  77              	.LVL6:
+  78 001e C360     		str	r3, [r0, #12]
+  79              	.LVL7:
+  80 0020 0361     		str	r3, [r0, #16]
+  81              	.LVL8:
+  82 0022 7047     		bx	lr
+  83              		.cfi_endproc
+  84              	.LFE1:
+  86              		.align	1
+  87              		.global	calcMovingAvg
+  88              		.thumb
+  89              		.thumb_func
+  91              	calcMovingAvg:
+  92              	.LFB2:
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	}
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** }
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** int calcMovingAvg(struct movingAverageValues *avg, int newValue)
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** {
+  93              		.loc 1 28 0
+  94              		.cfi_startproc
+  95              		@ args = 0, pretend = 0, frame = 0
+  96              		@ frame_needed = 0, uses_anonymous_args = 0
+  97              		@ link register save eliminated.
+  98              	.LVL9:
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	int i = 0, result = 0;
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	avg->avgArray[avg->countValue] = newValue;
+  99              		.loc 1 31 0
+ 100 0024 4369     		ldr	r3, [r0, #20]
+ 101 0026 40F82310 		str	r1, [r0, r3, lsl #2]
+ 102              	.LVL10:
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	for(i = 0;i<MA_VALUE;i++)
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	{
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 		result += avg->avgArray[i];
+ 103              		.loc 1 34 0
+ 104 002a 90E80600 		ldmia	r0, {r1, r2}
+ 105              	.LVL11:
+ 106 002e 8918     		adds	r1, r1, r2
+ 107              	.LVL12:
+ 108 0030 8268     		ldr	r2, [r0, #8]
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	}
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	avg->countValue++;
+ 109              		.loc 1 36 0
+ 110 0032 0133     		adds	r3, r3, #1
+ 111              	.LVL13:
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 		result += avg->avgArray[i];
+ 112              		.loc 1 34 0
+ 113 0034 8918     		adds	r1, r1, r2
+ 114              	.LVL14:
+ 115 0036 C268     		ldr	r2, [r0, #12]
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	if (avg->countValue >= MA_VALUE)
+ 116              		.loc 1 37 0
+ 117 0038 042B     		cmp	r3, #4
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 		result += avg->avgArray[i];
+ 118              		.loc 1 34 0
+ 119 003a 1144     		add	r1, r1, r2
+ 120              	.LVL15:
+ 121 003c 0269     		ldr	r2, [r0, #16]
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	{
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 		avg->countValue = 0;
+ 122              		.loc 1 39 0
+ 123 003e C8BF     		it	gt
+ 124 0040 0023     		movgt	r3, #0
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 		result += avg->avgArray[i];
+ 125              		.loc 1 34 0
+ 126 0042 8A18     		adds	r2, r1, r2
+ 127              	.LVL16:
+ 128              		.loc 1 39 0
+ 129 0044 4361     		str	r3, [r0, #20]
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	}
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	return result/MA_VALUE;
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** }
+ 130              		.loc 1 42 0
+ 131 0046 0520     		movs	r0, #5
+ 132              	.LVL17:
+ 133 0048 92FBF0F0 		sdiv	r0, r2, r0
+ 134 004c 7047     		bx	lr
+ 135              		.cfi_endproc
+ 136              	.LFE2:
+ 138              		.align	1
+ 139              		.global	quickSort
+ 140              		.thumb
+ 141              		.thumb_func
+ 143              	quickSort:
+ 144              	.LFB3:
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** void quickSort (int a[], int lo, int hi)
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** {
+ 145              		.loc 1 46 0
+ 146              		.cfi_startproc
+ 147              		@ args = 0, pretend = 0, frame = 0
+ 148              		@ frame_needed = 0, uses_anonymous_args = 0
+ 149              	.LVL18:
+ 150 004e 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 151              	.LCFI1:
+ 152              		.cfi_def_cfa_offset 40
+ 153              		.cfi_offset 3, -40
+ 154              		.cfi_offset 4, -36
+ 155              		.cfi_offset 5, -32
+ 156              		.cfi_offset 6, -28
+ 157              		.cfi_offset 7, -24
+ 158              		.cfi_offset 8, -20
+ 159              		.cfi_offset 9, -16
+ 160              		.cfi_offset 10, -12
+ 161              		.cfi_offset 11, -8
+ 162              		.cfi_offset 14, -4
+ 163              		.loc 1 46 0
+ 164 0052 0546     		mov	r5, r0
+ 165 0054 1646     		mov	r6, r2
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** //  lo is the lower index, hi is the upper index
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** //  of the region of array a that is to be sorted
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     int i=lo, j=hi, h;
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     int x=a[(lo+hi)/2];
+ 166              		.loc 1 50 0
+ 167 0056 4FF00208 		mov	r8, #2
+ 168              	.LVL19:
+ 169              	.L14:
+ 170 005a 8B19     		adds	r3, r1, r6
+ 171 005c 93FBF8F3 		sdiv	r3, r3, r8
+ 172 0060 55F823A0 		ldr	sl, [r5, r3, lsl #2]
+ 173              	.LVL20:
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** void quickSort (int a[], int lo, int hi)
+ 174              		.loc 1 45 0
+ 175 0064 05EB8102 		add	r2, r5, r1, lsl #2
+ 176 0068 4C1C     		adds	r4, r1, #1
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     int i=lo, j=hi, h;
+ 177              		.loc 1 49 0
+ 178 006a 3346     		mov	r3, r6
+ 179 006c 00E0     		b	.L8
+ 180              	.LVL21:
+ 181              	.L9:
+ 182 006e 0134     		adds	r4, r4, #1
+ 183              	.LVL22:
+ 184              	.L8:
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     //  partition
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     do
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     {
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****         while (a[i]<x) i++;
+ 185              		.loc 1 55 0 discriminator 1
+ 186 0070 52F804CB 		ldr	ip, [r2], #4
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** void quickSort (int a[], int lo, int hi)
+ 187              		.loc 1 45 0 discriminator 1
+ 188 0074 671E     		subs	r7, r4, #1
+ 189              	.LVL23:
+ 190              		.loc 1 55 0 discriminator 1
+ 191 0076 D445     		cmp	ip, sl
+ 192 0078 F9DB     		blt	.L9
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** void quickSort (int a[], int lo, int hi)
+ 193              		.loc 1 45 0
+ 194 007a 05EB8300 		add	r0, r5, r3, lsl #2
+ 195 007e 00E0     		b	.L10
+ 196              	.L11:
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****         while (a[j]>x) j--;
+ 197              		.loc 1 56 0 discriminator 2
+ 198 0080 013B     		subs	r3, r3, #1
+ 199              	.LVL24:
+ 200              	.L10:
+ 201              		.loc 1 56 0 is_stmt 0 discriminator 1
+ 202 0082 8346     		mov	fp, r0
+ 203 0084 50F80499 		ldr	r9, [r0], #-4
+ 204 0088 D145     		cmp	r9, sl
+ 205 008a F9DC     		bgt	.L11
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****         if (i<=j)
+ 206              		.loc 1 57 0 is_stmt 1
+ 207 008c 9F42     		cmp	r7, r3
+ 208 008e 07DC     		bgt	.L12
+ 209              	.LVL25:
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****         {
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****             h=a[i]; a[i]=a[j]; a[j]=h;
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****             i++; j--;
+ 210              		.loc 1 60 0
+ 211 0090 013B     		subs	r3, r3, #1
+ 212              	.LVL26:
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****         }
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     } while (i<=j);
+ 213              		.loc 1 62 0
+ 214 0092 9C42     		cmp	r4, r3
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****             h=a[i]; a[i]=a[j]; a[j]=h;
+ 215              		.loc 1 59 0
+ 216 0094 42F8049C 		str	r9, [r2, #-4]
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****             i++; j--;
+ 217              		.loc 1 60 0
+ 218 0098 2746     		mov	r7, r4
+ 219              	.LVL27:
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****             h=a[i]; a[i]=a[j]; a[j]=h;
+ 220              		.loc 1 59 0
+ 221 009a CBF800C0 		str	ip, [fp, #0]
+ 222              		.loc 1 62 0
+ 223 009e E6DD     		ble	.L9
+ 224              	.LVL28:
+ 225              	.L12:
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     //  recursion
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     if (lo<j) quickSort(a, lo, j);
+ 226              		.loc 1 65 0
+ 227 00a0 9942     		cmp	r1, r3
+ 228 00a2 03DA     		bge	.L13
+ 229              		.loc 1 65 0 is_stmt 0 discriminator 1
+ 230 00a4 2846     		mov	r0, r5
+ 231 00a6 1A46     		mov	r2, r3
+ 232 00a8 FFF7FEFF 		bl	quickSort
+ 233              	.LVL29:
+ 234              	.L13:
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     if (i<hi) quickSort(a, i, hi);
+ 235              		.loc 1 66 0 is_stmt 1
+ 236 00ac B742     		cmp	r7, r6
+ 237 00ae 3946     		mov	r1, r7
+ 238 00b0 D3DB     		blt	.L14
+ 239              	.LVL30:
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** }
+ 240              		.loc 1 67 0
+ 241 00b2 BDE8F88F 		pop	{r3, r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 242              		.cfi_endproc
+ 243              	.LFE3:
+ 245              		.global	__aeabi_i2d
+ 246              		.global	__aeabi_d2iz
+ 247              		.align	1
+ 248              		.global	calcStdDev
+ 249              		.thumb
+ 250              		.thumb_func
+ 252              	calcStdDev:
+ 253              	.LFB4:
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** int calcStdDev (int a[], int index, int avgVal)
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** {
+ 254              		.loc 1 72 0
+ 255              		.cfi_startproc
+ 256              		@ args = 0, pretend = 0, frame = 0
+ 257              		@ frame_needed = 0, uses_anonymous_args = 0
+ 258              	.LVL31:
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	int sum = 0, i = 0;
+  74:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	for(i = 0; i<index;i++)
+ 259              		.loc 1 75 0
+ 260 00b6 0023     		movs	r3, #0
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** {
+ 261              		.loc 1 72 0
+ 262 00b8 10B5     		push	{r4, lr}
+ 263              	.LCFI2:
+ 264              		.cfi_def_cfa_offset 8
+ 265              		.cfi_offset 4, -8
+ 266              		.cfi_offset 14, -4
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	int sum = 0, i = 0;
+ 267              		.loc 1 73 0
+ 268 00ba 1C46     		mov	r4, r3
+ 269              		.loc 1 75 0
+ 270 00bc 04E0     		b	.L17
+ 271              	.LVL32:
+ 272              	.L18:
+  76:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	{
+  77:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 		sum = (a[i]-avgVal)*(a[i]-avgVal);
+ 273              		.loc 1 77 0 discriminator 2
+ 274 00be 50F82340 		ldr	r4, [r0, r3, lsl #2]
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	for(i = 0; i<index;i++)
+ 275              		.loc 1 75 0 discriminator 2
+ 276 00c2 0133     		adds	r3, r3, #1
+ 277              	.LVL33:
+ 278              		.loc 1 77 0 discriminator 2
+ 279 00c4 A41A     		subs	r4, r4, r2
+ 280 00c6 6443     		muls	r4, r4, r4
+ 281              	.LVL34:
+ 282              	.L17:
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	for(i = 0; i<index;i++)
+ 283              		.loc 1 75 0 discriminator 1
+ 284 00c8 8B42     		cmp	r3, r1
+ 285 00ca F8DB     		blt	.L18
+  78:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	}
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	return (sqrt(sum/(index-1)));
+ 286              		.loc 1 79 0
+ 287 00cc 481E     		subs	r0, r1, #1
+ 288              	.LVL35:
+ 289 00ce 94FBF0F0 		sdiv	r0, r4, r0
+ 290 00d2 FFF7FEFF 		bl	__aeabi_i2d
+ 291              	.LVL36:
+ 292 00d6 FFF7FEFF 		bl	sqrt
+ 293              	.LVL37:
+ 294 00da FFF7FEFF 		bl	__aeabi_d2iz
+ 295              	.LVL38:
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** }
+ 296              		.loc 1 80 0
+ 297 00de 10BD     		pop	{r4, pc}
+ 298              		.cfi_endproc
+ 299              	.LFE4:
+ 301              		.global	__aeabi_i2f
+ 302              		.global	__aeabi_fdiv
+ 303              		.global	__aeabi_fadd
+ 304              		.global	__aeabi_fmul
+ 305              		.align	1
+ 306              		.global	floatFilterAcc1
+ 307              		.thumb
+ 308              		.thumb_func
+ 310              	floatFilterAcc1:
+ 311              	.LFB5:
+  81:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+  82:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** /*
+  84:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****  * SampleRate 250Hz cutoff: 5Hz 4th order Butterworth
+  85:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****  * http://www-users.cs.york.ac.uk/~fisher/mkfilter/trad.html
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****  */
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** void floatFilterAcc1(floatFilter *value, int newValue)
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** {
+ 312              		.loc 1 88 0
+ 313              		.cfi_startproc
+ 314              		@ args = 0, pretend = 0, frame = 8
+ 315              		@ frame_needed = 0, uses_anonymous_args = 0
+ 316              	.LVL39:
+ 317 00e0 2DE9F74F 		push	{r0, r1, r2, r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 318              	.LCFI3:
+ 319              		.cfi_def_cfa_offset 48
+ 320              		.cfi_offset 0, -48
+ 321              		.cfi_offset 1, -44
+ 322              		.cfi_offset 2, -40
+ 323              		.cfi_offset 4, -36
+ 324              		.cfi_offset 5, -32
+ 325              		.cfi_offset 6, -28
+ 326              		.cfi_offset 7, -24
+ 327              		.cfi_offset 8, -20
+ 328              		.cfi_offset 9, -16
+ 329              		.cfi_offset 10, -12
+ 330              		.cfi_offset 11, -8
+ 331              		.cfi_offset 14, -4
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	float *xv = &value->filter_xv[0];
+  90:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	float *yv = &value->filter_yv[0];
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	xv[0] = xv[1]; xv[1] = xv[2]; xv[2] = xv[3]; xv[3] = xv[4];
+ 332              		.loc 1 91 0
+ 333 00e4 4368     		ldr	r3, [r0, #4]	@ float
+ 334 00e6 D0F80C90 		ldr	r9, [r0, #12]	@ float
+ 335 00ea D0F808B0 		ldr	fp, [r0, #8]	@ float
+ 336 00ee D0F810A0 		ldr	sl, [r0, #16]	@ float
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** {
+ 337              		.loc 1 88 0
+ 338 00f2 0446     		mov	r4, r0
+ 339              		.loc 1 91 0
+ 340 00f4 0360     		str	r3, [r0, #0]	@ float
+ 341 00f6 C0F80890 		str	r9, [r0, #8]	@ float
+ 342 00fa C0F80CA0 		str	sl, [r0, #12]	@ float
+ 343 00fe C0F804B0 		str	fp, [r0, #4]	@ float
+  92:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	xv[4] = (float)newValue / 2.674241096e+06 /*GAIN*/;
+ 344              		.loc 1 92 0
+ 345 0102 0846     		mov	r0, r1
+ 346              	.LVL40:
+ 347 0104 0193     		str	r3, [sp, #4]
+ 348 0106 FFF7FEFF 		bl	__aeabi_i2f
+ 349              	.LVL41:
+ 350 010a 2949     		ldr	r1, .L20
+ 351 010c FFF7FEFF 		bl	__aeabi_fdiv
+ 352              	.LVL42:
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	yv[0] = yv[1]; yv[1] = yv[2]; yv[2] = yv[3]; yv[3] = yv[4];
+ 353              		.loc 1 93 0
+ 354 0110 D4F81880 		ldr	r8, [r4, #24]	@ float
+ 355 0114 E769     		ldr	r7, [r4, #28]	@ float
+ 356 0116 266A     		ldr	r6, [r4, #32]	@ float
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	yv[4] =   (xv[0] + xv[4]) + 4 * (xv[1] + xv[3]) + 6 * xv[2]
+ 357              		.loc 1 94 0
+ 358 0118 019B     		ldr	r3, [sp, #4]
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	yv[0] = yv[1]; yv[1] = yv[2]; yv[2] = yv[3]; yv[3] = yv[4];
+ 359              		.loc 1 93 0
+ 360 011a 656A     		ldr	r5, [r4, #36]	@ float
+  92:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	xv[4] = (float)newValue / 2.674241096e+06 /*GAIN*/;
+ 361              		.loc 1 92 0
+ 362 011c 0146     		mov	r1, r0
+ 363 011e 2061     		str	r0, [r4, #16]	@ float
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	yv[0] = yv[1]; yv[1] = yv[2]; yv[2] = yv[3]; yv[3] = yv[4];
+ 364              		.loc 1 93 0
+ 365 0120 C4F81480 		str	r8, [r4, #20]	@ float
+ 366 0124 A761     		str	r7, [r4, #24]	@ float
+ 367 0126 E661     		str	r6, [r4, #28]	@ float
+ 368              		.loc 1 94 0
+ 369 0128 1846     		mov	r0, r3
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	yv[0] = yv[1]; yv[1] = yv[2]; yv[2] = yv[3]; yv[3] = yv[4];
+ 370              		.loc 1 93 0
+ 371 012a 2562     		str	r5, [r4, #32]	@ float
+ 372              		.loc 1 94 0
+ 373 012c FFF7FEFF 		bl	__aeabi_fadd
+ 374              	.LVL43:
+ 375 0130 5146     		mov	r1, sl
+ 376 0132 0346     		mov	r3, r0
+ 377 0134 5846     		mov	r0, fp
+ 378 0136 0193     		str	r3, [sp, #4]
+ 379 0138 FFF7FEFF 		bl	__aeabi_fadd
+ 380              	.LVL44:
+ 381 013c 4FF08141 		mov	r1, #1082130432
+ 382 0140 FFF7FEFF 		bl	__aeabi_fmul
+ 383              	.LVL45:
+ 384 0144 019B     		ldr	r3, [sp, #4]
+ 385 0146 0146     		mov	r1, r0
+ 386 0148 1846     		mov	r0, r3
+ 387 014a FFF7FEFF 		bl	__aeabi_fadd
+ 388              	.LVL46:
+ 389 014e 1949     		ldr	r1, .L20+4
+ 390 0150 8246     		mov	sl, r0
+ 391 0152 4846     		mov	r0, r9
+ 392 0154 FFF7FEFF 		bl	__aeabi_fmul
+ 393              	.LVL47:
+ 394 0158 0146     		mov	r1, r0
+ 395 015a 5046     		mov	r0, sl
+ 396 015c FFF7FEFF 		bl	__aeabi_fadd
+ 397              	.LVL48:
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 				 + ( -0.8768965608 * yv[0]) + (  3.6227607596 * yv[1])
+ 398              		.loc 1 95 0
+ 399 0160 1549     		ldr	r1, .L20+8
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	yv[4] =   (xv[0] + xv[4]) + 4 * (xv[1] + xv[3]) + 6 * xv[2]
+ 400              		.loc 1 94 0
+ 401 0162 8146     		mov	r9, r0
+ 402              		.loc 1 95 0
+ 403 0164 4046     		mov	r0, r8
+ 404 0166 FFF7FEFF 		bl	__aeabi_fmul
+ 405              	.LVL49:
+ 406 016a 0146     		mov	r1, r0
+ 407 016c 4846     		mov	r0, r9
+ 408 016e FFF7FEFF 		bl	__aeabi_fadd
+ 409              	.LVL50:
+ 410 0172 1249     		ldr	r1, .L20+12
+ 411 0174 8046     		mov	r8, r0
+ 412 0176 3846     		mov	r0, r7
+ 413 0178 FFF7FEFF 		bl	__aeabi_fmul
+ 414              	.LVL51:
+ 415 017c 0146     		mov	r1, r0
+ 416 017e 4046     		mov	r0, r8
+ 417 0180 FFF7FEFF 		bl	__aeabi_fadd
+ 418              	.LVL52:
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 				 + ( -5.6145268496 * yv[2]) + (  3.8686566679 * yv[3]);
+ 419              		.loc 1 96 0
+ 420 0184 0E49     		ldr	r1, .L20+16
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 				 + ( -0.8768965608 * yv[0]) + (  3.6227607596 * yv[1])
+ 421              		.loc 1 95 0
+ 422 0186 0746     		mov	r7, r0
+ 423              		.loc 1 96 0
+ 424 0188 3046     		mov	r0, r6
+ 425 018a FFF7FEFF 		bl	__aeabi_fmul
+ 426              	.LVL53:
+ 427 018e 0146     		mov	r1, r0
+ 428 0190 3846     		mov	r0, r7
+ 429 0192 FFF7FEFF 		bl	__aeabi_fadd
+ 430              	.LVL54:
+ 431 0196 0B49     		ldr	r1, .L20+20
+ 432 0198 0646     		mov	r6, r0
+ 433 019a 2846     		mov	r0, r5
+ 434 019c FFF7FEFF 		bl	__aeabi_fmul
+ 435              	.LVL55:
+ 436 01a0 0146     		mov	r1, r0
+ 437 01a2 3046     		mov	r0, r6
+ 438 01a4 FFF7FEFF 		bl	__aeabi_fadd
+ 439              	.LVL56:
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	yv[4] =   (xv[0] + xv[4]) + 4 * (xv[1] + xv[3]) + 6 * xv[2]
+ 440              		.loc 1 94 0
+ 441 01a8 6062     		str	r0, [r4, #36]	@ float
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	value->currentValue = yv[4];
+ 442              		.loc 1 97 0
+ 443 01aa A062     		str	r0, [r4, #40]	@ float
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** }
+ 444              		.loc 1 98 0
+ 445 01ac BDE8FE8F 		pop	{r1, r2, r3, r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 446              	.L21:
+ 447              		.align	2
+ 448              	.L20:
+ 449 01b0 0439234A 		.word	1243822340
+ 450 01b4 0000C040 		.word	1086324736
+ 451 01b8 4B7C60BF 		.word	-1084195765
+ 452 01bc 50DB6740 		.word	1080548176
+ 453 01c0 34AAB3C0 		.word	-1061967308
+ 454 01c4 12987740 		.word	1081579538
+ 455              		.cfi_endproc
+ 456              	.LFE5:
+ 458              		.align	1
+ 459              		.global	floatFilterAcc2
+ 460              		.thumb
+ 461              		.thumb_func
+ 463              	floatFilterAcc2:
+ 464              	.LFB6:
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+ 100:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** void floatFilterAcc2(floatFilter *value, int newValue)
+ 101:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** {
+ 465              		.loc 1 101 0
+ 466              		.cfi_startproc
+ 467              		@ args = 0, pretend = 0, frame = 0
+ 468              		@ frame_needed = 0, uses_anonymous_args = 0
+ 469              	.LVL57:
+ 470 01c8 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 471              	.LCFI4:
+ 472              		.cfi_def_cfa_offset 24
+ 473              		.cfi_offset 4, -24
+ 474              		.cfi_offset 5, -20
+ 475              		.cfi_offset 6, -16
+ 476              		.cfi_offset 7, -12
+ 477              		.cfi_offset 8, -8
+ 478              		.cfi_offset 14, -4
+ 102:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	float *xv = &value->filter_xv[0];
+ 103:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	float *yv = &value->filter_yv[0];
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	xv[0] = xv[1]; xv[1] = xv[2];
+ 479              		.loc 1 104 0
+ 480 01cc D0F80480 		ldr	r8, [r0, #4]	@ float
+ 481 01d0 8768     		ldr	r7, [r0, #8]	@ float
+ 101:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** {
+ 482              		.loc 1 101 0
+ 483 01d2 0446     		mov	r4, r0
+ 484              		.loc 1 104 0
+ 485 01d4 C0F80080 		str	r8, [r0, #0]	@ float
+ 486 01d8 4760     		str	r7, [r0, #4]	@ float
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	xv[2] = (float)newValue / 2.555570536e+04 /*GAIN*/;
+ 487              		.loc 1 105 0
+ 488 01da 0846     		mov	r0, r1
+ 489              	.LVL58:
+ 490 01dc FFF7FEFF 		bl	__aeabi_i2f
+ 491              	.LVL59:
+ 492 01e0 1549     		ldr	r1, .L23
+ 493 01e2 FFF7FEFF 		bl	__aeabi_fdiv
+ 494              	.LVL60:
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     yv[0] = yv[1]; yv[1] = yv[2];
+ 495              		.loc 1 106 0
+ 496 01e6 A669     		ldr	r6, [r4, #24]	@ float
+ 497 01e8 E569     		ldr	r5, [r4, #28]	@ float
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	xv[2] = (float)newValue / 2.555570536e+04 /*GAIN*/;
+ 498              		.loc 1 105 0
+ 499 01ea 0146     		mov	r1, r0
+ 500 01ec A060     		str	r0, [r4, #8]	@ float
+ 501              		.loc 1 106 0
+ 502 01ee 6661     		str	r6, [r4, #20]	@ float
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     yv[2] =   (xv[0] + xv[2]) + 2 * xv[1]
+ 503              		.loc 1 107 0
+ 504 01f0 4046     		mov	r0, r8
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     yv[0] = yv[1]; yv[1] = yv[2];
+ 505              		.loc 1 106 0
+ 506 01f2 A561     		str	r5, [r4, #24]	@ float
+ 507              		.loc 1 107 0
+ 508 01f4 FFF7FEFF 		bl	__aeabi_fadd
+ 509              	.LVL61:
+ 510 01f8 3946     		mov	r1, r7
+ 511 01fa 8046     		mov	r8, r0
+ 512 01fc 3846     		mov	r0, r7
+ 513 01fe FFF7FEFF 		bl	__aeabi_fadd
+ 514              	.LVL62:
+ 515 0202 0146     		mov	r1, r0
+ 516 0204 4046     		mov	r0, r8
+ 517 0206 FFF7FEFF 		bl	__aeabi_fadd
+ 518              	.LVL63:
+ 108:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****                  + ( -0.9823854506 * yv[0]) + (  1.9822289298 * yv[1]);
+ 519              		.loc 1 108 0
+ 520 020a 0C49     		ldr	r1, .L23+4
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     yv[2] =   (xv[0] + xv[2]) + 2 * xv[1]
+ 521              		.loc 1 107 0
+ 522 020c 0746     		mov	r7, r0
+ 523              		.loc 1 108 0
+ 524 020e 3046     		mov	r0, r6
+ 525 0210 FFF7FEFF 		bl	__aeabi_fmul
+ 526              	.LVL64:
+ 527 0214 0146     		mov	r1, r0
+ 528 0216 3846     		mov	r0, r7
+ 529 0218 FFF7FEFF 		bl	__aeabi_fadd
+ 530              	.LVL65:
+ 531 021c 0849     		ldr	r1, .L23+8
+ 532 021e 0646     		mov	r6, r0
+ 533 0220 2846     		mov	r0, r5
+ 534 0222 FFF7FEFF 		bl	__aeabi_fmul
+ 535              	.LVL66:
+ 536 0226 0146     		mov	r1, r0
+ 537 0228 3046     		mov	r0, r6
+ 538 022a FFF7FEFF 		bl	__aeabi_fadd
+ 539              	.LVL67:
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     yv[2] =   (xv[0] + xv[2]) + 2 * xv[1]
+ 540              		.loc 1 107 0
+ 541 022e E061     		str	r0, [r4, #28]	@ float
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     value->currentValue = yv[2];
+ 542              		.loc 1 109 0
+ 543 0230 A062     		str	r0, [r4, #40]	@ float
+ 544 0232 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 545              	.L24:
+ 546 0236 00BF     		.align	2
+ 547              	.L23:
+ 548 0238 69A7C746 		.word	1187489641
+ 549 023c 9D7D7BBF 		.word	-1082425955
+ 550 0240 ADB9FD3F 		.word	1073592749
+ 551              		.cfi_endproc
+ 552              	.LFE6:
+ 554              		.align	1
+ 555              		.global	floatFilterAcc
+ 556              		.thumb
+ 557              		.thumb_func
+ 559              	floatFilterAcc:
+ 560              	.LFB7:
+ 110:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** }
+ 111:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+ 112:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** void floatFilterAcc(floatFilter *value, int newValue)
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** {
+ 561              		.loc 1 113 0
+ 562              		.cfi_startproc
+ 563              		@ args = 0, pretend = 0, frame = 0
+ 564              		@ frame_needed = 0, uses_anonymous_args = 0
+ 565              	.LVL68:
+ 566 0244 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 567              	.LCFI5:
+ 568              		.cfi_def_cfa_offset 24
+ 569              		.cfi_offset 4, -24
+ 570              		.cfi_offset 5, -20
+ 571              		.cfi_offset 6, -16
+ 572              		.cfi_offset 7, -12
+ 573              		.cfi_offset 8, -8
+ 574              		.cfi_offset 14, -4
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	float *xv = &value->filter_xv[0];
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	float *yv = &value->filter_yv[0];
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	xv[0] = xv[1]; xv[1] = xv[2];
+ 575              		.loc 1 116 0
+ 576 0248 D0F80480 		ldr	r8, [r0, #4]	@ float
+ 577 024c 8768     		ldr	r7, [r0, #8]	@ float
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** {
+ 578              		.loc 1 113 0
+ 579 024e 0446     		mov	r4, r0
+ 580              		.loc 1 116 0
+ 581 0250 C0F80080 		str	r8, [r0, #0]	@ float
+ 582 0254 4760     		str	r7, [r0, #4]	@ float
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	xv[2] = (float)newValue / 1.017716736e+05 /*GAIN*/;
+ 583              		.loc 1 117 0
+ 584 0256 0846     		mov	r0, r1
+ 585              	.LVL69:
+ 586 0258 FFF7FEFF 		bl	__aeabi_i2f
+ 587              	.LVL70:
+ 588 025c 1549     		ldr	r1, .L26
+ 589 025e FFF7FEFF 		bl	__aeabi_fdiv
+ 590              	.LVL71:
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     yv[0] = yv[1]; yv[1] = yv[2];
+ 591              		.loc 1 118 0
+ 592 0262 A669     		ldr	r6, [r4, #24]	@ float
+ 593 0264 E569     		ldr	r5, [r4, #28]	@ float
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	xv[2] = (float)newValue / 1.017716736e+05 /*GAIN*/;
+ 594              		.loc 1 117 0
+ 595 0266 0146     		mov	r1, r0
+ 596 0268 A060     		str	r0, [r4, #8]	@ float
+ 597              		.loc 1 118 0
+ 598 026a 6661     		str	r6, [r4, #20]	@ float
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     yv[2] =   (xv[0] + xv[2]) + 2 * xv[1]
+ 599              		.loc 1 119 0
+ 600 026c 4046     		mov	r0, r8
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     yv[0] = yv[1]; yv[1] = yv[2];
+ 601              		.loc 1 118 0
+ 602 026e A561     		str	r5, [r4, #24]	@ float
+ 603              		.loc 1 119 0
+ 604 0270 FFF7FEFF 		bl	__aeabi_fadd
+ 605              	.LVL72:
+ 606 0274 3946     		mov	r1, r7
+ 607 0276 8046     		mov	r8, r0
+ 608 0278 3846     		mov	r0, r7
+ 609 027a FFF7FEFF 		bl	__aeabi_fadd
+ 610              	.LVL73:
+ 611 027e 0146     		mov	r1, r0
+ 612 0280 4046     		mov	r0, r8
+ 613 0282 FFF7FEFF 		bl	__aeabi_fadd
+ 614              	.LVL74:
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****                  + ( -0.9911535959 * yv[0]) + (  1.9911142922 * yv[1]);
+ 615              		.loc 1 120 0
+ 616 0286 0C49     		ldr	r1, .L26+4
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     yv[2] =   (xv[0] + xv[2]) + 2 * xv[1]
+ 617              		.loc 1 119 0
+ 618 0288 0746     		mov	r7, r0
+ 619              		.loc 1 120 0
+ 620 028a 3046     		mov	r0, r6
+ 621 028c FFF7FEFF 		bl	__aeabi_fmul
+ 622              	.LVL75:
+ 623 0290 0146     		mov	r1, r0
+ 624 0292 3846     		mov	r0, r7
+ 625 0294 FFF7FEFF 		bl	__aeabi_fadd
+ 626              	.LVL76:
+ 627 0298 0849     		ldr	r1, .L26+8
+ 628 029a 0646     		mov	r6, r0
+ 629 029c 2846     		mov	r0, r5
+ 630 029e FFF7FEFF 		bl	__aeabi_fmul
+ 631              	.LVL77:
+ 632 02a2 0146     		mov	r1, r0
+ 633 02a4 3046     		mov	r0, r6
+ 634 02a6 FFF7FEFF 		bl	__aeabi_fadd
+ 635              	.LVL78:
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     yv[2] =   (xv[0] + xv[2]) + 2 * xv[1]
+ 636              		.loc 1 119 0
+ 637 02aa E061     		str	r0, [r4, #28]	@ float
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****     value->currentValue = yv[2];
+ 638              		.loc 1 121 0
+ 639 02ac A062     		str	r0, [r4, #40]	@ float
+ 640 02ae BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 641              	.L27:
+ 642 02b2 00BF     		.align	2
+ 643              	.L26:
+ 644 02b4 D6C5C647 		.word	1204209110
+ 645 02b8 3EBC7DBF 		.word	-1082278850
+ 646 02bc D5DCFE3F 		.word	1073667285
+ 647              		.cfi_endproc
+ 648              	.LFE7:
+ 650              		.align	1
+ 651              		.global	floatFilterGyro
+ 652              		.thumb
+ 653              		.thumb_func
+ 655              	floatFilterGyro:
+ 656              	.LFB8:
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** }
+ 123:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+ 124:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+ 125:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** /*
+ 126:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****  * SampleRate 500Hz, cutoff 200Hz, 4th order Butterworth
+ 127:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****  * http://www-users.cs.york.ac.uk/~fisher/mkfilter/trad.html
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c ****  */
+ 129:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** void floatFilterGyro(floatFilter *value, int newValue)
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** {
+ 657              		.loc 1 130 0
+ 658              		.cfi_startproc
+ 659              		@ args = 0, pretend = 0, frame = 8
+ 660              		@ frame_needed = 0, uses_anonymous_args = 0
+ 661              	.LVL79:
+ 662 02c0 2DE9F74F 		push	{r0, r1, r2, r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 663              	.LCFI6:
+ 664              		.cfi_def_cfa_offset 48
+ 665              		.cfi_offset 0, -48
+ 666              		.cfi_offset 1, -44
+ 667              		.cfi_offset 2, -40
+ 668              		.cfi_offset 4, -36
+ 669              		.cfi_offset 5, -32
+ 670              		.cfi_offset 6, -28
+ 671              		.cfi_offset 7, -24
+ 672              		.cfi_offset 8, -20
+ 673              		.cfi_offset 9, -16
+ 674              		.cfi_offset 10, -12
+ 675              		.cfi_offset 11, -8
+ 676              		.cfi_offset 14, -4
+ 131:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	float *xv = &value->filter_xv[0];
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	float *yv = &value->filter_yv[0];
+ 133:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	xv[0] = xv[1]; xv[1] = xv[2]; xv[2] = xv[3]; xv[3] = xv[4];
+ 677              		.loc 1 134 0
+ 678 02c4 4368     		ldr	r3, [r0, #4]	@ float
+ 679 02c6 D0F80C90 		ldr	r9, [r0, #12]	@ float
+ 680 02ca D0F808B0 		ldr	fp, [r0, #8]	@ float
+ 681 02ce D0F810A0 		ldr	sl, [r0, #16]	@ float
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** {
+ 682              		.loc 1 130 0
+ 683 02d2 0446     		mov	r4, r0
+ 684              		.loc 1 134 0
+ 685 02d4 0360     		str	r3, [r0, #0]	@ float
+ 686 02d6 C0F80890 		str	r9, [r0, #8]	@ float
+ 687 02da C0F80CA0 		str	sl, [r0, #12]	@ float
+ 688 02de C0F804B0 		str	fp, [r0, #4]	@ float
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	xv[4] = (float)newValue / 2.310287053e+00;
+ 689              		.loc 1 135 0
+ 690 02e2 0846     		mov	r0, r1
+ 691              	.LVL80:
+ 692 02e4 0193     		str	r3, [sp, #4]
+ 693 02e6 FFF7FEFF 		bl	__aeabi_i2f
+ 694              	.LVL81:
+ 695 02ea 2949     		ldr	r1, .L29
+ 696 02ec FFF7FEFF 		bl	__aeabi_fdiv
+ 697              	.LVL82:
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	yv[0] = yv[1]; yv[1] = yv[2]; yv[2] = yv[3]; yv[3] = yv[4];
+ 698              		.loc 1 136 0
+ 699 02f0 D4F81880 		ldr	r8, [r4, #24]	@ float
+ 700 02f4 E769     		ldr	r7, [r4, #28]	@ float
+ 701 02f6 266A     		ldr	r6, [r4, #32]	@ float
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	yv[4] =   (xv[0] + xv[4]) + 4 * (xv[1] + xv[3]) + 6 * xv[2]
+ 702              		.loc 1 137 0
+ 703 02f8 019B     		ldr	r3, [sp, #4]
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	yv[0] = yv[1]; yv[1] = yv[2]; yv[2] = yv[3]; yv[3] = yv[4];
+ 704              		.loc 1 136 0
+ 705 02fa 656A     		ldr	r5, [r4, #36]	@ float
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	xv[4] = (float)newValue / 2.310287053e+00;
+ 706              		.loc 1 135 0
+ 707 02fc 0146     		mov	r1, r0
+ 708 02fe 2061     		str	r0, [r4, #16]	@ float
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	yv[0] = yv[1]; yv[1] = yv[2]; yv[2] = yv[3]; yv[3] = yv[4];
+ 709              		.loc 1 136 0
+ 710 0300 C4F81480 		str	r8, [r4, #20]	@ float
+ 711 0304 A761     		str	r7, [r4, #24]	@ float
+ 712 0306 E661     		str	r6, [r4, #28]	@ float
+ 713              		.loc 1 137 0
+ 714 0308 1846     		mov	r0, r3
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	yv[0] = yv[1]; yv[1] = yv[2]; yv[2] = yv[3]; yv[3] = yv[4];
+ 715              		.loc 1 136 0
+ 716 030a 2562     		str	r5, [r4, #32]	@ float
+ 717              		.loc 1 137 0
+ 718 030c FFF7FEFF 		bl	__aeabi_fadd
+ 719              	.LVL83:
+ 720 0310 5146     		mov	r1, sl
+ 721 0312 0346     		mov	r3, r0
+ 722 0314 5846     		mov	r0, fp
+ 723 0316 0193     		str	r3, [sp, #4]
+ 724 0318 FFF7FEFF 		bl	__aeabi_fadd
+ 725              	.LVL84:
+ 726 031c 4FF08141 		mov	r1, #1082130432
+ 727 0320 FFF7FEFF 		bl	__aeabi_fmul
+ 728              	.LVL85:
+ 729 0324 019B     		ldr	r3, [sp, #4]
+ 730 0326 0146     		mov	r1, r0
+ 731 0328 1846     		mov	r0, r3
+ 732 032a FFF7FEFF 		bl	__aeabi_fadd
+ 733              	.LVL86:
+ 734 032e 1949     		ldr	r1, .L29+4
+ 735 0330 8246     		mov	sl, r0
+ 736 0332 4846     		mov	r0, r9
+ 737 0334 FFF7FEFF 		bl	__aeabi_fmul
+ 738              	.LVL87:
+ 739 0338 0146     		mov	r1, r0
+ 740 033a 5046     		mov	r0, sl
+ 741 033c FFF7FEFF 		bl	__aeabi_fadd
+ 742              	.LVL88:
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 				 + ( -0.1873794924 * yv[0]) + ( -1.0546654059 * yv[1])
+ 743              		.loc 1 138 0
+ 744 0340 1549     		ldr	r1, .L29+8
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	yv[4] =   (xv[0] + xv[4]) + 4 * (xv[1] + xv[3]) + 6 * xv[2]
+ 745              		.loc 1 137 0
+ 746 0342 8146     		mov	r9, r0
+ 747              		.loc 1 138 0
+ 748 0344 4046     		mov	r0, r8
+ 749 0346 FFF7FEFF 		bl	__aeabi_fmul
+ 750              	.LVL89:
+ 751 034a 0146     		mov	r1, r0
+ 752 034c 4846     		mov	r0, r9
+ 753 034e FFF7FEFF 		bl	__aeabi_fadd
+ 754              	.LVL90:
+ 755 0352 1249     		ldr	r1, .L29+12
+ 756 0354 8046     		mov	r8, r0
+ 757 0356 3846     		mov	r0, r7
+ 758 0358 FFF7FEFF 		bl	__aeabi_fmul
+ 759              	.LVL91:
+ 760 035c 0146     		mov	r1, r0
+ 761 035e 4046     		mov	r0, r8
+ 762 0360 FFF7FEFF 		bl	__aeabi_fadd
+ 763              	.LVL92:
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 				 + ( -2.3139884144 * yv[2]) + ( -2.3695130072 * yv[3]);
+ 764              		.loc 1 139 0
+ 765 0364 0E49     		ldr	r1, .L29+16
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 				 + ( -0.1873794924 * yv[0]) + ( -1.0546654059 * yv[1])
+ 766              		.loc 1 138 0
+ 767 0366 0746     		mov	r7, r0
+ 768              		.loc 1 139 0
+ 769 0368 3046     		mov	r0, r6
+ 770 036a FFF7FEFF 		bl	__aeabi_fmul
+ 771              	.LVL93:
+ 772 036e 0146     		mov	r1, r0
+ 773 0370 3846     		mov	r0, r7
+ 774 0372 FFF7FEFF 		bl	__aeabi_fadd
+ 775              	.LVL94:
+ 776 0376 0B49     		ldr	r1, .L29+20
+ 777 0378 0646     		mov	r6, r0
+ 778 037a 2846     		mov	r0, r5
+ 779 037c FFF7FEFF 		bl	__aeabi_fmul
+ 780              	.LVL95:
+ 781 0380 0146     		mov	r1, r0
+ 782 0382 3046     		mov	r0, r6
+ 783 0384 FFF7FEFF 		bl	__aeabi_fadd
+ 784              	.LVL96:
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	yv[4] =   (xv[0] + xv[4]) + 4 * (xv[1] + xv[3]) + 6 * xv[2]
+ 785              		.loc 1 137 0
+ 786 0388 6062     		str	r0, [r4, #36]	@ float
+ 140:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** 	value->currentValue = yv[4];
+ 787              		.loc 1 140 0
+ 788 038a A062     		str	r0, [r4, #40]	@ float
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/filter_Lib.c **** }
+ 789              		.loc 1 141 0
+ 790 038c BDE8FE8F 		pop	{r1, r2, r3, r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 791              	.L30:
+ 792              		.align	2
+ 793              	.L29:
+ 794 0390 BEDB1340 		.word	1075043262
+ 795 0394 0000C040 		.word	1086324736
+ 796 0398 69E03FBE 		.word	-1103110039
+ 797 039c 47FF86BF 		.word	-1081671865
+ 798 03a0 631814C0 		.word	-1072424861
+ 799 03a4 1AA617C0 		.word	-1072191974
+ 800              		.cfi_endproc
+ 801              	.LFE8:
+ 803              	.Letext0:
+ 804              		.file 2 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_inc/filter_Lib.h"
+ 805              		.file 3 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+DEFINED SYMBOLS
+                            *ABS*:00000000 filter_Lib.c
+     /tmp/ccbqaoBD.s:18     .text:00000000 $t
+     /tmp/ccbqaoBD.s:23     .text:00000000 update_intFilter
+     /tmp/ccbqaoBD.s:60     .text:00000014 initAvgValues
+     /tmp/ccbqaoBD.s:91     .text:00000024 calcMovingAvg
+     /tmp/ccbqaoBD.s:143    .text:0000004e quickSort
+     /tmp/ccbqaoBD.s:252    .text:000000b6 calcStdDev
+     /tmp/ccbqaoBD.s:310    .text:000000e0 floatFilterAcc1
+     /tmp/ccbqaoBD.s:449    .text:000001b0 $d
+     /tmp/ccbqaoBD.s:458    .text:000001c8 $t
+     /tmp/ccbqaoBD.s:463    .text:000001c8 floatFilterAcc2
+     /tmp/ccbqaoBD.s:548    .text:00000238 $d
+     /tmp/ccbqaoBD.s:554    .text:00000244 $t
+     /tmp/ccbqaoBD.s:559    .text:00000244 floatFilterAcc
+     /tmp/ccbqaoBD.s:644    .text:000002b4 $d
+     /tmp/ccbqaoBD.s:650    .text:000002c0 $t
+     /tmp/ccbqaoBD.s:655    .text:000002c0 floatFilterGyro
+     /tmp/ccbqaoBD.s:794    .text:00000390 $d
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.filter_Lib.h.9.c3b4da84b619ff7a2d8e947a9cf27fbf
+                           .group:00000000 wm4.newlib.h.8.e1d498e57c12962fc6d7be5061a6981a
+                           .group:00000000 wm4.config.h.148.52fe83653334d06815a0c57b59a3e584
+                           .group:00000000 wm4._ansi.h.23.95dee4059009fe3ab635a191bb73dc66
+                           .group:00000000 wm4._default_types.h.6.1dbd2e581fd590860c7c17f21d147e91
+                           .group:00000000 wm4.lock.h.2.9bc98482741e5e2a9450b12934a684ea
+                           .group:00000000 wm4.stddef.h.349.31f4c5baff3fa2689010b32028da9c47
+                           .group:00000000 wm4.reent.h.16.58b23a9f0faf0e7f2dfe7e2d33154afd
+                           .group:00000000 wm4.math.h.49.5da716593b937b9fb02bef6ed6537c13
+
+UNDEFINED SYMBOLS
+__aeabi_i2d
+__aeabi_d2iz
+sqrt
+__aeabi_i2f
+__aeabi_fdiv
+__aeabi_fadd
+__aeabi_fmul

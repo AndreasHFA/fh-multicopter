@@ -1,0 +1,1096 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"croutine.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.global	xCoRoutineCreate
+  20              		.thumb
+  21              		.thumb_func
+  23              	xCoRoutineCreate:
+  24              	.LFB0:
+  25              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** /*
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     FreeRTOS V7.4.0 - Copyright (C) 2013 Real Time Engineers Ltd.
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     FEATURES AND PORTS ARE ADDED TO FREERTOS ALL THE TIME.  PLEASE VISIT
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     ***************************************************************************
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *                                                                       *
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *    FreeRTOS tutorial books are available in pdf and paperback.        *
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *    Complete, revised, and edited pdf reference manuals are also       *
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *    available.                                                         *
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *                                                                       *
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *    Purchasing FreeRTOS documentation will not only help you, by       *
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *    ensuring you get running as quickly as possible and with an        *
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *    in-depth knowledge of how to use FreeRTOS, it will also help       *
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *    the FreeRTOS project to continue with its mission of providing     *
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *    professional grade, cross platform, de facto standard solutions    *
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *    for microcontrollers - completely free of charge!                  *
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *                                                                       *
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *    >>> See http://www.FreeRTOS.org/Documentation for details. <<<     *
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *                                                                       *
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *    Thank you for using FreeRTOS, and thank you for your support!      *
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *                                                                       *
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     ***************************************************************************
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     This file is part of the FreeRTOS distribution.
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     FreeRTOS is free software; you can redistribute it and/or modify it under
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     the terms of the GNU General Public License (version 2) as published by the
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     Free Software Foundation AND MODIFIED BY the FreeRTOS exception.
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     >>>>>>NOTE<<<<<< The modification to the GPL is included to allow you to
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     distribute a combined work that includes FreeRTOS without being obliged to
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     provide the source code for proprietary components outside of the FreeRTOS
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     kernel.
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     details. You should have received a copy of the GNU General Public License
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     and the FreeRTOS license exception along with FreeRTOS; if not itcan be
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     viewed here: http://www.freertos.org/a00114.html and also obtained by
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     writing to Real Time Engineers Ltd., contact details for whom are available
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     on the FreeRTOS WEB site.
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     1 tab == 4 spaces!
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     ***************************************************************************
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *                                                                       *
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *    Having a problem?  Start by reading the FAQ "My application does   *
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *    not run, what could be wrong?"                                     *
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *                                                                       *
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *    http://www.FreeRTOS.org/FAQHelp.html                               *
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****      *                                                                       *
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     ***************************************************************************
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     http://www.FreeRTOS.org - Documentation, books, training, latest versions,
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     license and Real Time Engineers Ltd. contact details.
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     including FreeRTOS+Trace - an indispensable productivity tool, and our new
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     fully thread aware and reentrant UDP/IP stack.
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     http://www.OpenRTOS.com - Real Time Engineers ltd license FreeRTOS to High
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     Integrity Systems, who sell the code with commercial support,
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     indemnification and middleware, under the OpenRTOS brand.
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     http://www.SafeRTOS.com - High Integrity Systems also provide a safety
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     engineered and independently SIL3 certified version for use in safety and
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****     mission critical applications that require provable dependability.
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** */
+  74:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** #include "FreeRTOS.h"
+  76:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** #include "task.h"
+  77:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** #include "croutine.h"
+  78:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** /*
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  * Some kernel aware debuggers require data to be viewed to be global, rather
+  81:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  * than file scope.
+  82:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  */
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** #ifdef portREMOVE_STATIC_QUALIFIER
+  84:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	#define static
+  85:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** #endif
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** /* Lists for ready and blocked co-routines. --------------------*/
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** static xList pxReadyCoRoutineLists[ configMAX_CO_ROUTINE_PRIORITIES ];	/*< Prioritised ready co-rou
+  90:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** static xList xDelayedCoRoutineList1;									/*< Delayed co-routines. */
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** static xList xDelayedCoRoutineList2;									/*< Delayed co-routines (two lists are used - one for 
+  92:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** static xList * pxDelayedCoRoutineList;									/*< Points to the delayed co-routine list currently 
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** static xList * pxOverflowDelayedCoRoutineList;							/*< Points to the delayed co-routine list curr
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** static xList xPendingReadyCoRoutineList;								/*< Holds co-routines that have been readied by an 
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** /* Other file private variables. --------------------------------*/
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** corCRCB * pxCurrentCoRoutine = NULL;
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** static unsigned portBASE_TYPE uxTopCoRoutineReadyPriority = 0;
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** static portTickType xCoRoutineTickCount = 0, xLastTickCount = 0, xPassedTicks = 0;
+ 100:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 101:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** /* The initial state of the co-routine when it is created. */
+ 102:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** #define corINITIAL_STATE	( 0 )
+ 103:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** /*
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  * Place the co-routine represented by pxCRCB into the appropriate ready queue
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  * for the priority.  It is inserted at the end of the list.
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  *
+ 108:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  * This macro accesses the co-routine ready lists and therefore must not be
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  * used from within an ISR.
+ 110:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  */
+ 111:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** #define prvAddCoRoutineToReadyQueue( pxCRCB )																		\
+ 112:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** {																													\
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	if( pxCRCB->uxPriority > uxTopCoRoutineReadyPriority )															\
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	{																												\
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		uxTopCoRoutineReadyPriority = pxCRCB->uxPriority;															\
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	}																												\
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	vListInsertEnd( ( xList * ) &( pxReadyCoRoutineLists[ pxCRCB->uxPriority ] ), &( pxCRCB->xGenericL
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** }
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** /*
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  * Utility to ready all the lists used by the scheduler.  This is called
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  * automatically upon the creation of the first co-routine.
+ 123:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  */
+ 124:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** static void prvInitialiseCoRoutineLists( void );
+ 125:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 126:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** /*
+ 127:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  * Co-routines that are readied by an interrupt cannot be placed directly into
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  * the ready lists (there is no mutual exclusion).  Instead they are placed in
+ 129:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  * in the pending ready list in order that they can later be moved to the ready
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  * list by the co-routine scheduler.
+ 131:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  */
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** static void prvCheckPendingReadyList( void );
+ 133:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** /*
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  * Macro that looks at the list of co-routines that are currently delayed to
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  * see if any require waking.
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  *
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  * Co-routines are stored in the queue in the order of their wake time -
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  * meaning once one co-routine has been found whose timer has not expired
+ 140:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  * we need not look any further down the list.
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c ****  */
+ 142:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** static void prvCheckDelayedList( void );
+ 143:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 144:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** /*-----------------------------------------------------------*/
+ 145:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 146:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** signed portBASE_TYPE xCoRoutineCreate( crCOROUTINE_CODE pxCoRoutineCode, unsigned portBASE_TYPE uxP
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** {
+  26              		.loc 1 147 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              	.LVL0:
+  31 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, sl, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 32
+  34              		.cfi_offset 4, -32
+  35              		.cfi_offset 5, -28
+  36              		.cfi_offset 6, -24
+  37              		.cfi_offset 7, -20
+  38              		.cfi_offset 8, -16
+  39              		.cfi_offset 9, -12
+  40              		.cfi_offset 10, -8
+  41              		.cfi_offset 14, -4
+  42              		.loc 1 147 0
+  43 0004 8046     		mov	r8, r0
+ 148:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** signed portBASE_TYPE xReturn;
+ 149:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** corCRCB *pxCoRoutine;
+ 150:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 151:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	/* Allocate the memory that will store the co-routine control block. */
+ 152:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	pxCoRoutine = ( corCRCB * ) pvPortMalloc( sizeof( corCRCB ) );
+  44              		.loc 1 152 0
+  45 0006 3820     		movs	r0, #56
+  46              	.LVL1:
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** {
+  47              		.loc 1 147 0
+  48 0008 8A46     		mov	sl, r1
+  49 000a 9146     		mov	r9, r2
+  50              		.loc 1 152 0
+  51 000c FFF7FEFF 		bl	pvPortMalloc
+  52              	.LVL2:
+ 153:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	if( pxCoRoutine )
+  53              		.loc 1 153 0
+  54 0010 0446     		mov	r4, r0
+  55 0012 0028     		cmp	r0, #0
+  56 0014 44D0     		beq	.L5
+ 154:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	{
+ 155:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		/* If pxCurrentCoRoutine is NULL then this is the first co-routine to
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		be created and the co-routine data structures need initialising. */
+ 157:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		if( pxCurrentCoRoutine == NULL )
+  57              		.loc 1 157 0
+  58 0016 244D     		ldr	r5, .L6
+  59 0018 2B68     		ldr	r3, [r5, #0]
+  60 001a C3B9     		cbnz	r3, .L3
+ 158:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		{
+ 159:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			pxCurrentCoRoutine = pxCoRoutine;
+  61              		.loc 1 159 0
+  62 001c 2846     		mov	r0, r5
+  63              	.LVL3:
+  64 001e 40F8044B 		str	r4, [r0], #4
+  65              	.LVL4:
+  66              	.LBB4:
+  67              	.LBB5:
+ 160:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			prvInitialiseCoRoutineLists();
+ 161:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		}
+ 162:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 163:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		/* Check the priority is within limits. */
+ 164:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		if( uxPriority >= configMAX_CO_ROUTINE_PRIORITIES )
+ 165:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		{
+ 166:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			uxPriority = configMAX_CO_ROUTINE_PRIORITIES - 1;
+ 167:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		}
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 169:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		/* Fill out the co-routine control block from the function parameters. */
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		pxCoRoutine->uxState = corINITIAL_STATE;
+ 171:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		pxCoRoutine->uxPriority = uxPriority;
+ 172:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		pxCoRoutine->uxIndex = uxIndex;
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		pxCoRoutine->pxCoRoutineFunction = pxCoRoutineCode;
+ 174:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 175:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		/* Initialise all the other co-routine control block parameters. */
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		vListInitialiseItem( &( pxCoRoutine->xGenericListItem ) );
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		vListInitialiseItem( &( pxCoRoutine->xEventListItem ) );
+ 178:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 179:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		/* Set the co-routine control block as a link back from the xListItem.
+ 180:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		This is so we can get back to the containing CRCB from a generic item
+ 181:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		in a list. */
+ 182:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		listSET_LIST_ITEM_OWNER( &( pxCoRoutine->xGenericListItem ), pxCoRoutine );
+ 183:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		listSET_LIST_ITEM_OWNER( &( pxCoRoutine->xEventListItem ), pxCoRoutine );
+ 184:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 185:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		/* Event lists are always in priority order. */
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		listSET_LIST_ITEM_VALUE( &( pxCoRoutine->xEventListItem ), configMAX_PRIORITIES - ( portTickType 
+ 187:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 188:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		/* Now the co-routine has been initialised it can be added to the ready
+ 189:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		list at the correct priority. */
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		prvAddCoRoutineToReadyQueue( pxCoRoutine );
+ 191:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 192:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		xReturn = pdPASS;
+ 193:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	}
+ 194:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	else
+ 195:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	{
+ 196:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		xReturn = errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY;
+ 197:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	}
+ 198:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 199:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	return xReturn;
+ 200:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** }
+ 201:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** /*-----------------------------------------------------------*/
+ 202:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 203:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** void vCoRoutineAddToDelayedList( portTickType xTicksToDelay, xList *pxEventList )
+ 204:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** {
+ 205:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** portTickType xTimeToWake;
+ 206:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 207:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	/* Calculate the time to wake - this may overflow but this is
+ 208:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	not a problem. */
+ 209:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	xTimeToWake = xCoRoutineTickCount + xTicksToDelay;
+ 210:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 211:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	/* We must remove ourselves from the ready list before adding
+ 212:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	ourselves to the blocked list as the same list item is used for
+ 213:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	both lists. */
+ 214:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	uxListRemove( ( xListItem * ) &( pxCurrentCoRoutine->xGenericListItem ) );
+ 215:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 216:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	/* The list item will be inserted in wake time order. */
+ 217:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	listSET_LIST_ITEM_VALUE( &( pxCurrentCoRoutine->xGenericListItem ), xTimeToWake );
+ 218:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 219:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	if( xTimeToWake < xCoRoutineTickCount )
+ 220:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	{
+ 221:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		/* Wake time has overflowed.  Place this item in the
+ 222:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		overflow list. */
+ 223:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		vListInsert( ( xList * ) pxOverflowDelayedCoRoutineList, ( xListItem * ) &( pxCurrentCoRoutine->x
+ 224:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	}
+ 225:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	else
+ 226:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	{
+ 227:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		/* The wake time has not overflowed, so we can use the
+ 228:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		current block list. */
+ 229:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		vListInsert( ( xList * ) pxDelayedCoRoutineList, ( xListItem * ) &( pxCurrentCoRoutine->xGenericL
+ 230:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	}
+ 231:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 232:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	if( pxEventList )
+ 233:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	{
+ 234:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		/* Also add the co-routine to an event list.  If this is done then the
+ 235:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		function must be called with interrupts disabled. */
+ 236:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		vListInsert( pxEventList, &( pxCurrentCoRoutine->xEventListItem ) );
+ 237:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	}
+ 238:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** }
+ 239:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** /*-----------------------------------------------------------*/
+ 240:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 241:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** static void prvCheckPendingReadyList( void )
+ 242:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** {
+ 243:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	/* Are there any co-routines waiting to get moved to the ready list?  These
+ 244:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	are co-routines that have been readied by an ISR.  The ISR cannot access
+ 245:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	the	ready lists itself. */
+ 246:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	while( listLIST_IS_EMPTY( &xPendingReadyCoRoutineList ) == pdFALSE )
+ 247:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	{
+ 248:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		corCRCB *pxUnblockedCRCB;
+ 249:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 250:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		/* The pending ready list can be accessed by an ISR. */
+ 251:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		portDISABLE_INTERRUPTS();
+ 252:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		{
+ 253:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			pxUnblockedCRCB = ( corCRCB * ) listGET_OWNER_OF_HEAD_ENTRY( (&xPendingReadyCoRoutineList) );
+ 254:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			uxListRemove( &( pxUnblockedCRCB->xEventListItem ) );
+ 255:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		}
+ 256:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		portENABLE_INTERRUPTS();
+ 257:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 258:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		uxListRemove( &( pxUnblockedCRCB->xGenericListItem ) );
+ 259:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		prvAddCoRoutineToReadyQueue( pxUnblockedCRCB );
+ 260:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	}
+ 261:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** }
+ 262:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** /*-----------------------------------------------------------*/
+ 263:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 264:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** static void prvCheckDelayedList( void )
+ 265:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** {
+ 266:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** corCRCB *pxCRCB;
+ 267:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 268:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	xPassedTicks = xTaskGetTickCount() - xLastTickCount;
+ 269:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	while( xPassedTicks )
+ 270:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	{
+ 271:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		xCoRoutineTickCount++;
+ 272:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		xPassedTicks--;
+ 273:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 274:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		/* If the tick count has overflowed we need to swap the ready lists. */
+ 275:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		if( xCoRoutineTickCount == 0 )
+ 276:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		{
+ 277:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			xList * pxTemp;
+ 278:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 279:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			/* Tick count has overflowed so we need to swap the delay lists.  If there are
+ 280:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			any items in pxDelayedCoRoutineList here then there is an error! */
+ 281:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			pxTemp = pxDelayedCoRoutineList;
+ 282:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			pxDelayedCoRoutineList = pxOverflowDelayedCoRoutineList;
+ 283:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			pxOverflowDelayedCoRoutineList = pxTemp;
+ 284:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		}
+ 285:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 286:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		/* See if this tick has made a timeout expire. */
+ 287:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		while( listLIST_IS_EMPTY( pxDelayedCoRoutineList ) == pdFALSE )
+ 288:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		{
+ 289:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			pxCRCB = ( corCRCB * ) listGET_OWNER_OF_HEAD_ENTRY( pxDelayedCoRoutineList );
+ 290:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 291:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			if( xCoRoutineTickCount < listGET_LIST_ITEM_VALUE( &( pxCRCB->xGenericListItem ) ) )
+ 292:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			{
+ 293:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 				/* Timeout not yet expired. */
+ 294:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 				break;
+ 295:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			}
+ 296:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 297:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			portDISABLE_INTERRUPTS();
+ 298:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			{
+ 299:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 				/* The event could have occurred just before this critical
+ 300:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 				section.  If this is the case then the generic list item will
+ 301:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 				have been moved to the pending ready list and the following
+ 302:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 				line is still valid.  Also the pvContainer parameter will have
+ 303:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 				been set to NULL so the following lines are also valid. */
+ 304:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 				uxListRemove( &( pxCRCB->xGenericListItem ) );
+ 305:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 306:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 				/* Is the co-routine waiting on an event also? */
+ 307:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 				if( pxCRCB->xEventListItem.pvContainer )
+ 308:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 				{
+ 309:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 					uxListRemove( &( pxCRCB->xEventListItem ) );
+ 310:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 				}
+ 311:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			}
+ 312:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			portENABLE_INTERRUPTS();
+ 313:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 314:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			prvAddCoRoutineToReadyQueue( pxCRCB );
+ 315:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		}
+ 316:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	}
+ 317:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 318:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	xLastTickCount = xCoRoutineTickCount;
+ 319:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** }
+ 320:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** /*-----------------------------------------------------------*/
+ 321:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 322:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** void vCoRoutineSchedule( void )
+ 323:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** {
+ 324:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	/* See if any co-routines readied by events need moving to the ready lists. */
+ 325:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	prvCheckPendingReadyList();
+ 326:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 327:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	/* See if any delayed co-routines have timed out. */
+ 328:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	prvCheckDelayedList();
+ 329:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 330:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	/* Find the highest priority queue that contains ready co-routines. */
+ 331:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	while( listLIST_IS_EMPTY( &( pxReadyCoRoutineLists[ uxTopCoRoutineReadyPriority ] ) ) )
+ 332:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	{
+ 333:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		if( uxTopCoRoutineReadyPriority == 0 )
+ 334:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		{
+ 335:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			/* No more co-routines to check. */
+ 336:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			return;
+ 337:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		}
+ 338:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		--uxTopCoRoutineReadyPriority;
+ 339:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	}
+ 340:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 341:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	/* listGET_OWNER_OF_NEXT_ENTRY walks through the list, so the co-routines
+ 342:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	 of the	same priority get an equal share of the processor time. */
+ 343:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	listGET_OWNER_OF_NEXT_ENTRY( pxCurrentCoRoutine, &( pxReadyCoRoutineLists[ uxTopCoRoutineReadyPrio
+ 344:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 345:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	/* Call the co-routine. */
+ 346:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	( pxCurrentCoRoutine->pxCoRoutineFunction )( pxCurrentCoRoutine, pxCurrentCoRoutine->uxIndex );
+ 347:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 348:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	return;
+ 349:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** }
+ 350:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** /*-----------------------------------------------------------*/
+ 351:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 352:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** static void prvInitialiseCoRoutineLists( void )
+ 353:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** {
+ 354:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** unsigned portBASE_TYPE uxPriority;
+ 355:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 356:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	for( uxPriority = 0; uxPriority < configMAX_CO_ROUTINE_PRIORITIES; uxPriority++ )
+ 357:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	{
+ 358:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		vListInitialise( ( xList * ) &( pxReadyCoRoutineLists[ uxPriority ] ) );
+  68              		.loc 1 358 0
+  69 0022 FFF7FEFF 		bl	vListInitialise
+  70              	.LVL5:
+ 359:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	}
+ 360:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 361:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	vListInitialise( ( xList * ) &xDelayedCoRoutineList1 );
+  71              		.loc 1 361 0
+  72 0026 05F12C06 		add	r6, r5, #44
+ 358:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		vListInitialise( ( xList * ) &( pxReadyCoRoutineLists[ uxPriority ] ) );
+  73              		.loc 1 358 0
+  74 002a 05F11800 		add	r0, r5, #24
+  75 002e FFF7FEFF 		bl	vListInitialise
+  76              	.LVL6:
+ 362:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	vListInitialise( ( xList * ) &xDelayedCoRoutineList2 );
+  77              		.loc 1 362 0
+  78 0032 05F14007 		add	r7, r5, #64
+ 361:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	vListInitialise( ( xList * ) &xDelayedCoRoutineList1 );
+  79              		.loc 1 361 0
+  80 0036 3046     		mov	r0, r6
+  81 0038 FFF7FEFF 		bl	vListInitialise
+  82              	.LVL7:
+  83              		.loc 1 362 0
+  84 003c 3846     		mov	r0, r7
+  85 003e FFF7FEFF 		bl	vListInitialise
+  86              	.LVL8:
+ 363:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	vListInitialise( ( xList * ) &xPendingReadyCoRoutineList );
+  87              		.loc 1 363 0
+  88 0042 05F15400 		add	r0, r5, #84
+  89 0046 FFF7FEFF 		bl	vListInitialise
+  90              	.LVL9:
+ 364:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 365:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	/* Start with pxDelayedCoRoutineList using list1 and the
+ 366:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	pxOverflowDelayedCoRoutineList using list2. */
+ 367:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	pxDelayedCoRoutineList = &xDelayedCoRoutineList1;
+  91              		.loc 1 367 0
+  92 004a AE66     		str	r6, [r5, #104]
+ 368:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	pxOverflowDelayedCoRoutineList = &xDelayedCoRoutineList2;
+  93              		.loc 1 368 0
+  94 004c EF66     		str	r7, [r5, #108]
+  95              	.LVL10:
+  96              	.L3:
+  97              	.LBE5:
+  98              	.LBE4:
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		pxCoRoutine->pxCoRoutineFunction = pxCoRoutineCode;
+  99              		.loc 1 173 0
+ 100 004e 2546     		mov	r5, r4
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		pxCoRoutine->uxState = corINITIAL_STATE;
+ 101              		.loc 1 170 0
+ 102 0050 0023     		movs	r3, #0
+ 103 0052 BAF1010F 		cmp	sl, #1
+ 104 0056 34BF     		ite	cc
+ 105 0058 5646     		movcc	r6, sl
+ 106 005a 0126     		movcs	r6, #1
+ 107              	.LVL11:
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		pxCoRoutine->pxCoRoutineFunction = pxCoRoutineCode;
+ 108              		.loc 1 173 0
+ 109 005c 45F8048B 		str	r8, [r5], #4
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		pxCoRoutine->uxState = corINITIAL_STATE;
+ 110              		.loc 1 170 0
+ 111 0060 A386     		strh	r3, [r4, #52]	@ movhi
+ 171:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		pxCoRoutine->uxPriority = uxPriority;
+ 112              		.loc 1 171 0
+ 113 0062 E662     		str	r6, [r4, #44]
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		vListInitialiseItem( &( pxCoRoutine->xGenericListItem ) );
+ 114              		.loc 1 176 0
+ 115 0064 2846     		mov	r0, r5
+ 172:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		pxCoRoutine->uxIndex = uxIndex;
+ 116              		.loc 1 172 0
+ 117 0066 C4F83090 		str	r9, [r4, #48]
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		vListInitialiseItem( &( pxCoRoutine->xGenericListItem ) );
+ 118              		.loc 1 176 0
+ 119 006a FFF7FEFF 		bl	vListInitialiseItem
+ 120              	.LVL12:
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		vListInitialiseItem( &( pxCoRoutine->xEventListItem ) );
+ 121              		.loc 1 177 0
+ 122 006e 04F11800 		add	r0, r4, #24
+ 123 0072 FFF7FEFF 		bl	vListInitialiseItem
+ 124              	.LVL13:
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		prvAddCoRoutineToReadyQueue( pxCoRoutine );
+ 125              		.loc 1 190 0
+ 126 0076 0C4A     		ldr	r2, .L6
+ 127 0078 E36A     		ldr	r3, [r4, #44]
+ 128 007a 116F     		ldr	r1, [r2, #112]
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		listSET_LIST_ITEM_VALUE( &( pxCoRoutine->xEventListItem ), configMAX_PRIORITIES - ( portTickType 
+ 129              		.loc 1 186 0
+ 130 007c C6F10506 		rsb	r6, r6, #5
+ 131              	.LVL14:
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		prvAddCoRoutineToReadyQueue( pxCoRoutine );
+ 132              		.loc 1 190 0
+ 133 0080 8B42     		cmp	r3, r1
+ 134 0082 88BF     		it	hi
+ 135 0084 1367     		strhi	r3, [r2, #112]
+ 136 0086 094A     		ldr	r2, .L6+4
+ 137 0088 1420     		movs	r0, #20
+ 138 008a 00FB0320 		mla	r0, r0, r3, r2
+ 182:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		listSET_LIST_ITEM_OWNER( &( pxCoRoutine->xGenericListItem ), pxCoRoutine );
+ 139              		.loc 1 182 0
+ 140 008e 2461     		str	r4, [r4, #16]
+ 183:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		listSET_LIST_ITEM_OWNER( &( pxCoRoutine->xEventListItem ), pxCoRoutine );
+ 141              		.loc 1 183 0
+ 142 0090 6462     		str	r4, [r4, #36]
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		listSET_LIST_ITEM_VALUE( &( pxCoRoutine->xEventListItem ), configMAX_PRIORITIES - ( portTickType 
+ 143              		.loc 1 186 0
+ 144 0092 A661     		str	r6, [r4, #24]
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		prvAddCoRoutineToReadyQueue( pxCoRoutine );
+ 145              		.loc 1 190 0
+ 146 0094 2946     		mov	r1, r5
+ 147 0096 FFF7FEFF 		bl	vListInsertEnd
+ 148              	.LVL15:
+ 192:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		xReturn = pdPASS;
+ 149              		.loc 1 192 0
+ 150 009a 0120     		movs	r0, #1
+ 151 009c BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, sl, pc}
+ 152              	.LVL16:
+ 153              	.L5:
+ 196:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		xReturn = errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY;
+ 154              		.loc 1 196 0
+ 155 00a0 4FF0FF30 		mov	r0, #-1
+ 156              	.LVL17:
+ 200:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** }
+ 157              		.loc 1 200 0
+ 158 00a4 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, sl, pc}
+ 159              	.L7:
+ 160              		.align	2
+ 161              	.L6:
+ 162 00a8 00000000 		.word	.LANCHOR0
+ 163 00ac 04000000 		.word	.LANCHOR0+4
+ 164              		.cfi_endproc
+ 165              	.LFE0:
+ 167              		.align	1
+ 168              		.global	vCoRoutineAddToDelayedList
+ 169              		.thumb
+ 170              		.thumb_func
+ 172              	vCoRoutineAddToDelayedList:
+ 173              	.LFB1:
+ 204:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** {
+ 174              		.loc 1 204 0
+ 175              		.cfi_startproc
+ 176              		@ args = 0, pretend = 0, frame = 0
+ 177              		@ frame_needed = 0, uses_anonymous_args = 0
+ 178              	.LVL18:
+ 179 00b0 70B5     		push	{r4, r5, r6, lr}
+ 180              	.LCFI1:
+ 181              		.cfi_def_cfa_offset 16
+ 182              		.cfi_offset 4, -16
+ 183              		.cfi_offset 5, -12
+ 184              		.cfi_offset 6, -8
+ 185              		.cfi_offset 14, -4
+ 209:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	xTimeToWake = xCoRoutineTickCount + xTicksToDelay;
+ 186              		.loc 1 209 0
+ 187 00b2 0D4C     		ldr	r4, .L13
+ 204:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** {
+ 188              		.loc 1 204 0
+ 189 00b4 0D46     		mov	r5, r1
+ 209:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	xTimeToWake = xCoRoutineTickCount + xTicksToDelay;
+ 190              		.loc 1 209 0
+ 191 00b6 666F     		ldr	r6, [r4, #116]
+ 192 00b8 8619     		adds	r6, r0, r6
+ 193              	.LVL19:
+ 214:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	uxListRemove( ( xListItem * ) &( pxCurrentCoRoutine->xGenericListItem ) );
+ 194              		.loc 1 214 0
+ 195 00ba 2068     		ldr	r0, [r4, #0]
+ 196              	.LVL20:
+ 197 00bc 0430     		adds	r0, r0, #4
+ 198 00be FFF7FEFF 		bl	uxListRemove
+ 199              	.LVL21:
+ 219:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	if( xTimeToWake < xCoRoutineTickCount )
+ 200              		.loc 1 219 0
+ 201 00c2 636F     		ldr	r3, [r4, #116]
+ 217:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	listSET_LIST_ITEM_VALUE( &( pxCurrentCoRoutine->xGenericListItem ), xTimeToWake );
+ 202              		.loc 1 217 0
+ 203 00c4 2168     		ldr	r1, [r4, #0]
+ 219:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	if( xTimeToWake < xCoRoutineTickCount )
+ 204              		.loc 1 219 0
+ 205 00c6 9E42     		cmp	r6, r3
+ 223:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		vListInsert( ( xList * ) pxOverflowDelayedCoRoutineList, ( xListItem * ) &( pxCurrentCoRoutine->x
+ 206              		.loc 1 223 0
+ 207 00c8 34BF     		ite	cc
+ 208 00ca E06E     		ldrcc	r0, [r4, #108]
+ 229:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		vListInsert( ( xList * ) pxDelayedCoRoutineList, ( xListItem * ) &( pxCurrentCoRoutine->xGenericL
+ 209              		.loc 1 229 0
+ 210 00cc A06E     		ldrcs	r0, [r4, #104]
+ 217:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	listSET_LIST_ITEM_VALUE( &( pxCurrentCoRoutine->xGenericListItem ), xTimeToWake );
+ 211              		.loc 1 217 0
+ 212 00ce 41F8046F 		str	r6, [r1, #4]!
+ 229:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		vListInsert( ( xList * ) pxDelayedCoRoutineList, ( xListItem * ) &( pxCurrentCoRoutine->xGenericL
+ 213              		.loc 1 229 0
+ 214 00d2 FFF7FEFF 		bl	vListInsert
+ 215              	.LVL22:
+ 232:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	if( pxEventList )
+ 216              		.loc 1 232 0
+ 217 00d6 35B1     		cbz	r5, .L8
+ 236:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		vListInsert( pxEventList, &( pxCurrentCoRoutine->xEventListItem ) );
+ 218              		.loc 1 236 0
+ 219 00d8 2168     		ldr	r1, [r4, #0]
+ 220 00da 2846     		mov	r0, r5
+ 221 00dc 1831     		adds	r1, r1, #24
+ 238:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** }
+ 222              		.loc 1 238 0
+ 223 00de BDE87040 		pop	{r4, r5, r6, lr}
+ 236:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		vListInsert( pxEventList, &( pxCurrentCoRoutine->xEventListItem ) );
+ 224              		.loc 1 236 0
+ 225 00e2 FFF7FEBF 		b	vListInsert
+ 226              	.LVL23:
+ 227              	.L8:
+ 228 00e6 70BD     		pop	{r4, r5, r6, pc}
+ 229              	.L14:
+ 230              		.align	2
+ 231              	.L13:
+ 232 00e8 00000000 		.word	.LANCHOR0
+ 233              		.cfi_endproc
+ 234              	.LFE1:
+ 236              		.align	1
+ 237              		.global	vCoRoutineSchedule
+ 238              		.thumb
+ 239              		.thumb_func
+ 241              	vCoRoutineSchedule:
+ 242              	.LFB4:
+ 323:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** {
+ 243              		.loc 1 323 0
+ 244              		.cfi_startproc
+ 245              		@ args = 0, pretend = 0, frame = 0
+ 246              		@ frame_needed = 0, uses_anonymous_args = 0
+ 247 00ec 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 248              	.LCFI2:
+ 249              		.cfi_def_cfa_offset 24
+ 250              		.cfi_offset 4, -24
+ 251              		.cfi_offset 5, -20
+ 252              		.cfi_offset 6, -16
+ 253              		.cfi_offset 7, -12
+ 254              		.cfi_offset 8, -8
+ 255              		.cfi_offset 14, -4
+ 256              	.LBB13:
+ 257              	.LBB14:
+ 246:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	while( listLIST_IS_EMPTY( &xPendingReadyCoRoutineList ) == pdFALSE )
+ 258              		.loc 1 246 0
+ 259 00f0 414D     		ldr	r5, .L38
+ 260              	.LBB15:
+ 259:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		prvAddCoRoutineToReadyQueue( pxUnblockedCRCB );
+ 261              		.loc 1 259 0
+ 262 00f2 4FF01408 		mov	r8, #20
+ 263 00f6 2F1D     		adds	r7, r5, #4
+ 264 00f8 18E0     		b	.L16
+ 265              	.L18:
+ 251:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		portDISABLE_INTERRUPTS();
+ 266              		.loc 1 251 0
+ 267 00fa FFF7FEFF 		bl	ulPortSetInterruptMask
+ 268              	.LVL24:
+ 253:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			pxUnblockedCRCB = ( corCRCB * ) listGET_OWNER_OF_HEAD_ENTRY( (&xPendingReadyCoRoutineList) );
+ 269              		.loc 1 253 0
+ 270 00fe 2B6E     		ldr	r3, [r5, #96]
+ 271 0100 DC68     		ldr	r4, [r3, #12]
+ 272              	.LVL25:
+ 254:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			uxListRemove( &( pxUnblockedCRCB->xEventListItem ) );
+ 273              		.loc 1 254 0
+ 274 0102 04F11800 		add	r0, r4, #24
+ 275 0106 FFF7FEFF 		bl	uxListRemove
+ 276              	.LVL26:
+ 258:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		uxListRemove( &( pxUnblockedCRCB->xGenericListItem ) );
+ 277              		.loc 1 258 0
+ 278 010a 261D     		adds	r6, r4, #4
+ 256:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		portENABLE_INTERRUPTS();
+ 279              		.loc 1 256 0
+ 280 010c 0020     		movs	r0, #0
+ 281 010e FFF7FEFF 		bl	vPortClearInterruptMask
+ 282              	.LVL27:
+ 258:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		uxListRemove( &( pxUnblockedCRCB->xGenericListItem ) );
+ 283              		.loc 1 258 0
+ 284 0112 3046     		mov	r0, r6
+ 285 0114 FFF7FEFF 		bl	uxListRemove
+ 286              	.LVL28:
+ 259:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		prvAddCoRoutineToReadyQueue( pxUnblockedCRCB );
+ 287              		.loc 1 259 0
+ 288 0118 E06A     		ldr	r0, [r4, #44]
+ 289 011a 2A6F     		ldr	r2, [r5, #112]
+ 290 011c 3146     		mov	r1, r6
+ 291 011e 9042     		cmp	r0, r2
+ 292 0120 88BF     		it	hi
+ 293 0122 2867     		strhi	r0, [r5, #112]
+ 294 0124 08FB0070 		mla	r0, r8, r0, r7
+ 295 0128 FFF7FEFF 		bl	vListInsertEnd
+ 296              	.LVL29:
+ 297              	.L16:
+ 298              	.LBE15:
+ 246:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	while( listLIST_IS_EMPTY( &xPendingReadyCoRoutineList ) == pdFALSE )
+ 299              		.loc 1 246 0
+ 300 012c 6B6D     		ldr	r3, [r5, #84]
+ 301 012e 324C     		ldr	r4, .L38
+ 302 0130 002B     		cmp	r3, #0
+ 303 0132 E2D1     		bne	.L18
+ 304              	.LBE14:
+ 305              	.LBE13:
+ 306              	.LBB16:
+ 307              	.LBB17:
+ 268:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	xPassedTicks = xTaskGetTickCount() - xLastTickCount;
+ 308              		.loc 1 268 0
+ 309 0134 FFF7FEFF 		bl	xTaskGetTickCount
+ 310              	.LVL30:
+ 311 0138 E36F     		ldr	r3, [r4, #124]
+ 314:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			prvAddCoRoutineToReadyQueue( pxCRCB );
+ 312              		.loc 1 314 0
+ 313 013a 271D     		adds	r7, r4, #4
+ 268:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	xPassedTicks = xTaskGetTickCount() - xLastTickCount;
+ 314              		.loc 1 268 0
+ 315 013c C01A     		subs	r0, r0, r3
+ 316 013e A067     		str	r0, [r4, #120]
+ 317 0140 30E0     		b	.L36
+ 318              	.L25:
+ 271:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		xCoRoutineTickCount++;
+ 319              		.loc 1 271 0
+ 320 0142 626F     		ldr	r2, [r4, #116]
+ 272:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		xPassedTicks--;
+ 321              		.loc 1 272 0
+ 322 0144 013B     		subs	r3, r3, #1
+ 271:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		xCoRoutineTickCount++;
+ 323              		.loc 1 271 0
+ 324 0146 0132     		adds	r2, r2, #1
+ 325 0148 6267     		str	r2, [r4, #116]
+ 272:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		xPassedTicks--;
+ 326              		.loc 1 272 0
+ 327 014a A367     		str	r3, [r4, #120]
+ 275:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		if( xCoRoutineTickCount == 0 )
+ 328              		.loc 1 275 0
+ 329 014c 22BB     		cbnz	r2, .L21
+ 330              	.LBB18:
+ 281:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			pxTemp = pxDelayedCoRoutineList;
+ 331              		.loc 1 281 0
+ 332 014e A26E     		ldr	r2, [r4, #104]
+ 333              	.LVL31:
+ 282:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			pxDelayedCoRoutineList = pxOverflowDelayedCoRoutineList;
+ 334              		.loc 1 282 0
+ 335 0150 E36E     		ldr	r3, [r4, #108]
+ 283:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			pxOverflowDelayedCoRoutineList = pxTemp;
+ 336              		.loc 1 283 0
+ 337 0152 E266     		str	r2, [r4, #108]
+ 282:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			pxDelayedCoRoutineList = pxOverflowDelayedCoRoutineList;
+ 338              		.loc 1 282 0
+ 339 0154 A366     		str	r3, [r4, #104]
+ 340 0156 1FE0     		b	.L21
+ 341              	.LVL32:
+ 342              	.L24:
+ 343              	.LBE18:
+ 289:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			pxCRCB = ( corCRCB * ) listGET_OWNER_OF_HEAD_ENTRY( pxDelayedCoRoutineList );
+ 344              		.loc 1 289 0
+ 345 0158 DB68     		ldr	r3, [r3, #12]
+ 291:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			if( xCoRoutineTickCount < listGET_LIST_ITEM_VALUE( &( pxCRCB->xGenericListItem ) ) )
+ 346              		.loc 1 291 0
+ 347 015a 626F     		ldr	r2, [r4, #116]
+ 289:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			pxCRCB = ( corCRCB * ) listGET_OWNER_OF_HEAD_ENTRY( pxDelayedCoRoutineList );
+ 348              		.loc 1 289 0
+ 349 015c DD68     		ldr	r5, [r3, #12]
+ 350              	.LVL33:
+ 291:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			if( xCoRoutineTickCount < listGET_LIST_ITEM_VALUE( &( pxCRCB->xGenericListItem ) ) )
+ 351              		.loc 1 291 0
+ 352 015e 6B68     		ldr	r3, [r5, #4]
+ 353 0160 9A42     		cmp	r2, r3
+ 354 0162 1FD3     		bcc	.L36
+ 304:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 				uxListRemove( &( pxCRCB->xGenericListItem ) );
+ 355              		.loc 1 304 0
+ 356 0164 2E1D     		adds	r6, r5, #4
+ 297:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			portDISABLE_INTERRUPTS();
+ 357              		.loc 1 297 0
+ 358 0166 FFF7FEFF 		bl	ulPortSetInterruptMask
+ 359              	.LVL34:
+ 304:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 				uxListRemove( &( pxCRCB->xGenericListItem ) );
+ 360              		.loc 1 304 0
+ 361 016a 3046     		mov	r0, r6
+ 362 016c FFF7FEFF 		bl	uxListRemove
+ 363              	.LVL35:
+ 307:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 				if( pxCRCB->xEventListItem.pvContainer )
+ 364              		.loc 1 307 0
+ 365 0170 AB6A     		ldr	r3, [r5, #40]
+ 366 0172 1BB1     		cbz	r3, .L22
+ 309:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 					uxListRemove( &( pxCRCB->xEventListItem ) );
+ 367              		.loc 1 309 0
+ 368 0174 05F11800 		add	r0, r5, #24
+ 369 0178 FFF7FEFF 		bl	uxListRemove
+ 370              	.LVL36:
+ 371              	.L22:
+ 312:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			portENABLE_INTERRUPTS();
+ 372              		.loc 1 312 0
+ 373 017c 0020     		movs	r0, #0
+ 374 017e FFF7FEFF 		bl	vPortClearInterruptMask
+ 375              	.LVL37:
+ 314:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 			prvAddCoRoutineToReadyQueue( pxCRCB );
+ 376              		.loc 1 314 0
+ 377 0182 E86A     		ldr	r0, [r5, #44]
+ 378 0184 226F     		ldr	r2, [r4, #112]
+ 379 0186 3146     		mov	r1, r6
+ 380 0188 9042     		cmp	r0, r2
+ 381 018a 88BF     		it	hi
+ 382 018c 2067     		strhi	r0, [r4, #112]
+ 383 018e 08FB0070 		mla	r0, r8, r0, r7
+ 384 0192 FFF7FEFF 		bl	vListInsertEnd
+ 385              	.LVL38:
+ 386 0196 01E0     		b	.L37
+ 387              	.LVL39:
+ 388              	.L21:
+ 389 0198 4FF01408 		mov	r8, #20
+ 390              	.L37:
+ 287:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		while( listLIST_IS_EMPTY( pxDelayedCoRoutineList ) == pdFALSE )
+ 391              		.loc 1 287 0
+ 392 019c A36E     		ldr	r3, [r4, #104]
+ 393 019e 1A68     		ldr	r2, [r3, #0]
+ 394 01a0 002A     		cmp	r2, #0
+ 395 01a2 D9D1     		bne	.L24
+ 396              	.L36:
+ 269:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	while( xPassedTicks )
+ 397              		.loc 1 269 0
+ 398 01a4 A36F     		ldr	r3, [r4, #120]
+ 399 01a6 144A     		ldr	r2, .L38
+ 400 01a8 002B     		cmp	r3, #0
+ 401 01aa CAD1     		bne	.L25
+ 318:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	xLastTickCount = xCoRoutineTickCount;
+ 402              		.loc 1 318 0
+ 403 01ac 536F     		ldr	r3, [r2, #116]
+ 404              	.LBE17:
+ 405              	.LBE16:
+ 331:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	while( listLIST_IS_EMPTY( &( pxReadyCoRoutineLists[ uxTopCoRoutineReadyPriority ] ) ) )
+ 406              		.loc 1 331 0
+ 407 01ae 1425     		movs	r5, #20
+ 408              	.LBB20:
+ 409              	.LBB19:
+ 318:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	xLastTickCount = xCoRoutineTickCount;
+ 410              		.loc 1 318 0
+ 411 01b0 D367     		str	r3, [r2, #124]
+ 412 01b2 136F     		ldr	r3, [r2, #112]
+ 413 01b4 04E0     		b	.L26
+ 414              	.L29:
+ 415              	.LBE19:
+ 416              	.LBE20:
+ 333:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		if( uxTopCoRoutineReadyPriority == 0 )
+ 417              		.loc 1 333 0
+ 418 01b6 13B9     		cbnz	r3, .L27
+ 419 01b8 0B67     		str	r3, [r1, #112]
+ 420 01ba BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 421              	.L27:
+ 338:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		--uxTopCoRoutineReadyPriority;
+ 422              		.loc 1 338 0
+ 423 01be 013B     		subs	r3, r3, #1
+ 424              	.L26:
+ 331:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	while( listLIST_IS_EMPTY( &( pxReadyCoRoutineLists[ uxTopCoRoutineReadyPriority ] ) ) )
+ 425              		.loc 1 331 0 discriminator 1
+ 426 01c0 05FB03F0 		mul	r0, r5, r3
+ 427 01c4 1418     		adds	r4, r2, r0
+ 428 01c6 6468     		ldr	r4, [r4, #4]
+ 429 01c8 0B49     		ldr	r1, .L38
+ 430 01ca 002C     		cmp	r4, #0
+ 431 01cc F3D0     		beq	.L29
+ 432 01ce 0B67     		str	r3, [r1, #112]
+ 433              	.LBB21:
+ 343:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	listGET_OWNER_OF_NEXT_ENTRY( pxCurrentCoRoutine, &( pxReadyCoRoutineLists[ uxTopCoRoutineReadyPrio
+ 434              		.loc 1 343 0
+ 435 01d0 0B1D     		adds	r3, r1, #4
+ 436 01d2 1B18     		adds	r3, r3, r0
+ 437              	.LVL40:
+ 438 01d4 5A68     		ldr	r2, [r3, #4]
+ 439 01d6 03F10801 		add	r1, r3, #8
+ 440 01da 5268     		ldr	r2, [r2, #4]
+ 441 01dc 8A42     		cmp	r2, r1
+ 442 01de 5A60     		str	r2, [r3, #4]
+ 443 01e0 04BF     		itt	eq
+ 444 01e2 5268     		ldreq	r2, [r2, #4]
+ 445 01e4 5A60     		streq	r2, [r3, #4]
+ 446 01e6 5B68     		ldr	r3, [r3, #4]
+ 447              	.LVL41:
+ 448 01e8 D868     		ldr	r0, [r3, #12]
+ 449 01ea 034B     		ldr	r3, .L38
+ 450              	.LBE21:
+ 346:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	( pxCurrentCoRoutine->pxCoRoutineFunction )( pxCurrentCoRoutine, pxCurrentCoRoutine->uxIndex );
+ 451              		.loc 1 346 0
+ 452 01ec 016B     		ldr	r1, [r0, #48]
+ 453              	.LVL42:
+ 454              	.LBB22:
+ 343:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	listGET_OWNER_OF_NEXT_ENTRY( pxCurrentCoRoutine, &( pxReadyCoRoutineLists[ uxTopCoRoutineReadyPrio
+ 455              		.loc 1 343 0
+ 456 01ee 1860     		str	r0, [r3, #0]
+ 457              	.LBE22:
+ 346:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	( pxCurrentCoRoutine->pxCoRoutineFunction )( pxCurrentCoRoutine, pxCurrentCoRoutine->uxIndex );
+ 458              		.loc 1 346 0
+ 459 01f0 0368     		ldr	r3, [r0, #0]
+ 460              	.LVL43:
+ 461 01f2 9847     		blx	r3
+ 462              	.LVL44:
+ 463 01f4 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 464              	.L39:
+ 465              		.align	2
+ 466              	.L38:
+ 467 01f8 00000000 		.word	.LANCHOR0
+ 468              		.cfi_endproc
+ 469              	.LFE4:
+ 471              		.align	1
+ 472              		.global	xCoRoutineRemoveFromEventList
+ 473              		.thumb
+ 474              		.thumb_func
+ 476              	xCoRoutineRemoveFromEventList:
+ 477              	.LFB6:
+ 369:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** }
+ 370:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** /*-----------------------------------------------------------*/
+ 371:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 372:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** signed portBASE_TYPE xCoRoutineRemoveFromEventList( const xList *pxEventList )
+ 373:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** {
+ 478              		.loc 1 373 0
+ 479              		.cfi_startproc
+ 480              		@ args = 0, pretend = 0, frame = 0
+ 481              		@ frame_needed = 0, uses_anonymous_args = 0
+ 482              	.LVL45:
+ 374:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** corCRCB *pxUnblockedCRCB;
+ 375:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** signed portBASE_TYPE xReturn;
+ 376:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 377:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	/* This function is called from within an interrupt.  It can only access
+ 378:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	event lists and the pending ready list.  This function assumes that a
+ 379:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	check has already been made to ensure pxEventList is not empty. */
+ 380:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	pxUnblockedCRCB = ( corCRCB * ) listGET_OWNER_OF_HEAD_ENTRY( pxEventList );
+ 483              		.loc 1 380 0
+ 484 01fc C368     		ldr	r3, [r0, #12]
+ 373:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** {
+ 485              		.loc 1 373 0
+ 486 01fe 70B5     		push	{r4, r5, r6, lr}
+ 487              	.LCFI3:
+ 488              		.cfi_def_cfa_offset 16
+ 489              		.cfi_offset 4, -16
+ 490              		.cfi_offset 5, -12
+ 491              		.cfi_offset 6, -8
+ 492              		.cfi_offset 14, -4
+ 493              		.loc 1 380 0
+ 494 0200 DC68     		ldr	r4, [r3, #12]
+ 495              	.LVL46:
+ 381:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	uxListRemove( &( pxUnblockedCRCB->xEventListItem ) );
+ 382:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	vListInsertEnd( ( xList * ) &( xPendingReadyCoRoutineList ), &( pxUnblockedCRCB->xEventListItem ) 
+ 496              		.loc 1 382 0
+ 497 0202 094D     		ldr	r5, .L41
+ 381:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	uxListRemove( &( pxUnblockedCRCB->xEventListItem ) );
+ 498              		.loc 1 381 0
+ 499 0204 04F11806 		add	r6, r4, #24
+ 500 0208 3046     		mov	r0, r6
+ 501              	.LVL47:
+ 502 020a FFF7FEFF 		bl	uxListRemove
+ 503              	.LVL48:
+ 504              		.loc 1 382 0
+ 505 020e 05F15400 		add	r0, r5, #84
+ 506 0212 3146     		mov	r1, r6
+ 507 0214 FFF7FEFF 		bl	vListInsertEnd
+ 508              	.LVL49:
+ 383:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 384:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	if( pxUnblockedCRCB->uxPriority >= pxCurrentCoRoutine->uxPriority )
+ 509              		.loc 1 384 0
+ 510 0218 2B68     		ldr	r3, [r5, #0]
+ 511 021a E06A     		ldr	r0, [r4, #44]
+ 512 021c DB6A     		ldr	r3, [r3, #44]
+ 385:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	{
+ 386:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		xReturn = pdTRUE;
+ 387:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	}
+ 388:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	else
+ 389:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	{
+ 390:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 		xReturn = pdFALSE;
+ 391:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	}
+ 392:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 
+ 393:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** 	return xReturn;
+ 394:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/croutine.c **** }
+ 513              		.loc 1 394 0
+ 514 021e 9842     		cmp	r0, r3
+ 515 0220 34BF     		ite	cc
+ 516 0222 0020     		movcc	r0, #0
+ 517 0224 0120     		movcs	r0, #1
+ 518 0226 70BD     		pop	{r4, r5, r6, pc}
+ 519              	.L42:
+ 520              		.align	2
+ 521              	.L41:
+ 522 0228 00000000 		.word	.LANCHOR0
+ 523              		.cfi_endproc
+ 524              	.LFE6:
+ 526              		.global	pxCurrentCoRoutine
+ 527              		.bss
+ 528              		.align	2
+ 529              		.set	.LANCHOR0,. + 0
+ 532              	pxCurrentCoRoutine:
+ 533 0000 00000000 		.space	4
+ 536              	pxReadyCoRoutineLists:
+ 537 0004 00000000 		.space	40
+ 537      00000000 
+ 537      00000000 
+ 537      00000000 
+ 537      00000000 
+ 540              	xDelayedCoRoutineList1:
+ 541 002c 00000000 		.space	20
+ 541      00000000 
+ 541      00000000 
+ 541      00000000 
+ 541      00000000 
+ 544              	xDelayedCoRoutineList2:
+ 545 0040 00000000 		.space	20
+ 545      00000000 
+ 545      00000000 
+ 545      00000000 
+ 545      00000000 
+ 548              	xPendingReadyCoRoutineList:
+ 549 0054 00000000 		.space	20
+ 549      00000000 
+ 549      00000000 
+ 549      00000000 
+ 549      00000000 
+ 552              	pxDelayedCoRoutineList:
+ 553 0068 00000000 		.space	4
+ 556              	pxOverflowDelayedCoRoutineList:
+ 557 006c 00000000 		.space	4
+ 560              	uxTopCoRoutineReadyPriority:
+ 561 0070 00000000 		.space	4
+ 564              	xCoRoutineTickCount:
+ 565 0074 00000000 		.space	4
+ 568              	xPassedTicks:
+ 569 0078 00000000 		.space	4
+ 572              	xLastTickCount:
+ 573 007c 00000000 		.space	4
+ 574              		.text
+ 575              	.Letext0:
+ 576              		.file 2 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+ 577              		.file 3 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/portable/
+ 578              		.file 4 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/include/l
+ 579              		.file 5 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/include/c
+ 580              		.file 6 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/include/p
+ 581              		.file 7 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/FreeRTOS/Source/include/t
+DEFINED SYMBOLS
+                            *ABS*:00000000 croutine.c
+     /tmp/ccrBU8rz.s:18     .text:00000000 $t
+     /tmp/ccrBU8rz.s:23     .text:00000000 xCoRoutineCreate
+     /tmp/ccrBU8rz.s:162    .text:000000a8 $d
+     /tmp/ccrBU8rz.s:167    .text:000000b0 $t
+     /tmp/ccrBU8rz.s:172    .text:000000b0 vCoRoutineAddToDelayedList
+     /tmp/ccrBU8rz.s:232    .text:000000e8 $d
+     /tmp/ccrBU8rz.s:236    .text:000000ec $t
+     /tmp/ccrBU8rz.s:241    .text:000000ec vCoRoutineSchedule
+     /tmp/ccrBU8rz.s:467    .text:000001f8 $d
+     /tmp/ccrBU8rz.s:471    .text:000001fc $t
+     /tmp/ccrBU8rz.s:476    .text:000001fc xCoRoutineRemoveFromEventList
+     /tmp/ccrBU8rz.s:522    .text:00000228 $d
+     /tmp/ccrBU8rz.s:532    .bss:00000000 pxCurrentCoRoutine
+     /tmp/ccrBU8rz.s:528    .bss:00000000 $d
+     /tmp/ccrBU8rz.s:536    .bss:00000004 pxReadyCoRoutineLists
+     /tmp/ccrBU8rz.s:540    .bss:0000002c xDelayedCoRoutineList1
+     /tmp/ccrBU8rz.s:544    .bss:00000040 xDelayedCoRoutineList2
+     /tmp/ccrBU8rz.s:548    .bss:00000054 xPendingReadyCoRoutineList
+     /tmp/ccrBU8rz.s:552    .bss:00000068 pxDelayedCoRoutineList
+     /tmp/ccrBU8rz.s:556    .bss:0000006c pxOverflowDelayedCoRoutineList
+     /tmp/ccrBU8rz.s:560    .bss:00000070 uxTopCoRoutineReadyPriority
+     /tmp/ccrBU8rz.s:564    .bss:00000074 xCoRoutineTickCount
+     /tmp/ccrBU8rz.s:568    .bss:00000078 xPassedTicks
+     /tmp/ccrBU8rz.s:572    .bss:0000007c xLastTickCount
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.stddef.h.40.50cf36416e06376af8a9dca28536f2e4
+                           .group:00000000 wm4.projdefs.h.76.214f319a5937dae232f0ee2912b07e1d
+                           .group:00000000 wm4.FreeRTOSConfig.h.79.5ce50f1f04ae36d94916fa991aa4b8d7
+                           .group:00000000 wm4.portmacro.h.77.0810e0eb8c6edf5adf0d27242484a945
+                           .group:00000000 wm4.portable.h.332.e25bf3f97ebf50a0f90736144cb8c3f8
+                           .group:00000000 wm4.mpu_wrappers.h.76.3abcfc7ebb6d78909ee0b4ad2f20f282
+                           .group:00000000 wm4.FreeRTOS.h.159.741cbf33489b2c951994722716e9692e
+                           .group:00000000 wm4.list.h.105.6a6307ce3396638a078c02ff83387dc6
+                           .group:00000000 wm4.task.h.94.33ec4de8c3f825901c54e6cf58507761
+                           .group:00000000 wm4.croutine.h.76.348a46e106a704888b711d08f2a8ea48
+
+UNDEFINED SYMBOLS
+pvPortMalloc
+vListInitialise
+vListInitialiseItem
+vListInsertEnd
+uxListRemove
+vListInsert
+ulPortSetInterruptMask
+vPortClearInterruptMask
+xTaskGetTickCount

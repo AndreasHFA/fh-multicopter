@@ -1,0 +1,1107 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.eabi_attribute 28, 1
+   5              		.fpu fpv4-sp-d16
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 4
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.thumb
+  16              		.file	"port.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.align	1
+  21              		.thumb
+  22              		.thumb_func
+  24              	prvPortStartFirstTask:
+  25              	.LFB2:
+  26              		.file 1 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/p
+   1:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*
+   2:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     FreeRTOS V7.3.0 - Copyright (C) 2012 Real Time Engineers Ltd.
+   3:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+   4:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     FEATURES AND PORTS ARE ADDED TO FREERTOS ALL THE TIME.  PLEASE VISIT 
+   5:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
+   6:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+   7:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     ***************************************************************************
+   8:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *                                                                       *
+   9:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *    FreeRTOS tutorial books are available in pdf and paperback.        *
+  10:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *    Complete, revised, and edited pdf reference manuals are also       *
+  11:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *    available.                                                         *
+  12:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *                                                                       *
+  13:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *    Purchasing FreeRTOS documentation will not only help you, by       *
+  14:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *    ensuring you get running as quickly as possible and with an        *
+  15:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *    in-depth knowledge of how to use FreeRTOS, it will also help       *
+  16:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *    the FreeRTOS project to continue with its mission of providing     *
+  17:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *    professional grade, cross platform, de facto standard solutions    *
+  18:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *    for microcontrollers - completely free of charge!                  *
+  19:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *                                                                       *
+  20:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *    >>> See http://www.FreeRTOS.org/Documentation for details. <<<     *
+  21:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *                                                                       *
+  22:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *    Thank you for using FreeRTOS, and thank you for your support!      *
+  23:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *                                                                       *
+  24:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     ***************************************************************************
+  25:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+  26:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+  27:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     This file is part of the FreeRTOS distribution.
+  28:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+  29:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     FreeRTOS is free software; you can redistribute it and/or modify it under
+  30:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     the terms of the GNU General Public License (version 2) as published by the
+  31:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     Free Software Foundation AND MODIFIED BY the FreeRTOS exception.
+  32:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     >>>NOTE<<< The modification to the GPL is included to allow you to
+  33:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     distribute a combined work that includes FreeRTOS without being obliged to
+  34:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     provide the source code for proprietary components outside of the FreeRTOS
+  35:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     kernel.  FreeRTOS is distributed in the hope that it will be useful, but
+  36:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+  37:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+  38:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     more details. You should have received a copy of the GNU General Public
+  39:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     License and the FreeRTOS license exception along with FreeRTOS; if not it
+  40:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     can be viewed here: http://www.freertos.org/a00114.html and also obtained
+  41:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     by writing to Richard Barry, contact details for whom are available on the
+  42:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     FreeRTOS WEB site.
+  43:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+  44:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     1 tab == 4 spaces!
+  45:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     
+  46:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     ***************************************************************************
+  47:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *                                                                       *
+  48:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *    Having a problem?  Start by reading the FAQ "My application does   *
+  49:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *    not run, what could be wrong?"                                     *
+  50:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *                                                                       *
+  51:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *    http://www.FreeRTOS.org/FAQHelp.html                               *
+  52:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****      *                                                                       *
+  53:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     ***************************************************************************
+  54:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+  55:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     
+  56:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     http://www.FreeRTOS.org - Documentation, training, latest versions, license 
+  57:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     and contact details.  
+  58:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     
+  59:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
+  60:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     including FreeRTOS+Trace - an indispensable productivity tool.
+  61:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+  62:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     Real Time Engineers ltd license FreeRTOS to High Integrity Systems, who sell 
+  63:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     the code with commercial support, indemnification, and middleware, under 
+  64:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     the OpenRTOS brand: http://www.OpenRTOS.com.  High Integrity Systems also
+  65:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     provide a safety engineered and independently SIL3 certified version under 
+  66:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****     the SafeRTOS brand: http://www.SafeRTOS.com.
+  67:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** */
+  68:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+  69:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*-----------------------------------------------------------
+  70:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  * Implementation of functions defined in portable.h for the ARM CM4F port.
+  71:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  *----------------------------------------------------------*/
+  72:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+  73:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /* Scheduler includes. */
+  74:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #include "FreeRTOS.h"
+  75:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #include "task.h"
+  76:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+  77:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #ifndef __VFP_FP__
+  78:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	#error This port can only be used when the project options are configured to enable hardware float
+  79:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #endif
+  80:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+  81:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #ifndef configSYSTICK_CLOCK_HZ
+  82:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	#define configSYSTICK_CLOCK_HZ configCPU_CLOCK_HZ
+  83:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #endif
+  84:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+  85:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /* Constants required to manipulate the core.  Registers first... */
+  86:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portNVIC_SYSTICK_CTRL_REG			( * ( ( volatile unsigned long * ) 0xe000e010 ) )
+  87:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portNVIC_SYSTICK_LOAD_REG			( * ( ( volatile unsigned long * ) 0xe000e014 ) )
+  88:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portNVIC_SYSTICK_CURRENT_VALUE_REG	( * ( ( volatile unsigned long * ) 0xe000e018 ) )
+  89:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portNVIC_INT_CTRL_REG				( * ( ( volatile unsigned long * ) 0xe000ed04 ) )
+  90:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portNVIC_SYSPRI2_REG				( * ( ( volatile unsigned long * ) 0xe000ed20 ) )
+  91:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /* ...then bits in the registers. */
+  92:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portNVIC_SYSTICK_CLK_BIT			( 1UL << 2UL )
+  93:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portNVIC_SYSTICK_INT_BIT			( 1UL << 1UL )
+  94:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portNVIC_SYSTICK_ENABLE_BIT			( 1UL << 0UL )
+  95:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portNVIC_SYSTICK_COUNT_FLAG_BIT		( 1UL << 16UL )
+  96:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portNVIC_PENDSVSET_BIT				( 1UL << 28UL )
+  97:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portNVIC_PENDSVCLEAR_BIT 			( 1UL << 27UL )
+  98:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portNVIC_PEND_SYSTICK_CLEAR_BIT		( 1UL << 25UL )
+  99:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 100:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portNVIC_PENDSV_PRI				( ( ( unsigned long ) configKERNEL_INTERRUPT_PRIORITY ) << 16UL )
+ 101:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portNVIC_SYSTICK_PRI			( ( ( unsigned long ) configKERNEL_INTERRUPT_PRIORITY ) << 24UL )
+ 102:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 103:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /* Constants required to manipulate the VFP. */
+ 104:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portFPCCR					( ( volatile unsigned long * ) 0xe000ef34 ) /* Floating point context control
+ 105:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portASPEN_AND_LSPEN_BITS	( 0x3UL << 30UL )
+ 106:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 107:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /* Constants required to set up the initial stack. */
+ 108:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portINITIAL_XPSR			( 0x01000000 )
+ 109:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #define portINITIAL_EXEC_RETURN		( 0xfffffffd )
+ 110:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 111:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /* The priority used by the kernel is assigned to a variable to make access
+ 112:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** from inline assembler easier. */
+ 113:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** const unsigned long ulKernelPriority = configKERNEL_INTERRUPT_PRIORITY;
+ 114:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 115:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /* Each task maintains its own interrupt status in the critical nesting
+ 116:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** variable. */
+ 117:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** static unsigned portBASE_TYPE uxCriticalNesting = 0xaaaaaaaa;
+ 118:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 119:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*
+ 120:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  * Setup the timer to generate the tick interrupts.  The implementation in this
+ 121:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  * file is weak to allow application writers to change the timer used to 
+ 122:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  * generate the tick interrupt.
+ 123:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  */
+ 124:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** void vPortSetupTimerInterrupt( void );
+ 125:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 126:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*
+ 127:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  * Exception handlers.
+ 128:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  */
+ 129:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** void xPortPendSVHandler( void ) __attribute__ (( naked ));
+ 130:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** void xPortSysTickHandler( void );
+ 131:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** void vPortSVCHandler( void ) __attribute__ (( naked ));
+ 132:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 133:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*
+ 134:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  * Start first task is a separate function so it can be tested in isolation.
+ 135:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  */
+ 136:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** static void prvPortStartFirstTask( void ) __attribute__ (( naked ));
+ 137:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 138:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*
+ 139:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  * Function to enable the VFP.
+ 140:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  */
+ 141:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  static void vPortEnableVFP( void ) __attribute__ (( naked ));
+ 142:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 143:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*-----------------------------------------------------------*/
+ 144:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 145:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*
+ 146:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  * The number of SysTick increments that make up one tick period.
+ 147:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  */
+ 148:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #if configUSE_TICKLESS_IDLE == 1
+ 149:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	static unsigned long ulTimerReloadValueForOneTick = 0;
+ 150:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #endif
+ 151:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 152:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*
+ 153:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  * The maximum number of tick periods that can be suppressed is limited by the
+ 154:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  * 24 bit resolution of the SysTick timer.
+ 155:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  */
+ 156:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #if configUSE_TICKLESS_IDLE == 1
+ 157:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	static unsigned long xMaximumPossibleSuppressedTicks = 0;
+ 158:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #endif /* configUSE_TICKLESS_IDLE */
+ 159:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 160:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*
+ 161:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  * Compensate for the CPU cycles that pass while the SysTick is stopped (low
+ 162:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  * power functionality only.
+ 163:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  */
+ 164:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #if configUSE_TICKLESS_IDLE == 1
+ 165:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	static unsigned long ulStoppedTimerCompensation = 0;
+ 166:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #endif /* configUSE_TICKLESS_IDLE */
+ 167:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 168:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*-----------------------------------------------------------*/
+ 169:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 170:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*
+ 171:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  * See header file for description.
+ 172:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  */
+ 173:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** portSTACK_TYPE *pxPortInitialiseStack( portSTACK_TYPE *pxTopOfStack, pdTASK_CODE pxCode, void *pvPa
+ 174:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 175:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* Simulate the stack frame as it would be created by a context switch
+ 176:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	interrupt. */
+ 177:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 178:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* Offset added to account for the way the MCU uses the stack on entry/exit
+ 179:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	of interrupts, and to ensure alignment. */
+ 180:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	pxTopOfStack--;
+ 181:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 182:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	*pxTopOfStack = portINITIAL_XPSR;	/* xPSR */
+ 183:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	pxTopOfStack--;
+ 184:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	*pxTopOfStack = ( portSTACK_TYPE ) pxCode;	/* PC */
+ 185:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	pxTopOfStack--;
+ 186:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	*pxTopOfStack = 0;	/* LR */
+ 187:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 188:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* Save code space by skipping register initialisation. */
+ 189:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	pxTopOfStack -= 5;	/* R12, R3, R2 and R1. */
+ 190:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	*pxTopOfStack = ( portSTACK_TYPE ) pvParameters;	/* R0 */
+ 191:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 192:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* A save method is being used that requires each task to maintain its
+ 193:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	own exec return value. */
+ 194:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	pxTopOfStack--;
+ 195:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	*pxTopOfStack = portINITIAL_EXEC_RETURN;
+ 196:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 197:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	pxTopOfStack -= 8;	/* R11, R10, R9, R8, R7, R6, R5 and R4. */
+ 198:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 199:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	return pxTopOfStack;
+ 200:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 201:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*-----------------------------------------------------------*/
+ 202:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 203:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** void vPortSVCHandler( void )
+ 204:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 205:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	__asm volatile (
+ 206:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					"	ldr	r3, pxCurrentTCBConst2		\n" /* Restore the context. */
+ 207:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					"	ldr r1, [r3]					\n" /* Use pxCurrentTCBConst to get the pxCurrentTCB address. */
+ 208:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					"	ldr r0, [r1]					\n" /* The first item in pxCurrentTCB is the task top of stack. */
+ 209:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					"	ldmia r0!, {r4-r11, r14}		\n" /* Pop the registers that are not automatically saved on excep
+ 210:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					"	msr psp, r0						\n" /* Restore the task stack pointer. */
+ 211:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					"	mov r0, #0 						\n"
+ 212:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					"	msr	basepri, r0					\n"
+ 213:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					"	bx r14							\n"
+ 214:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					"									\n"
+ 215:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					"	.align 2						\n"
+ 216:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					"pxCurrentTCBConst2: .word pxCurrentTCB				\n"
+ 217:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				);
+ 218:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 219:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*-----------------------------------------------------------*/
+ 220:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 221:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** static void prvPortStartFirstTask( void )
+ 222:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+  27              		.loc 1 222 0
+  28              		.cfi_startproc
+  29              		@ Naked Function: prologue and epilogue provided by programmer.
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+ 223:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	__asm volatile(
+  32              		.loc 1 223 0
+  33              	@ 223 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port
+  34 0000 5B48     		 ldr r0, =0xE000ED08 	
+  35 0002 0068     	 ldr r0, [r0] 			
+  36 0004 0068     	 ldr r0, [r0] 			
+  37 0006 80F30888 	 msr msp, r0			
+  38 000a 62B6     	 cpsie i				
+  39 000c 00DF     	 svc 0					
+  40 000e 00BF     	 nop					
+  41              	
+  42              	@ 0 "" 2
+ 224:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					" ldr r0, =0xE000ED08 	\n" /* Use the NVIC offset register to locate the stack. */
+ 225:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					" ldr r0, [r0] 			\n"
+ 226:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					" ldr r0, [r0] 			\n"
+ 227:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					" msr msp, r0			\n" /* Set the msp back to the start of the stack. */
+ 228:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					" cpsie i				\n" /* Globally enable interrupts. */
+ 229:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					" svc 0					\n" /* System call to start first task. */
+ 230:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 					" nop					\n"
+ 231:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				);
+ 232:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+  43              		.loc 1 232 0
+  44              		.thumb
+  45              		.cfi_endproc
+  46              	.LFE2:
+  48              		.align	1
+  49              		.thumb
+  50              		.thumb_func
+  52              	vPortEnableVFP:
+  53              	.LFB13:
+ 233:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*-----------------------------------------------------------*/
+ 234:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 235:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*
+ 236:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  * See header file for description.
+ 237:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  */
+ 238:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** portBASE_TYPE xPortStartScheduler( void )
+ 239:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 240:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* configMAX_SYSCALL_INTERRUPT_PRIORITY must not be set to 0.
+ 241:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html */
+ 242:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	configASSERT( configMAX_SYSCALL_INTERRUPT_PRIORITY );
+ 243:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 244:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* Make PendSV, CallSV and SysTick the same priroity as the kernel. */
+ 245:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	portNVIC_SYSPRI2_REG |= portNVIC_PENDSV_PRI;
+ 246:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	portNVIC_SYSPRI2_REG |= portNVIC_SYSTICK_PRI;
+ 247:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 248:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* Start the timer that generates the tick ISR.  Interrupts are disabled
+ 249:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	here already. */
+ 250:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	vPortSetupTimerInterrupt();
+ 251:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 252:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* Initialise the critical nesting count ready for the first task. */
+ 253:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	uxCriticalNesting = 0;
+ 254:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 255:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* Ensure the VFP is enabled - it should be anyway. */
+ 256:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	vPortEnableVFP();
+ 257:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 258:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* Lazy save always. */
+ 259:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	*( portFPCCR ) |= portASPEN_AND_LSPEN_BITS;
+ 260:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 261:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* Start the first task. */
+ 262:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	prvPortStartFirstTask();
+ 263:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 264:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* Should not get here! */
+ 265:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	return 0;
+ 266:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 267:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*-----------------------------------------------------------*/
+ 268:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 269:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** void vPortEndScheduler( void )
+ 270:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 271:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* It is unlikely that the CM4F port will require this function as there
+ 272:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	is nothing to return to.  */
+ 273:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 274:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*-----------------------------------------------------------*/
+ 275:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 276:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** void vPortYieldFromISR( void )
+ 277:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 278:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* Set a PendSV to request a context switch. */
+ 279:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT;
+ 280:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 281:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*-----------------------------------------------------------*/
+ 282:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 283:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** void vPortEnterCritical( void )
+ 284:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 285:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	portDISABLE_INTERRUPTS();
+ 286:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	uxCriticalNesting++;
+ 287:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 288:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*-----------------------------------------------------------*/
+ 289:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 290:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** void vPortExitCritical( void )
+ 291:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 292:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	uxCriticalNesting--;
+ 293:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	if( uxCriticalNesting == 0 )
+ 294:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	{
+ 295:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		portENABLE_INTERRUPTS();
+ 296:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	}
+ 297:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 298:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*-----------------------------------------------------------*/
+ 299:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 300:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** __attribute__(( naked )) unsigned long ulPortSetInterruptMask( void )
+ 301:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 302:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	__asm volatile														\
+ 303:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	(																	\
+ 304:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		"	mrs r0, basepri											\n" \
+ 305:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		"	mov r1, %0												\n"	\
+ 306:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		"	msr basepri, r1											\n" \
+ 307:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		"	bx lr													\n" \
+ 308:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		:: "i" ( configMAX_SYSCALL_INTERRUPT_PRIORITY ) : "r0", "r1"	\
+ 309:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	);
+ 310:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 311:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* This return will not be reached but is necessary to prevent compiler
+ 312:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	warnings. */
+ 313:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	return 0;
+ 314:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 315:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*-----------------------------------------------------------*/
+ 316:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 317:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** __attribute__(( naked )) void vPortClearInterruptMask( unsigned long ulNewMaskValue )
+ 318:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 319:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	__asm volatile													\
+ 320:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	(																\
+ 321:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		"	msr basepri, r0										\n"	\
+ 322:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		"	bx lr												\n" \
+ 323:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		:::"r0"														\
+ 324:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	);
+ 325:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 326:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*-----------------------------------------------------------*/
+ 327:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 328:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** void xPortPendSVHandler( void )
+ 329:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 330:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* This is a naked function. */
+ 331:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 332:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	__asm volatile
+ 333:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	(
+ 334:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	mrs r0, psp							\n"
+ 335:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"										\n"
+ 336:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	ldr	r3, pxCurrentTCBConst				\n" /* Get the location of the current TCB. */
+ 337:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	ldr	r2, [r3]						\n"
+ 338:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"										\n"
+ 339:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	tst r14, #0x10						\n" /* Is the task using the FPU context?  If so, push high vfp registers. *
+ 340:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	it eq								\n"
+ 341:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	vstmdbeq r0!, {s16-s31}				\n"
+ 342:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"										\n"
+ 343:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	stmdb r0!, {r4-r11, r14}			\n" /* Save the core registers. */
+ 344:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"										\n"
+ 345:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	str r0, [r2]						\n" /* Save the new top of stack into the first member of the TCB. */
+ 346:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"										\n"
+ 347:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	stmdb sp!, {r3, r14}				\n"
+ 348:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	mov r0, %0 							\n"
+ 349:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	msr basepri, r0						\n"
+ 350:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	bl vTaskSwitchContext				\n"
+ 351:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	mov r0, #0							\n"
+ 352:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	msr basepri, r0						\n"
+ 353:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	ldmia sp!, {r3, r14}				\n"
+ 354:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"										\n"
+ 355:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	ldr r1, [r3]						\n" /* The first item in pxCurrentTCB is the task top of stack. */
+ 356:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	ldr r0, [r1]						\n"
+ 357:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"										\n"
+ 358:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	ldmia r0!, {r4-r11, r14}			\n" /* Pop the core registers. */
+ 359:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"										\n"
+ 360:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	tst r14, #0x10						\n" /* Is the task using the FPU context?  If so, pop the high vfp registers
+ 361:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	it eq								\n"
+ 362:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	vldmiaeq r0!, {s16-s31}				\n"
+ 363:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"										\n"
+ 364:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	msr psp, r0							\n"
+ 365:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	bx r14								\n"
+ 366:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"										\n"
+ 367:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"	.align 2							\n"
+ 368:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	"pxCurrentTCBConst: .word pxCurrentTCB	\n"
+ 369:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	::"i"(configMAX_SYSCALL_INTERRUPT_PRIORITY)
+ 370:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	);
+ 371:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 372:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*-----------------------------------------------------------*/
+ 373:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 374:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** void xPortSysTickHandler( void )
+ 375:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 376:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* If using preemption, also force a context switch. */
+ 377:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	#if configUSE_PREEMPTION == 1
+ 378:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT;
+ 379:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	#endif
+ 380:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 381:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* Only reset the systick load register if configUSE_TICKLESS_IDLE is set to
+ 382:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	1.  If it is set to 0 tickless idle is not being used.  If it is set to a 
+ 383:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	value other than 0 or 1 then a timer other than the SysTick is being used
+ 384:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	to generate the tick interrupt. */
+ 385:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	#if configUSE_TICKLESS_IDLE == 1
+ 386:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		portNVIC_SYSTICK_LOAD_REG = ulTimerReloadValueForOneTick;
+ 387:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	#endif
+ 388:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 389:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	( void ) portSET_INTERRUPT_MASK_FROM_ISR();
+ 390:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	{
+ 391:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		vTaskIncrementTick();
+ 392:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	}
+ 393:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	portCLEAR_INTERRUPT_MASK_FROM_ISR( 0 );
+ 394:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 395:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*-----------------------------------------------------------*/
+ 396:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 397:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #if configUSE_TICKLESS_IDLE == 1
+ 398:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 399:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	__attribute__((weak)) void vPortSuppressTicksAndSleep( portTickType xExpectedIdleTime )
+ 400:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	{
+ 401:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	unsigned long ulReloadValue, ulCompleteTickPeriods, ulCompletedSysTickIncrements;
+ 402:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 403:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		/* Make sure the SysTick reload value does not overflow the counter. */
+ 404:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		if( xExpectedIdleTime > xMaximumPossibleSuppressedTicks )
+ 405:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		{
+ 406:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			xExpectedIdleTime = xMaximumPossibleSuppressedTicks;
+ 407:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		}
+ 408:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 409:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		/* Calculate the reload value required to wait xExpectedIdleTime
+ 410:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		tick periods.  -1 is used because this code will execute part way
+ 411:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		through one of the tick periods, and the fraction of a tick period is
+ 412:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		accounted for later. */
+ 413:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		ulReloadValue = ( ulTimerReloadValueForOneTick * ( xExpectedIdleTime - 1UL ) );
+ 414:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		if( ulReloadValue > ulStoppedTimerCompensation )
+ 415:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		{
+ 416:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			ulReloadValue -= ulStoppedTimerCompensation;
+ 417:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		}
+ 418:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 419:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		/* Stop the SysTick momentarily.  The time the SysTick is stopped for
+ 420:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		is accounted for as best it can be, but using the tickless mode will
+ 421:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		inevitably result in some tiny drift of the time maintained by the
+ 422:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		kernel with respect to calendar time. */
+ 423:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		portNVIC_SYSTICK_CTRL_REG = portNVIC_SYSTICK_CLK_BIT | portNVIC_SYSTICK_INT_BIT;
+ 424:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 425:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		/* If a context switch is pending then abandon the low power entry as
+ 426:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		the context switch might have been pended by an external interrupt that
+ 427:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		requires processing. */
+ 428:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		if( ( portNVIC_INT_CTRL_REG & portNVIC_PENDSVSET_BIT ) != 0 )
+ 429:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		{
+ 430:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			/* Restart SysTick. */
+ 431:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			portNVIC_SYSTICK_CTRL_REG = portNVIC_SYSTICK_CLK_BIT | portNVIC_SYSTICK_INT_BIT | portNVIC_SYSTI
+ 432:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		}
+ 433:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		else
+ 434:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		{
+ 435:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			/* Adjust the reload value to take into account that the current
+ 436:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			time slice is already partially complete. */
+ 437:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			ulReloadValue += ( portNVIC_SYSTICK_LOAD_REG - ( portNVIC_SYSTICK_LOAD_REG - portNVIC_SYSTICK_CU
+ 438:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			portNVIC_SYSTICK_LOAD_REG = ulReloadValue;
+ 439:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 440:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			/* Clear the SysTick count flag and set the count value back to
+ 441:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			zero. */
+ 442:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			portNVIC_SYSTICK_CURRENT_VALUE_REG = 0UL;
+ 443:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 444:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			/* Restart SysTick. */
+ 445:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			portNVIC_SYSTICK_CTRL_REG = portNVIC_SYSTICK_CLK_BIT | portNVIC_SYSTICK_INT_BIT | portNVIC_SYSTI
+ 446:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 447:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			/* Sleep until something happens. */
+ 448:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			configPRE_SLEEP_PROCESSING( xExpectedIdleTime );
+ 449:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			if( xExpectedIdleTime > 0 )
+ 450:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			{
+ 451:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				__asm volatile( "wfi" );
+ 452:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			}
+ 453:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			configPOST_SLEEP_PROCESSING( xExpectedIdleTime );
+ 454:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 455:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			/* Stop SysTick.  Again, the time the SysTick is stopped for is
+ 456:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			accounted for as best it can be, but using the tickless mode will
+ 457:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			inevitably result in some tiny drift of the time maintained by the
+ 458:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			kernel with respect to calendar time. */
+ 459:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			portNVIC_SYSTICK_CTRL_REG = portNVIC_SYSTICK_CLK_BIT | portNVIC_SYSTICK_INT_BIT;
+ 460:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 461:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			if( ( portNVIC_SYSTICK_CTRL_REG & portNVIC_SYSTICK_COUNT_FLAG_BIT ) != 0 )
+ 462:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			{
+ 463:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				/* The tick interrupt has already executed, and the SysTick
+ 464:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				count reloaded with the portNVIC_SYSTICK_LOAD_REG value.
+ 465:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				Reset the portNVIC_SYSTICK_LOAD_REG with whatever remains of
+ 466:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				this tick period. */
+ 467:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				portNVIC_SYSTICK_LOAD_REG = ulTimerReloadValueForOneTick - ( ulReloadValue - portNVIC_SYSTICK_C
+ 468:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 469:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				/* The tick interrupt handler will already have pended the tick
+ 470:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				processing in the kernel.  As the pending tick will be
+ 471:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				processed as soon as this function exits, the tick value
+ 472:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				maintained by the tick is stepped forward by one less than the
+ 473:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				time spent waiting. */
+ 474:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				ulCompleteTickPeriods = xExpectedIdleTime - 1UL;
+ 475:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			}
+ 476:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			else
+ 477:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			{
+ 478:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				/* Something other than the tick interrupt ended the sleep.
+ 479:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				Work out how long the sleep lasted. */
+ 480:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				ulCompletedSysTickIncrements = ( xExpectedIdleTime * ulTimerReloadValueForOneTick ) - portNVIC_
+ 481:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 482:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				/* How many complete tick periods passed while the processor
+ 483:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				was waiting? */
+ 484:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				ulCompleteTickPeriods = ulCompletedSysTickIncrements / ulTimerReloadValueForOneTick;
+ 485:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 486:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				/* The reload value is set to whatever fraction of a single tick
+ 487:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				period remains. */
+ 488:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 				portNVIC_SYSTICK_LOAD_REG = ( ( ulCompleteTickPeriods + 1 ) * ulTimerReloadValueForOneTick ) - 
+ 489:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			}
+ 490:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 491:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			/* Restart SysTick so it runs from portNVIC_SYSTICK_LOAD_REG
+ 492:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			again, then set portNVIC_SYSTICK_LOAD_REG back to its standard
+ 493:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			value. */
+ 494:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			portNVIC_SYSTICK_CURRENT_VALUE_REG = 0UL;
+ 495:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			portNVIC_SYSTICK_CTRL_REG = portNVIC_SYSTICK_CLK_BIT | portNVIC_SYSTICK_INT_BIT | portNVIC_SYSTI
+ 496:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 497:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 			vTaskStepTick( ulCompleteTickPeriods );
+ 498:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		}
+ 499:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	}
+ 500:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 501:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** #endif /* #if configUSE_TICKLESS_IDLE */
+ 502:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*-----------------------------------------------------------*/
+ 503:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 504:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*
+ 505:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  * Setup the systick timer to generate the tick interrupts at the required
+ 506:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  * frequency.
+ 507:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c ****  */
+ 508:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** __attribute__(( weak )) void vPortSetupTimerInterrupt( void )
+ 509:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 510:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* Calculate the constants required to configure the tick interrupt. */		
+ 511:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	#if configUSE_TICKLESS_IDLE == 1
+ 512:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	{
+ 513:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		ulTimerReloadValueForOneTick = ( configSYSTICK_CLOCK_HZ / configTICK_RATE_HZ ) - 1UL;
+ 514:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		xMaximumPossibleSuppressedTicks = 0xffffffUL / ( ( configSYSTICK_CLOCK_HZ / configTICK_RATE_HZ ) 
+ 515:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		ulStoppedTimerCompensation = 45UL / ( configCPU_CLOCK_HZ / configSYSTICK_CLOCK_HZ );
+ 516:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	}
+ 517:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	#endif /* configUSE_TICKLESS_IDLE */
+ 518:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 519:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	/* Configure SysTick to interrupt at the requested rate. */
+ 520:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	portNVIC_SYSTICK_LOAD_REG = ( configSYSTICK_CLOCK_HZ / configTICK_RATE_HZ ) - 1UL;;
+ 521:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	portNVIC_SYSTICK_CTRL_REG = portNVIC_SYSTICK_CLK_BIT | portNVIC_SYSTICK_INT_BIT | portNVIC_SYSTICK
+ 522:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 523:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /*-----------------------------------------------------------*/
+ 524:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 
+ 525:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** /* This is a naked function. */
+ 526:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** static void vPortEnableVFP( void )
+ 527:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+  54              		.loc 1 527 0
+  55              		.cfi_startproc
+  56              		@ Naked Function: prologue and epilogue provided by programmer.
+  57              		@ args = 0, pretend = 0, frame = 0
+  58              		@ frame_needed = 0, uses_anonymous_args = 0
+ 528:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	__asm volatile
+  59              		.loc 1 528 0
+  60              	@ 528 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port
+  61 0010 DFF86001 			ldr.w r0, =0xE000ED88		
+  62 0014 0168     		ldr r1, [r0]				
+  63              									
+  64 0016 41F47001 		orr r1, r1, #( 0xf << 20 )	
+  65 001a 0160     		str r1, [r0]				
+  66 001c 7047     		bx r14						
+  67              	@ 0 "" 2
+ 529:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	(
+ 530:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		"	ldr.w r0, =0xE000ED88		\n" /* The FPU enable bits are in the CPACR. */
+ 531:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		"	ldr r1, [r0]				\n"
+ 532:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		"								\n"
+ 533:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		"	orr r1, r1, #( 0xf << 20 )	\n" /* Enable CP10 and CP11 coprocessors, then save back. */
+ 534:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		"	str r1, [r0]				\n"
+ 535:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		"	bx r14						"
+ 536:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	);
+ 537:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+  68              		.loc 1 537 0
+  69              		.thumb
+  70              		.cfi_endproc
+  71              	.LFE13:
+  73              		.align	1
+  74              		.global	pxPortInitialiseStack
+  75              		.thumb
+  76              		.thumb_func
+  78              	pxPortInitialiseStack:
+  79              	.LFB0:
+ 174:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+  80              		.loc 1 174 0
+  81              		.cfi_startproc
+  82              		@ args = 0, pretend = 0, frame = 0
+  83              		@ frame_needed = 0, uses_anonymous_args = 0
+  84              		@ link register save eliminated.
+  85              	.LVL0:
+ 182:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	*pxTopOfStack = portINITIAL_XPSR;	/* xPSR */
+  86              		.loc 1 182 0
+  87 001e 4FF08073 		mov	r3, #16777216
+ 184:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	*pxTopOfStack = ( portSTACK_TYPE ) pxCode;	/* PC */
+  88              		.loc 1 184 0
+  89 0022 00E90A00 		stmdb	r0, {r1, r3}
+  90              	.LVL1:
+ 186:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	*pxTopOfStack = 0;	/* LR */
+  91              		.loc 1 186 0
+  92 0026 0023     		movs	r3, #0
+  93 0028 40F80C3C 		str	r3, [r0, #-12]
+  94              	.LVL2:
+ 195:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	*pxTopOfStack = portINITIAL_EXEC_RETURN;
+  95              		.loc 1 195 0
+  96 002c 6FF00203 		mvn	r3, #2
+ 190:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	*pxTopOfStack = ( portSTACK_TYPE ) pvParameters;	/* R0 */
+  97              		.loc 1 190 0
+  98 0030 40F8202C 		str	r2, [r0, #-32]
+  99              	.LVL3:
+ 195:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	*pxTopOfStack = portINITIAL_EXEC_RETURN;
+ 100              		.loc 1 195 0
+ 101 0034 40F8243C 		str	r3, [r0, #-36]
+ 102              	.LVL4:
+ 200:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 103              		.loc 1 200 0
+ 104 0038 4438     		subs	r0, r0, #68
+ 105              	.LVL5:
+ 106 003a 7047     		bx	lr
+ 107              		.cfi_endproc
+ 108              	.LFE0:
+ 110              		.align	1
+ 111              		.global	SVC_Handler
+ 112              		.thumb
+ 113              		.thumb_func
+ 115              	SVC_Handler:
+ 116              	.LFB1:
+ 204:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 117              		.loc 1 204 0
+ 118              		.cfi_startproc
+ 119              		@ Naked Function: prologue and epilogue provided by programmer.
+ 120              		@ args = 0, pretend = 0, frame = 0
+ 121              		@ frame_needed = 0, uses_anonymous_args = 0
+ 205:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	__asm volatile (
+ 122              		.loc 1 205 0
+ 123              	@ 205 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port
+ 124 003c 054B     			ldr	r3, pxCurrentTCBConst2		
+ 125 003e 1968     		ldr r1, [r3]					
+ 126 0040 0868     		ldr r0, [r1]					
+ 127 0042 B0E8F04F 		ldmia r0!, {r4-r11, r14}		
+ 128 0046 80F30988 		msr psp, r0						
+ 129 004a 4FF00000 		mov r0, #0 						
+ 130 004e 80F31188 		msr	basepri, r0					
+ 131 0052 7047     		bx r14							
+ 132              										
+ 133              		.align 2						
+ 134 0054 00000000 	pxCurrentTCBConst2: .word pxCurrentTCB				
+ 135              	
+ 136              	@ 0 "" 2
+ 218:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 137              		.loc 1 218 0
+ 138              		.thumb
+ 139              		.cfi_endproc
+ 140              	.LFE1:
+ 142              		.align	1
+ 143              		.global	vPortEndScheduler
+ 144              		.thumb
+ 145              		.thumb_func
+ 147              	vPortEndScheduler:
+ 148              	.LFB4:
+ 270:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 149              		.loc 1 270 0
+ 150              		.cfi_startproc
+ 151              		@ args = 0, pretend = 0, frame = 0
+ 152              		@ frame_needed = 0, uses_anonymous_args = 0
+ 153              		@ link register save eliminated.
+ 154 0058 7047     		bx	lr
+ 155              		.cfi_endproc
+ 156              	.LFE4:
+ 158              		.align	1
+ 159              		.global	vPortYieldFromISR
+ 160              		.thumb
+ 161              		.thumb_func
+ 163              	vPortYieldFromISR:
+ 164              	.LFB5:
+ 277:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 165              		.loc 1 277 0
+ 166              		.cfi_startproc
+ 167              		@ args = 0, pretend = 0, frame = 0
+ 168              		@ frame_needed = 0, uses_anonymous_args = 0
+ 169              		@ link register save eliminated.
+ 279:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT;
+ 170              		.loc 1 279 0
+ 171 005a 024B     		ldr	r3, .L7
+ 172 005c 4FF08052 		mov	r2, #268435456
+ 173 0060 1A60     		str	r2, [r3, #0]
+ 174 0062 7047     		bx	lr
+ 175              	.L8:
+ 176              		.align	2
+ 177              	.L7:
+ 178 0064 04ED00E0 		.word	-536810236
+ 179              		.cfi_endproc
+ 180              	.LFE5:
+ 182              		.align	1
+ 183              		.global	ulPortSetInterruptMask
+ 184              		.thumb
+ 185              		.thumb_func
+ 187              	ulPortSetInterruptMask:
+ 188              	.LFB8:
+ 301:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 189              		.loc 1 301 0
+ 190              		.cfi_startproc
+ 191              		@ Naked Function: prologue and epilogue provided by programmer.
+ 192              		@ args = 0, pretend = 0, frame = 0
+ 193              		@ frame_needed = 0, uses_anonymous_args = 0
+ 302:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	__asm volatile														\
+ 194              		.loc 1 302 0
+ 195              	@ 302 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port
+ 196 0068 EFF31180 			mrs r0, basepri											
+ 197 006c 4FF05001 		mov r1, #80												
+ 198 0070 81F31188 		msr basepri, r1											
+ 199 0074 7047     		bx lr													
+ 200              	
+ 201              	@ 0 "" 2
+ 314:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 202              		.loc 1 314 0
+ 203              		.thumb
+ 204 0076 0020     		movs	r0, #0
+ 205              		.cfi_endproc
+ 206              	.LFE8:
+ 208              		.align	1
+ 209              		.global	vPortEnterCritical
+ 210              		.thumb
+ 211              		.thumb_func
+ 213              	vPortEnterCritical:
+ 214              	.LFB6:
+ 284:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 215              		.loc 1 284 0
+ 216              		.cfi_startproc
+ 217              		@ args = 0, pretend = 0, frame = 0
+ 218              		@ frame_needed = 0, uses_anonymous_args = 0
+ 219 0078 08B5     		push	{r3, lr}
+ 220              	.LCFI0:
+ 221              		.cfi_def_cfa_offset 8
+ 222              		.cfi_offset 3, -8
+ 223              		.cfi_offset 14, -4
+ 285:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	portDISABLE_INTERRUPTS();
+ 224              		.loc 1 285 0
+ 225 007a FFF7FEFF 		bl	ulPortSetInterruptMask
+ 226              	.LVL6:
+ 286:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	uxCriticalNesting++;
+ 227              		.loc 1 286 0
+ 228 007e 024B     		ldr	r3, .L11
+ 229 0080 1A68     		ldr	r2, [r3, #0]
+ 230 0082 0132     		adds	r2, r2, #1
+ 231 0084 1A60     		str	r2, [r3, #0]
+ 232 0086 08BD     		pop	{r3, pc}
+ 233              	.L12:
+ 234              		.align	2
+ 235              	.L11:
+ 236 0088 00000000 		.word	.LANCHOR0
+ 237              		.cfi_endproc
+ 238              	.LFE6:
+ 240              		.align	1
+ 241              		.global	vPortClearInterruptMask
+ 242              		.thumb
+ 243              		.thumb_func
+ 245              	vPortClearInterruptMask:
+ 246              	.LFB9:
+ 318:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 247              		.loc 1 318 0
+ 248              		.cfi_startproc
+ 249              		@ Naked Function: prologue and epilogue provided by programmer.
+ 250              		@ args = 0, pretend = 0, frame = 0
+ 251              		@ frame_needed = 0, uses_anonymous_args = 0
+ 252              	.LVL7:
+ 319:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	__asm volatile													\
+ 253              		.loc 1 319 0
+ 254              	@ 319 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port
+ 255 008c 80F31188 			msr basepri, r0										
+ 256 0090 7047     		bx lr												
+ 257              	
+ 258              	@ 0 "" 2
+ 259              	.LVL8:
+ 325:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 260              		.loc 1 325 0
+ 261              		.thumb
+ 262              		.cfi_endproc
+ 263              	.LFE9:
+ 265              		.align	1
+ 266              		.global	vPortExitCritical
+ 267              		.thumb
+ 268              		.thumb_func
+ 270              	vPortExitCritical:
+ 271              	.LFB7:
+ 291:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 272              		.loc 1 291 0
+ 273              		.cfi_startproc
+ 274              		@ args = 0, pretend = 0, frame = 0
+ 275              		@ frame_needed = 0, uses_anonymous_args = 0
+ 276              		@ link register save eliminated.
+ 292:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	uxCriticalNesting--;
+ 277              		.loc 1 292 0
+ 278 0092 044B     		ldr	r3, .L16
+ 279 0094 1868     		ldr	r0, [r3, #0]
+ 280 0096 0138     		subs	r0, r0, #1
+ 281 0098 1860     		str	r0, [r3, #0]
+ 293:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	if( uxCriticalNesting == 0 )
+ 282              		.loc 1 293 0
+ 283 009a 08B9     		cbnz	r0, .L14
+ 297:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 284              		.loc 1 297 0
+ 295:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		portENABLE_INTERRUPTS();
+ 285              		.loc 1 295 0
+ 286 009c FFF7FEBF 		b	vPortClearInterruptMask
+ 287              	.LVL9:
+ 288              	.L14:
+ 289 00a0 7047     		bx	lr
+ 290              	.L17:
+ 291 00a2 00BF     		.align	2
+ 292              	.L16:
+ 293 00a4 00000000 		.word	.LANCHOR0
+ 294              		.cfi_endproc
+ 295              	.LFE7:
+ 297              		.align	1
+ 298              		.global	PendSV_Handler
+ 299              		.thumb
+ 300              		.thumb_func
+ 302              	PendSV_Handler:
+ 303              	.LFB10:
+ 329:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 304              		.loc 1 329 0
+ 305              		.cfi_startproc
+ 306              		@ Naked Function: prologue and epilogue provided by programmer.
+ 307              		@ args = 0, pretend = 0, frame = 0
+ 308              		@ frame_needed = 0, uses_anonymous_args = 0
+ 332:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	__asm volatile
+ 309              		.loc 1 332 0
+ 310              	@ 332 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port
+ 311 00a8 EFF30980 			mrs r0, psp							
+ 312              											
+ 313 00ac 114B     		ldr	r3, pxCurrentTCBConst				
+ 314 00ae 1A68     		ldr	r2, [r3]						
+ 315              											
+ 316 00b0 1EF0100F 		tst r14, #0x10						
+ 317 00b4 08BF     		it eq								
+ 318 00b6 20ED108A 		vstmdbeq r0!, {s16-s31}				
+ 319              											
+ 320 00ba 20E9F04F 		stmdb r0!, {r4-r11, r14}			
+ 321              											
+ 322 00be 1060     		str r0, [r2]						
+ 323              											
+ 324 00c0 2DE90840 		stmdb sp!, {r3, r14}				
+ 325 00c4 4FF05000 		mov r0, #80 							
+ 326 00c8 80F31188 		msr basepri, r0						
+ 327 00cc FFF7FEFF 		bl vTaskSwitchContext				
+ 328 00d0 4FF00000 		mov r0, #0							
+ 329 00d4 80F31188 		msr basepri, r0						
+ 330 00d8 BDE80840 		ldmia sp!, {r3, r14}				
+ 331              											
+ 332 00dc 1968     		ldr r1, [r3]						
+ 333 00de 0868     		ldr r0, [r1]						
+ 334              											
+ 335 00e0 B0E8F04F 		ldmia r0!, {r4-r11, r14}			
+ 336              											
+ 337 00e4 1EF0100F 		tst r14, #0x10						
+ 338 00e8 08BF     		it eq								
+ 339 00ea B0EC108A 		vldmiaeq r0!, {s16-s31}				
+ 340              											
+ 341 00ee 80F30988 		msr psp, r0							
+ 342 00f2 7047     		bx r14								
+ 343              											
+ 344              		.align 2							
+ 345 00f4 00000000 	pxCurrentTCBConst: .word pxCurrentTCB	
+ 346              	
+ 347              	@ 0 "" 2
+ 371:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 348              		.loc 1 371 0
+ 349              		.thumb
+ 350              		.cfi_endproc
+ 351              	.LFE10:
+ 353              		.align	1
+ 354              		.global	SysTick_Handler
+ 355              		.thumb
+ 356              		.thumb_func
+ 358              	SysTick_Handler:
+ 359              	.LFB11:
+ 375:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 360              		.loc 1 375 0
+ 361              		.cfi_startproc
+ 362              		@ args = 0, pretend = 0, frame = 0
+ 363              		@ frame_needed = 0, uses_anonymous_args = 0
+ 364 00f8 08B5     		push	{r3, lr}
+ 365              	.LCFI1:
+ 366              		.cfi_def_cfa_offset 8
+ 367              		.cfi_offset 3, -8
+ 368              		.cfi_offset 14, -4
+ 378:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT;
+ 369              		.loc 1 378 0
+ 370 00fa 064B     		ldr	r3, .L20
+ 371 00fc 4FF08052 		mov	r2, #268435456
+ 372 0100 1A60     		str	r2, [r3, #0]
+ 389:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	( void ) portSET_INTERRUPT_MASK_FROM_ISR();
+ 373              		.loc 1 389 0
+ 374 0102 FFF7FEFF 		bl	ulPortSetInterruptMask
+ 375              	.LVL10:
+ 391:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 		vTaskIncrementTick();
+ 376              		.loc 1 391 0
+ 377 0106 FFF7FEFF 		bl	vTaskIncrementTick
+ 378              	.LVL11:
+ 393:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	portCLEAR_INTERRUPT_MASK_FROM_ISR( 0 );
+ 379              		.loc 1 393 0
+ 380 010a 0020     		movs	r0, #0
+ 394:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 381              		.loc 1 394 0
+ 382 010c BDE80840 		pop	{r3, lr}
+ 393:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	portCLEAR_INTERRUPT_MASK_FROM_ISR( 0 );
+ 383              		.loc 1 393 0
+ 384 0110 FFF7FEBF 		b	vPortClearInterruptMask
+ 385              	.LVL12:
+ 386              	.L21:
+ 387              		.align	2
+ 388              	.L20:
+ 389 0114 04ED00E0 		.word	-536810236
+ 390              		.cfi_endproc
+ 391              	.LFE11:
+ 393              		.align	1
+ 394              		.weak	vPortSetupTimerInterrupt
+ 395              		.thumb
+ 396              		.thumb_func
+ 398              	vPortSetupTimerInterrupt:
+ 399              	.LFB12:
+ 509:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 400              		.loc 1 509 0
+ 401              		.cfi_startproc
+ 402              		@ args = 0, pretend = 0, frame = 0
+ 403              		@ frame_needed = 0, uses_anonymous_args = 0
+ 404              		@ link register save eliminated.
+ 520:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	portNVIC_SYSTICK_LOAD_REG = ( configSYSTICK_CLOCK_HZ / configTICK_RATE_HZ ) - 1UL;;
+ 405              		.loc 1 520 0
+ 406 0118 034A     		ldr	r2, .L23
+ 407 011a 044B     		ldr	r3, .L23+4
+ 408 011c 1A60     		str	r2, [r3, #0]
+ 521:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	portNVIC_SYSTICK_CTRL_REG = portNVIC_SYSTICK_CLK_BIT | portNVIC_SYSTICK_INT_BIT | portNVIC_SYSTICK
+ 409              		.loc 1 521 0
+ 410 011e 0722     		movs	r2, #7
+ 411 0120 43F8042C 		str	r2, [r3, #-4]
+ 412 0124 7047     		bx	lr
+ 413              	.L24:
+ 414 0126 00BF     		.align	2
+ 415              	.L23:
+ 416 0128 3F190100 		.word	71999
+ 417 012c 14E000E0 		.word	-536813548
+ 418              		.cfi_endproc
+ 419              	.LFE12:
+ 421              		.align	1
+ 422              		.global	xPortStartScheduler
+ 423              		.thumb
+ 424              		.thumb_func
+ 426              	xPortStartScheduler:
+ 427              	.LFB3:
+ 239:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 428              		.loc 1 239 0
+ 429              		.cfi_startproc
+ 430              		@ args = 0, pretend = 0, frame = 0
+ 431              		@ frame_needed = 0, uses_anonymous_args = 0
+ 245:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	portNVIC_SYSPRI2_REG |= portNVIC_PENDSV_PRI;
+ 432              		.loc 1 245 0
+ 433 0130 0C4B     		ldr	r3, .L26
+ 434 0132 1A68     		ldr	r2, [r3, #0]
+ 435 0134 42F47002 		orr	r2, r2, #15728640
+ 239:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** {
+ 436              		.loc 1 239 0
+ 437 0138 10B5     		push	{r4, lr}
+ 438              	.LCFI2:
+ 439              		.cfi_def_cfa_offset 8
+ 440              		.cfi_offset 4, -8
+ 441              		.cfi_offset 14, -4
+ 245:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	portNVIC_SYSPRI2_REG |= portNVIC_PENDSV_PRI;
+ 442              		.loc 1 245 0
+ 443 013a 1A60     		str	r2, [r3, #0]
+ 246:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	portNVIC_SYSPRI2_REG |= portNVIC_SYSTICK_PRI;
+ 444              		.loc 1 246 0
+ 445 013c 1A68     		ldr	r2, [r3, #0]
+ 446 013e 42F07042 		orr	r2, r2, #-268435456
+ 447 0142 1A60     		str	r2, [r3, #0]
+ 250:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	vPortSetupTimerInterrupt();
+ 448              		.loc 1 250 0
+ 449 0144 FFF7FEFF 		bl	vPortSetupTimerInterrupt
+ 450              	.LVL13:
+ 253:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	uxCriticalNesting = 0;
+ 451              		.loc 1 253 0
+ 452 0148 074B     		ldr	r3, .L26+4
+ 453 014a 0024     		movs	r4, #0
+ 454 014c 1C60     		str	r4, [r3, #0]
+ 256:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	vPortEnableVFP();
+ 455              		.loc 1 256 0
+ 456 014e FFF75FFF 		bl	vPortEnableVFP
+ 457              	.LVL14:
+ 259:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	*( portFPCCR ) |= portASPEN_AND_LSPEN_BITS;
+ 458              		.loc 1 259 0
+ 459 0152 064B     		ldr	r3, .L26+8
+ 460 0154 1A68     		ldr	r2, [r3, #0]
+ 461 0156 42F04042 		orr	r2, r2, #-1073741824
+ 462 015a 1A60     		str	r2, [r3, #0]
+ 262:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** 	prvPortStartFirstTask();
+ 463              		.loc 1 262 0
+ 464 015c FFF750FF 		bl	prvPortStartFirstTask
+ 465              	.LVL15:
+ 266:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/port.c **** }
+ 466              		.loc 1 266 0
+ 467 0160 2046     		mov	r0, r4
+ 468 0162 10BD     		pop	{r4, pc}
+ 469              	.L27:
+ 470              		.align	2
+ 471              	.L26:
+ 472 0164 20ED00E0 		.word	-536810208
+ 473 0168 00000000 		.word	.LANCHOR0
+ 474 016c 34EF00E0 		.word	-536809676
+ 475              		.cfi_endproc
+ 476              	.LFE3:
+ 478              		.global	ulKernelPriority
+ 479              		.section	.rodata
+ 480              		.align	2
+ 483              	ulKernelPriority:
+ 484 0000 F0000000 		.word	240
+ 485              		.data
+ 486              		.align	2
+ 487              		.set	.LANCHOR0,. + 0
+ 490              	uxCriticalNesting:
+ 491 0000 AAAAAAAA 		.word	-1431655766
+ 492              		.text
+ 493              	.Letext0:
+ 494              		.file 2 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/include/pr
+ 495              		.file 3 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/portable/p
+ 496              		.file 4 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/include/ta
+DEFINED SYMBOLS
+                            *ABS*:00000000 port.c
+     /tmp/ccSYFavx.s:20     .text:00000000 $t
+     /tmp/ccSYFavx.s:24     .text:00000000 prvPortStartFirstTask
+     /tmp/ccSYFavx.s:52     .text:00000010 vPortEnableVFP
+     /tmp/ccSYFavx.s:78     .text:0000001e pxPortInitialiseStack
+     /tmp/ccSYFavx.s:115    .text:0000003c SVC_Handler
+     /tmp/ccSYFavx.s:134    .text:00000054 pxCurrentTCBConst2
+     /tmp/ccSYFavx.s:134    .text:00000054 $d
+     /tmp/ccSYFavx.s:142    .text:00000058 $t
+     /tmp/ccSYFavx.s:147    .text:00000058 vPortEndScheduler
+     /tmp/ccSYFavx.s:163    .text:0000005a vPortYieldFromISR
+     /tmp/ccSYFavx.s:178    .text:00000064 $d
+     /tmp/ccSYFavx.s:182    .text:00000068 $t
+     /tmp/ccSYFavx.s:187    .text:00000068 ulPortSetInterruptMask
+     /tmp/ccSYFavx.s:213    .text:00000078 vPortEnterCritical
+     /tmp/ccSYFavx.s:236    .text:00000088 $d
+     /tmp/ccSYFavx.s:240    .text:0000008c $t
+     /tmp/ccSYFavx.s:245    .text:0000008c vPortClearInterruptMask
+     /tmp/ccSYFavx.s:270    .text:00000092 vPortExitCritical
+     /tmp/ccSYFavx.s:293    .text:000000a4 $d
+     /tmp/ccSYFavx.s:297    .text:000000a8 $t
+     /tmp/ccSYFavx.s:302    .text:000000a8 PendSV_Handler
+     /tmp/ccSYFavx.s:345    .text:000000f4 pxCurrentTCBConst
+     /tmp/ccSYFavx.s:345    .text:000000f4 $d
+     /tmp/ccSYFavx.s:353    .text:000000f8 $t
+     /tmp/ccSYFavx.s:358    .text:000000f8 SysTick_Handler
+     /tmp/ccSYFavx.s:389    .text:00000114 $d
+     /tmp/ccSYFavx.s:393    .text:00000118 $t
+     /tmp/ccSYFavx.s:398    .text:00000118 vPortSetupTimerInterrupt
+     /tmp/ccSYFavx.s:416    .text:00000128 $d
+     /tmp/ccSYFavx.s:421    .text:00000130 $t
+     /tmp/ccSYFavx.s:426    .text:00000130 xPortStartScheduler
+     /tmp/ccSYFavx.s:472    .text:00000164 $d
+     /tmp/ccSYFavx.s:483    .rodata:00000000 ulKernelPriority
+     /tmp/ccSYFavx.s:480    .rodata:00000000 $d
+     /tmp/ccSYFavx.s:486    .data:00000000 $d
+     /tmp/ccSYFavx.s:490    .data:00000000 uxCriticalNesting
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4eaffbadb3a087d856021b8a18f9e221
+                           .group:00000000 wm4.stddef.h.40.50cf36416e06376af8a9dca28536f2e4
+                           .group:00000000 wm4.projdefs.h.70.dbccf9a6ca737be695addf5321434443
+                           .group:00000000 wm4.FreeRTOSConfig.h.79.bfdec03d0f0e76f8a4cb6847c22dabd7
+                           .group:00000000 wm4.portmacro.h.71.4b486245a22132630e6590c20a5362d9
+                           .group:00000000 wm4.portable.h.326.d973d87d91a2870806201c5c4493d578
+                           .group:00000000 wm4.mpu_wrappers.h.70.805d5308b530bfb35337fa0cda53b379
+                           .group:00000000 wm4.FreeRTOS.h.153.2856cce34c845bc23d0e3eff29cca38b
+                           .group:00000000 wm4.list.h.99.4794e53f44ef377a7e8b918fd5c142a2
+                           .group:00000000 wm4.task.h.87.ccd4c448460750abd1f398251d355800
+
+UNDEFINED SYMBOLS
+pxCurrentTCB
+vTaskSwitchContext
+vTaskIncrementTick

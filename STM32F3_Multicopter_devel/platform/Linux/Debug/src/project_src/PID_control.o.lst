@@ -1,0 +1,378 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"PID_control.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.global	init_PID
+  20              		.thumb
+  21              		.thumb_func
+  23              	init_PID:
+  24              	.LFB0:
+  25              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** #include <PID_control.h>
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** void init_PID(float sample_rate, float kp, float ki, float kd, PID_Control *values)
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** {
+  26              		.loc 1 5 0
+  27              		.cfi_startproc
+  28              		@ args = 4, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              	.LVL0:
+  31 0000 10B5     		push	{r4, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  36              		.loc 1 5 0
+  37 0002 029C     		ldr	r4, [sp, #8]
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	values->sampling_rate = sample_rate;
+  38              		.loc 1 6 0
+  39 0004 2060     		str	r0, [r4, #0]	@ float
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	values->kp = kp;
+  40              		.loc 1 7 0
+  41 0006 A160     		str	r1, [r4, #8]	@ float
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	values->ki = ki;
+  42              		.loc 1 8 0
+  43 0008 E260     		str	r2, [r4, #12]	@ float
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	values->kd = kd;
+  44              		.loc 1 9 0
+  45 000a 2361     		str	r3, [r4, #16]	@ float
+  46 000c 10BD     		pop	{r4, pc}
+  47              		.cfi_endproc
+  48              	.LFE0:
+  50              		.align	1
+  51              		.global	resetIntegralValues_PID
+  52              		.thumb
+  53              		.thumb_func
+  55              	resetIntegralValues_PID:
+  56              	.LFB1:
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** }
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** void resetIntegralValues_PID(PID_Control *values)
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** {
+  57              		.loc 1 13 0
+  58              		.cfi_startproc
+  59              		@ args = 0, pretend = 0, frame = 0
+  60              		@ frame_needed = 0, uses_anonymous_args = 0
+  61              		@ link register save eliminated.
+  62              	.LVL1:
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	values->ealt = 0;
+  63              		.loc 1 14 0
+  64 000e 0023     		movs	r3, #0
+  65 0010 C361     		str	r3, [r0, #28]	@ float
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	values->esum = 0;
+  66              		.loc 1 15 0
+  67 0012 8361     		str	r3, [r0, #24]	@ float
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	values->y = 0;
+  68              		.loc 1 16 0
+  69 0014 4360     		str	r3, [r0, #4]	@ float
+  70 0016 7047     		bx	lr
+  71              		.cfi_endproc
+  72              	.LFE1:
+  74              		.global	__aeabi_fsub
+  75              		.global	__aeabi_fadd
+  76              		.global	__aeabi_fmul
+  77              		.global	__aeabi_fdiv
+  78              		.align	1
+  79              		.global	calc_PID
+  80              		.thumb
+  81              		.thumb_func
+  83              	calc_PID:
+  84              	.LFB2:
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** }
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** /*Simple PID-Calcultion from http://www.rn-wissen.de/index.php/Regelungstechnik*/
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** void calc_PID(float istwert, float sollwert, PID_Control *values)
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** {	
+  85              		.loc 1 22 0
+  86              		.cfi_startproc
+  87              		@ args = 0, pretend = 0, frame = 0
+  88              		@ frame_needed = 0, uses_anonymous_args = 0
+  89              	.LVL2:
+  90 0018 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  91              	.LCFI1:
+  92              		.cfi_def_cfa_offset 24
+  93              		.cfi_offset 4, -24
+  94              		.cfi_offset 5, -20
+  95              		.cfi_offset 6, -16
+  96              		.cfi_offset 7, -12
+  97              		.cfi_offset 8, -8
+  98              		.cfi_offset 14, -4
+  99              		.loc 1 22 0
+ 100 001c 1446     		mov	r4, r2
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 		values->e = istwert - sollwert;
+ 101              		.loc 1 23 0
+ 102 001e FFF7FEFF 		bl	__aeabi_fsub
+ 103              	.LVL3:
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 		//f�r I-Anteil aufsummieren:
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 		values->esum = values->esum + (values->e);
+ 104              		.loc 1 26 0
+ 105 0022 A169     		ldr	r1, [r4, #24]	@ float
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 		values->e = istwert - sollwert;
+ 106              		.loc 1 23 0
+ 107 0024 6061     		str	r0, [r4, #20]	@ float
+ 108 0026 0546     		mov	r5, r0
+ 109              		.loc 1 26 0
+ 110 0028 FFF7FEFF 		bl	__aeabi_fadd
+ 111              	.LVL4:
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 		//PID-Regler	 	
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 		values->y = (values->kp*values->e) + (values->esum*values->ki*values->sampling_rate) + (values->k
+ 112              		.loc 1 29 0
+ 113 002c A168     		ldr	r1, [r4, #8]	@ float
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 		values->esum = values->esum + (values->e);
+ 114              		.loc 1 26 0
+ 115 002e 0746     		mov	r7, r0
+ 116 0030 A061     		str	r0, [r4, #24]	@ float
+ 117              		.loc 1 29 0
+ 118 0032 2846     		mov	r0, r5
+ 119 0034 FFF7FEFF 		bl	__aeabi_fmul
+ 120              	.LVL5:
+ 121 0038 2668     		ldr	r6, [r4, #0]	@ float
+ 122 003a 8046     		mov	r8, r0
+ 123 003c E168     		ldr	r1, [r4, #12]	@ float
+ 124 003e 3846     		mov	r0, r7
+ 125 0040 FFF7FEFF 		bl	__aeabi_fmul
+ 126              	.LVL6:
+ 127 0044 3146     		mov	r1, r6
+ 128 0046 FFF7FEFF 		bl	__aeabi_fmul
+ 129              	.LVL7:
+ 130 004a 0146     		mov	r1, r0
+ 131 004c 4046     		mov	r0, r8
+ 132 004e FFF7FEFF 		bl	__aeabi_fadd
+ 133              	.LVL8:
+ 134 0052 E169     		ldr	r1, [r4, #28]	@ float
+ 135 0054 0746     		mov	r7, r0
+ 136 0056 2846     		mov	r0, r5
+ 137 0058 FFF7FEFF 		bl	__aeabi_fsub
+ 138              	.LVL9:
+ 139 005c 2169     		ldr	r1, [r4, #16]	@ float
+ 140 005e FFF7FEFF 		bl	__aeabi_fmul
+ 141              	.LVL10:
+ 142 0062 3146     		mov	r1, r6
+ 143 0064 FFF7FEFF 		bl	__aeabi_fdiv
+ 144              	.LVL11:
+ 145 0068 0146     		mov	r1, r0
+ 146 006a 3846     		mov	r0, r7
+ 147 006c FFF7FEFF 		bl	__aeabi_fadd
+ 148              	.LVL12:
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 		//f�r D-Anteil:
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 		values->ealt = values->e;
+ 149              		.loc 1 32 0
+ 150 0070 E561     		str	r5, [r4, #28]	@ float
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 		values->y = (values->kp*values->e) + (values->esum*values->ki*values->sampling_rate) + (values->k
+ 151              		.loc 1 29 0
+ 152 0072 6060     		str	r0, [r4, #4]	@ float
+ 153              		.loc 1 32 0
+ 154 0074 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 155              		.cfi_endproc
+ 156              	.LFE2:
+ 158              		.global	__aeabi_fcmpge
+ 159              		.global	__aeabi_fcmple
+ 160              		.global	__aeabi_fcmpgt
+ 161              		.global	__aeabi_fcmplt
+ 162              		.align	1
+ 163              		.global	calc_PID_YAW
+ 164              		.thumb
+ 165              		.thumb_func
+ 167              	calc_PID_YAW:
+ 168              	.LFB3:
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** }
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** /*
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c ****  * The yaw PID calculation needs a special handling as the input value has
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c ****  * an integrating character
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c ****  * */
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** void calc_PID_YAW(float istwert, float sollwert, PID_Control *values)
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** {
+ 169              		.loc 1 40 0
+ 170              		.cfi_startproc
+ 171              		@ args = 0, pretend = 0, frame = 0
+ 172              		@ frame_needed = 0, uses_anonymous_args = 0
+ 173              	.LVL13:
+ 174 0078 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 175              	.LCFI2:
+ 176              		.cfi_def_cfa_offset 24
+ 177              		.cfi_offset 4, -24
+ 178              		.cfi_offset 5, -20
+ 179              		.cfi_offset 6, -16
+ 180              		.cfi_offset 7, -12
+ 181              		.cfi_offset 8, -8
+ 182              		.cfi_offset 14, -4
+ 183              		.loc 1 40 0
+ 184 007c 1446     		mov	r4, r2
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	values->e = istwert - sollwert;
+ 185              		.loc 1 41 0
+ 186 007e FFF7FEFF 		bl	__aeabi_fsub
+ 187              	.LVL14:
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	if(values->e >= 180) values->e -= 360;
+ 188              		.loc 1 43 0
+ 189 0082 2749     		ldr	r1, .L18
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	values->e = istwert - sollwert;
+ 190              		.loc 1 41 0
+ 191 0084 0546     		mov	r5, r0
+ 192              		.loc 1 43 0
+ 193 0086 FFF7FEFF 		bl	__aeabi_fcmpge
+ 194              	.LVL15:
+ 195 008a 20B1     		cbz	r0, .L16
+ 196              		.loc 1 43 0 is_stmt 0 discriminator 1
+ 197 008c 2846     		mov	r0, r5
+ 198 008e 2549     		ldr	r1, .L18+4
+ 199 0090 FFF7FEFF 		bl	__aeabi_fsub
+ 200              	.LVL16:
+ 201 0094 0AE0     		b	.L17
+ 202              	.L16:
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	else if (values->e <= -180) values->e += 360;
+ 203              		.loc 1 44 0 is_stmt 1
+ 204 0096 2846     		mov	r0, r5
+ 205 0098 2349     		ldr	r1, .L18+8
+ 206 009a FFF7FEFF 		bl	__aeabi_fcmple
+ 207              	.LVL17:
+ 208 009e 08B9     		cbnz	r0, .L8
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	values->e = istwert - sollwert;
+ 209              		.loc 1 41 0
+ 210 00a0 6561     		str	r5, [r4, #20]	@ float
+ 211 00a2 04E0     		b	.L7
+ 212              	.L8:
+ 213              		.loc 1 44 0 discriminator 1
+ 214 00a4 2846     		mov	r0, r5
+ 215 00a6 1F49     		ldr	r1, .L18+4
+ 216 00a8 FFF7FEFF 		bl	__aeabi_fadd
+ 217              	.LVL18:
+ 218              	.L17:
+ 219 00ac 6061     		str	r0, [r4, #20]	@ float
+ 220              	.L7:
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	/* Keep the e-value in a maintainable range */
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	if(values->e > 50) values->e = 50;
+ 221              		.loc 1 47 0
+ 222 00ae 1F4D     		ldr	r5, .L18+12
+ 223 00b0 6069     		ldr	r0, [r4, #20]	@ float
+ 224 00b2 2946     		mov	r1, r5
+ 225 00b4 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 226              	.LVL19:
+ 227 00b8 00B1     		cbz	r0, .L9
+ 228              		.loc 1 47 0 is_stmt 0 discriminator 1
+ 229 00ba 6561     		str	r5, [r4, #20]	@ float
+ 230              	.L9:
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	if(values->e < -50) values->e = -50;
+ 231              		.loc 1 48 0 is_stmt 1
+ 232 00bc 1C4D     		ldr	r5, .L18+16
+ 233 00be 6069     		ldr	r0, [r4, #20]	@ float
+ 234 00c0 2946     		mov	r1, r5
+ 235 00c2 FFF7FEFF 		bl	__aeabi_fcmplt
+ 236              	.LVL20:
+ 237 00c6 00B1     		cbz	r0, .L11
+ 238              		.loc 1 48 0 is_stmt 0 discriminator 1
+ 239 00c8 6561     		str	r5, [r4, #20]	@ float
+ 240              	.L11:
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	//f�r I-Anteil aufsummieren:
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	values->esum = values->esum + (values->e);
+ 241              		.loc 1 51 0 is_stmt 1
+ 242 00ca 6569     		ldr	r5, [r4, #20]	@ float
+ 243 00cc A169     		ldr	r1, [r4, #24]	@ float
+ 244 00ce 2846     		mov	r0, r5
+ 245 00d0 FFF7FEFF 		bl	__aeabi_fadd
+ 246              	.LVL21:
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	//PID-Regler
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	values->y = (values->kp*values->e) + (values->esum*values->ki*values->sampling_rate) + (values->kd
+ 247              		.loc 1 54 0
+ 248 00d4 A168     		ldr	r1, [r4, #8]	@ float
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	values->esum = values->esum + (values->e);
+ 249              		.loc 1 51 0
+ 250 00d6 0746     		mov	r7, r0
+ 251 00d8 A061     		str	r0, [r4, #24]	@ float
+ 252              		.loc 1 54 0
+ 253 00da 2846     		mov	r0, r5
+ 254 00dc FFF7FEFF 		bl	__aeabi_fmul
+ 255              	.LVL22:
+ 256 00e0 2668     		ldr	r6, [r4, #0]	@ float
+ 257 00e2 8046     		mov	r8, r0
+ 258 00e4 E168     		ldr	r1, [r4, #12]	@ float
+ 259 00e6 3846     		mov	r0, r7
+ 260 00e8 FFF7FEFF 		bl	__aeabi_fmul
+ 261              	.LVL23:
+ 262 00ec 3146     		mov	r1, r6
+ 263 00ee FFF7FEFF 		bl	__aeabi_fmul
+ 264              	.LVL24:
+ 265 00f2 0146     		mov	r1, r0
+ 266 00f4 4046     		mov	r0, r8
+ 267 00f6 FFF7FEFF 		bl	__aeabi_fadd
+ 268              	.LVL25:
+ 269 00fa E169     		ldr	r1, [r4, #28]	@ float
+ 270 00fc 0746     		mov	r7, r0
+ 271 00fe 2846     		mov	r0, r5
+ 272 0100 FFF7FEFF 		bl	__aeabi_fsub
+ 273              	.LVL26:
+ 274 0104 2169     		ldr	r1, [r4, #16]	@ float
+ 275 0106 FFF7FEFF 		bl	__aeabi_fmul
+ 276              	.LVL27:
+ 277 010a 3146     		mov	r1, r6
+ 278 010c FFF7FEFF 		bl	__aeabi_fdiv
+ 279              	.LVL28:
+ 280 0110 0146     		mov	r1, r0
+ 281 0112 3846     		mov	r0, r7
+ 282 0114 FFF7FEFF 		bl	__aeabi_fadd
+ 283              	.LVL29:
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	//f�r D-Anteil:
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	values->ealt = values->e;
+ 284              		.loc 1 57 0
+ 285 0118 E561     		str	r5, [r4, #28]	@ float
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/PID_control.c **** 	values->y = (values->kp*values->e) + (values->esum*values->ki*values->sampling_rate) + (values->kd
+ 286              		.loc 1 54 0
+ 287 011a 6060     		str	r0, [r4, #4]	@ float
+ 288              		.loc 1 57 0
+ 289 011c BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 290              	.L19:
+ 291              		.align	2
+ 292              	.L18:
+ 293 0120 00003443 		.word	1127481344
+ 294 0124 0000B443 		.word	1135869952
+ 295 0128 000034C3 		.word	-1020002304
+ 296 012c 00004842 		.word	1112014848
+ 297 0130 000048C2 		.word	-1035468800
+ 298              		.cfi_endproc
+ 299              	.LFE3:
+ 301              	.Letext0:
+ 302              		.file 2 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_inc/PID_control.h
+DEFINED SYMBOLS
+                            *ABS*:00000000 PID_control.c
+     /tmp/ccrBe9rk.s:18     .text:00000000 $t
+     /tmp/ccrBe9rk.s:23     .text:00000000 init_PID
+     /tmp/ccrBe9rk.s:55     .text:0000000e resetIntegralValues_PID
+     /tmp/ccrBe9rk.s:83     .text:00000018 calc_PID
+     /tmp/ccrBe9rk.s:167    .text:00000078 calc_PID_YAW
+     /tmp/ccrBe9rk.s:293    .text:00000120 $d
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+
+UNDEFINED SYMBOLS
+__aeabi_fsub
+__aeabi_fadd
+__aeabi_fmul
+__aeabi_fdiv
+__aeabi_fcmpge
+__aeabi_fcmple
+__aeabi_fcmpgt
+__aeabi_fcmplt

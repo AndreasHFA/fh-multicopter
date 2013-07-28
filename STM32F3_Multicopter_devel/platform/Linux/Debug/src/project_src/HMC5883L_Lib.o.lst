@@ -1,0 +1,56 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"HMC5883L_Lib.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.comm	XYZ,12,4
+  19              		.comm	CtrlStates,10,2
+  20              		.comm	GlobalSettings,64,4
+  21              	.Letext0:
+  22              		.file 1 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+  23              		.file 2 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_inc/IMU_algorithm
+  24              		.file 3 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_inc/multicopter_s
+  25              		.file 4 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Include/core_cm4.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 HMC5883L_Lib.c
+                            *COM*:0000000c XYZ
+                            *COM*:0000000a CtrlStates
+                            *COM*:00000040 GlobalSettings
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.stm32f30x.h.54.c7b24f715ee55ef38656f44540ae3be6
+                           .group:00000000 wm4.core_cm4.h.32.2441f2e49dd40451ba4254637c879d0c
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.292.5f9271075d54fc48f1e25ff79df85cb2
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_comp.h.31.9bbc5f5f1a849069ea9062fbe7b81435
+                           .group:00000000 wm4.stm32f30x_dma.h.31.73d173fa6d60026d432f3cf1d2fc4407
+                           .group:00000000 wm4.stm32f30x_exti.h.31.22e280aa6e095108654ac8d3c74a2409
+                           .group:00000000 wm4.stm32f30x_flash.h.31.bee86dc3079b7049419bdbeec073e2cd
+                           .group:00000000 wm4.stm32f30x_gpio.h.31.3745297fee3728b346ad4d2a2467e40f
+                           .group:00000000 wm4.stm32f30x_syscfg.h.31.96b023b7dbc3641f358604478433eb5c
+                           .group:00000000 wm4.stm32f30x_i2c.h.31.52025acd7f154308042bf46a2835e9d3
+                           .group:00000000 wm4.stm32f30x_pwr.h.31.cdef322c6e7f25cfc29954045d24e9b8
+                           .group:00000000 wm4.stm32f30x_rcc.h.31.3b94c1144b21d1e4fe780e4d1a02d257
+                           .group:00000000 wm4.stm32f30x_spi.h.31.c1ebebab897d23cecc617ec8ad9fd534
+                           .group:00000000 wm4.stm32f30x_tim.h.31.336f9cd855fb4e2cd819ac260ded6518
+                           .group:00000000 wm4.stm32f30x_usart.h.31.cd85313e29c0a128555b4a7b8ec0f487
+                           .group:00000000 wm4.stm32f30x_misc.h.31.f08b0e9f53f0471613b5131bb95f8725
+                           .group:00000000 wm4.stm32f30x.h.6173.8b641ba1d9b0040eda9120fe8a414b2d
+                           .group:00000000 wm4.multicopter_settings.h.29.0b31706a1ebdcc10c24bd8ac6bb149dd
+
+NO UNDEFINED SYMBOLS

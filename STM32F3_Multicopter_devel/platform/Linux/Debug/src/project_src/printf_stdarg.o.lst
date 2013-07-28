@@ -1,0 +1,1057 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"printf_stdarg.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.thumb
+  20              		.thumb_func
+  22              	printchar:
+  23              	.LFB111:
+  24              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** /*
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     putchar is the only external dependency for this file,
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     if you have a working putchar, leave it commented out.
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     If not, uncomment the define below and
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     replace outbyte(c) by your own function call.
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** */
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** #include <stdarg.h>
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** #include <stm32f30x.h>
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** #include <usart.h>
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** #define putchar(c) Usart2Put(c)
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** //#define putchar(c) Usart3Put(c)
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** static void printchar(char **str, int c)
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** {
+  25              		.loc 1 19 0
+  26              		.cfi_startproc
+  27              		@ args = 0, pretend = 0, frame = 0
+  28              		@ frame_needed = 0, uses_anonymous_args = 0
+  29              		@ link register save eliminated.
+  30              	.LVL0:
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     //extern int putchar(int c);
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     if (str) {
+  31              		.loc 1 22 0
+  32 0000 28B1     		cbz	r0, .L2
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         **str = c;
+  33              		.loc 1 23 0
+  34 0002 0368     		ldr	r3, [r0, #0]
+  35 0004 1970     		strb	r1, [r3, #0]
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         ++(*str);
+  36              		.loc 1 24 0
+  37 0006 0368     		ldr	r3, [r0, #0]
+  38 0008 0133     		adds	r3, r3, #1
+  39 000a 0360     		str	r3, [r0, #0]
+  40 000c 7047     		bx	lr
+  41              	.L2:
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     }
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     else (void)putchar(c);
+  42              		.loc 1 26 0
+  43 000e C8B2     		uxtb	r0, r1
+  44              	.LVL1:
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** }
+  45              		.loc 1 27 0
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     else (void)putchar(c);
+  46              		.loc 1 26 0
+  47 0010 FFF7FEBF 		b	Usart2Put
+  48              	.LVL2:
+  49              		.cfi_endproc
+  50              	.LFE111:
+  52              		.align	1
+  53              		.thumb
+  54              		.thumb_func
+  56              	prints:
+  57              	.LFB112:
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** #define PAD_RIGHT 1
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** #define PAD_ZERO 2
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** static int prints(char **out, const char *string, int width, int pad)
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** {
+  58              		.loc 1 33 0
+  59              		.cfi_startproc
+  60              		@ args = 0, pretend = 0, frame = 0
+  61              		@ frame_needed = 0, uses_anonymous_args = 0
+  62              	.LVL3:
+  63 0014 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  64              	.LCFI0:
+  65              		.cfi_def_cfa_offset 24
+  66              		.cfi_offset 4, -24
+  67              		.cfi_offset 5, -20
+  68              		.cfi_offset 6, -16
+  69              		.cfi_offset 7, -12
+  70              		.cfi_offset 8, -8
+  71              		.cfi_offset 14, -4
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     register int pc = 0, padchar = ' ';
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     if (width > 0) {
+  72              		.loc 1 36 0
+  73 0018 141E     		subs	r4, r2, #0
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** {
+  74              		.loc 1 33 0
+  75 001a 0746     		mov	r7, r0
+  76 001c 8846     		mov	r8, r1
+  77              		.loc 1 36 0
+  78 001e 03DC     		bgt	.L17
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     register int pc = 0, padchar = ' ';
+  79              		.loc 1 34 0
+  80 0020 2026     		movs	r6, #32
+  81 0022 10E0     		b	.L7
+  82              	.LVL4:
+  83              	.L8:
+  84              	.LBB2:
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         register int len = 0;
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         register const char *ptr;
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         for (ptr = string; *ptr; ++ptr) ++len;
+  85              		.loc 1 39 0 discriminator 2
+  86 0024 0132     		adds	r2, r2, #1
+  87              	.LVL5:
+  88 0026 00E0     		b	.L6
+  89              	.LVL6:
+  90              	.L17:
+  91              	.LBE2:
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     if (width > 0) {
+  92              		.loc 1 36 0
+  93 0028 0022     		movs	r2, #0
+  94              	.LVL7:
+  95              	.L6:
+  96              	.LBB3:
+  97              		.loc 1 39 0 discriminator 1
+  98 002a 18F80210 		ldrb	r1, [r8, r2]	@ zero_extendqisi2
+  99 002e 0029     		cmp	r1, #0
+ 100 0030 F8D1     		bne	.L8
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         if (len >= width) width = 0;
+ 101              		.loc 1 40 0
+ 102 0032 A242     		cmp	r2, r4
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         else width -= len;
+ 103              		.loc 1 41 0
+ 104 0034 B4BF     		ite	lt
+ 105 0036 C2EB0404 		rsblt	r4, r2, r4
+ 106              	.LVL8:
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         if (len >= width) width = 0;
+ 107              		.loc 1 40 0
+ 108 003a 0C46     		movge	r4, r1
+ 109              	.LVL9:
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         if (pad & PAD_ZERO) padchar = '0';
+ 110              		.loc 1 42 0
+ 111 003c 13F0020F 		tst	r3, #2
+ 112 0040 0CBF     		ite	eq
+ 113 0042 2026     		moveq	r6, #32
+ 114 0044 3026     		movne	r6, #48
+ 115              	.LVL10:
+ 116              	.L7:
+ 117              	.LBE3:
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     }
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     if (!(pad & PAD_RIGHT)) {
+ 118              		.loc 1 44 0
+ 119 0046 DB07     		lsls	r3, r3, #31
+ 120              	.LVL11:
+ 121 0048 0CD4     		bmi	.L20
+ 122              		.loc 1 44 0 is_stmt 0 discriminator 1
+ 123 004a 2546     		mov	r5, r4
+ 124 004c 04E0     		b	.L11
+ 125              	.LVL12:
+ 126              	.L12:
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         for ( ; width > 0; --width) {
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             printchar (out, padchar);
+ 127              		.loc 1 46 0 is_stmt 1 discriminator 2
+ 128 004e 3846     		mov	r0, r7
+ 129 0050 3146     		mov	r1, r6
+ 130 0052 FFF7D5FF 		bl	printchar
+ 131              	.LVL13:
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         for ( ; width > 0; --width) {
+ 132              		.loc 1 45 0 discriminator 2
+ 133 0056 013D     		subs	r5, r5, #1
+ 134              	.LVL14:
+ 135              	.L11:
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         for ( ; width > 0; --width) {
+ 136              		.loc 1 45 0 is_stmt 0 discriminator 1
+ 137 0058 002D     		cmp	r5, #0
+ 138 005a F8DC     		bgt	.L12
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** static int prints(char **out, const char *string, int width, int pad)
+ 139              		.loc 1 32 0 is_stmt 1
+ 140 005c 24EAE475 		bic	r5, r4, r4, asr #31
+ 141              	.LVL15:
+ 142 0060 641B     		subs	r4, r4, r5
+ 143 0062 00E0     		b	.L10
+ 144              	.LVL16:
+ 145              	.L20:
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     register int pc = 0, padchar = ' ';
+ 146              		.loc 1 34 0
+ 147 0064 0025     		movs	r5, #0
+ 148              	.LVL17:
+ 149              	.L10:
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** static int prints(char **out, const char *string, int width, int pad)
+ 150              		.loc 1 32 0 discriminator 1
+ 151 0066 C5EB0808 		rsb	r8, r5, r8
+ 152              	.LVL18:
+ 153 006a 03E0     		b	.L13
+ 154              	.LVL19:
+ 155              	.L14:
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             ++pc;
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         }
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     }
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     for ( ; *string ; ++string) {
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         printchar (out, *string);
+ 156              		.loc 1 51 0 discriminator 2
+ 157 006c 3846     		mov	r0, r7
+ 158 006e FFF7C7FF 		bl	printchar
+ 159              	.LVL20:
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         ++pc;
+ 160              		.loc 1 52 0 discriminator 2
+ 161 0072 0135     		adds	r5, r5, #1
+ 162              	.LVL21:
+ 163              	.L13:
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     for ( ; *string ; ++string) {
+ 164              		.loc 1 50 0 discriminator 1
+ 165 0074 18F80510 		ldrb	r1, [r8, r5]	@ zero_extendqisi2
+ 166 0078 0029     		cmp	r1, #0
+ 167 007a F7D1     		bne	.L14
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     for ( ; *string ; ++string) {
+ 168              		.loc 1 50 0 is_stmt 0
+ 169 007c A046     		mov	r8, r4
+ 170 007e 05E0     		b	.L15
+ 171              	.LVL22:
+ 172              	.L16:
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     }
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     for ( ; width > 0; --width) {
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         printchar (out, padchar);
+ 173              		.loc 1 55 0 is_stmt 1 discriminator 2
+ 174 0080 3846     		mov	r0, r7
+ 175 0082 3146     		mov	r1, r6
+ 176 0084 FFF7BCFF 		bl	printchar
+ 177              	.LVL23:
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     for ( ; width > 0; --width) {
+ 178              		.loc 1 54 0 discriminator 2
+ 179 0088 08F1FF38 		add	r8, r8, #-1
+ 180              	.LVL24:
+ 181              	.L15:
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     for ( ; width > 0; --width) {
+ 182              		.loc 1 54 0 is_stmt 0 discriminator 1
+ 183 008c B8F1000F 		cmp	r8, #0
+ 184 0090 F6DC     		bgt	.L16
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         ++pc;
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     }
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     return pc;
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** }
+ 185              		.loc 1 60 0 is_stmt 1
+ 186 0092 002C     		cmp	r4, #0
+ 187 0094 ACBF     		ite	ge
+ 188 0096 2819     		addge	r0, r5, r4
+ 189 0098 281C     		addlt	r0, r5, #0
+ 190 009a BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 191              		.cfi_endproc
+ 192              	.LFE112:
+ 194              		.align	1
+ 195              		.thumb
+ 196              		.thumb_func
+ 198              	printi:
+ 199              	.LFB113:
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** /* the following should be enough for 32 bit int */
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** #define PRINT_BUF_LEN 12
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** static int printi(char **out, int i, int b, int sg, int width, int pad, int letbase)
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** {
+ 200              		.loc 1 66 0
+ 201              		.cfi_startproc
+ 202              		@ args = 12, pretend = 0, frame = 16
+ 203              		@ frame_needed = 0, uses_anonymous_args = 0
+ 204              	.LVL25:
+ 205 009e 2DE9FF47 		push	{r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, sl, lr}
+ 206              	.LCFI1:
+ 207              		.cfi_def_cfa_offset 48
+ 208              		.cfi_offset 0, -48
+ 209              		.cfi_offset 1, -44
+ 210              		.cfi_offset 2, -40
+ 211              		.cfi_offset 3, -36
+ 212              		.cfi_offset 4, -32
+ 213              		.cfi_offset 5, -28
+ 214              		.cfi_offset 6, -24
+ 215              		.cfi_offset 7, -20
+ 216              		.cfi_offset 8, -16
+ 217              		.cfi_offset 9, -12
+ 218              		.cfi_offset 10, -8
+ 219              		.cfi_offset 14, -4
+ 220              		.loc 1 66 0
+ 221 00a2 0C9E     		ldr	r6, [sp, #48]
+ 222 00a4 8146     		mov	r9, r0
+ 223 00a6 DDF83480 		ldr	r8, [sp, #52]
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     char print_buf[PRINT_BUF_LEN];
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     register char *s;
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     register int t, neg = 0, pc = 0;
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     register unsigned int u = i;
+ 224              		.loc 1 70 0
+ 225 00aa 0C46     		mov	r4, r1
+ 226              	.LVL26:
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     if (i == 0) {
+ 227              		.loc 1 72 0
+ 228 00ac 51B9     		cbnz	r1, .L22
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         print_buf[0] = '0';
+ 229              		.loc 1 73 0
+ 230 00ae 3023     		movs	r3, #48
+ 231              	.LVL27:
+ 232 00b0 8DF80430 		strb	r3, [sp, #4]
+  74:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         print_buf[1] = '\0';
+ 233              		.loc 1 74 0
+ 234 00b4 8DF80510 		strb	r1, [sp, #5]
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         return prints (out, print_buf, width, pad);
+ 235              		.loc 1 75 0
+ 236 00b8 3246     		mov	r2, r6
+ 237              	.LVL28:
+ 238 00ba 01A9     		add	r1, sp, #4
+ 239              	.LVL29:
+ 240 00bc 4346     		mov	r3, r8
+ 241 00be FFF7A9FF 		bl	prints
+ 242              	.LVL30:
+ 243 00c2 37E0     		b	.L23
+ 244              	.LVL31:
+ 245              	.L22:
+  76:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     }
+  77:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+  78:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     if (sg && b == 10 && i < 0) {
+ 246              		.loc 1 78 0
+ 247 00c4 33B1     		cbz	r3, .L32
+ 248              		.loc 1 78 0 is_stmt 0 discriminator 1
+ 249 00c6 0A2A     		cmp	r2, #10
+ 250 00c8 04D1     		bne	.L32
+ 251 00ca 0029     		cmp	r1, #0
+ 252 00cc 02DA     		bge	.L32
+ 253              	.LVL32:
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         neg = 1;
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         u = -i;
+ 254              		.loc 1 80 0 is_stmt 1
+ 255 00ce 4C42     		negs	r4, r1
+ 256              	.LVL33:
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         neg = 1;
+ 257              		.loc 1 79 0
+ 258 00d0 0127     		movs	r7, #1
+ 259 00d2 00E0     		b	.L24
+ 260              	.LVL34:
+ 261              	.L32:
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     register int t, neg = 0, pc = 0;
+ 262              		.loc 1 69 0
+ 263 00d4 0027     		movs	r7, #0
+ 264              	.LVL35:
+ 265              	.L24:
+  81:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     }
+  82:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     s = print_buf + PRINT_BUF_LEN-1;
+  84:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     *s = '\0';
+ 266              		.loc 1 84 0
+ 267 00d6 0023     		movs	r3, #0
+ 268              	.LVL36:
+ 269 00d8 04AD     		add	r5, sp, #16
+ 270 00da 05F8013D 		strb	r3, [r5, #-1]!
+  85:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     while (u) {
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         t = u % b;
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         if( t >= 10 )
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             t += letbase - '0' - 10;
+ 271              		.loc 1 89 0
+ 272 00de 0E9B     		ldr	r3, [sp, #56]
+ 273 00e0 A3F13A01 		sub	r1, r3, #58
+ 274              	.LVL37:
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     while (u) {
+ 275              		.loc 1 86 0
+ 276 00e4 0AE0     		b	.L25
+ 277              	.LVL38:
+ 278              	.L27:
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         t = u % b;
+ 279              		.loc 1 87 0
+ 280 00e6 B4FBF2F3 		udiv	r3, r4, r2
+ 281 00ea 02FB1344 		mls	r4, r2, r3, r4
+ 282              	.LVL39:
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         if( t >= 10 )
+ 283              		.loc 1 88 0
+ 284 00ee 092C     		cmp	r4, #9
+ 285              		.loc 1 89 0
+ 286 00f0 C8BF     		it	gt
+ 287 00f2 6418     		addgt	r4, r4, r1
+ 288              	.LVL40:
+  90:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         *--s = t + '0';
+ 289              		.loc 1 90 0
+ 290 00f4 3034     		adds	r4, r4, #48
+ 291              	.LVL41:
+ 292 00f6 05F8014D 		strb	r4, [r5, #-1]!
+ 293              	.LVL42:
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         u /= b;
+ 294              		.loc 1 91 0
+ 295 00fa 1C46     		mov	r4, r3
+ 296              	.LVL43:
+ 297              	.L25:
+ 298 00fc AA46     		mov	sl, r5
+ 299              	.LVL44:
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     while (u) {
+ 300              		.loc 1 86 0 discriminator 1
+ 301 00fe 002C     		cmp	r4, #0
+ 302 0100 F1D1     		bne	.L27
+  92:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     }
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     if (neg) {
+ 303              		.loc 1 94 0
+ 304 0102 87B1     		cbz	r7, .L28
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         if( width && (pad & PAD_ZERO) ) {
+ 305              		.loc 1 95 0
+ 306 0104 4EB1     		cbz	r6, .L29
+ 307              		.loc 1 95 0 is_stmt 0 discriminator 1
+ 308 0106 18F0020F 		tst	r8, #2
+ 309 010a 06D0     		beq	.L29
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             printchar (out, '-');
+ 310              		.loc 1 96 0 is_stmt 1
+ 311 010c 4846     		mov	r0, r9
+ 312              	.LVL45:
+ 313 010e 2D21     		movs	r1, #45
+ 314 0110 FFF776FF 		bl	printchar
+ 315              	.LVL46:
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             ++pc;
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             --width;
+ 316              		.loc 1 98 0
+ 317 0114 013E     		subs	r6, r6, #1
+ 318              	.LVL47:
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             ++pc;
+ 319              		.loc 1 97 0
+ 320 0116 0127     		movs	r7, #1
+ 321              	.LVL48:
+ 322              		.loc 1 98 0
+ 323 0118 05E0     		b	.L28
+ 324              	.LVL49:
+ 325              	.L29:
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         }
+ 100:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         else {
+ 101:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             *--s = '-';
+ 326              		.loc 1 101 0
+ 327 011a 2D23     		movs	r3, #45
+ 328 011c 05F1FF3A 		add	sl, r5, #-1
+ 329              	.LVL50:
+ 330 0120 05F8013C 		strb	r3, [r5, #-1]
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     register int t, neg = 0, pc = 0;
+ 331              		.loc 1 69 0
+ 332 0124 0027     		movs	r7, #0
+ 333              	.LVL51:
+ 334              	.L28:
+ 102:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         }
+ 103:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     }
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     return pc + prints (out, s, width, pad);
+ 335              		.loc 1 105 0
+ 336 0126 4846     		mov	r0, r9
+ 337 0128 5146     		mov	r1, sl
+ 338 012a 3246     		mov	r2, r6
+ 339 012c 4346     		mov	r3, r8
+ 340 012e FFF771FF 		bl	prints
+ 341              	.LVL52:
+ 342 0132 3818     		adds	r0, r7, r0
+ 343              	.LVL53:
+ 344              	.L23:
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** }
+ 345              		.loc 1 106 0
+ 346 0134 04B0     		add	sp, sp, #16
+ 347 0136 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, sl, pc}
+ 348              		.cfi_endproc
+ 349              	.LFE113:
+ 351              		.align	1
+ 352              		.thumb
+ 353              		.thumb_func
+ 355              	print:
+ 356              	.LFB114:
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+ 108:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** static int print( char **out, const char *format, va_list args )
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** {
+ 357              		.loc 1 109 0
+ 358              		.cfi_startproc
+ 359              		@ args = 0, pretend = 0, frame = 16
+ 360              		@ frame_needed = 0, uses_anonymous_args = 0
+ 361              	.LVL54:
+ 362 013a 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, sl, lr}
+ 363              	.LCFI2:
+ 364              		.cfi_def_cfa_offset 32
+ 365              		.cfi_offset 4, -32
+ 366              		.cfi_offset 5, -28
+ 367              		.cfi_offset 6, -24
+ 368              		.cfi_offset 7, -20
+ 369              		.cfi_offset 8, -16
+ 370              		.cfi_offset 9, -12
+ 371              		.cfi_offset 10, -8
+ 372              		.cfi_offset 14, -4
+ 110:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     register int width, pad;
+ 111:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     register int pc = 0;
+ 373              		.loc 1 111 0
+ 374 013e 0024     		movs	r4, #0
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** {
+ 375              		.loc 1 109 0
+ 376 0140 88B0     		sub	sp, sp, #32
+ 377              	.LCFI3:
+ 378              		.cfi_def_cfa_offset 64
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** {
+ 379              		.loc 1 109 0
+ 380 0142 0646     		mov	r6, r0
+ 381 0144 0D46     		mov	r5, r1
+ 382 0146 0592     		str	r2, [sp, #20]
+ 112:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     char scr[2];
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     for (; *format != 0; ++format) {
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         if (*format == '%') {
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             ++format;
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             width = pad = 0;
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if (*format == '\0') break;
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if (*format == '%') goto out;
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if (*format == '-') {
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 ++format;
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 pad = PAD_RIGHT;
+ 123:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             }
+ 124:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             while (*format == '0') {
+ 383              		.loc 1 124 0
+ 384 0148 2746     		mov	r7, r4
+ 385              	.LBB4:
+ 125:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 ++format;
+ 126:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 pad |= PAD_ZERO;
+ 127:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             }
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             for ( ; *format >= '0' && *format <= '9'; ++format) {
+ 129:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 width *= 10;
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 width += *format - '0';
+ 131:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             }
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if( *format == 's' ) {
+ 133:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 register char *s = (char *)va_arg( args, int );
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 pc += prints (out, s?s:"(null)", width, pad);
+ 386              		.loc 1 134 0
+ 387 014a DFF81C81 		ldr	r8, .L67
+ 388              	.LBE4:
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     for (; *format != 0; ++format) {
+ 389              		.loc 1 114 0
+ 390 014e 7FE0     		b	.L41
+ 391              	.LVL55:
+ 392              	.L58:
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         if (*format == '%') {
+ 393              		.loc 1 115 0
+ 394 0150 252B     		cmp	r3, #37
+ 395 0152 77D1     		bne	.L42
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if (*format == '\0') break;
+ 396              		.loc 1 118 0
+ 397 0154 6B78     		ldrb	r3, [r5, #1]	@ zero_extendqisi2
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             ++format;
+ 398              		.loc 1 116 0
+ 399 0156 6A1C     		adds	r2, r5, #1
+ 400              	.LVL56:
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if (*format == '\0') break;
+ 401              		.loc 1 118 0
+ 402 0158 13B9     		cbnz	r3, .L43
+ 403              	.LVL57:
+ 404              	.L59:
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 continue;
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             }
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if( *format == 'd' ) {
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 pc += printi (out, va_arg( args, int ), 10, 1, width, pad, 'a');
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 continue;
+ 140:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             }
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if( *format == 'x' ) {
+ 142:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 pc += printi (out, va_arg( args, int ), 16, 0, width, pad, 'a');
+ 143:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 continue;
+ 144:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             }
+ 145:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if( *format == 'X' ) {
+ 146:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 pc += printi (out, va_arg( args, int ), 16, 0, width, pad, 'A');
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 continue;
+ 148:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             }
+ 149:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if( *format == 'u' ) {
+ 150:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 pc += printi (out, va_arg( args, int ), 10, 0, width, pad, 'a');
+ 151:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 continue;
+ 152:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             }
+ 153:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if( *format == 'c' ) {
+ 154:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 /* char are converted to int then pushed on the stack */
+ 155:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 scr[0] = (char)va_arg( args, int );
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 scr[1] = '\0';
+ 157:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 pc += prints (out, scr, width, pad);
+ 158:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 continue;
+ 159:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             }
+ 160:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         }
+ 161:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         else {
+ 162:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         out:
+ 163:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             printchar (out, *format);
+ 164:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             ++pc;
+ 165:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         }
+ 166:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     }
+ 167:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     if (out) **out = '\0';
+ 405              		.loc 1 167 0
+ 406 015a 002E     		cmp	r6, #0
+ 407 015c 7DD1     		bne	.L44
+ 408 015e 7FE0     		b	.L45
+ 409              	.LVL58:
+ 410              	.L43:
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if (*format == '%') goto out;
+ 411              		.loc 1 119 0
+ 412 0160 252B     		cmp	r3, #37
+ 413 0162 6ED0     		beq	.L60
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if (*format == '-') {
+ 414              		.loc 1 120 0
+ 415 0164 2D2B     		cmp	r3, #45
+ 416 0166 02D1     		bne	.L61
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 ++format;
+ 417              		.loc 1 121 0
+ 418 0168 AA1C     		adds	r2, r5, #2
+ 419              	.LVL59:
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 pad = PAD_RIGHT;
+ 420              		.loc 1 122 0
+ 421 016a 0123     		movs	r3, #1
+ 422 016c 03E0     		b	.L47
+ 423              	.LVL60:
+ 424              	.L61:
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             width = pad = 0;
+ 425              		.loc 1 117 0
+ 426 016e 0023     		movs	r3, #0
+ 427 0170 01E0     		b	.L47
+ 428              	.LVL61:
+ 429              	.L48:
+ 126:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 pad |= PAD_ZERO;
+ 430              		.loc 1 126 0
+ 431 0172 43F00203 		orr	r3, r3, #2
+ 432              	.LVL62:
+ 433              	.L47:
+ 434 0176 1146     		mov	r1, r2
+ 435              	.LVL63:
+ 124:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             while (*format == '0') {
+ 436              		.loc 1 124 0 discriminator 1
+ 437 0178 0878     		ldrb	r0, [r1, #0]	@ zero_extendqisi2
+ 438 017a 0132     		adds	r2, r2, #1
+ 439 017c 3028     		cmp	r0, #48
+ 440 017e F8D0     		beq	.L48
+ 441 0180 8C46     		mov	ip, r1
+ 442 0182 0022     		movs	r2, #0
+ 129:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 width *= 10;
+ 443              		.loc 1 129 0 discriminator 1
+ 444 0184 4FF00A0A 		mov	sl, #10
+ 445 0188 01E0     		b	.L49
+ 446              	.LVL64:
+ 447              	.L50:
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 width += *format - '0';
+ 448              		.loc 1 130 0 discriminator 2
+ 449 018a 0AFB0202 		mla	r2, sl, r2, r0
+ 450              	.LVL65:
+ 451              	.L49:
+ 452 018e 6546     		mov	r5, ip
+ 453              	.LVL66:
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             for ( ; *format >= '0' && *format <= '9'; ++format) {
+ 454              		.loc 1 128 0 discriminator 1
+ 455 0190 2978     		ldrb	r1, [r5, #0]	@ zero_extendqisi2
+ 456 0192 0CF1010C 		add	ip, ip, #1
+ 457 0196 A1F13000 		sub	r0, r1, #48
+ 458 019a 5FFA80F9 		uxtb	r9, r0
+ 459 019e B9F1090F 		cmp	r9, #9
+ 460 01a2 F2D9     		bls	.L50
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if( *format == 's' ) {
+ 461              		.loc 1 132 0
+ 462 01a4 7329     		cmp	r1, #115
+ 463 01a6 08D1     		bne	.L51
+ 464              	.LBB5:
+ 133:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 register char *s = (char *)va_arg( args, int );
+ 465              		.loc 1 133 0
+ 466 01a8 0599     		ldr	r1, [sp, #20]
+ 467 01aa 081D     		adds	r0, r1, #4
+ 468 01ac 0968     		ldr	r1, [r1, #0]
+ 469              	.LVL67:
+ 470 01ae 0590     		str	r0, [sp, #20]
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 pc += prints (out, s?s:"(null)", width, pad);
+ 471              		.loc 1 134 0
+ 472 01b0 0029     		cmp	r1, #0
+ 473 01b2 08BF     		it	eq
+ 474 01b4 4146     		moveq	r1, r8
+ 475              	.LVL68:
+ 476 01b6 3046     		mov	r0, r6
+ 477 01b8 40E0     		b	.L65
+ 478              	.LVL69:
+ 479              	.L51:
+ 480              	.LBE5:
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if( *format == 'd' ) {
+ 481              		.loc 1 137 0
+ 482 01ba 6429     		cmp	r1, #100
+ 483 01bc 0ED1     		bne	.L54
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 pc += printi (out, va_arg( args, int ), 10, 1, width, pad, 'a');
+ 484              		.loc 1 138 0
+ 485 01be 8DE80C00 		stmia	sp, {r2, r3}
+ 486 01c2 0599     		ldr	r1, [sp, #20]
+ 487 01c4 6123     		movs	r3, #97
+ 488              	.LVL70:
+ 489 01c6 0293     		str	r3, [sp, #8]
+ 490 01c8 081D     		adds	r0, r1, #4
+ 491 01ca 0968     		ldr	r1, [r1, #0]
+ 492 01cc 0590     		str	r0, [sp, #20]
+ 493 01ce 0A22     		movs	r2, #10
+ 494              	.LVL71:
+ 495 01d0 3046     		mov	r0, r6
+ 496 01d2 0123     		movs	r3, #1
+ 497              	.LVL72:
+ 498              	.L63:
+ 499 01d4 FFF763FF 		bl	printi
+ 500              	.LVL73:
+ 501              	.L62:
+ 502 01d8 2418     		adds	r4, r4, r0
+ 503              	.LVL74:
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 continue;
+ 504              		.loc 1 139 0
+ 505 01da 38E0     		b	.L53
+ 506              	.LVL75:
+ 507              	.L54:
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if( *format == 'x' ) {
+ 508              		.loc 1 141 0
+ 509 01dc 7829     		cmp	r1, #120
+ 510 01de 06D1     		bne	.L55
+ 142:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 pc += printi (out, va_arg( args, int ), 16, 0, width, pad, 'a');
+ 511              		.loc 1 142 0
+ 512 01e0 0599     		ldr	r1, [sp, #20]
+ 513 01e2 8DE80C00 		stmia	sp, {r2, r3}
+ 514 01e6 081D     		adds	r0, r1, #4
+ 515 01e8 0590     		str	r0, [sp, #20]
+ 516 01ea 6123     		movs	r3, #97
+ 517              	.LVL76:
+ 518 01ec 07E0     		b	.L66
+ 519              	.LVL77:
+ 520              	.L55:
+ 145:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if( *format == 'X' ) {
+ 521              		.loc 1 145 0
+ 522 01ee 5829     		cmp	r1, #88
+ 523 01f0 0AD1     		bne	.L56
+ 146:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 pc += printi (out, va_arg( args, int ), 16, 0, width, pad, 'A');
+ 524              		.loc 1 146 0
+ 525 01f2 0599     		ldr	r1, [sp, #20]
+ 526 01f4 8DE80C00 		stmia	sp, {r2, r3}
+ 527 01f8 081D     		adds	r0, r1, #4
+ 528 01fa 0590     		str	r0, [sp, #20]
+ 529 01fc 4123     		movs	r3, #65
+ 530              	.LVL78:
+ 531              	.L66:
+ 532 01fe 0293     		str	r3, [sp, #8]
+ 533 0200 3046     		mov	r0, r6
+ 534 0202 0968     		ldr	r1, [r1, #0]
+ 535 0204 1022     		movs	r2, #16
+ 536              	.LVL79:
+ 537 0206 0BE0     		b	.L64
+ 538              	.LVL80:
+ 539              	.L56:
+ 149:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if( *format == 'u' ) {
+ 540              		.loc 1 149 0
+ 541 0208 7529     		cmp	r1, #117
+ 542 020a 0BD1     		bne	.L57
+ 150:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 pc += printi (out, va_arg( args, int ), 10, 0, width, pad, 'a');
+ 543              		.loc 1 150 0
+ 544 020c 8DE80C00 		stmia	sp, {r2, r3}
+ 545 0210 0599     		ldr	r1, [sp, #20]
+ 546 0212 6123     		movs	r3, #97
+ 547              	.LVL81:
+ 548 0214 0293     		str	r3, [sp, #8]
+ 549 0216 081D     		adds	r0, r1, #4
+ 550 0218 0968     		ldr	r1, [r1, #0]
+ 551 021a 0590     		str	r0, [sp, #20]
+ 552 021c 0A22     		movs	r2, #10
+ 553              	.LVL82:
+ 554 021e 3046     		mov	r0, r6
+ 555              	.LVL83:
+ 556              	.L64:
+ 557 0220 0023     		movs	r3, #0
+ 558 0222 D7E7     		b	.L63
+ 559              	.LVL84:
+ 560              	.L57:
+ 153:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             if( *format == 'c' ) {
+ 561              		.loc 1 153 0
+ 562 0224 6329     		cmp	r1, #99
+ 563 0226 12D1     		bne	.L53
+ 155:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 scr[0] = (char)va_arg( args, int );
+ 564              		.loc 1 155 0
+ 565 0228 0599     		ldr	r1, [sp, #20]
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 scr[1] = '\0';
+ 566              		.loc 1 156 0
+ 567 022a 8DF81D70 		strb	r7, [sp, #29]
+ 155:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 scr[0] = (char)va_arg( args, int );
+ 568              		.loc 1 155 0
+ 569 022e 081D     		adds	r0, r1, #4
+ 570 0230 0968     		ldr	r1, [r1, #0]
+ 571 0232 0590     		str	r0, [sp, #20]
+ 572 0234 8DF81C10 		strb	r1, [sp, #28]
+ 157:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****                 pc += prints (out, scr, width, pad);
+ 573              		.loc 1 157 0
+ 574 0238 3046     		mov	r0, r6
+ 575 023a 07A9     		add	r1, sp, #28
+ 576              	.LVL85:
+ 577              	.L65:
+ 578 023c FFF7EAFE 		bl	prints
+ 579              	.LVL86:
+ 580 0240 CAE7     		b	.L62
+ 581              	.LVL87:
+ 582              	.L60:
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             ++format;
+ 583              		.loc 1 116 0
+ 584 0242 1546     		mov	r5, r2
+ 585              	.LVL88:
+ 586              	.L42:
+ 163:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             printchar (out, *format);
+ 587              		.loc 1 163 0
+ 588 0244 3046     		mov	r0, r6
+ 589 0246 2978     		ldrb	r1, [r5, #0]	@ zero_extendqisi2
+ 590 0248 FFF7DAFE 		bl	printchar
+ 591              	.LVL89:
+ 164:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****             ++pc;
+ 592              		.loc 1 164 0
+ 593 024c 0134     		adds	r4, r4, #1
+ 594              	.LVL90:
+ 595              	.L53:
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     for (; *format != 0; ++format) {
+ 596              		.loc 1 114 0
+ 597 024e 0135     		adds	r5, r5, #1
+ 598              	.LVL91:
+ 599              	.L41:
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     for (; *format != 0; ++format) {
+ 600              		.loc 1 114 0 is_stmt 0 discriminator 1
+ 601 0250 2B78     		ldrb	r3, [r5, #0]	@ zero_extendqisi2
+ 602 0252 002B     		cmp	r3, #0
+ 603 0254 7FF47CAF 		bne	.L58
+ 604 0258 7FE7     		b	.L59
+ 605              	.LVL92:
+ 606              	.L44:
+ 607              		.loc 1 167 0 is_stmt 1 discriminator 1
+ 608 025a 3368     		ldr	r3, [r6, #0]
+ 609 025c 0022     		movs	r2, #0
+ 610 025e 1A70     		strb	r2, [r3, #0]
+ 611              	.L45:
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     va_end( args );
+ 169:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****     return pc;
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** }
+ 612              		.loc 1 170 0
+ 613 0260 2046     		mov	r0, r4
+ 614 0262 08B0     		add	sp, sp, #32
+ 615 0264 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, sl, pc}
+ 616              	.L68:
+ 617              		.align	2
+ 618              	.L67:
+ 619 0268 00000000 		.word	.LC0
+ 620              		.cfi_endproc
+ 621              	.LFE114:
+ 623              		.align	1
+ 624              		.global	printf
+ 625              		.thumb
+ 626              		.thumb_func
+ 628              	printf:
+ 629              	.LFB115:
+ 171:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+ 172:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** int printf(const char *format, ...)
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** {
+ 630              		.loc 1 173 0
+ 631              		.cfi_startproc
+ 632              		@ args = 4, pretend = 16, frame = 8
+ 633              		@ frame_needed = 0, uses_anonymous_args = 1
+ 634              	.LVL93:
+ 635 026c 0FB4     		push	{r0, r1, r2, r3}
+ 636              	.LCFI4:
+ 637              		.cfi_def_cfa_offset 16
+ 638              		.cfi_offset 0, -16
+ 639              		.cfi_offset 1, -12
+ 640              		.cfi_offset 2, -8
+ 641              		.cfi_offset 3, -4
+ 642 026e 07B5     		push	{r0, r1, r2, lr}
+ 643              	.LCFI5:
+ 644              		.cfi_def_cfa_offset 32
+ 645              		.cfi_offset 0, -32
+ 646              		.cfi_offset 1, -28
+ 647              		.cfi_offset 2, -24
+ 648              		.cfi_offset 14, -20
+ 649              		.loc 1 173 0
+ 650 0270 04AA     		add	r2, sp, #16
+ 651 0272 52F8041B 		ldr	r1, [r2], #4
+ 174:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         va_list args;
+ 175:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         va_start( args, format );
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         return print( 0, format, args );
+ 652              		.loc 1 177 0
+ 653 0276 0020     		movs	r0, #0
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         va_start( args, format );
+ 654              		.loc 1 176 0
+ 655 0278 0192     		str	r2, [sp, #4]
+ 656              		.loc 1 177 0
+ 657 027a FFF75EFF 		bl	print
+ 658              	.LVL94:
+ 178:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** }
+ 659              		.loc 1 178 0
+ 660 027e BDE80E40 		pop	{r1, r2, r3, lr}
+ 661 0282 04B0     		add	sp, sp, #16
+ 662 0284 7047     		bx	lr
+ 663              		.cfi_endproc
+ 664              	.LFE115:
+ 666              		.align	1
+ 667              		.global	sprintf
+ 668              		.thumb
+ 669              		.thumb_func
+ 671              	sprintf:
+ 672              	.LFB116:
+ 179:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+ 180:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** int sprintf(char *out, const char *format, ...)
+ 181:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** {
+ 673              		.loc 1 181 0
+ 674              		.cfi_startproc
+ 675              		@ args = 4, pretend = 12, frame = 16
+ 676              		@ frame_needed = 0, uses_anonymous_args = 1
+ 677              	.LVL95:
+ 678 0286 0EB4     		push	{r1, r2, r3}
+ 679              	.LCFI6:
+ 680              		.cfi_def_cfa_offset 12
+ 681              		.cfi_offset 1, -12
+ 682              		.cfi_offset 2, -8
+ 683              		.cfi_offset 3, -4
+ 684 0288 0FB5     		push	{r0, r1, r2, r3, lr}
+ 685              	.LCFI7:
+ 686              		.cfi_def_cfa_offset 32
+ 687              		.cfi_offset 0, -32
+ 688              		.cfi_offset 1, -28
+ 689              		.cfi_offset 2, -24
+ 690              		.cfi_offset 3, -20
+ 691              		.cfi_offset 14, -16
+ 692              		.loc 1 181 0
+ 693 028a 05AA     		add	r2, sp, #20
+ 694 028c 52F8041B 		ldr	r1, [r2], #4
+ 695 0290 0190     		str	r0, [sp, #4]
+ 182:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         va_list args;
+ 183:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+ 184:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         va_start( args, format );
+ 185:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         return print( &out, format, args );
+ 696              		.loc 1 185 0
+ 697 0292 01A8     		add	r0, sp, #4
+ 698              	.LVL96:
+ 184:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         va_start( args, format );
+ 699              		.loc 1 184 0
+ 700 0294 0392     		str	r2, [sp, #12]
+ 701              		.loc 1 185 0
+ 702 0296 FFF750FF 		bl	print
+ 703              	.LVL97:
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** }
+ 704              		.loc 1 186 0
+ 705 029a 04B0     		add	sp, sp, #16
+ 706 029c 5DF804EB 		pop	{lr}
+ 707 02a0 03B0     		add	sp, sp, #12
+ 708 02a2 7047     		bx	lr
+ 709              		.cfi_endproc
+ 710              	.LFE116:
+ 712              		.align	1
+ 713              		.global	snprintf
+ 714              		.thumb
+ 715              		.thumb_func
+ 717              	snprintf:
+ 718              	.LFB117:
+ 187:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+ 188:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+ 189:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** int snprintf( char *buf, unsigned int count, const char *format, ... )
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** {
+ 719              		.loc 1 190 0
+ 720              		.cfi_startproc
+ 721              		@ args = 4, pretend = 8, frame = 16
+ 722              		@ frame_needed = 0, uses_anonymous_args = 1
+ 723              	.LVL98:
+ 724 02a4 0CB4     		push	{r2, r3}
+ 725              	.LCFI8:
+ 726              		.cfi_def_cfa_offset 8
+ 727              		.cfi_offset 2, -8
+ 728              		.cfi_offset 3, -4
+ 729 02a6 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 730              	.LCFI9:
+ 731              		.cfi_def_cfa_offset 32
+ 732              		.cfi_offset 0, -32
+ 733              		.cfi_offset 1, -28
+ 734              		.cfi_offset 2, -24
+ 735              		.cfi_offset 3, -20
+ 736              		.cfi_offset 4, -16
+ 737              		.cfi_offset 14, -12
+ 738              		.loc 1 190 0
+ 739 02a8 06AA     		add	r2, sp, #24
+ 740 02aa 52F8041B 		ldr	r1, [r2], #4
+ 741              	.LVL99:
+ 742 02ae 0190     		str	r0, [sp, #4]
+ 191:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         va_list args;
+ 192:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+ 193:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         ( void ) count;
+ 194:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** 
+ 195:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         va_start( args, format );
+ 196:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         return print( &buf, format, args );
+ 743              		.loc 1 196 0
+ 744 02b0 01A8     		add	r0, sp, #4
+ 745              	.LVL100:
+ 195:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c ****         va_start( args, format );
+ 746              		.loc 1 195 0
+ 747 02b2 0392     		str	r2, [sp, #12]
+ 748              		.loc 1 196 0
+ 749 02b4 FFF741FF 		bl	print
+ 750              	.LVL101:
+ 197:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_src/printf_stdarg.c **** }
+ 751              		.loc 1 197 0
+ 752 02b8 05B0     		add	sp, sp, #20
+ 753 02ba 5DF804EB 		pop	{lr}
+ 754 02be 02B0     		add	sp, sp, #8
+ 755 02c0 7047     		bx	lr
+ 756              		.cfi_endproc
+ 757              	.LFE117:
+ 759              		.section	.rodata.str1.1,"aMS",%progbits,1
+ 760              	.LC0:
+ 761 0000 286E756C 		.ascii	"(null)\000"
+ 761      6C2900
+ 762              		.text
+ 763              	.Letext0:
+ 764              		.file 2 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+ 765              		.file 3 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+ 766              		.file 4 "<built-in>"
+ 767              		.file 5 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Include/core_cm4.h"
+ 768              		.file 6 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/project_inc/usart.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 printf_stdarg.c
+     /tmp/ccPzIVUE.s:18     .text:00000000 $t
+     /tmp/ccPzIVUE.s:22     .text:00000000 printchar
+     /tmp/ccPzIVUE.s:56     .text:00000014 prints
+     /tmp/ccPzIVUE.s:198    .text:0000009e printi
+     /tmp/ccPzIVUE.s:355    .text:0000013a print
+     /tmp/ccPzIVUE.s:619    .text:00000268 $d
+     /tmp/ccPzIVUE.s:623    .text:0000026c $t
+     /tmp/ccPzIVUE.s:628    .text:0000026c printf
+     /tmp/ccPzIVUE.s:671    .text:00000286 sprintf
+     /tmp/ccPzIVUE.s:717    .text:000002a4 snprintf
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.stdarg.h.31.b70f21342353634f7b44d85f85f13832
+                           .group:00000000 wm4.stm32f30x.h.54.c7b24f715ee55ef38656f44540ae3be6
+                           .group:00000000 wm4.core_cm4.h.32.2441f2e49dd40451ba4254637c879d0c
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.292.5f9271075d54fc48f1e25ff79df85cb2
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_comp.h.31.9bbc5f5f1a849069ea9062fbe7b81435
+                           .group:00000000 wm4.stm32f30x_dma.h.31.73d173fa6d60026d432f3cf1d2fc4407
+                           .group:00000000 wm4.stm32f30x_exti.h.31.22e280aa6e095108654ac8d3c74a2409
+                           .group:00000000 wm4.stm32f30x_flash.h.31.bee86dc3079b7049419bdbeec073e2cd
+                           .group:00000000 wm4.stm32f30x_gpio.h.31.3745297fee3728b346ad4d2a2467e40f
+                           .group:00000000 wm4.stm32f30x_syscfg.h.31.96b023b7dbc3641f358604478433eb5c
+                           .group:00000000 wm4.stm32f30x_i2c.h.31.52025acd7f154308042bf46a2835e9d3
+                           .group:00000000 wm4.stm32f30x_pwr.h.31.cdef322c6e7f25cfc29954045d24e9b8
+                           .group:00000000 wm4.stm32f30x_rcc.h.31.3b94c1144b21d1e4fe780e4d1a02d257
+                           .group:00000000 wm4.stm32f30x_spi.h.31.c1ebebab897d23cecc617ec8ad9fd534
+                           .group:00000000 wm4.stm32f30x_tim.h.31.336f9cd855fb4e2cd819ac260ded6518
+                           .group:00000000 wm4.stm32f30x_usart.h.31.cd85313e29c0a128555b4a7b8ec0f487
+                           .group:00000000 wm4.stm32f30x_misc.h.31.f08b0e9f53f0471613b5131bb95f8725
+                           .group:00000000 wm4.stm32f30x.h.6173.8b641ba1d9b0040eda9120fe8a414b2d
+                           .group:00000000 wm4.usart.h.2.52768ec0d936930d63857c2a6f357495
+
+UNDEFINED SYMBOLS
+Usart2Put

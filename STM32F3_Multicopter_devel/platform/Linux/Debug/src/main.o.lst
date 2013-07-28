@@ -1,0 +1,2885 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.eabi_attribute 28, 1
+   5              		.fpu fpv4-sp-d16
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 4
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.thumb
+  16              		.file	"main.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.align	1
+  21              		.thumb
+  22              		.thumb_func
+  24              	IMU_Print_Values:
+  25              	.LFB114:
+  26              		.file 1 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c"
+   1:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <stm32f30x.h>
+   2:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <stm32f30x_conf.h>
+   3:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <stm32_configuration.h>
+   4:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+   5:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <stdio.h>
+   6:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <stdlib.h>
+   7:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <string.h>
+   8:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <usart.h>
+   9:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  10:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <FreeRTOS.h>
+  11:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <task.h>
+  12:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <queue.h>
+  13:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <timers.h>
+  14:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <semphr.h>
+  15:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  16:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <IMU_algorithm.h>
+  17:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <filter_Lib.h>
+  18:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <multicopter_settings.h>
+  19:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <L3GD20_Lib_SPI.h>
+  20:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <ADXL345_Lib.h>
+  21:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <LSM303DLHC_Lib_I2C.h>
+  22:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <MotorPWM.h>
+  23:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #include <PID_control.h>
+  24:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  25:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #define DEG_TO_RAD 0.017453292f
+  26:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  27:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** //#define ESC_CALIBRATE
+  28:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #define DEBUG
+  29:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  30:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #ifndef DEBUG
+  31:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	#define enableX_AXIS
+  32:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	#define enableY_AXIS
+  33:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #endif
+  34:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  35:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** //#define USART_REMOTE
+  36:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  37:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** /*Max Gyro Error when calibrating*/
+  38:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #define MAX_GYRO_ERROR 1.0f
+  39:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  40:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** /* USEFUL FLAGS */
+  41:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #define READY_FLAG	0x01 	 /* FLAG set by the RemoteControl*/
+  42:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #define MOTORSTART_FLAG	0x02 /* FLAG set by the IMU Gyro Test*/
+  43:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  44:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** /* dt-Time of Main IMU Task*/
+  45:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #define DT 2
+  46:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #define DT_S ((float)DT/1000)
+  47:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  48:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #define ACC_MEDIAN_VALUE 5
+  49:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  50:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** /*Global Values for the Motor Control
+  51:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c ****  * this is just for testing purposes
+  52:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c ****  * they will get their own struct and lib
+  53:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c ****  * later*/
+  54:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** volatile uint8_t COPTER_STATUS = 0;
+  55:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  56:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** EXTI_InitTypeDef *globalEXTI_Structure;
+  57:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  58:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** MulticopterSettings GlobalSettings;
+  59:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** MulticopterCtrlStates CtrlStates;
+  60:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** struct XYZ_angles XYZ;
+  61:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  62:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** static void IMU_Calculation( void *pvParameters );
+  63:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** static void IMU_Print_Values( void *pvParameters );
+  64:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** static void PID_Calculation( void *pvParameters );
+  65:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  66:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** uint8_t accBuffer[6];
+  67:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  68:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** int xTemp = 0;
+  69:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** int yTemp = 0;
+  70:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** int zTemp = 0;
+  71:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  72:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  73:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** int main()
+  74:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+  75:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	SCB->CPACR |= ((3UL << 10*2)|(3UL << 11*2));  /* set CP10 and CP11 Full Access */
+  76:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  77:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	RCC_Configuration();
+  78:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	NVIC_Configuration();
+  79:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	GPIO_Configuration();
+  80:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	USART_Configuration();
+  81:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	SPI_Configuration();
+  82:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	I2C_Configuration();
+  83:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	TIM3_PWM_Configuration();
+  84:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	TIM4_Configuration();
+  85:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	ADC_Configuration();
+  86:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	globalEXTI_Structure = EXTI_Configuration();
+  87:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	DMA_Configuration(&accBuffer[0]);
+  88:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	//TIM4_PWM_INPUT_Configuration();
+  89:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  90:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	SETTINGS_init(&GlobalSettings);
+  91:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	CTRLSTATES_init(&CtrlStates);
+  92:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  93:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	xTaskCreate( IMU_Calculation, ( signed char * ) "IMU_Gyro", configMINIMAL_STACK_SIZE, NULL, 4, NUL
+  94:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	xTaskCreate( PID_Calculation, ( signed char * ) "PID_Calc", configMINIMAL_STACK_SIZE, NULL, 3, NUL
+  95:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	xTaskCreate( IMU_Print_Values, ( signed char * ) "Print_Euler", configMINIMAL_STACK_SIZE, NULL, 2,
+  96:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+  97:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	/* Start the tasks and timer running. */
+  98:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	vTaskStartScheduler();
+  99:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	while(1);
+ 100:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** }
+ 101:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 102:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** static void IMU_Calculation( void *pvParameters )
+ 103:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+ 104:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	portTickType xNextWakeTime;
+ 105:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 106:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	uint16_t i = 0;
+ 107:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 108:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	struct IMU_values IMU;
+ 109:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 110:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	/************ GYRO **************/
+ 111:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	struct gyroValues gyroOffset = {0,0,0};
+ 112:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	struct gyroValues gyroXYZ = {0,0,0};
+ 113:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 114:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	floatFilter xGyroFiltered_float;
+ 115:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	floatFilter yGyroFiltered_float;
+ 116:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	floatFilter zGyroFiltered_float;
+ 117:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	memset(&xGyroFiltered_float, 0, sizeof(xGyroFiltered_float));
+ 118:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	memset(&yGyroFiltered_float, 0, sizeof(yGyroFiltered_float));
+ 119:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	memset(&zGyroFiltered_float, 0, sizeof(zGyroFiltered_float));
+ 120:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 121:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	/************ ACC ***************/
+ 122:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	struct accValues accXYZ = {0,0,0};
+ 123:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	uint8_t accCount = 0;
+ 124:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 125:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	floatFilter xAccFiltered_float;
+ 126:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	floatFilter yAccFiltered_float;
+ 127:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	floatFilter zAccFiltered_float;
+ 128:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	memset(&xAccFiltered_float, 0, sizeof(xAccFiltered_float));
+ 129:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	memset(&yAccFiltered_float, 0, sizeof(yAccFiltered_float));
+ 130:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	memset(&zAccFiltered_float, 0, sizeof(zAccFiltered_float));
+ 131:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 132:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	/************ MAG ***************/
+ 133:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	uint8_t magCount = 0;
+ 134:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	struct magValues magXYZ = {0,0,0};
+ 135:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	intFilter xMagFiltered = {0,0};
+ 136:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	intFilter yMagFiltered = {0,0};
+ 137:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 138:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	/*Initialize the DCM-variables*/
+ 139:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	IMU_init(&IMU, DT_S);
+ 140:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(GlobalSettings.enableDriftCorrection)
+ 141:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	{
+ 142:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU_init_drift_correction(&IMU, 0.00025f/*kp-value*/);
+ 143:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	}
+ 144:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 145:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	#ifndef DEBUG
+ 146:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		while((COPTER_STATUS & READY_FLAG) != READY_FLAG)
+ 147:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		{
+ 148:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			printf("waiting for READY_FLAG...%d\n\r", 0);
+ 149:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			vTaskDelay( 20 );
+ 150:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		}
+ 151:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	#endif
+ 152:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 153:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	while(1)
+ 154:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	{
+ 155:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		Gyro_calibrate(&gyroOffset);
+ 156:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		for (i = 0;i<7000;i++)
+ 157:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		{
+ 158:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			Gyro_readValues(&gyroXYZ);
+ 159:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			gyroXYZ.gyroValueX = ((gyroXYZ.gyroValueX-gyroOffset.gyroValueX));
+ 160:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			gyroXYZ.gyroValueY = ((gyroXYZ.gyroValueY-gyroOffset.gyroValueY));
+ 161:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			gyroXYZ.gyroValueZ = ((gyroXYZ.gyroValueZ-gyroOffset.gyroValueZ));
+ 162:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 163:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] += ((float)gyroXYZ.gyroValueX*GYROC
+ 164:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensY]] += ((float)gyroXYZ.gyroValueX*GYROC
+ 165:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensZ]] += ((float)gyroXYZ.gyroValueX*GYROC
+ 166:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		}
+ 167:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		vTaskDelayUntil( &xNextWakeTime, DT );
+ 168:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 169:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if((IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] > -MAX_GYRO_ERROR) && (IMU.veloc
+ 170:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		   (IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensY]] > -MAX_GYRO_ERROR) && (IMU.veloc
+ 171:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		   (IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensZ]] > -MAX_GYRO_ERROR) && (IMU.veloc
+ 172:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		{
+ 173:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] = 0;
+ 174:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensY]] = 0;
+ 175:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensZ]] = 0;
+ 176:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			break;
+ 177:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		}
+ 178:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] = 0;
+ 179:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensY]] = 0;
+ 180:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensZ]] = 0;
+ 181:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		printf("Error Gyro Test!\n\r");
+ 182:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	}
+ 183:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 184:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(GlobalSettings.enableACC)
+ 185:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	{
+ 186:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		//ADXL345_calibrate(GlobalSettings.accMaxGOverflow, &accXYZ);
+ 187:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		LSM303DLHC_ACC_calibrate(GlobalSettings.accMaxGOverflow, &accXYZ);
+ 188:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	}
+ 189:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(GlobalSettings.enableACC)
+ 190:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	{
+ 191:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		Mag_calibrate();
+ 192:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	}
+ 193:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 194:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	/* Set the START Flag! */
+ 195:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	COPTER_STATUS |= MOTORSTART_FLAG;
+ 196:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 197:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	xNextWakeTime = xTaskGetTickCount();
+ 198:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 199:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	while(1)
+ 200:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	{
+ 201:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		GPIOE->ODR ^= GPIO_Pin_8;
+ 202:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		Gyro_readValues(&gyroXYZ);
+ 203:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		gyroXYZ.gyroValueX = ((gyroXYZ.gyroValueX-gyroOffset.gyroValueX));
+ 204:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		gyroXYZ.gyroValueY = ((gyroXYZ.gyroValueY-gyroOffset.gyroValueY));
+ 205:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		gyroXYZ.gyroValueZ = ((gyroXYZ.gyroValueZ-gyroOffset.gyroValueZ));
+ 206:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 207:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		/* Cut-off the lower values to reduce noise and fail-integration*/
+ 208:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(gyroXYZ.gyroValueX > -GlobalSettings.gyroSensTreshold && gyroXYZ.gyroValueX < GlobalSettings.g
+ 209:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(gyroXYZ.gyroValueY > -GlobalSettings.gyroSensTreshold && gyroXYZ.gyroValueY < GlobalSettings.g
+ 210:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(gyroXYZ.gyroValueZ > -GlobalSettings.gyroSensTreshold && gyroXYZ.gyroValueZ < GlobalSettings.g
+ 211:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 212:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		floatFilterGyro(&xGyroFiltered_float, gyroXYZ.gyroValueX);
+ 213:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		floatFilterGyro(&yGyroFiltered_float, gyroXYZ.gyroValueY);
+ 214:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		floatFilterGyro(&zGyroFiltered_float, gyroXYZ.gyroValueZ);
+ 215:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 216:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] = GlobalSettings.gyroDir.sensDirecti
+ 217:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensY]] = GlobalSettings.gyroDir.sensDirecti
+ 218:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensZ]] = GlobalSettings.gyroDir.sensDirecti
+ 219:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 220:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		/*Here the ACC-Compensation, we do this in every tenth round*/
+ 221:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(GlobalSettings.enableACC)
+ 222:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		{
+ 223:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			if(accCount >= 2)
+ 224:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			{
+ 225:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				//ADXL345_readValues(&accXYZ);
+ 226:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				//LSM303DLHC_ACC_readValues(&accXYZ);
+ 227:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				LSM303DLHC_ACC_readValuesDMA(&accXYZ, &accBuffer[0]);
+ 228:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 229:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				//ADC_AutoInjectedConvCmd(ADC2,ENABLE);
+ 230:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** //				ADC_StartConversion(ADC2);
+ 231:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** //				/* wait for ADRDY */
+ 232:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** //				while(!ADC_GetFlagStatus(ADC2, ADC_FLAG_EOC));
+ 233:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** //				ADC_StartInjectedConversion(ADC2);
+ 234:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** //
+ 235:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** //				accXYZ.accValueX = ADC_GetInjectedConversionValue(ADC2,ADC_InjectedSequence_2)-1700;
+ 236:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** //				accXYZ.accValueZ = ADC_GetInjectedConversionValue(ADC2,ADC_InjectedSequence_1)-1700;
+ 237:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** //				accXYZ.accValueY = ADC_GetInjectedConversionValue(ADC2,ADC_InjectedSequence_3)-1700;
+ 238:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 239:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				floatFilterAcc(&xAccFiltered_float, accXYZ.accValueX);
+ 240:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				floatFilterAcc(&yAccFiltered_float, accXYZ.accValueY);
+ 241:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				floatFilterAcc(&zAccFiltered_float, accXYZ.accValueZ);
+ 242:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 243:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				if((xAccFiltered_float.currentValue < accXYZ.accGValue) && (xAccFiltered_float.currentValue > -
+ 244:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				   (yAccFiltered_float.currentValue < accXYZ.accGValue) && (yAccFiltered_float.currentValue > -
+ 245:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				   (zAccFiltered_float.currentValue < accXYZ.accGValue) && (zAccFiltered_float.currentValue > -
+ 246:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				{
+ 247:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					/*Direction setup is the same as above*/
+ 248:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensX]] = GlobalSettings.accDir.sensDirection
+ 249:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensY]] = GlobalSettings.accDir.sensDirection
+ 250:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensZ]] = GlobalSettings.accDir.sensDirection
+ 251:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 252:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					xTemp = (int)IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensX]];
+ 253:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					yTemp = (int)IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensY]];
+ 254:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					zTemp = (int)IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensZ]];
+ 255:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				}
+ 256:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				else
+ 257:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				{
+ 258:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.kp_vector_ACC[0] = 0;
+ 259:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.kp_vector_ACC[1] = 0;
+ 260:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.kp_vector_ACC[2] = 0;
+ 261:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 262:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					xTemp = 0;
+ 263:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					yTemp = 0;
+ 264:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					zTemp = 0;
+ 265:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				}
+ 266:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 267:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				if(GlobalSettings.enableDriftCorrection)
+ 268:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				{
+ 269:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU_drift_correction_ACC(&IMU);
+ 270:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				}
+ 271:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				accCount = 0;
+ 272:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			}
+ 273:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			accCount++;
+ 274:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		}
+ 275:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 276:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		/*Here the ACC-Compensation, we do this in every tenth round*/
+ 277:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(GlobalSettings.enableMAG)
+ 278:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		{
+ 279:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			if(magCount >= 45)
+ 280:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			{
+ 281:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				Mag_readValues(&magXYZ);
+ 282:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				update_intFilter(&xMagFiltered, GlobalSettings.magLowpassValue, (magXYZ.magValueX));
+ 283:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				update_intFilter(&yMagFiltered, GlobalSettings.magLowpassValue, (magXYZ.magValueY));
+ 284:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 285:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				/*Direction setup is the same as above*/
+ 286:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				IMU.mag_vector[GlobalSettings.magDir.sensOrder[sensX]] = GlobalSettings.magDir.sensDirection[se
+ 287:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				IMU.mag_vector[GlobalSettings.magDir.sensOrder[sensY]] = GlobalSettings.magDir.sensDirection[se
+ 288:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				//IMU.mag_vector[GlobalSettings.magDir.sensOrder[sensZ]] = GlobalSettings.magDir.sensDirection[
+ 289:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				IMU.mag_vector[GlobalSettings.magDir.sensOrder[sensZ]] = 0;
+ 290:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 291:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				if(GlobalSettings.enableDriftCorrection)
+ 292:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				{
+ 293:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU_drift_correction_MAG(&IMU);
+ 294:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				}
+ 295:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				magCount = 0;
+ 296:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				//printf("%d,%d\n\r", (int)xMagFiltered.filtered, (int)yMagFiltered.filtered);
+ 297:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			}
+ 298:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			magCount++;
+ 299:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		}
+ 300:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 301:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		/*This functions here calculate the DCM Algorithm*/
+ 302:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU_update(&IMU);
+ 303:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU_ortho_adjust(&IMU);
+ 304:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU_normalize(&IMU);
+ 305:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		//Euler_angles(&DCM);
+ 306:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		//IMU_DCM_to_Euler_deg(&IMU, &euler);
+ 307:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU_DCM_to_XYZ(&IMU, &XYZ);
+ 308:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 309:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		vTaskDelayUntil( &xNextWakeTime, DT );
+ 310:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	}
+ 311:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** }
+ 312:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 313:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 314:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** /*PID Calculation - this is far from being finished
+ 315:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c ****  *
+ 316:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c ****  * */
+ 317:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** static void PID_Calculation( void *pvParameters )
+ 318:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+ 319:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	const portTickType xDelay = 3 / portTICK_RATE_MS;
+ 320:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 321:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	float MOT1 = 0;
+ 322:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	float MOT3 = 0;
+ 323:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	float MOT2 = 0;
+ 324:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	float MOT4 = 0;
+ 325:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 326:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	PID_Control PID_X1;
+ 327:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	PID_Control PID_X2;
+ 328:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 329:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	PID_Control PID_Y1;
+ 330:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	PID_Control PID_Y2;
+ 331:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 332:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	PID_Control PID_Z;
+ 333:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 334:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	init_PID(0.003f, GlobalSettings.PID_rollPitch.PID_kp, GlobalSettings.PID_rollPitch.PID_ki, GlobalS
+ 335:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	init_PID(0.003f, GlobalSettings.PID_rollPitch.PID_kp, GlobalSettings.PID_rollPitch.PID_ki, GlobalS
+ 336:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	init_PID(0.003f, GlobalSettings.PID_rollPitch.PID_kp, GlobalSettings.PID_rollPitch.PID_ki, GlobalS
+ 337:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	init_PID(0.003f, GlobalSettings.PID_rollPitch.PID_kp, GlobalSettings.PID_rollPitch.PID_ki, GlobalS
+ 338:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	init_PID(0.003f, GlobalSettings.PID_yaw.PID_kp, GlobalSettings.PID_yaw.PID_ki, GlobalSettings.PID_
+ 339:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 340:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	while(1)
+ 341:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	{
+ 342:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(COPTER_STATUS == (READY_FLAG | MOTORSTART_FLAG))
+ 343:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		{
+ 344:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			#ifdef ESC_CALIBRATE
+ 345:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			MOT1 = GlobalSettings.stopSpeed + CtrlStates.gas;
+ 346:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			MOT2 = GlobalSettings.stopSpeed + CtrlStates.gas;
+ 347:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			MOT3 = GlobalSettings.stopSpeed + CtrlStates.gas;
+ 348:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			MOT4 = GlobalSettings.stopSpeed + CtrlStates.gas;
+ 349:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			PWM_Motor(0, (uint16_t)MOT1);
+ 350:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			PWM_Motor(1, (uint16_t)MOT2);
+ 351:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			PWM_Motor(2, (uint16_t)MOT3);
+ 352:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			PWM_Motor(3, (uint16_t)MOT4);
+ 353:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			#else
+ 354:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			calc_PID_YAW(XYZ.z, CtrlStates.yaw, &PID_Z);
+ 355:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 356:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			//PID-Regler
+ 357:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			calc_PID(XYZ.y, -CtrlStates.roll, &PID_X1);
+ 358:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			calc_PID(XYZ.x, CtrlStates.nick, &PID_X2);
+ 359:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 360:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			//Mischen der Werte:
+ 361:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			#ifdef plus_config
+ 362:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			MOT2 = GlobalSettings.minSpeed + CtrlStates.gas + PID_X1.y - PID_Z.y;
+ 363:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			MOT4 = GlobalSettings.minSpeed + CtrlStates.gas - PID_X1.y - PID_Z.y;
+ 364:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 365:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			MOT1 = GlobalSettings.minSpeed + CtrlStates.gas + PID_X2.y + PID_Z.y;
+ 366:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			MOT3 = GlobalSettings.minSpeed + CtrlStates.gas - PID_X2.y + PID_Z.y;
+ 367:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			#else
+ 368:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			MOT1 = GlobalSettings.minSpeed + CtrlStates.gas + PID_X2.y - PID_X1.y - PID_Z.y;
+ 369:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			MOT3 = GlobalSettings.minSpeed + CtrlStates.gas - PID_X2.y + PID_X1.y - PID_Z.y;
+ 370:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 371:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			calc_PID(XYZ.y, CtrlStates.roll, &PID_Y1);
+ 372:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			calc_PID(XYZ.x, -CtrlStates.nick, &PID_Y2);
+ 373:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			MOT2 = GlobalSettings.minSpeed + CtrlStates.gas + PID_Y1.y + PID_Y2.y + PID_Z.y;
+ 374:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			MOT4 = GlobalSettings.minSpeed + CtrlStates.gas - PID_Y1.y - PID_Y2.y + PID_Z.y;
+ 375:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			#endif
+ 376:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 377:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			if(MOT2 < GlobalSettings.minSpeed) MOT2 = GlobalSettings.minSpeed;
+ 378:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			if(MOT2 > GlobalSettings.maxSpeed) MOT2 = GlobalSettings.maxSpeed;
+ 379:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 380:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			if(MOT4 < GlobalSettings.minSpeed) MOT4 = GlobalSettings.minSpeed;
+ 381:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			if(MOT4 > GlobalSettings.maxSpeed) MOT4 = GlobalSettings.maxSpeed;
+ 382:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 383:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			if(MOT1 < GlobalSettings.minSpeed) MOT1 = GlobalSettings.minSpeed;
+ 384:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			if(MOT1 > GlobalSettings.maxSpeed) MOT1 = GlobalSettings.maxSpeed;
+ 385:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 386:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			if(MOT3 < GlobalSettings.minSpeed) MOT3 = GlobalSettings.minSpeed;
+ 387:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			if(MOT3 > GlobalSettings.maxSpeed) MOT3 = GlobalSettings.maxSpeed;
+ 388:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 389:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			taskENTER_CRITICAL();
+ 390:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #ifdef enableX_AXIS
+ 391:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			PWM_Motor(3, (uint16_t)MOT3);
+ 392:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			PWM_Motor(0, (uint16_t)MOT1);
+ 393:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #endif /*enableX_AXIS*/
+ 394:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #ifdef enableY_AXIS
+ 395:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			PWM_Motor(2, (uint16_t)MOT4);
+ 396:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			PWM_Motor(1, (uint16_t)MOT2);
+ 397:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #endif /*enableY_AXIS*/
+ 398:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			taskEXIT_CRITICAL();
+ 399:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 400:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			//printf("%d,%d,%d,%d\n\r", (uint16_t)MOT1, (uint16_t)MOT2, (uint16_t)MOT3, (uint16_t)MOT4);
+ 401:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			#endif
+ 402:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		}
+ 403:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		else
+ 404:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		{
+ 405:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			resetIntegralValues_PID(&PID_X1);
+ 406:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			resetIntegralValues_PID(&PID_X2);
+ 407:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			resetIntegralValues_PID(&PID_Y1);
+ 408:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			resetIntegralValues_PID(&PID_Y2);
+ 409:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			resetIntegralValues_PID(&PID_Z);
+ 410:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 411:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			PWM_Motor(1, (uint16_t)GlobalSettings.stopSpeed);
+ 412:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			PWM_Motor(3, (uint16_t)GlobalSettings.stopSpeed);
+ 413:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			PWM_Motor(0, (uint16_t)GlobalSettings.stopSpeed);
+ 414:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			PWM_Motor(2, (uint16_t)GlobalSettings.stopSpeed);
+ 415:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		}
+ 416:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		//printf("%d %d\n\r", (int16_t)MOT1, (int16_t)MOT3);
+ 417:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 418:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		vTaskDelay( xDelay );
+ 419:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	}
+ 420:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** }
+ 421:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 422:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 423:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** /*For debug purposes - the print task*/
+ 424:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** static void IMU_Print_Values( void *pvParameters )
+ 425:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+  27              		.loc 1 425 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              	.LVL0:
+  32 0000 13B5     		push	{r0, r1, r4, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 16
+  35              		.cfi_offset 0, -16
+  36              		.cfi_offset 1, -12
+  37              		.cfi_offset 4, -8
+  38              		.cfi_offset 14, -4
+ 426:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	const portTickType xDelay = 40 / portTICK_RATE_MS;
+ 427:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 428:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	while(1)
+ 429:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	{
+ 430:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		printf("%d,%d,%d, %d\n",CtrlStates.gas, CtrlStates.nick, CtrlStates.roll, CtrlStates.yaw);
+  39              		.loc 1 430 0
+  40 0002 084C     		ldr	r4, .L4
+  41              	.LVL1:
+  42              	.L2:
+  43              		.loc 1 430 0 is_stmt 0 discriminator 1
+  44 0004 B4F90600 		ldrsh	r0, [r4, #6]
+  45 0008 B4F90010 		ldrsh	r1, [r4]
+  46 000c 0090     		str	r0, [sp]
+  47 000e B4F90420 		ldrsh	r2, [r4, #4]
+  48 0012 B4F90230 		ldrsh	r3, [r4, #2]
+  49 0016 0448     		ldr	r0, .L4+4
+  50 0018 FFF7FEFF 		bl	printf
+  51              	.LVL2:
+ 431:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		//printf("%d,%d,%d\n",(int)XYZ.y, (int)XYZ.x, (int)XYZ.z);
+ 432:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		//printf("%d,%d,%d\n", (int)(xTemp), (int)(yTemp), (int)(zTemp));
+ 433:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		vTaskDelay( xDelay );
+  52              		.loc 1 433 0 is_stmt 1 discriminator 1
+  53 001c 2820     		movs	r0, #40
+  54 001e FFF7FEFF 		bl	vTaskDelay
+  55              	.LVL3:
+  56 0022 EFE7     		b	.L2
+  57              	.L5:
+  58              		.align	2
+  59              	.L4:
+  60 0024 00000000 		.word	CtrlStates
+  61 0028 00000000 		.word	.LC0
+  62              		.cfi_endproc
+  63              	.LFE114:
+  65              		.align	1
+  66              		.thumb
+  67              		.thumb_func
+  69              	PID_Calculation:
+  70              	.LFB113:
+ 318:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+  71              		.loc 1 318 0
+  72              		.cfi_startproc
+  73              		@ args = 0, pretend = 0, frame = 160
+  74              		@ frame_needed = 0, uses_anonymous_args = 0
+  75              	.LVL4:
+  76 002c F0B5     		push	{r4, r5, r6, r7, lr}
+  77              	.LCFI1:
+  78              		.cfi_def_cfa_offset 20
+  79              		.cfi_offset 4, -20
+  80              		.cfi_offset 5, -16
+  81              		.cfi_offset 6, -12
+  82              		.cfi_offset 7, -8
+  83              		.cfi_offset 14, -4
+ 334:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	init_PID(0.003f, GlobalSettings.PID_rollPitch.PID_kp, GlobalSettings.PID_rollPitch.PID_ki, GlobalS
+  84              		.loc 1 334 0
+  85 002e 504C     		ldr	r4, .L10
+ 342:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(COPTER_STATUS == (READY_FLAG | MOTORSTART_FLAG))
+  86              		.loc 1 342 0
+  87 0030 504F     		ldr	r7, .L10+4
+ 354:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			calc_PID_YAW(XYZ.z, CtrlStates.yaw, &PID_Z);
+  88              		.loc 1 354 0
+  89 0032 514D     		ldr	r5, .L10+8
+  90 0034 514E     		ldr	r6, .L10+12
+ 318:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+  91              		.loc 1 318 0
+  92 0036 A9B0     		sub	sp, sp, #164
+  93              	.LCFI2:
+  94              		.cfi_def_cfa_offset 184
+ 334:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	init_PID(0.003f, GlobalSettings.PID_rollPitch.PID_kp, GlobalSettings.PID_rollPitch.PID_ki, GlobalS
+  95              		.loc 1 334 0
+  96 0038 9FED510A 		flds	s0, .L10+16
+  97 003c D4ED0A0A 		flds	s1, [r4, #40]
+  98 0040 94ED0B1A 		flds	s2, [r4, #44]
+  99 0044 D4ED0C1A 		flds	s3, [r4, #48]
+ 100 0048 6846     		mov	r0, sp
+ 101              	.LVL5:
+ 102 004a FFF7FEFF 		bl	init_PID
+ 103              	.LVL6:
+ 335:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	init_PID(0.003f, GlobalSettings.PID_rollPitch.PID_kp, GlobalSettings.PID_rollPitch.PID_ki, GlobalS
+ 104              		.loc 1 335 0
+ 105 004e 9FED4C0A 		flds	s0, .L10+16
+ 106 0052 D4ED0A0A 		flds	s1, [r4, #40]
+ 107 0056 94ED0B1A 		flds	s2, [r4, #44]
+ 108 005a D4ED0C1A 		flds	s3, [r4, #48]
+ 109 005e 08A8     		add	r0, sp, #32
+ 110 0060 FFF7FEFF 		bl	init_PID
+ 111              	.LVL7:
+ 336:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	init_PID(0.003f, GlobalSettings.PID_rollPitch.PID_kp, GlobalSettings.PID_rollPitch.PID_ki, GlobalS
+ 112              		.loc 1 336 0
+ 113 0064 9FED460A 		flds	s0, .L10+16
+ 114 0068 D4ED0A0A 		flds	s1, [r4, #40]
+ 115 006c 94ED0B1A 		flds	s2, [r4, #44]
+ 116 0070 D4ED0C1A 		flds	s3, [r4, #48]
+ 117 0074 10A8     		add	r0, sp, #64
+ 118 0076 FFF7FEFF 		bl	init_PID
+ 119              	.LVL8:
+ 337:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	init_PID(0.003f, GlobalSettings.PID_rollPitch.PID_kp, GlobalSettings.PID_rollPitch.PID_ki, GlobalS
+ 120              		.loc 1 337 0
+ 121 007a 9FED410A 		flds	s0, .L10+16
+ 122 007e D4ED0A0A 		flds	s1, [r4, #40]
+ 123 0082 94ED0B1A 		flds	s2, [r4, #44]
+ 124 0086 D4ED0C1A 		flds	s3, [r4, #48]
+ 125 008a 18A8     		add	r0, sp, #96
+ 126 008c FFF7FEFF 		bl	init_PID
+ 127              	.LVL9:
+ 338:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	init_PID(0.003f, GlobalSettings.PID_yaw.PID_kp, GlobalSettings.PID_yaw.PID_ki, GlobalSettings.PID_
+ 128              		.loc 1 338 0
+ 129 0090 9FED3B0A 		flds	s0, .L10+16
+ 130 0094 D4ED0D0A 		flds	s1, [r4, #52]
+ 131 0098 94ED0E1A 		flds	s2, [r4, #56]
+ 132 009c D4ED0F1A 		flds	s3, [r4, #60]
+ 133 00a0 20A8     		add	r0, sp, #128
+ 134 00a2 FFF7FEFF 		bl	init_PID
+ 135              	.LVL10:
+ 136              	.L9:
+ 342:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(COPTER_STATUS == (READY_FLAG | MOTORSTART_FLAG))
+ 137              		.loc 1 342 0
+ 138 00a6 3B78     		ldrb	r3, [r7]	@ zero_extendqisi2
+ 139 00a8 032B     		cmp	r3, #3
+ 140 00aa 3DD1     		bne	.L7
+ 354:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			calc_PID_YAW(XYZ.z, CtrlStates.yaw, &PID_Z);
+ 141              		.loc 1 354 0
+ 142 00ac B6F90630 		ldrsh	r3, [r6, #6]
+ 143 00b0 00EE903A 		fmsr	s1, r3	@ int
+ 144 00b4 95ED020A 		flds	s0, [r5, #8]
+ 145 00b8 20A8     		add	r0, sp, #128
+ 146 00ba F8EEE00A 		fsitos	s1, s1
+ 147 00be FFF7FEFF 		bl	calc_PID_YAW
+ 148              	.LVL11:
+ 357:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			calc_PID(XYZ.y, -CtrlStates.roll, &PID_X1);
+ 149              		.loc 1 357 0
+ 150 00c2 B6F90230 		ldrsh	r3, [r6, #2]
+ 151 00c6 5B42     		negs	r3, r3
+ 152 00c8 00EE903A 		fmsr	s1, r3	@ int
+ 153 00cc 95ED010A 		flds	s0, [r5, #4]
+ 154 00d0 6846     		mov	r0, sp
+ 155 00d2 F8EEE00A 		fsitos	s1, s1
+ 156 00d6 FFF7FEFF 		bl	calc_PID
+ 157              	.LVL12:
+ 358:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			calc_PID(XYZ.x, CtrlStates.nick, &PID_X2);
+ 158              		.loc 1 358 0
+ 159 00da B6F90430 		ldrsh	r3, [r6, #4]
+ 160 00de 00EE903A 		fmsr	s1, r3	@ int
+ 161 00e2 95ED000A 		flds	s0, [r5]
+ 162 00e6 08A8     		add	r0, sp, #32
+ 163 00e8 F8EEE00A 		fsitos	s1, s1
+ 164 00ec FFF7FEFF 		bl	calc_PID
+ 165              	.LVL13:
+ 371:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			calc_PID(XYZ.y, CtrlStates.roll, &PID_Y1);
+ 166              		.loc 1 371 0
+ 167 00f0 B6F90230 		ldrsh	r3, [r6, #2]
+ 168 00f4 00EE903A 		fmsr	s1, r3	@ int
+ 169 00f8 95ED010A 		flds	s0, [r5, #4]
+ 170 00fc 10A8     		add	r0, sp, #64
+ 171 00fe F8EEE00A 		fsitos	s1, s1
+ 172 0102 FFF7FEFF 		bl	calc_PID
+ 173              	.LVL14:
+ 372:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			calc_PID(XYZ.x, -CtrlStates.nick, &PID_Y2);
+ 174              		.loc 1 372 0
+ 175 0106 B6F90430 		ldrsh	r3, [r6, #4]
+ 176 010a 5B42     		negs	r3, r3
+ 177 010c 00EE903A 		fmsr	s1, r3	@ int
+ 178 0110 95ED000A 		flds	s0, [r5]
+ 179 0114 F8EEE00A 		fsitos	s1, s1
+ 180 0118 18A8     		add	r0, sp, #96
+ 181 011a FFF7FEFF 		bl	calc_PID
+ 182              	.LVL15:
+ 389:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			taskENTER_CRITICAL();
+ 183              		.loc 1 389 0
+ 184 011e FFF7FEFF 		bl	vPortEnterCritical
+ 185              	.LVL16:
+ 398:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			taskEXIT_CRITICAL();
+ 186              		.loc 1 398 0
+ 187 0122 FFF7FEFF 		bl	vPortExitCritical
+ 188              	.LVL17:
+ 189 0126 1EE0     		b	.L8
+ 190              	.L7:
+ 405:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			resetIntegralValues_PID(&PID_X1);
+ 191              		.loc 1 405 0
+ 192 0128 6846     		mov	r0, sp
+ 193 012a FFF7FEFF 		bl	resetIntegralValues_PID
+ 194              	.LVL18:
+ 406:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			resetIntegralValues_PID(&PID_X2);
+ 195              		.loc 1 406 0
+ 196 012e 08A8     		add	r0, sp, #32
+ 197 0130 FFF7FEFF 		bl	resetIntegralValues_PID
+ 198              	.LVL19:
+ 407:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			resetIntegralValues_PID(&PID_Y1);
+ 199              		.loc 1 407 0
+ 200 0134 10A8     		add	r0, sp, #64
+ 201 0136 FFF7FEFF 		bl	resetIntegralValues_PID
+ 202              	.LVL20:
+ 408:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			resetIntegralValues_PID(&PID_Y2);
+ 203              		.loc 1 408 0
+ 204 013a 18A8     		add	r0, sp, #96
+ 205 013c FFF7FEFF 		bl	resetIntegralValues_PID
+ 206              	.LVL21:
+ 409:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			resetIntegralValues_PID(&PID_Z);
+ 207              		.loc 1 409 0
+ 208 0140 20A8     		add	r0, sp, #128
+ 209 0142 FFF7FEFF 		bl	resetIntegralValues_PID
+ 210              	.LVL22:
+ 411:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			PWM_Motor(1, (uint16_t)GlobalSettings.stopSpeed);
+ 211              		.loc 1 411 0
+ 212 0146 0120     		movs	r0, #1
+ 213 0148 618C     		ldrh	r1, [r4, #34]
+ 214 014a FFF7FEFF 		bl	PWM_Motor
+ 215              	.LVL23:
+ 412:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			PWM_Motor(3, (uint16_t)GlobalSettings.stopSpeed);
+ 216              		.loc 1 412 0
+ 217 014e 0320     		movs	r0, #3
+ 218 0150 618C     		ldrh	r1, [r4, #34]
+ 219 0152 FFF7FEFF 		bl	PWM_Motor
+ 220              	.LVL24:
+ 413:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			PWM_Motor(0, (uint16_t)GlobalSettings.stopSpeed);
+ 221              		.loc 1 413 0
+ 222 0156 0020     		movs	r0, #0
+ 223 0158 618C     		ldrh	r1, [r4, #34]
+ 224 015a FFF7FEFF 		bl	PWM_Motor
+ 225              	.LVL25:
+ 414:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			PWM_Motor(2, (uint16_t)GlobalSettings.stopSpeed);
+ 226              		.loc 1 414 0
+ 227 015e 0220     		movs	r0, #2
+ 228 0160 618C     		ldrh	r1, [r4, #34]
+ 229 0162 FFF7FEFF 		bl	PWM_Motor
+ 230              	.LVL26:
+ 231              	.L8:
+ 418:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		vTaskDelay( xDelay );
+ 232              		.loc 1 418 0
+ 233 0166 0320     		movs	r0, #3
+ 234 0168 FFF7FEFF 		bl	vTaskDelay
+ 235              	.LVL27:
+ 419:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	}
+ 236              		.loc 1 419 0
+ 237 016c 9BE7     		b	.L9
+ 238              	.L11:
+ 239 016e 00BF     		.align	2
+ 240              	.L10:
+ 241 0170 00000000 		.word	GlobalSettings
+ 242 0174 00000000 		.word	.LANCHOR0
+ 243 0178 00000000 		.word	XYZ
+ 244 017c 00000000 		.word	CtrlStates
+ 245 0180 A69B443B 		.word	994352038
+ 246              		.cfi_endproc
+ 247              	.LFE113:
+ 249              		.align	1
+ 250              		.thumb
+ 251              		.thumb_func
+ 253              	IMU_Calculation:
+ 254              	.LFB112:
+ 103:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+ 255              		.loc 1 103 0
+ 256              		.cfi_startproc
+ 257              		@ args = 0, pretend = 0, frame = 440
+ 258              		@ frame_needed = 0, uses_anonymous_args = 0
+ 259              	.LVL28:
+ 260 0184 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 261              	.LCFI3:
+ 262              		.cfi_def_cfa_offset 24
+ 263              		.cfi_offset 4, -24
+ 264              		.cfi_offset 5, -20
+ 265              		.cfi_offset 6, -16
+ 266              		.cfi_offset 7, -12
+ 267              		.cfi_offset 8, -8
+ 268              		.cfi_offset 14, -4
+ 269 0188 2DED068B 		fstmfdd	sp!, {d8, d9, d10}
+ 270              	.LCFI4:
+ 271              		.cfi_def_cfa_offset 48
+ 272              		.cfi_offset 80, -48
+ 273              		.cfi_offset 82, -40
+ 274              		.cfi_offset 84, -32
+ 111:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	struct gyroValues gyroOffset = {0,0,0};
+ 275              		.loc 1 111 0
+ 276 018c 0024     		movs	r4, #0
+ 103:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+ 277              		.loc 1 103 0
+ 278 018e EEB0     		sub	sp, sp, #440
+ 279              	.LCFI5:
+ 280              		.cfi_def_cfa_offset 488
+ 117:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	memset(&xGyroFiltered_float, 0, sizeof(xGyroFiltered_float));
+ 281              		.loc 1 117 0
+ 282 0190 2146     		mov	r1, r4
+ 283 0192 2C22     		movs	r2, #44
+ 284 0194 0EA8     		add	r0, sp, #56
+ 285              	.LVL29:
+ 111:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	struct gyroValues gyroOffset = {0,0,0};
+ 286              		.loc 1 111 0
+ 287 0196 ADF80440 		strh	r4, [sp, #4]	@ movhi
+ 288 019a ADF80640 		strh	r4, [sp, #6]	@ movhi
+ 289 019e ADF80840 		strh	r4, [sp, #8]	@ movhi
+ 112:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	struct gyroValues gyroXYZ = {0,0,0};
+ 290              		.loc 1 112 0
+ 291 01a2 ADF80C40 		strh	r4, [sp, #12]	@ movhi
+ 292 01a6 ADF80E40 		strh	r4, [sp, #14]	@ movhi
+ 293 01aa ADF81040 		strh	r4, [sp, #16]	@ movhi
+ 117:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	memset(&xGyroFiltered_float, 0, sizeof(xGyroFiltered_float));
+ 294              		.loc 1 117 0
+ 295 01ae FFF7FEFF 		bl	memset
+ 296              	.LVL30:
+ 118:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	memset(&yGyroFiltered_float, 0, sizeof(yGyroFiltered_float));
+ 297              		.loc 1 118 0
+ 298 01b2 2146     		mov	r1, r4
+ 299 01b4 2C22     		movs	r2, #44
+ 300 01b6 19A8     		add	r0, sp, #100
+ 301 01b8 FFF7FEFF 		bl	memset
+ 302              	.LVL31:
+ 119:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	memset(&zGyroFiltered_float, 0, sizeof(zGyroFiltered_float));
+ 303              		.loc 1 119 0
+ 304 01bc 2146     		mov	r1, r4
+ 305 01be 2C22     		movs	r2, #44
+ 306 01c0 24A8     		add	r0, sp, #144
+ 307 01c2 FFF7FEFF 		bl	memset
+ 308              	.LVL32:
+ 122:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	struct accValues accXYZ = {0,0,0};
+ 309              		.loc 1 122 0
+ 310 01c6 2146     		mov	r1, r4
+ 311 01c8 0C22     		movs	r2, #12
+ 312 01ca 0BA8     		add	r0, sp, #44
+ 313 01cc FFF7FEFF 		bl	memset
+ 314              	.LVL33:
+ 128:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	memset(&xAccFiltered_float, 0, sizeof(xAccFiltered_float));
+ 315              		.loc 1 128 0
+ 316 01d0 2146     		mov	r1, r4
+ 317 01d2 2C22     		movs	r2, #44
+ 318 01d4 2FA8     		add	r0, sp, #188
+ 319 01d6 FFF7FEFF 		bl	memset
+ 320              	.LVL34:
+ 129:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	memset(&yAccFiltered_float, 0, sizeof(yAccFiltered_float));
+ 321              		.loc 1 129 0
+ 322 01da 2146     		mov	r1, r4
+ 323 01dc 2C22     		movs	r2, #44
+ 324 01de 3AA8     		add	r0, sp, #232
+ 325 01e0 FFF7FEFF 		bl	memset
+ 326              	.LVL35:
+ 130:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	memset(&zAccFiltered_float, 0, sizeof(zAccFiltered_float));
+ 327              		.loc 1 130 0
+ 328 01e4 2146     		mov	r1, r4
+ 329 01e6 2C22     		movs	r2, #44
+ 330 01e8 45A8     		add	r0, sp, #276
+ 331 01ea FFF7FEFF 		bl	memset
+ 332              	.LVL36:
+ 134:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	struct magValues magXYZ = {0,0,0};
+ 333              		.loc 1 134 0
+ 334 01ee ADF81440 		strh	r4, [sp, #20]	@ movhi
+ 335 01f2 ADF81640 		strh	r4, [sp, #22]	@ movhi
+ 336 01f6 ADF81840 		strh	r4, [sp, #24]	@ movhi
+ 135:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	intFilter xMagFiltered = {0,0};
+ 337              		.loc 1 135 0
+ 338 01fa 0794     		str	r4, [sp, #28]
+ 339 01fc 0894     		str	r4, [sp, #32]
+ 136:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	intFilter yMagFiltered = {0,0};
+ 340              		.loc 1 136 0
+ 341 01fe 0994     		str	r4, [sp, #36]
+ 342 0200 0A94     		str	r4, [sp, #40]
+ 140:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(GlobalSettings.enableDriftCorrection)
+ 343              		.loc 1 140 0
+ 344 0202 5D4C     		ldr	r4, .L69
+ 139:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	IMU_init(&IMU, DT_S);
+ 345              		.loc 1 139 0
+ 346 0204 50A8     		add	r0, sp, #320
+ 347 0206 9FED5D0A 		flds	s0, .L69+4
+ 348 020a FFF7FEFF 		bl	IMU_init
+ 349              	.LVL37:
+ 140:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(GlobalSettings.enableDriftCorrection)
+ 350              		.loc 1 140 0
+ 351 020e A37A     		ldrb	r3, [r4, #10]	@ zero_extendqisi2
+ 352 0210 23B1     		cbz	r3, .L13
+ 142:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU_init_drift_correction(&IMU, 0.00025f/*kp-value*/);
+ 353              		.loc 1 142 0
+ 354 0212 50A8     		add	r0, sp, #320
+ 355 0214 9FED5A0A 		flds	s0, .L69+8
+ 356 0218 FFF7FEFF 		bl	IMU_init_drift_correction
+ 357              	.LVL38:
+ 358              	.L13:
+ 163:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] += ((float)gyroXYZ.gyroValueX*GYROC
+ 359              		.loc 1 163 0
+ 360 021c 9FED59AA 		flds	s20, .L69+12
+ 361 0220 DFED568A 		flds	s17, .L69+4
+ 169:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if((IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] > -MAX_GYRO_ERROR) && (IMU.veloc
+ 362              		.loc 1 169 0
+ 363 0224 BFEE009A 		fconsts	s18, #240
+ 364 0228 0027     		movs	r7, #0
+ 365 022a F7EE009A 		fconsts	s19, #112
+ 366              	.LVL39:
+ 367              	.L25:
+ 155:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		Gyro_calibrate(&gyroOffset);
+ 368              		.loc 1 155 0
+ 369 022e 01A8     		add	r0, sp, #4
+ 370 0230 FFF7FEFF 		bl	Gyro_calibrate
+ 371              	.LVL40:
+ 372 0234 41F65835 		movw	r5, #7000
+ 373              	.LVL41:
+ 374              	.L15:
+ 158:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			Gyro_readValues(&gyroXYZ);
+ 375              		.loc 1 158 0 discriminator 2
+ 376 0238 03A8     		add	r0, sp, #12
+ 377 023a FFF7FEFF 		bl	Gyro_readValues
+ 378              	.LVL42:
+ 159:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			gyroXYZ.gyroValueX = ((gyroXYZ.gyroValueX-gyroOffset.gyroValueX));
+ 379              		.loc 1 159 0 discriminator 2
+ 380 023e BDF80C20 		ldrh	r2, [sp, #12]
+ 381 0242 BDF80430 		ldrh	r3, [sp, #4]
+ 160:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			gyroXYZ.gyroValueY = ((gyroXYZ.gyroValueY-gyroOffset.gyroValueY));
+ 382              		.loc 1 160 0 discriminator 2
+ 383 0246 BDF80E10 		ldrh	r1, [sp, #14]
+ 163:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] += ((float)gyroXYZ.gyroValueX*GYROC
+ 384              		.loc 1 163 0 discriminator 2
+ 385 024a 4B4E     		ldr	r6, .L69
+ 159:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			gyroXYZ.gyroValueX = ((gyroXYZ.gyroValueX-gyroOffset.gyroValueX));
+ 386              		.loc 1 159 0 discriminator 2
+ 387 024c D21A     		subs	r2, r2, r3
+ 160:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			gyroXYZ.gyroValueY = ((gyroXYZ.gyroValueY-gyroOffset.gyroValueY));
+ 388              		.loc 1 160 0 discriminator 2
+ 389 024e BDF80630 		ldrh	r3, [sp, #6]
+ 390 0252 CB1A     		subs	r3, r1, r3
+ 391 0254 ADF80E30 		strh	r3, [sp, #14]	@ movhi
+ 161:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			gyroXYZ.gyroValueZ = ((gyroXYZ.gyroValueZ-gyroOffset.gyroValueZ));
+ 392              		.loc 1 161 0 discriminator 2
+ 393 0258 BDF81010 		ldrh	r1, [sp, #16]
+ 394 025c BDF80830 		ldrh	r3, [sp, #8]
+ 159:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			gyroXYZ.gyroValueX = ((gyroXYZ.gyroValueX-gyroOffset.gyroValueX));
+ 395              		.loc 1 159 0 discriminator 2
+ 396 0260 92B2     		uxth	r2, r2
+ 161:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			gyroXYZ.gyroValueZ = ((gyroXYZ.gyroValueZ-gyroOffset.gyroValueZ));
+ 397              		.loc 1 161 0 discriminator 2
+ 398 0262 CB1A     		subs	r3, r1, r3
+ 159:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			gyroXYZ.gyroValueX = ((gyroXYZ.gyroValueX-gyroOffset.gyroValueX));
+ 399              		.loc 1 159 0 discriminator 2
+ 400 0264 ADF80C20 		strh	r2, [sp, #12]	@ movhi
+ 163:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] += ((float)gyroXYZ.gyroValueX*GYROC
+ 401              		.loc 1 163 0 discriminator 2
+ 402 0268 12B2     		sxth	r2, r2
+ 161:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			gyroXYZ.gyroValueZ = ((gyroXYZ.gyroValueZ-gyroOffset.gyroValueZ));
+ 403              		.loc 1 161 0 discriminator 2
+ 404 026a ADF81030 		strh	r3, [sp, #16]	@ movhi
+ 163:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] += ((float)gyroXYZ.gyroValueX*GYROC
+ 405              		.loc 1 163 0 discriminator 2
+ 406 026e 07EE102A 		fmsr	s14, r2	@ int
+ 407 0272 2379     		ldrb	r3, [r4, #4]	@ zero_extendqisi2
+ 408 0274 6EA8     		add	r0, sp, #440
+ 409 0276 B8EEC77A 		fsitos	s14, s14
+ 410 027a 0A33     		adds	r3, r3, #10
+ 411 027c 00EB8303 		add	r3, r0, r3, lsl #2
+ 412 0280 53ED1E7A 		flds	s15, [r3, #-120]
+ 413 0284 27EE0A7A 		fmuls	s14, s14, s20
+ 414 0288 013D     		subs	r5, r5, #1
+ 415              	.LVL43:
+ 416 028a E7EE287A 		vfma.f32	s15, s14, s17
+ 417 028e ADB2     		uxth	r5, r5
+ 418              	.LVL44:
+ 419 0290 43ED1E7A 		fsts	s15, [r3, #-120]
+ 164:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensY]] += ((float)gyroXYZ.gyroValueX*GYROC
+ 420              		.loc 1 164 0 discriminator 2
+ 421 0294 6379     		ldrb	r3, [r4, #5]	@ zero_extendqisi2
+ 422 0296 0A33     		adds	r3, r3, #10
+ 423 0298 00EB8303 		add	r3, r0, r3, lsl #2
+ 424 029c 53ED1E7A 		flds	s15, [r3, #-120]
+ 425 02a0 E7EE287A 		vfma.f32	s15, s14, s17
+ 426 02a4 9FED378A 		flds	s16, .L69+12
+ 427 02a8 43ED1E7A 		fsts	s15, [r3, #-120]
+ 165:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensZ]] += ((float)gyroXYZ.gyroValueX*GYROC
+ 428              		.loc 1 165 0 discriminator 2
+ 429 02ac A379     		ldrb	r3, [r4, #6]	@ zero_extendqisi2
+ 430 02ae 0A33     		adds	r3, r3, #10
+ 431 02b0 00EB8303 		add	r3, r0, r3, lsl #2
+ 432 02b4 53ED1E7A 		flds	s15, [r3, #-120]
+ 433 02b8 E7EE287A 		vfma.f32	s15, s14, s17
+ 434 02bc 43ED1E7A 		fsts	s15, [r3, #-120]
+ 156:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		for (i = 0;i<7000;i++)
+ 435              		.loc 1 156 0 discriminator 2
+ 436 02c0 002D     		cmp	r5, #0
+ 437 02c2 B9D1     		bne	.L15
+ 167:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		vTaskDelayUntil( &xNextWakeTime, DT );
+ 438              		.loc 1 167 0
+ 439 02c4 6846     		mov	r0, sp
+ 440 02c6 0221     		movs	r1, #2
+ 441 02c8 FFF7FEFF 		bl	vTaskDelayUntil
+ 442              	.LVL45:
+ 169:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if((IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] > -MAX_GYRO_ERROR) && (IMU.veloc
+ 443              		.loc 1 169 0
+ 444 02cc 3379     		ldrb	r3, [r6, #4]	@ zero_extendqisi2
+ 445 02ce 6EAA     		add	r2, sp, #440
+ 446 02d0 0A33     		adds	r3, r3, #10
+ 447 02d2 02EB8300 		add	r0, r2, r3, lsl #2
+ 448 02d6 50ED1E7A 		flds	s15, [r0, #-120]
+ 449 02da F4EEC97A 		fcmpes	s15, s18
+ 450 02de F1EE10FA 		fmstat
+ 451 02e2 4FF00005 		mov	r5, #0
+ 452 02e6 34DD     		ble	.L16
+ 169:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if((IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] > -MAX_GYRO_ERROR) && (IMU.veloc
+ 453              		.loc 1 169 0 is_stmt 0 discriminator 1
+ 454 02e8 F4EEE97A 		fcmpes	s15, s19
+ 455 02ec F1EE10FA 		fmstat
+ 456 02f0 2FD5     		bpl	.L16
+ 170:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		   (IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensY]] > -MAX_GYRO_ERROR) && (IMU.veloc
+ 457              		.loc 1 170 0 is_stmt 1 discriminator 1
+ 458 02f2 7179     		ldrb	r1, [r6, #5]	@ zero_extendqisi2
+ 459 02f4 0A31     		adds	r1, r1, #10
+ 460 02f6 02EB8101 		add	r1, r2, r1, lsl #2
+ 461 02fa 51ED1E7A 		flds	s15, [r1, #-120]
+ 169:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if((IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] > -MAX_GYRO_ERROR) && (IMU.veloc
+ 462              		.loc 1 169 0 discriminator 1
+ 463 02fe F4EEC97A 		fcmpes	s15, s18
+ 464 0302 F1EE10FA 		fmstat
+ 465 0306 24DD     		ble	.L16
+ 170:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		   (IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensY]] > -MAX_GYRO_ERROR) && (IMU.veloc
+ 466              		.loc 1 170 0
+ 467 0308 F4EEE97A 		fcmpes	s15, s19
+ 468 030c F1EE10FA 		fmstat
+ 469 0310 1FD5     		bpl	.L16
+ 171:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		   (IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensZ]] > -MAX_GYRO_ERROR) && (IMU.veloc
+ 470              		.loc 1 171 0 discriminator 1
+ 471 0312 B279     		ldrb	r2, [r6, #6]	@ zero_extendqisi2
+ 472 0314 0DF5DC7E 		add	lr, sp, #440
+ 473 0318 0A32     		adds	r2, r2, #10
+ 474 031a 0EEB8202 		add	r2, lr, r2, lsl #2
+ 475 031e 52ED1E7A 		flds	s15, [r2, #-120]
+ 170:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		   (IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensY]] > -MAX_GYRO_ERROR) && (IMU.veloc
+ 476              		.loc 1 170 0 discriminator 1
+ 477 0322 F4EEC97A 		fcmpes	s15, s18
+ 478 0326 F1EE10FA 		fmstat
+ 479 032a 12DD     		ble	.L16
+ 171:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		   (IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensZ]] > -MAX_GYRO_ERROR) && (IMU.veloc
+ 480              		.loc 1 171 0
+ 481 032c F4EEE97A 		fcmpes	s15, s19
+ 482 0330 F1EE10FA 		fmstat
+ 483 0334 0DD5     		bpl	.L16
+ 184:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(GlobalSettings.enableACC)
+ 484              		.loc 1 184 0
+ 485 0336 F37A     		ldrb	r3, [r6, #11]	@ zero_extendqisi2
+ 173:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] = 0;
+ 486              		.loc 1 173 0
+ 487 0338 40F8785C 		str	r5, [r0, #-120]	@ float
+ 174:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensY]] = 0;
+ 488              		.loc 1 174 0
+ 489 033c 41F8785C 		str	r5, [r1, #-120]	@ float
+ 175:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensZ]] = 0;
+ 490              		.loc 1 175 0
+ 491 0340 42F8785C 		str	r5, [r2, #-120]	@ float
+ 184:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(GlobalSettings.enableACC)
+ 492              		.loc 1 184 0
+ 493 0344 13B3     		cbz	r3, .L24
+ 187:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		LSM303DLHC_ACC_calibrate(GlobalSettings.accMaxGOverflow, &accXYZ);
+ 494              		.loc 1 187 0
+ 495 0346 96ED050A 		flds	s0, [r6, #20]
+ 496 034a 0BA8     		add	r0, sp, #44
+ 497 034c FFF7FEFF 		bl	LSM303DLHC_ACC_calibrate
+ 498              	.LVL46:
+ 499 0350 1CE0     		b	.L24
+ 500              	.L16:
+ 178:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] = 0;
+ 501              		.loc 1 178 0
+ 502 0352 6EA8     		add	r0, sp, #440
+ 503 0354 00EB8303 		add	r3, r0, r3, lsl #2
+ 504 0358 43F8787C 		str	r7, [r3, #-120]	@ float
+ 179:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensY]] = 0;
+ 505              		.loc 1 179 0
+ 506 035c 6379     		ldrb	r3, [r4, #5]	@ zero_extendqisi2
+ 507 035e 00EB8303 		add	r3, r0, r3, lsl #2
+ 508 0362 43F8507C 		str	r7, [r3, #-80]	@ float
+ 180:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensZ]] = 0;
+ 509              		.loc 1 180 0
+ 510 0366 A379     		ldrb	r3, [r4, #6]	@ zero_extendqisi2
+ 511 0368 00EB8303 		add	r3, r0, r3, lsl #2
+ 181:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		printf("Error Gyro Test!\n\r");
+ 512              		.loc 1 181 0
+ 513 036c 0648     		ldr	r0, .L69+16
+ 180:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensZ]] = 0;
+ 514              		.loc 1 180 0
+ 515 036e 43F8507C 		str	r7, [r3, #-80]	@ float
+ 181:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		printf("Error Gyro Test!\n\r");
+ 516              		.loc 1 181 0
+ 517 0372 FFF7FEFF 		bl	printf
+ 518              	.LVL47:
+ 182:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	}
+ 519              		.loc 1 182 0
+ 520 0376 5AE7     		b	.L25
+ 521              	.L70:
+ 522              		.align	2
+ 523              	.L69:
+ 524 0378 00000000 		.word	GlobalSettings
+ 525 037c 6F12033B 		.word	990057071
+ 526 0380 6F128339 		.word	964891247
+ 527 0384 295C8F3D 		.word	1032805417
+ 528 0388 0E000000 		.word	.LC1
+ 529              	.L24:
+ 189:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(GlobalSettings.enableACC)
+ 530              		.loc 1 189 0
+ 531 038c E37A     		ldrb	r3, [r4, #11]	@ zero_extendqisi2
+ 532 038e 0BB1     		cbz	r3, .L26
+ 191:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		Mag_calibrate();
+ 533              		.loc 1 191 0
+ 534 0390 FFF7FEFF 		bl	Mag_calibrate
+ 535              	.LVL48:
+ 536              	.L26:
+ 195:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	COPTER_STATUS |= MOTORSTART_FLAG;
+ 537              		.loc 1 195 0
+ 538 0394 BA4B     		ldr	r3, .L71
+ 208:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(gyroXYZ.gyroValueX > -GlobalSettings.gyroSensTreshold && gyroXYZ.gyroValueX < GlobalSettings.g
+ 539              		.loc 1 208 0
+ 540 0396 BB4C     		ldr	r4, .L71+4
+ 195:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	COPTER_STATUS |= MOTORSTART_FLAG;
+ 541              		.loc 1 195 0
+ 542 0398 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 543 039a 42F00202 		orr	r2, r2, #2
+ 544 039e 1A70     		strb	r2, [r3]
+ 197:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	xNextWakeTime = xTaskGetTickCount();
+ 545              		.loc 1 197 0
+ 546 03a0 FFF7FEFF 		bl	xTaskGetTickCount
+ 547              	.LVL49:
+ 133:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	uint8_t magCount = 0;
+ 548              		.loc 1 133 0
+ 549 03a4 0026     		movs	r6, #0
+ 216:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] = GlobalSettings.gyroDir.sensDirecti
+ 550              		.loc 1 216 0
+ 551 03a6 DFEDB88A 		flds	s17, .L71+8
+ 197:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	xNextWakeTime = xTaskGetTickCount();
+ 552              		.loc 1 197 0
+ 553 03aa 0090     		str	r0, [sp]
+ 123:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	uint8_t accCount = 0;
+ 554              		.loc 1 123 0
+ 555 03ac 3746     		mov	r7, r6
+ 556 03ae A046     		mov	r8, r4
+ 557              	.LVL50:
+ 558              	.L42:
+ 201:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		GPIOE->ODR ^= GPIO_Pin_8;
+ 559              		.loc 1 201 0
+ 560 03b0 B64B     		ldr	r3, .L71+12
+ 561 03b2 9A8A     		ldrh	r2, [r3, #20]
+ 562 03b4 92B2     		uxth	r2, r2
+ 563 03b6 82F48072 		eor	r2, r2, #256
+ 564 03ba 9A82     		strh	r2, [r3, #20]	@ movhi
+ 202:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		Gyro_readValues(&gyroXYZ);
+ 565              		.loc 1 202 0
+ 566 03bc 03A8     		add	r0, sp, #12
+ 567 03be FFF7FEFF 		bl	Gyro_readValues
+ 568              	.LVL51:
+ 203:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		gyroXYZ.gyroValueX = ((gyroXYZ.gyroValueX-gyroOffset.gyroValueX));
+ 569              		.loc 1 203 0
+ 570 03c2 BDF80CE0 		ldrh	lr, [sp, #12]
+ 571 03c6 BDF80430 		ldrh	r3, [sp, #4]
+ 204:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		gyroXYZ.gyroValueY = ((gyroXYZ.gyroValueY-gyroOffset.gyroValueY));
+ 572              		.loc 1 204 0
+ 573 03ca BDF80E00 		ldrh	r0, [sp, #14]
+ 205:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		gyroXYZ.gyroValueZ = ((gyroXYZ.gyroValueZ-gyroOffset.gyroValueZ));
+ 574              		.loc 1 205 0
+ 575 03ce BDF81010 		ldrh	r1, [sp, #16]
+ 203:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		gyroXYZ.gyroValueX = ((gyroXYZ.gyroValueX-gyroOffset.gyroValueX));
+ 576              		.loc 1 203 0
+ 577 03d2 C3EB0E0E 		rsb	lr, r3, lr
+ 204:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		gyroXYZ.gyroValueY = ((gyroXYZ.gyroValueY-gyroOffset.gyroValueY));
+ 578              		.loc 1 204 0
+ 579 03d6 BDF80630 		ldrh	r3, [sp, #6]
+ 580 03da C01A     		subs	r0, r0, r3
+ 205:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		gyroXYZ.gyroValueZ = ((gyroXYZ.gyroValueZ-gyroOffset.gyroValueZ));
+ 581              		.loc 1 205 0
+ 582 03dc BDF80830 		ldrh	r3, [sp, #8]
+ 583 03e0 C91A     		subs	r1, r1, r3
+ 208:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(gyroXYZ.gyroValueX > -GlobalSettings.gyroSensTreshold && gyroXYZ.gyroValueX < GlobalSettings.g
+ 584              		.loc 1 208 0
+ 585 03e2 2388     		ldrh	r3, [r4]
+ 203:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		gyroXYZ.gyroValueX = ((gyroXYZ.gyroValueX-gyroOffset.gyroValueX));
+ 586              		.loc 1 203 0
+ 587 03e4 1FFA8EFE 		uxth	lr, lr
+ 588 03e8 ADF80CE0 		strh	lr, [sp, #12]	@ movhi
+ 208:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(gyroXYZ.gyroValueX > -GlobalSettings.gyroSensTreshold && gyroXYZ.gyroValueX < GlobalSettings.g
+ 589              		.loc 1 208 0
+ 590 03ec 5A42     		negs	r2, r3
+ 591 03ee 0FFA8EFE 		sxth	lr, lr
+ 204:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		gyroXYZ.gyroValueY = ((gyroXYZ.gyroValueY-gyroOffset.gyroValueY));
+ 592              		.loc 1 204 0
+ 593 03f2 80B2     		uxth	r0, r0
+ 205:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		gyroXYZ.gyroValueZ = ((gyroXYZ.gyroValueZ-gyroOffset.gyroValueZ));
+ 594              		.loc 1 205 0
+ 595 03f4 89B2     		uxth	r1, r1
+ 208:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(gyroXYZ.gyroValueX > -GlobalSettings.gyroSensTreshold && gyroXYZ.gyroValueX < GlobalSettings.g
+ 596              		.loc 1 208 0
+ 597 03f6 9645     		cmp	lr, r2
+ 204:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		gyroXYZ.gyroValueY = ((gyroXYZ.gyroValueY-gyroOffset.gyroValueY));
+ 598              		.loc 1 204 0
+ 599 03f8 ADF80E00 		strh	r0, [sp, #14]	@ movhi
+ 205:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		gyroXYZ.gyroValueZ = ((gyroXYZ.gyroValueZ-gyroOffset.gyroValueZ));
+ 600              		.loc 1 205 0
+ 601 03fc ADF81010 		strh	r1, [sp, #16]	@ movhi
+ 208:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(gyroXYZ.gyroValueX > -GlobalSettings.gyroSensTreshold && gyroXYZ.gyroValueX < GlobalSettings.g
+ 602              		.loc 1 208 0
+ 603 0400 05DD     		ble	.L27
+ 208:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(gyroXYZ.gyroValueX > -GlobalSettings.gyroSensTreshold && gyroXYZ.gyroValueX < GlobalSettings.g
+ 604              		.loc 1 208 0 is_stmt 0 discriminator 1
+ 605 0402 9E45     		cmp	lr, r3
+ 606 0404 BCBF     		itt	lt
+ 607 0406 4FF0000E 		movlt	lr, #0
+ 608 040a ADF80CE0 		strhlt	lr, [sp, #12]	@ movhi
+ 609              	.L27:
+ 209:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(gyroXYZ.gyroValueY > -GlobalSettings.gyroSensTreshold && gyroXYZ.gyroValueY < GlobalSettings.g
+ 610              		.loc 1 209 0 is_stmt 1
+ 611 040e 00B2     		sxth	r0, r0
+ 612 0410 9042     		cmp	r0, r2
+ 613 0412 04DD     		ble	.L28
+ 209:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(gyroXYZ.gyroValueY > -GlobalSettings.gyroSensTreshold && gyroXYZ.gyroValueY < GlobalSettings.g
+ 614              		.loc 1 209 0 is_stmt 0 discriminator 1
+ 615 0414 9842     		cmp	r0, r3
+ 616 0416 BCBF     		itt	lt
+ 617 0418 0020     		movlt	r0, #0
+ 618 041a ADF80E00 		strhlt	r0, [sp, #14]	@ movhi
+ 619              	.L28:
+ 210:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(gyroXYZ.gyroValueZ > -GlobalSettings.gyroSensTreshold && gyroXYZ.gyroValueZ < GlobalSettings.g
+ 620              		.loc 1 210 0 is_stmt 1
+ 621 041e 09B2     		sxth	r1, r1
+ 622 0420 9142     		cmp	r1, r2
+ 623 0422 04DD     		ble	.L29
+ 210:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(gyroXYZ.gyroValueZ > -GlobalSettings.gyroSensTreshold && gyroXYZ.gyroValueZ < GlobalSettings.g
+ 624              		.loc 1 210 0 is_stmt 0 discriminator 1
+ 625 0424 9942     		cmp	r1, r3
+ 626 0426 BCBF     		itt	lt
+ 627 0428 0023     		movlt	r3, #0
+ 628 042a ADF81030 		strhlt	r3, [sp, #16]	@ movhi
+ 629              	.L29:
+ 212:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		floatFilterGyro(&xGyroFiltered_float, gyroXYZ.gyroValueX);
+ 630              		.loc 1 212 0 is_stmt 1
+ 631 042e 0EA8     		add	r0, sp, #56
+ 632 0430 BDF90C10 		ldrsh	r1, [sp, #12]
+ 633 0434 FFF7FEFF 		bl	floatFilterGyro
+ 634              	.LVL52:
+ 213:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		floatFilterGyro(&yGyroFiltered_float, gyroXYZ.gyroValueY);
+ 635              		.loc 1 213 0
+ 636 0438 19A8     		add	r0, sp, #100
+ 637 043a BDF90E10 		ldrsh	r1, [sp, #14]
+ 638 043e FFF7FEFF 		bl	floatFilterGyro
+ 639              	.LVL53:
+ 214:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		floatFilterGyro(&zGyroFiltered_float, gyroXYZ.gyroValueZ);
+ 640              		.loc 1 214 0
+ 641 0442 24A8     		add	r0, sp, #144
+ 642 0444 BDF91010 		ldrsh	r1, [sp, #16]
+ 643 0448 FFF7FEFF 		bl	floatFilterGyro
+ 644              	.LVL54:
+ 216:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] = GlobalSettings.gyroDir.sensDirecti
+ 645              		.loc 1 216 0
+ 646 044c 94F907E0 		ldrsb	lr, [r4, #7]
+ 647 0450 2379     		ldrb	r3, [r4, #4]	@ zero_extendqisi2
+ 217:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensY]] = GlobalSettings.gyroDir.sensDirecti
+ 648              		.loc 1 217 0
+ 649 0452 94F90800 		ldrsb	r0, [r4, #8]
+ 216:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] = GlobalSettings.gyroDir.sensDirecti
+ 650              		.loc 1 216 0
+ 651 0456 07EE90EA 		fmsr	s15, lr	@ int
+ 652 045a 9DED187A 		flds	s14, [sp, #96]
+ 653 045e F8EEE77A 		fsitos	s15, s15
+ 654 0462 27EE087A 		fmuls	s14, s14, s16
+ 655 0466 6EAA     		add	r2, sp, #440
+ 656 0468 67EE877A 		fmuls	s15, s15, s14
+ 657 046c 02EB8303 		add	r3, r2, r3, lsl #2
+ 658 0470 67EEA87A 		fmuls	s15, s15, s17
+ 217:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensY]] = GlobalSettings.gyroDir.sensDirecti
+ 659              		.loc 1 217 0
+ 660 0474 9DED237A 		flds	s14, [sp, #140]
+ 216:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensX]] = GlobalSettings.gyroDir.sensDirecti
+ 661              		.loc 1 216 0
+ 662 0478 43ED147A 		fsts	s15, [r3, #-80]
+ 217:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensY]] = GlobalSettings.gyroDir.sensDirecti
+ 663              		.loc 1 217 0
+ 664 047c 07EE900A 		fmsr	s15, r0	@ int
+ 665 0480 27EE087A 		fmuls	s14, s14, s16
+ 666 0484 F8EEE77A 		fsitos	s15, s15
+ 667 0488 6379     		ldrb	r3, [r4, #5]	@ zero_extendqisi2
+ 668 048a 67EE877A 		fmuls	s15, s15, s14
+ 669 048e 02EB8303 		add	r3, r2, r3, lsl #2
+ 670 0492 67EEA87A 		fmuls	s15, s15, s17
+ 218:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensZ]] = GlobalSettings.gyroDir.sensDirecti
+ 671              		.loc 1 218 0
+ 672 0496 9DED2E7A 		flds	s14, [sp, #184]
+ 217:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensY]] = GlobalSettings.gyroDir.sensDirecti
+ 673              		.loc 1 217 0
+ 674 049a 43ED147A 		fsts	s15, [r3, #-80]
+ 218:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU.velocity_vector[GlobalSettings.gyroDir.sensOrder[sensZ]] = GlobalSettings.gyroDir.sensDirecti
+ 675              		.loc 1 218 0
+ 676 049e A379     		ldrb	r3, [r4, #6]	@ zero_extendqisi2
+ 677 04a0 02EB8303 		add	r3, r2, r3, lsl #2
+ 678 04a4 94F90920 		ldrsb	r2, [r4, #9]
+ 679 04a8 07EE902A 		fmsr	s15, r2	@ int
+ 680 04ac 27EE087A 		fmuls	s14, s14, s16
+ 681 04b0 F8EEE77A 		fsitos	s15, s15
+ 682 04b4 67EE877A 		fmuls	s15, s15, s14
+ 683 04b8 67EEA87A 		fmuls	s15, s15, s17
+ 684 04bc 43ED147A 		fsts	s15, [r3, #-80]
+ 221:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(GlobalSettings.enableACC)
+ 685              		.loc 1 221 0
+ 686 04c0 E37A     		ldrb	r3, [r4, #11]	@ zero_extendqisi2
+ 687 04c2 002B     		cmp	r3, #0
+ 688 04c4 00F08C80 		beq	.L30
+ 223:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			if(accCount >= 2)
+ 689              		.loc 1 223 0
+ 690 04c8 012F     		cmp	r7, #1
+ 691 04ca 40F28780 		bls	.L31
+ 227:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				LSM303DLHC_ACC_readValuesDMA(&accXYZ, &accBuffer[0]);
+ 692              		.loc 1 227 0
+ 693 04ce 0BA8     		add	r0, sp, #44
+ 694 04d0 6F49     		ldr	r1, .L71+16
+ 695 04d2 FFF7FEFF 		bl	LSM303DLHC_ACC_readValuesDMA
+ 696              	.LVL55:
+ 239:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				floatFilterAcc(&xAccFiltered_float, accXYZ.accValueX);
+ 697              		.loc 1 239 0
+ 698 04d6 2FA8     		add	r0, sp, #188
+ 699 04d8 BDF92C10 		ldrsh	r1, [sp, #44]
+ 700 04dc FFF7FEFF 		bl	floatFilterAcc
+ 701              	.LVL56:
+ 240:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				floatFilterAcc(&yAccFiltered_float, accXYZ.accValueY);
+ 702              		.loc 1 240 0
+ 703 04e0 3AA8     		add	r0, sp, #232
+ 704 04e2 BDF92E10 		ldrsh	r1, [sp, #46]
+ 705 04e6 FFF7FEFF 		bl	floatFilterAcc
+ 706              	.LVL57:
+ 241:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				floatFilterAcc(&zAccFiltered_float, accXYZ.accValueZ);
+ 707              		.loc 1 241 0
+ 708 04ea 45A8     		add	r0, sp, #276
+ 709 04ec BDF93010 		ldrsh	r1, [sp, #48]
+ 710 04f0 FFF7FEFF 		bl	floatFilterAcc
+ 711              	.LVL58:
+ 243:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				if((xAccFiltered_float.currentValue < accXYZ.accGValue) && (xAccFiltered_float.currentValue > -
+ 712              		.loc 1 243 0
+ 713 04f4 9DED396A 		flds	s12, [sp, #228]
+ 714 04f8 DDED0D7A 		flds	s15, [sp, #52]
+ 715 04fc B4EEE76A 		fcmpes	s12, s15
+ 716 0500 F1EE10FA 		fmstat
+ 717 0504 5E4B     		ldr	r3, .L71
+ 718 0506 5BD5     		bpl	.L32
+ 243:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				if((xAccFiltered_float.currentValue < accXYZ.accGValue) && (xAccFiltered_float.currentValue > -
+ 719              		.loc 1 243 0 is_stmt 0 discriminator 1
+ 720 0508 F1EE675A 		fnegs	s11, s15
+ 721 050c B4EEE56A 		fcmpes	s12, s11
+ 722 0510 F1EE10FA 		fmstat
+ 723 0514 54DD     		ble	.L32
+ 244:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				   (yAccFiltered_float.currentValue < accXYZ.accGValue) && (yAccFiltered_float.currentValue > -
+ 724              		.loc 1 244 0 is_stmt 1 discriminator 1
+ 725 0516 DDED446A 		flds	s13, [sp, #272]
+ 243:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				if((xAccFiltered_float.currentValue < accXYZ.accGValue) && (xAccFiltered_float.currentValue > -
+ 726              		.loc 1 243 0 discriminator 1
+ 727 051a F4EEE76A 		fcmpes	s13, s15
+ 728 051e F1EE10FA 		fmstat
+ 729 0522 4DD5     		bpl	.L32
+ 244:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				   (yAccFiltered_float.currentValue < accXYZ.accGValue) && (yAccFiltered_float.currentValue > -
+ 730              		.loc 1 244 0
+ 731 0524 F4EEE56A 		fcmpes	s13, s11
+ 732 0528 F1EE10FA 		fmstat
+ 733 052c 48DD     		ble	.L32
+ 245:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				   (zAccFiltered_float.currentValue < accXYZ.accGValue) && (zAccFiltered_float.currentValue > -
+ 734              		.loc 1 245 0 discriminator 1
+ 735 052e 9DED4F7A 		flds	s14, [sp, #316]
+ 244:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				   (yAccFiltered_float.currentValue < accXYZ.accGValue) && (yAccFiltered_float.currentValue > -
+ 736              		.loc 1 244 0 discriminator 1
+ 737 0532 B4EEE77A 		fcmpes	s14, s15
+ 738 0536 F1EE10FA 		fmstat
+ 739 053a 41D5     		bpl	.L32
+ 245:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				   (zAccFiltered_float.currentValue < accXYZ.accGValue) && (zAccFiltered_float.currentValue > -
+ 740              		.loc 1 245 0
+ 741 053c B4EEE57A 		fcmpes	s14, s11
+ 742 0540 F1EE10FA 		fmstat
+ 743 0544 3CDD     		ble	.L32
+ 248:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensX]] = GlobalSettings.accDir.sensDirection
+ 744              		.loc 1 248 0
+ 745 0546 94F90FE0 		ldrsb	lr, [r4, #15]
+ 249:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensY]] = GlobalSettings.accDir.sensDirection
+ 746              		.loc 1 249 0
+ 747 054a 94F91000 		ldrsb	r0, [r4, #16]
+ 248:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensX]] = GlobalSettings.accDir.sensDirection
+ 748              		.loc 1 248 0
+ 749 054e 217B     		ldrb	r1, [r4, #12]	@ zero_extendqisi2
+ 249:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensY]] = GlobalSettings.accDir.sensDirection
+ 750              		.loc 1 249 0
+ 751 0550 627B     		ldrb	r2, [r4, #13]	@ zero_extendqisi2
+ 248:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensX]] = GlobalSettings.accDir.sensDirection
+ 752              		.loc 1 248 0
+ 753 0552 07EE90EA 		fmsr	s15, lr	@ int
+ 754 0556 F8EEE77A 		fsitos	s15, s15
+ 755 055a 6EAF     		add	r7, sp, #440
+ 756              	.LVL59:
+ 757 055c 27EE866A 		fmuls	s12, s15, s12
+ 249:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensY]] = GlobalSettings.accDir.sensDirection
+ 758              		.loc 1 249 0
+ 759 0560 07EE900A 		fmsr	s15, r0	@ int
+ 248:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensX]] = GlobalSettings.accDir.sensDirection
+ 760              		.loc 1 248 0
+ 761 0564 0C31     		adds	r1, r1, #12
+ 249:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensY]] = GlobalSettings.accDir.sensDirection
+ 762              		.loc 1 249 0
+ 763 0566 0C32     		adds	r2, r2, #12
+ 248:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensX]] = GlobalSettings.accDir.sensDirection
+ 764              		.loc 1 248 0
+ 765 0568 07EB8101 		add	r1, r7, r1, lsl #2
+ 249:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensY]] = GlobalSettings.accDir.sensDirection
+ 766              		.loc 1 249 0
+ 767 056c 07EB8202 		add	r2, r7, r2, lsl #2
+ 768 0570 F8EEE77A 		fsitos	s15, s15
+ 250:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensZ]] = GlobalSettings.accDir.sensDirection
+ 769              		.loc 1 250 0
+ 770 0574 94F91170 		ldrsb	r7, [r4, #17]
+ 771 0578 A07B     		ldrb	r0, [r4, #14]	@ zero_extendqisi2
+ 249:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensY]] = GlobalSettings.accDir.sensDirection
+ 772              		.loc 1 249 0
+ 773 057a 67EEA66A 		fmuls	s13, s15, s13
+ 250:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensZ]] = GlobalSettings.accDir.sensDirection
+ 774              		.loc 1 250 0
+ 775 057e 07EE907A 		fmsr	s15, r7	@ int
+ 776 0582 F8EEE77A 		fsitos	s15, s15
+ 777 0586 0DF5DC7E 		add	lr, sp, #440
+ 778 058a 27EE877A 		fmuls	s14, s15, s14
+ 779 058e 0EEB8000 		add	r0, lr, r0, lsl #2
+ 248:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensX]] = GlobalSettings.accDir.sensDirection
+ 780              		.loc 1 248 0
+ 781 0592 01ED1D6A 		fsts	s12, [r1, #-116]
+ 249:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensY]] = GlobalSettings.accDir.sensDirection
+ 782              		.loc 1 249 0
+ 783 0596 42ED1D6A 		fsts	s13, [r2, #-116]
+ 250:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensZ]] = GlobalSettings.accDir.sensDirection
+ 784              		.loc 1 250 0
+ 785 059a 00ED117A 		fsts	s14, [r0, #-68]
+ 252:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					xTemp = (int)IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensX]];
+ 786              		.loc 1 252 0
+ 787 059e 51ED1D7A 		flds	s15, [r1, #-116]
+ 788 05a2 FDEEE77A 		ftosizs	s15, s15
+ 254:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					zTemp = (int)IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensZ]];
+ 789              		.loc 1 254 0
+ 790 05a6 BDEEC77A 		ftosizs	s14, s14
+ 252:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					xTemp = (int)IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensX]];
+ 791              		.loc 1 252 0
+ 792 05aa C3ED017A 		fsts	s15, [r3, #4]	@ int
+ 253:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					yTemp = (int)IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensY]];
+ 793              		.loc 1 253 0
+ 794 05ae 52ED1D7A 		flds	s15, [r2, #-116]
+ 795 05b2 FDEEE77A 		ftosizs	s15, s15
+ 254:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					zTemp = (int)IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensZ]];
+ 796              		.loc 1 254 0
+ 797 05b6 83ED037A 		fsts	s14, [r3, #12]	@ int
+ 253:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					yTemp = (int)IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensY]];
+ 798              		.loc 1 253 0
+ 799 05ba C3ED027A 		fsts	s15, [r3, #8]	@ int
+ 254:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					zTemp = (int)IMU.accel_vector[GlobalSettings.accDir.sensOrder[sensZ]];
+ 800              		.loc 1 254 0
+ 801 05be 06E0     		b	.L39
+ 802              	.LVL60:
+ 803              	.L32:
+ 262:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					xTemp = 0;
+ 804              		.loc 1 262 0
+ 805 05c0 0022     		movs	r2, #0
+ 258:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.kp_vector_ACC[0] = 0;
+ 806              		.loc 1 258 0
+ 807 05c2 6895     		str	r5, [sp, #416]	@ float
+ 259:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.kp_vector_ACC[1] = 0;
+ 808              		.loc 1 259 0
+ 809 05c4 6995     		str	r5, [sp, #420]	@ float
+ 260:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU.kp_vector_ACC[2] = 0;
+ 810              		.loc 1 260 0
+ 811 05c6 6A95     		str	r5, [sp, #424]	@ float
+ 262:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					xTemp = 0;
+ 812              		.loc 1 262 0
+ 813 05c8 5A60     		str	r2, [r3, #4]
+ 263:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					yTemp = 0;
+ 814              		.loc 1 263 0
+ 815 05ca 9A60     		str	r2, [r3, #8]
+ 264:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					zTemp = 0;
+ 816              		.loc 1 264 0
+ 817 05cc DA60     		str	r2, [r3, #12]
+ 818              	.LVL61:
+ 819              	.L39:
+ 267:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				if(GlobalSettings.enableDriftCorrection)
+ 820              		.loc 1 267 0
+ 821 05ce 98F80A70 		ldrb	r7, [r8, #10]	@ zero_extendqisi2
+ 822 05d2 1FB1     		cbz	r7, .L31
+ 269:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU_drift_correction_ACC(&IMU);
+ 823              		.loc 1 269 0
+ 824 05d4 50A8     		add	r0, sp, #320
+ 825 05d6 FFF7FEFF 		bl	IMU_drift_correction_ACC
+ 826              	.LVL62:
+ 271:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				accCount = 0;
+ 827              		.loc 1 271 0
+ 828 05da 0027     		movs	r7, #0
+ 829              	.L31:
+ 830              	.LVL63:
+ 273:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			accCount++;
+ 831              		.loc 1 273 0
+ 832 05dc 0137     		adds	r7, r7, #1
+ 833              	.LVL64:
+ 834 05de FFB2     		uxtb	r7, r7
+ 835              	.LVL65:
+ 836              	.L30:
+ 277:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(GlobalSettings.enableMAG)
+ 837              		.loc 1 277 0
+ 838 05e0 98F81830 		ldrb	r3, [r8, #24]	@ zero_extendqisi2
+ 839 05e4 002B     		cmp	r3, #0
+ 840 05e6 38D0     		beq	.L40
+ 279:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			if(magCount >= 45)
+ 841              		.loc 1 279 0
+ 842 05e8 2C2E     		cmp	r6, #44
+ 843 05ea 34D9     		bls	.L41
+ 281:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				Mag_readValues(&magXYZ);
+ 844              		.loc 1 281 0
+ 845 05ec 05A8     		add	r0, sp, #20
+ 846 05ee FFF7FEFF 		bl	Mag_readValues
+ 847              	.LVL66:
+ 282:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				update_intFilter(&xMagFiltered, GlobalSettings.magLowpassValue, (magXYZ.magValueX));
+ 848              		.loc 1 282 0
+ 849 05f2 07A8     		add	r0, sp, #28
+ 850 05f4 218C     		ldrh	r1, [r4, #32]
+ 851 05f6 BDF91420 		ldrsh	r2, [sp, #20]
+ 852 05fa FFF7FEFF 		bl	update_intFilter
+ 853              	.LVL67:
+ 283:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				update_intFilter(&yMagFiltered, GlobalSettings.magLowpassValue, (magXYZ.magValueY));
+ 854              		.loc 1 283 0
+ 855 05fe 09A8     		add	r0, sp, #36
+ 856 0600 218C     		ldrh	r1, [r4, #32]
+ 857 0602 BDF91620 		ldrsh	r2, [sp, #22]
+ 858 0606 FFF7FEFF 		bl	update_intFilter
+ 859              	.LVL68:
+ 286:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				IMU.mag_vector[GlobalSettings.magDir.sensOrder[sensX]] = GlobalSettings.magDir.sensDirection[se
+ 860              		.loc 1 286 0
+ 861 060a 0899     		ldr	r1, [sp, #32]
+ 862 060c 94F91C20 		ldrsb	r2, [r4, #28]
+ 863 0610 637E     		ldrb	r3, [r4, #25]	@ zero_extendqisi2
+ 291:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				if(GlobalSettings.enableDriftCorrection)
+ 864              		.loc 1 291 0
+ 865 0612 A67A     		ldrb	r6, [r4, #10]	@ zero_extendqisi2
+ 866              	.LVL69:
+ 286:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				IMU.mag_vector[GlobalSettings.magDir.sensOrder[sensX]] = GlobalSettings.magDir.sensDirection[se
+ 867              		.loc 1 286 0
+ 868 0614 4A43     		muls	r2, r1, r2
+ 869 0616 07EE102A 		fmsr	s14, r2	@ int
+ 287:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				IMU.mag_vector[GlobalSettings.magDir.sensOrder[sensY]] = GlobalSettings.magDir.sensDirection[se
+ 870              		.loc 1 287 0
+ 871 061a 0A99     		ldr	r1, [sp, #40]
+ 872 061c 94F91D20 		ldrsb	r2, [r4, #29]
+ 286:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				IMU.mag_vector[GlobalSettings.magDir.sensOrder[sensX]] = GlobalSettings.magDir.sensDirection[se
+ 873              		.loc 1 286 0
+ 874 0620 6EA8     		add	r0, sp, #440
+ 875 0622 F8EEC77A 		fsitos	s15, s14
+ 287:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				IMU.mag_vector[GlobalSettings.magDir.sensOrder[sensY]] = GlobalSettings.magDir.sensDirection[se
+ 876              		.loc 1 287 0
+ 877 0626 4A43     		muls	r2, r1, r2
+ 286:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				IMU.mag_vector[GlobalSettings.magDir.sensOrder[sensX]] = GlobalSettings.magDir.sensDirection[se
+ 878              		.loc 1 286 0
+ 879 0628 00EB8303 		add	r3, r0, r3, lsl #2
+ 287:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				IMU.mag_vector[GlobalSettings.magDir.sensOrder[sensY]] = GlobalSettings.magDir.sensDirection[se
+ 880              		.loc 1 287 0
+ 881 062c 07EE102A 		fmsr	s14, r2	@ int
+ 286:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				IMU.mag_vector[GlobalSettings.magDir.sensOrder[sensX]] = GlobalSettings.magDir.sensDirection[se
+ 882              		.loc 1 286 0
+ 883 0630 43ED0E7A 		fsts	s15, [r3, #-56]
+ 287:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				IMU.mag_vector[GlobalSettings.magDir.sensOrder[sensY]] = GlobalSettings.magDir.sensDirection[se
+ 884              		.loc 1 287 0
+ 885 0634 A37E     		ldrb	r3, [r4, #26]	@ zero_extendqisi2
+ 886 0636 F8EEC77A 		fsitos	s15, s14
+ 887 063a 00EB8303 		add	r3, r0, r3, lsl #2
+ 888 063e 43ED0E7A 		fsts	s15, [r3, #-56]
+ 289:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				IMU.mag_vector[GlobalSettings.magDir.sensOrder[sensZ]] = 0;
+ 889              		.loc 1 289 0
+ 890 0642 E37E     		ldrb	r3, [r4, #27]	@ zero_extendqisi2
+ 891 0644 00EB8303 		add	r3, r0, r3, lsl #2
+ 892 0648 43F8385C 		str	r5, [r3, #-56]	@ float
+ 291:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				if(GlobalSettings.enableDriftCorrection)
+ 893              		.loc 1 291 0
+ 894 064c 1EB1     		cbz	r6, .L41
+ 293:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 					IMU_drift_correction_MAG(&IMU);
+ 895              		.loc 1 293 0
+ 896 064e 50A8     		add	r0, sp, #320
+ 897 0650 FFF7FEFF 		bl	IMU_drift_correction_MAG
+ 898              	.LVL70:
+ 295:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				magCount = 0;
+ 899              		.loc 1 295 0
+ 900 0654 0026     		movs	r6, #0
+ 901              	.L41:
+ 902              	.LVL71:
+ 298:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			magCount++;
+ 903              		.loc 1 298 0
+ 904 0656 0136     		adds	r6, r6, #1
+ 905              	.LVL72:
+ 906 0658 F6B2     		uxtb	r6, r6
+ 907              	.LVL73:
+ 908              	.L40:
+ 302:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU_update(&IMU);
+ 909              		.loc 1 302 0
+ 910 065a 50A8     		add	r0, sp, #320
+ 911 065c FFF7FEFF 		bl	IMU_update
+ 912              	.LVL74:
+ 303:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU_ortho_adjust(&IMU);
+ 913              		.loc 1 303 0
+ 914 0660 50A8     		add	r0, sp, #320
+ 915 0662 FFF7FEFF 		bl	IMU_ortho_adjust
+ 916              	.LVL75:
+ 304:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU_normalize(&IMU);
+ 917              		.loc 1 304 0
+ 918 0666 50A8     		add	r0, sp, #320
+ 919 0668 FFF7FEFF 		bl	IMU_normalize
+ 920              	.LVL76:
+ 307:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		IMU_DCM_to_XYZ(&IMU, &XYZ);
+ 921              		.loc 1 307 0
+ 922 066c 50A8     		add	r0, sp, #320
+ 923 066e 0949     		ldr	r1, .L71+20
+ 924 0670 FFF7FEFF 		bl	IMU_DCM_to_XYZ
+ 925              	.LVL77:
+ 309:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		vTaskDelayUntil( &xNextWakeTime, DT );
+ 926              		.loc 1 309 0
+ 927 0674 6846     		mov	r0, sp
+ 928 0676 0221     		movs	r1, #2
+ 929 0678 FFF7FEFF 		bl	vTaskDelayUntil
+ 930              	.LVL78:
+ 310:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	}
+ 931              		.loc 1 310 0
+ 932 067c 98E6     		b	.L42
+ 933              	.L72:
+ 934 067e 00BF     		.align	2
+ 935              	.L71:
+ 936 0680 00000000 		.word	.LANCHOR0
+ 937 0684 00000000 		.word	GlobalSettings
+ 938 0688 35FA8E3C 		.word	1016003125
+ 939 068c 00100048 		.word	1207963648
+ 940 0690 00000000 		.word	accBuffer
+ 941 0694 00000000 		.word	XYZ
+ 942              		.cfi_endproc
+ 943              	.LFE112:
+ 945              		.section	.text.startup,"ax",%progbits
+ 946              		.align	1
+ 947              		.global	main
+ 948              		.thumb
+ 949              		.thumb_func
+ 951              	main:
+ 952              	.LFB111:
+  74:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+ 953              		.loc 1 74 0
+ 954              		.cfi_startproc
+ 955              		@ args = 0, pretend = 0, frame = 0
+ 956              		@ frame_needed = 0, uses_anonymous_args = 0
+ 957 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 958              	.LCFI6:
+ 959              		.cfi_def_cfa_offset 24
+ 960              		.cfi_offset 0, -24
+ 961              		.cfi_offset 1, -20
+ 962              		.cfi_offset 2, -16
+ 963              		.cfi_offset 3, -12
+ 964              		.cfi_offset 4, -8
+ 965              		.cfi_offset 14, -4
+  75:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	SCB->CPACR |= ((3UL << 10*2)|(3UL << 11*2));  /* set CP10 and CP11 Full Access */
+ 966              		.loc 1 75 0
+ 967 0002 274B     		ldr	r3, .L75
+ 968 0004 D3F88820 		ldr	r2, [r3, #136]
+ 969 0008 42F47002 		orr	r2, r2, #15728640
+ 970 000c C3F88820 		str	r2, [r3, #136]
+  77:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	RCC_Configuration();
+ 971              		.loc 1 77 0
+ 972 0010 FFF7FEFF 		bl	RCC_Configuration
+ 973              	.LVL79:
+  78:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	NVIC_Configuration();
+ 974              		.loc 1 78 0
+ 975 0014 FFF7FEFF 		bl	NVIC_Configuration
+ 976              	.LVL80:
+  79:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	GPIO_Configuration();
+ 977              		.loc 1 79 0
+ 978 0018 FFF7FEFF 		bl	GPIO_Configuration
+ 979              	.LVL81:
+  80:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	USART_Configuration();
+ 980              		.loc 1 80 0
+ 981 001c FFF7FEFF 		bl	USART_Configuration
+ 982              	.LVL82:
+  81:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	SPI_Configuration();
+ 983              		.loc 1 81 0
+ 984 0020 FFF7FEFF 		bl	SPI_Configuration
+ 985              	.LVL83:
+  82:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	I2C_Configuration();
+ 986              		.loc 1 82 0
+ 987 0024 FFF7FEFF 		bl	I2C_Configuration
+ 988              	.LVL84:
+  83:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	TIM3_PWM_Configuration();
+ 989              		.loc 1 83 0
+ 990 0028 FFF7FEFF 		bl	TIM3_PWM_Configuration
+ 991              	.LVL85:
+  84:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	TIM4_Configuration();
+ 992              		.loc 1 84 0
+ 993 002c FFF7FEFF 		bl	TIM4_Configuration
+ 994              	.LVL86:
+  85:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	ADC_Configuration();
+ 995              		.loc 1 85 0
+ 996 0030 FFF7FEFF 		bl	ADC_Configuration
+ 997              	.LVL87:
+  86:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	globalEXTI_Structure = EXTI_Configuration();
+ 998              		.loc 1 86 0
+ 999 0034 FFF7FEFF 		bl	EXTI_Configuration
+ 1000              	.LVL88:
+ 1001 0038 1A4B     		ldr	r3, .L75+4
+ 1002 003a 1860     		str	r0, [r3]
+  87:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	DMA_Configuration(&accBuffer[0]);
+ 1003              		.loc 1 87 0
+ 1004 003c 1A48     		ldr	r0, .L75+8
+ 1005 003e FFF7FEFF 		bl	DMA_Configuration
+ 1006              	.LVL89:
+  90:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	SETTINGS_init(&GlobalSettings);
+ 1007              		.loc 1 90 0
+ 1008 0042 1A48     		ldr	r0, .L75+12
+ 1009 0044 FFF7FEFF 		bl	SETTINGS_init
+ 1010              	.LVL90:
+  91:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	CTRLSTATES_init(&CtrlStates);
+ 1011              		.loc 1 91 0
+ 1012 0048 1948     		ldr	r0, .L75+16
+  93:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	xTaskCreate( IMU_Calculation, ( signed char * ) "IMU_Gyro", configMINIMAL_STACK_SIZE, NULL, 4, NUL
+ 1013              		.loc 1 93 0
+ 1014 004a 0024     		movs	r4, #0
+  91:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	CTRLSTATES_init(&CtrlStates);
+ 1015              		.loc 1 91 0
+ 1016 004c FFF7FEFF 		bl	CTRLSTATES_init
+ 1017              	.LVL91:
+  93:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	xTaskCreate( IMU_Calculation, ( signed char * ) "IMU_Gyro", configMINIMAL_STACK_SIZE, NULL, 4, NUL
+ 1018              		.loc 1 93 0
+ 1019 0050 0423     		movs	r3, #4
+ 1020 0052 8DE81800 		stmia	sp, {r3, r4}
+ 1021 0056 1749     		ldr	r1, .L75+20
+ 1022 0058 0294     		str	r4, [sp, #8]
+ 1023 005a 4FF4A072 		mov	r2, #320
+ 1024 005e 2346     		mov	r3, r4
+ 1025 0060 0394     		str	r4, [sp, #12]
+ 1026 0062 1548     		ldr	r0, .L75+24
+ 1027 0064 FFF7FEFF 		bl	xTaskGenericCreate
+ 1028              	.LVL92:
+  94:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	xTaskCreate( PID_Calculation, ( signed char * ) "PID_Calc", configMINIMAL_STACK_SIZE, NULL, 3, NUL
+ 1029              		.loc 1 94 0
+ 1030 0068 0323     		movs	r3, #3
+ 1031 006a 8DE81800 		stmia	sp, {r3, r4}
+ 1032 006e 1349     		ldr	r1, .L75+28
+ 1033 0070 0294     		str	r4, [sp, #8]
+ 1034 0072 4FF4A072 		mov	r2, #320
+ 1035 0076 2346     		mov	r3, r4
+ 1036 0078 0394     		str	r4, [sp, #12]
+ 1037 007a 1148     		ldr	r0, .L75+32
+ 1038 007c FFF7FEFF 		bl	xTaskGenericCreate
+ 1039              	.LVL93:
+  95:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	xTaskCreate( IMU_Print_Values, ( signed char * ) "Print_Euler", configMINIMAL_STACK_SIZE, NULL, 2,
+ 1040              		.loc 1 95 0
+ 1041 0080 0223     		movs	r3, #2
+ 1042 0082 8DE81800 		stmia	sp, {r3, r4}
+ 1043 0086 0F49     		ldr	r1, .L75+36
+ 1044 0088 0294     		str	r4, [sp, #8]
+ 1045 008a 4FF4A072 		mov	r2, #320
+ 1046 008e 2346     		mov	r3, r4
+ 1047 0090 0394     		str	r4, [sp, #12]
+ 1048 0092 0D48     		ldr	r0, .L75+40
+ 1049 0094 FFF7FEFF 		bl	xTaskGenericCreate
+ 1050              	.LVL94:
+  98:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	vTaskStartScheduler();
+ 1051              		.loc 1 98 0
+ 1052 0098 FFF7FEFF 		bl	vTaskStartScheduler
+ 1053              	.LVL95:
+ 1054              	.L74:
+ 1055 009c FEE7     		b	.L74
+ 1056              	.L76:
+ 1057 009e 00BF     		.align	2
+ 1058              	.L75:
+ 1059 00a0 00ED00E0 		.word	-536810240
+ 1060 00a4 00000000 		.word	globalEXTI_Structure
+ 1061 00a8 00000000 		.word	accBuffer
+ 1062 00ac 00000000 		.word	GlobalSettings
+ 1063 00b0 00000000 		.word	CtrlStates
+ 1064 00b4 21000000 		.word	.LC2
+ 1065 00b8 00000000 		.word	IMU_Calculation
+ 1066 00bc 2A000000 		.word	.LC3
+ 1067 00c0 00000000 		.word	PID_Calculation
+ 1068 00c4 33000000 		.word	.LC4
+ 1069 00c8 00000000 		.word	IMU_Print_Values
+ 1070              		.cfi_endproc
+ 1071              	.LFE111:
+ 1073              		.text
+ 1074              		.align	1
+ 1075              		.global	CalcRXValues
+ 1076              		.thumb
+ 1077              		.thumb_func
+ 1079              	CalcRXValues:
+ 1080              	.LFB115:
+ 434:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	}
+ 435:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** }
+ 436:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 437:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 438:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** void CalcRXValues(unsigned char *msgPointer, int16_t adjValue)
+ 439:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+ 1081              		.loc 1 439 0
+ 1082              		.cfi_startproc
+ 1083              		@ args = 0, pretend = 0, frame = 0
+ 1084              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1085              	.LVL96:
+ 1086 0698 70B5     		push	{r4, r5, r6, lr}
+ 1087              	.LCFI7:
+ 1088              		.cfi_def_cfa_offset 16
+ 1089              		.cfi_offset 4, -16
+ 1090              		.cfi_offset 5, -12
+ 1091              		.cfi_offset 6, -8
+ 1092              		.cfi_offset 14, -4
+ 440:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	static intFilter gasFiltered = {0,0};
+ 441:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	static intFilter rollFiltered = {0,0};
+ 442:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	static intFilter nickFiltered = {0,0};
+ 443:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	static intFilter yawFiltered = {0,0};
+ 444:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 445:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	static int16_t currentYaw = 0;
+ 446:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 447:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	update_intFilter(&gasFiltered, 1, (((uint8_t)msgPointer[5]-adjValue)*4.5f)+60);
+ 1093              		.loc 1 447 0
+ 1094 069a 4379     		ldrb	r3, [r0, #5]	@ zero_extendqisi2
+ 1095 069c 394C     		ldr	r4, .L84
+ 1096 069e 5B1A     		subs	r3, r3, r1
+ 1097 06a0 07EE103A 		fmsr	s14, r3	@ int
+ 1098 06a4 DFED387A 		flds	s15, .L84+4
+ 1099 06a8 F8EEC76A 		fsitos	s13, s14
+ 1100 06ac B1EE027A 		fconsts	s14, #18
+ 1101 06b0 E6EE877A 		vfma.f32	s15, s13, s14
+ 439:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+ 1102              		.loc 1 439 0
+ 1103 06b4 0546     		mov	r5, r0
+ 1104              		.loc 1 447 0
+ 1105 06b6 FDEEE77A 		ftosizs	s15, s15
+ 1106 06ba 04F11000 		add	r0, r4, #16
+ 1107              	.LVL97:
+ 439:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+ 1108              		.loc 1 439 0
+ 1109 06be 0E46     		mov	r6, r1
+ 1110              		.loc 1 447 0
+ 1111 06c0 17EE902A 		fmrs	r2, s15	@ int
+ 1112 06c4 0121     		movs	r1, #1
+ 1113              	.LVL98:
+ 1114 06c6 FFF7FEFF 		bl	update_intFilter
+ 1115              	.LVL99:
+ 448:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	update_intFilter(&rollFiltered, 1, ((uint8_t)msgPointer[2]-adjValue)*2.0f);
+ 1116              		.loc 1 448 0
+ 1117 06ca AB78     		ldrb	r3, [r5, #2]	@ zero_extendqisi2
+ 1118 06cc 9B1B     		subs	r3, r3, r6
+ 1119 06ce 07EE103A 		fmsr	s14, r3	@ int
+ 1120 06d2 F8EEC77A 		fsitos	s15, s14
+ 1121 06d6 04F11800 		add	r0, r4, #24
+ 1122 06da 77EEA77A 		fadds	s15, s15, s15
+ 1123 06de 0121     		movs	r1, #1
+ 1124 06e0 FDEEE77A 		ftosizs	s15, s15
+ 1125 06e4 17EE902A 		fmrs	r2, s15	@ int
+ 1126 06e8 FFF7FEFF 		bl	update_intFilter
+ 1127              	.LVL100:
+ 449:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	update_intFilter(&yawFiltered, 1, ((uint8_t)msgPointer[4]-adjValue)*1.3f);
+ 1128              		.loc 1 449 0
+ 1129 06ec 2B79     		ldrb	r3, [r5, #4]	@ zero_extendqisi2
+ 1130 06ee 9B1B     		subs	r3, r3, r6
+ 1131 06f0 07EE903A 		fmsr	s15, r3	@ int
+ 1132 06f4 9FED257A 		flds	s14, .L84+8
+ 1133 06f8 F8EEE77A 		fsitos	s15, s15
+ 1134 06fc 04F12000 		add	r0, r4, #32
+ 1135 0700 67EE877A 		fmuls	s15, s15, s14
+ 1136 0704 0121     		movs	r1, #1
+ 1137 0706 FDEEE77A 		ftosizs	s15, s15
+ 1138 070a 17EE902A 		fmrs	r2, s15	@ int
+ 1139 070e FFF7FEFF 		bl	update_intFilter
+ 1140              	.LVL101:
+ 450:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 451:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	CtrlStates.gas = gasFiltered.filtered;
+ 1141              		.loc 1 451 0
+ 1142 0712 1F4B     		ldr	r3, .L84+12
+ 1143 0714 A58A     		ldrh	r5, [r4, #20]
+ 1144              	.LVL102:
+ 452:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	CtrlStates.roll = rollFiltered.filtered;
+ 453:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	CtrlStates.nick = nickFiltered.filtered;
+ 454:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 455:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	/* integrating the yaw value */
+ 456:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	CtrlStates.yaw += yawFiltered.filtered;
+ 1145              		.loc 1 456 0
+ 1146 0716 616A     		ldr	r1, [r4, #36]
+ 451:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	CtrlStates.gas = gasFiltered.filtered;
+ 1147              		.loc 1 451 0
+ 1148 0718 1D80     		strh	r5, [r3]	@ movhi
+ 457:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 458:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	/* Narrow down all ctrl values */
+ 459:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(CtrlStates.gas > MAX_GAS) CtrlStates.gas = MAX_GAS;
+ 1149              		.loc 1 459 0
+ 1150 071a 2DB2     		sxth	r5, r5
+ 1151 071c 642D     		cmp	r5, #100
+ 453:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	CtrlStates.nick = nickFiltered.filtered;
+ 1152              		.loc 1 453 0
+ 1153 071e 4FF00002 		mov	r2, #0
+ 452:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	CtrlStates.roll = rollFiltered.filtered;
+ 1154              		.loc 1 452 0
+ 1155 0722 A08B     		ldrh	r0, [r4, #28]
+ 453:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	CtrlStates.nick = nickFiltered.filtered;
+ 1156              		.loc 1 453 0
+ 1157 0724 9A80     		strh	r2, [r3, #4]	@ movhi
+ 1158              		.loc 1 459 0
+ 1159 0726 C8BF     		it	gt
+ 1160 0728 6424     		movgt	r4, #100
+ 456:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	CtrlStates.yaw += yawFiltered.filtered;
+ 1161              		.loc 1 456 0
+ 1162 072a DA88     		ldrh	r2, [r3, #6]
+ 1163              		.loc 1 459 0
+ 1164 072c C8BF     		it	gt
+ 1165 072e 1C80     		strhgt	r4, [r3]	@ movhi
+ 456:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	CtrlStates.yaw += yawFiltered.filtered;
+ 1166              		.loc 1 456 0
+ 1167 0730 0A44     		add	r2, r2, r1
+ 460:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(CtrlStates.gas < -MAX_GAS) CtrlStates.gas = -MAX_GAS;
+ 1168              		.loc 1 460 0
+ 1169 0732 B3F90040 		ldrsh	r4, [r3]
+ 452:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	CtrlStates.roll = rollFiltered.filtered;
+ 1170              		.loc 1 452 0
+ 1171 0736 5880     		strh	r0, [r3, #2]	@ movhi
+ 456:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	CtrlStates.yaw += yawFiltered.filtered;
+ 1172              		.loc 1 456 0
+ 1173 0738 92B2     		uxth	r2, r2
+ 1174 073a 91B2     		uxth	r1, r2
+ 1175              		.loc 1 460 0
+ 1176 073c 6434     		adds	r4, r4, #100
+ 456:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	CtrlStates.yaw += yawFiltered.filtered;
+ 1177              		.loc 1 456 0
+ 1178 073e D980     		strh	r1, [r3, #6]	@ movhi
+ 1179              		.loc 1 460 0
+ 1180 0740 03DA     		bge	.L79
+ 1181              		.loc 1 460 0 is_stmt 0 discriminator 1
+ 1182 0742 134C     		ldr	r4, .L84+12
+ 1183 0744 4FF69C75 		movw	r5, #65436
+ 1184 0748 2580     		strh	r5, [r4]	@ movhi
+ 1185              	.L79:
+ 461:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 462:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(CtrlStates.roll > MAX_ROLL) CtrlStates.roll = MAX_ROLL;
+ 1186              		.loc 1 462 0 is_stmt 1
+ 1187 074a 00B2     		sxth	r0, r0
+ 1188 074c 2328     		cmp	r0, #35
+ 1189 074e C4BF     		itt	gt
+ 1190 0750 2320     		movgt	r0, #35
+ 1191 0752 5880     		strhgt	r0, [r3, #2]	@ movhi
+ 463:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(CtrlStates.roll < -MAX_ROLL) CtrlStates.roll = -MAX_ROLL;
+ 1192              		.loc 1 463 0
+ 1193 0754 B3F90200 		ldrsh	r0, [r3, #2]
+ 1194 0758 2330     		adds	r0, r0, #35
+ 1195 075a 03DA     		bge	.L81
+ 1196              		.loc 1 463 0 is_stmt 0 discriminator 1
+ 1197 075c 0C48     		ldr	r0, .L84+12
+ 1198 075e 4FF6DD74 		movw	r4, #65501
+ 1199 0762 4480     		strh	r4, [r0, #2]	@ movhi
+ 1200              	.L81:
+ 464:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 465:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(CtrlStates.nick > MAX_NICK) CtrlStates.nick = MAX_NICK;
+ 466:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(CtrlStates.nick < -MAX_NICK) CtrlStates.nick = -MAX_NICK;
+ 467:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 468:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	/* The yaw value needs a special handling */
+ 469:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(CtrlStates.yaw > 180) CtrlStates.yaw -= 360;
+ 1201              		.loc 1 469 0 is_stmt 1
+ 1202 0764 09B2     		sxth	r1, r1
+ 1203 0766 B429     		cmp	r1, #180
+ 1204 0768 C4BF     		itt	gt
+ 1205 076a A2F5B472 		subgt	r2, r2, #360
+ 1206 076e DA80     		strhgt	r2, [r3, #6]	@ movhi
+ 470:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(CtrlStates.yaw < -180) CtrlStates.yaw += 360;
+ 1207              		.loc 1 470 0
+ 1208 0770 DB88     		ldrh	r3, [r3, #6]
+ 1209 0772 1AB2     		sxth	r2, r3
+ 1210 0774 B432     		adds	r2, r2, #180
+ 1211 0776 03DA     		bge	.L77
+ 1212              		.loc 1 470 0 is_stmt 0 discriminator 1
+ 1213 0778 054A     		ldr	r2, .L84+12
+ 1214 077a 03F5B473 		add	r3, r3, #360
+ 1215 077e D380     		strh	r3, [r2, #6]	@ movhi
+ 1216              	.L77:
+ 1217 0780 70BD     		pop	{r4, r5, r6, pc}
+ 1218              	.L85:
+ 1219 0782 00BF     		.align	2
+ 1220              	.L84:
+ 1221 0784 00000000 		.word	.LANCHOR0
+ 1222 0788 00007042 		.word	1114636288
+ 1223 078c 6666A63F 		.word	1067869798
+ 1224 0790 00000000 		.word	CtrlStates
+ 1225              		.cfi_endproc
+ 1226              	.LFE115:
+ 1228              		.align	1
+ 1229              		.global	disableEXTI
+ 1230              		.thumb
+ 1231              		.thumb_func
+ 1233              	disableEXTI:
+ 1234              	.LFB116:
+ 471:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 472:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #ifdef USART_REMOTE
+ 473:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(msgPointer[1] == 'K')
+ 474:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	{
+ 475:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		COPTER_STATUS |= READY_FLAG;
+ 476:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	}
+ 477:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	else
+ 478:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	{
+ 479:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		COPTER_STATUS &= ~(READY_FLAG);
+ 480:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	}
+ 481:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #else
+ 482:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(currentYaw < -20 && CtrlStates.gas < 5)
+ 483:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	{
+ 484:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		COPTER_STATUS |= READY_FLAG;
+ 485:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	}
+ 486:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	else if(currentYaw > 20 && CtrlStates.gas < 5)
+ 487:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	{
+ 488:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		COPTER_STATUS &= ~(READY_FLAG);
+ 489:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	}
+ 490:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** #endif
+ 491:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** }
+ 492:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 493:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 494:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 495:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** void disableEXTI(uint32_t EXTINr)
+ 496:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+ 1235              		.loc 1 496 0 is_stmt 1
+ 1236              		.cfi_startproc
+ 1237              		@ args = 0, pretend = 0, frame = 0
+ 1238              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1239              		@ link register save eliminated.
+ 1240              	.LVL103:
+ 497:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	globalEXTI_Structure->EXTI_Line = EXTINr;
+ 1241              		.loc 1 497 0
+ 1242 0794 034B     		ldr	r3, .L87
+ 1243 0796 1B68     		ldr	r3, [r3]
+ 498:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	globalEXTI_Structure->EXTI_LineCmd = DISABLE;
+ 1244              		.loc 1 498 0
+ 1245 0798 0022     		movs	r2, #0
+ 497:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	globalEXTI_Structure->EXTI_Line = EXTINr;
+ 1246              		.loc 1 497 0
+ 1247 079a 1860     		str	r0, [r3]
+ 1248              		.loc 1 498 0
+ 1249 079c 9A71     		strb	r2, [r3, #6]
+ 499:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	EXTI_Init(globalEXTI_Structure);
+ 1250              		.loc 1 499 0
+ 1251 079e 1846     		mov	r0, r3
+ 1252              	.LVL104:
+ 1253 07a0 FFF7FEBF 		b	EXTI_Init
+ 1254              	.LVL105:
+ 1255              	.L88:
+ 1256              		.align	2
+ 1257              	.L87:
+ 1258 07a4 00000000 		.word	globalEXTI_Structure
+ 1259              		.cfi_endproc
+ 1260              	.LFE116:
+ 1262              		.align	1
+ 1263              		.global	enableEXTI
+ 1264              		.thumb
+ 1265              		.thumb_func
+ 1267              	enableEXTI:
+ 1268              	.LFB117:
+ 500:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** }
+ 501:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 502:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** void enableEXTI(uint32_t EXTINr)
+ 503:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+ 1269              		.loc 1 503 0
+ 1270              		.cfi_startproc
+ 1271              		@ args = 0, pretend = 0, frame = 0
+ 1272              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1273              		@ link register save eliminated.
+ 1274              	.LVL106:
+ 504:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	globalEXTI_Structure->EXTI_Line = EXTINr;
+ 1275              		.loc 1 504 0
+ 1276 07a8 034B     		ldr	r3, .L90
+ 1277 07aa 1B68     		ldr	r3, [r3]
+ 505:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	globalEXTI_Structure->EXTI_LineCmd = ENABLE;
+ 1278              		.loc 1 505 0
+ 1279 07ac 0122     		movs	r2, #1
+ 504:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	globalEXTI_Structure->EXTI_Line = EXTINr;
+ 1280              		.loc 1 504 0
+ 1281 07ae 1860     		str	r0, [r3]
+ 1282              		.loc 1 505 0
+ 1283 07b0 9A71     		strb	r2, [r3, #6]
+ 506:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	EXTI_Init(globalEXTI_Structure);
+ 1284              		.loc 1 506 0
+ 1285 07b2 1846     		mov	r0, r3
+ 1286              	.LVL107:
+ 1287 07b4 FFF7FEBF 		b	EXTI_Init
+ 1288              	.LVL108:
+ 1289              	.L91:
+ 1290              		.align	2
+ 1291              	.L90:
+ 1292 07b8 00000000 		.word	globalEXTI_Structure
+ 1293              		.cfi_endproc
+ 1294              	.LFE117:
+ 1296              		.align	1
+ 1297              		.global	EXTI15_10_IRQHandler
+ 1298              		.thumb
+ 1299              		.thumb_func
+ 1301              	EXTI15_10_IRQHandler:
+ 1302              	.LFB118:
+ 507:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** }
+ 508:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 509:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 510:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** /* Interupt Handlers */
+ 511:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** void EXTI15_10_IRQHandler(void)
+ 512:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+ 1303              		.loc 1 512 0
+ 1304              		.cfi_startproc
+ 1305              		@ args = 0, pretend = 0, frame = 0
+ 1306              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1307 07bc 38B5     		push	{r3, r4, r5, lr}
+ 1308              	.LCFI8:
+ 1309              		.cfi_def_cfa_offset 16
+ 1310              		.cfi_offset 3, -16
+ 1311              		.cfi_offset 4, -12
+ 1312              		.cfi_offset 5, -8
+ 1313              		.cfi_offset 14, -4
+ 513:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	static uint8_t timNr = 0;
+ 514:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	static uint8_t timStage = 0;
+ 515:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	static unsigned char rxBuffer[6];
+ 516:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 517:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	switch(timNr)
+ 1314              		.loc 1 517 0
+ 1315 07be 594C     		ldr	r4, .L109
+ 1316 07c0 94F82830 		ldrb	r3, [r4, #40]	@ zero_extendqisi2
+ 1317 07c4 032B     		cmp	r3, #3
+ 1318 07c6 00F29280 		bhi	.L93
+ 1319 07ca DFE803F0 		tbb	[pc, r3]
+ 1320              	.L95:
+ 1321 07ce 02       		.byte	(.L94-.L95)/2
+ 1322 07cf 24       		.byte	(.L96-.L95)/2
+ 1323 07d0 46       		.byte	(.L97-.L95)/2
+ 1324 07d1 66       		.byte	(.L98-.L95)/2
+ 1325              		.align	1
+ 1326              	.L94:
+ 518:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	{
+ 519:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	case 0:
+ 520:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if (EXTI_GetITStatus(EXTI_Line12) == SET)
+ 1327              		.loc 1 520 0
+ 1328 07d2 0C20     		movs	r0, #12
+ 1329 07d4 FFF7FEFF 		bl	EXTI_GetITStatus
+ 1330              	.LVL109:
+ 1331 07d8 0128     		cmp	r0, #1
+ 1332 07da 40F09480 		bne	.L100
+ 521:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		{
+ 522:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			if(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_12) == 1)
+ 1333              		.loc 1 522 0
+ 1334 07de 5248     		ldr	r0, .L109+4
+ 1335 07e0 4FF48051 		mov	r1, #4096
+ 1336 07e4 FFF7FEFF 		bl	GPIO_ReadInputDataBit
+ 1337              	.LVL110:
+ 1338 07e8 0128     		cmp	r0, #1
+ 1339 07ea 62D0     		beq	.L108
+ 523:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			{
+ 524:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				timStage += 1;
+ 525:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				TIM_SetCounter(TIM4, 0);
+ 526:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			}
+ 527:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			else if (timStage == (timNr+1))
+ 1340              		.loc 1 527 0
+ 1341 07ec 94F82820 		ldrb	r2, [r4, #40]	@ zero_extendqisi2
+ 1342 07f0 94F82930 		ldrb	r3, [r4, #41]	@ zero_extendqisi2
+ 1343 07f4 4B4D     		ldr	r5, .L109
+ 1344 07f6 0132     		adds	r2, r2, #1
+ 1345 07f8 9342     		cmp	r3, r2
+ 1346 07fa 40F08480 		bne	.L100
+ 528:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			{
+ 529:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				timNr += 1;
+ 530:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				/* add an offset to zero the GAS-value */
+ 531:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				rxBuffer[2] = TIM_GetCounter(TIM4);
+ 1347              		.loc 1 531 0
+ 1348 07fe 4B48     		ldr	r0, .L109+8
+ 529:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				timNr += 1;
+ 1349              		.loc 1 529 0
+ 1350 0800 85F82830 		strb	r3, [r5, #40]
+ 1351              		.loc 1 531 0
+ 1352 0804 FFF7FEFF 		bl	TIM_GetCounter
+ 1353              	.LVL111:
+ 1354 0808 85F82C00 		strb	r0, [r5, #44]
+ 532:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				//GAS = TIM_GetCounter(TIM4);
+ 533:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				disableEXTI(EXTI_Line12);
+ 1355              		.loc 1 533 0
+ 1356 080c 0C20     		movs	r0, #12
+ 1357 080e FFF7FEFF 		bl	disableEXTI
+ 1358              	.LVL112:
+ 534:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				enableEXTI(EXTI_Line13);
+ 1359              		.loc 1 534 0
+ 1360 0812 0D20     		movs	r0, #13
+ 1361 0814 1EE0     		b	.L106
+ 1362              	.L96:
+ 535:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			}
+ 536:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		}
+ 537:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		break;
+ 538:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	case  1:
+ 539:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if (EXTI_GetITStatus(EXTI_Line13) == SET)
+ 1363              		.loc 1 539 0
+ 1364 0816 0D20     		movs	r0, #13
+ 1365 0818 FFF7FEFF 		bl	EXTI_GetITStatus
+ 1366              	.LVL113:
+ 1367 081c 0128     		cmp	r0, #1
+ 1368 081e 72D1     		bne	.L100
+ 540:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		{
+ 541:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			if(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_13) == 1)
+ 1369              		.loc 1 541 0
+ 1370 0820 4148     		ldr	r0, .L109+4
+ 1371 0822 4FF40051 		mov	r1, #8192
+ 1372 0826 FFF7FEFF 		bl	GPIO_ReadInputDataBit
+ 1373              	.LVL114:
+ 1374 082a 0128     		cmp	r0, #1
+ 1375 082c 41D0     		beq	.L108
+ 542:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			{
+ 543:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				timStage += 1;
+ 544:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				TIM_SetCounter(TIM4, 0);
+ 545:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			}
+ 546:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			else if (timStage == (timNr+1))
+ 1376              		.loc 1 546 0
+ 1377 082e 94F82820 		ldrb	r2, [r4, #40]	@ zero_extendqisi2
+ 1378 0832 94F82930 		ldrb	r3, [r4, #41]	@ zero_extendqisi2
+ 1379 0836 3B4D     		ldr	r5, .L109
+ 1380 0838 0132     		adds	r2, r2, #1
+ 1381 083a 9342     		cmp	r3, r2
+ 1382 083c 63D1     		bne	.L100
+ 547:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			{
+ 548:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				timNr += 1;
+ 549:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				rxBuffer[3] = TIM_GetCounter(TIM4);
+ 1383              		.loc 1 549 0
+ 1384 083e 3B48     		ldr	r0, .L109+8
+ 548:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				timNr += 1;
+ 1385              		.loc 1 548 0
+ 1386 0840 85F82830 		strb	r3, [r5, #40]
+ 1387              		.loc 1 549 0
+ 1388 0844 FFF7FEFF 		bl	TIM_GetCounter
+ 1389              	.LVL115:
+ 1390 0848 85F82D00 		strb	r0, [r5, #45]
+ 550:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				disableEXTI(EXTI_Line13);
+ 1391              		.loc 1 550 0
+ 1392 084c 0D20     		movs	r0, #13
+ 1393 084e FFF7FEFF 		bl	disableEXTI
+ 1394              	.LVL116:
+ 551:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				enableEXTI(EXTI_Line14);
+ 1395              		.loc 1 551 0
+ 1396 0852 0E20     		movs	r0, #14
+ 1397              	.L106:
+ 1398 0854 FFF7FEFF 		bl	enableEXTI
+ 1399              	.LVL117:
+ 1400 0858 55E0     		b	.L100
+ 1401              	.L97:
+ 552:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			}
+ 553:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		}
+ 554:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		break;
+ 555:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	case  2:
+ 556:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if (EXTI_GetITStatus(EXTI_Line14) == SET)
+ 1402              		.loc 1 556 0
+ 1403 085a 0E20     		movs	r0, #14
+ 1404 085c FFF7FEFF 		bl	EXTI_GetITStatus
+ 1405              	.LVL118:
+ 1406 0860 0128     		cmp	r0, #1
+ 1407 0862 50D1     		bne	.L100
+ 557:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		{
+ 558:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			if(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_14) == 1)
+ 1408              		.loc 1 558 0
+ 1409 0864 3048     		ldr	r0, .L109+4
+ 1410 0866 4FF48041 		mov	r1, #16384
+ 1411 086a FFF7FEFF 		bl	GPIO_ReadInputDataBit
+ 1412              	.LVL119:
+ 1413 086e 0128     		cmp	r0, #1
+ 1414 0870 1FD0     		beq	.L108
+ 559:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			{
+ 560:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				timStage += 1;
+ 561:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				TIM_SetCounter(TIM4, 0);
+ 562:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			}
+ 563:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			else if (timStage == (timNr+1))
+ 1415              		.loc 1 563 0
+ 1416 0872 94F82820 		ldrb	r2, [r4, #40]	@ zero_extendqisi2
+ 1417 0876 94F82930 		ldrb	r3, [r4, #41]	@ zero_extendqisi2
+ 1418 087a 2A4D     		ldr	r5, .L109
+ 1419 087c 0132     		adds	r2, r2, #1
+ 1420 087e 9342     		cmp	r3, r2
+ 1421 0880 41D1     		bne	.L100
+ 564:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			{
+ 565:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				timNr += 1;
+ 566:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				rxBuffer[4] = TIM_GetCounter(TIM4);
+ 1422              		.loc 1 566 0
+ 1423 0882 2A48     		ldr	r0, .L109+8
+ 565:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				timNr += 1;
+ 1424              		.loc 1 565 0
+ 1425 0884 85F82830 		strb	r3, [r5, #40]
+ 1426              		.loc 1 566 0
+ 1427 0888 FFF7FEFF 		bl	TIM_GetCounter
+ 1428              	.LVL120:
+ 1429 088c 85F82E00 		strb	r0, [r5, #46]
+ 567:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				disableEXTI(EXTI_Line14);
+ 1430              		.loc 1 567 0
+ 1431 0890 0E20     		movs	r0, #14
+ 1432 0892 FFF7FEFF 		bl	disableEXTI
+ 1433              	.LVL121:
+ 568:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				enableEXTI(EXTI_Line15);
+ 1434              		.loc 1 568 0
+ 1435 0896 0F20     		movs	r0, #15
+ 1436 0898 DCE7     		b	.L106
+ 1437              	.L98:
+ 569:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			}
+ 570:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		}
+ 571:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		break;
+ 572:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	case  3:
+ 573:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if (EXTI_GetITStatus(EXTI_Line15) == SET)
+ 1438              		.loc 1 573 0
+ 1439 089a 0F20     		movs	r0, #15
+ 1440 089c FFF7FEFF 		bl	EXTI_GetITStatus
+ 1441              	.LVL122:
+ 1442 08a0 0128     		cmp	r0, #1
+ 1443 08a2 30D1     		bne	.L100
+ 574:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		{
+ 575:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			if(GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_15) == 1)
+ 1444              		.loc 1 575 0
+ 1445 08a4 2048     		ldr	r0, .L109+4
+ 1446 08a6 4FF40041 		mov	r1, #32768
+ 1447 08aa FFF7FEFF 		bl	GPIO_ReadInputDataBit
+ 1448              	.LVL123:
+ 1449 08ae 0128     		cmp	r0, #1
+ 1450 08b0 09D1     		bne	.L105
+ 1451              	.L108:
+ 576:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			{
+ 577:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				timStage += 1;
+ 1452              		.loc 1 577 0
+ 1453 08b2 94F82930 		ldrb	r3, [r4, #41]	@ zero_extendqisi2
+ 578:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				TIM_SetCounter(TIM4, 0);
+ 1454              		.loc 1 578 0
+ 1455 08b6 1D48     		ldr	r0, .L109+8
+ 577:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				timStage += 1;
+ 1456              		.loc 1 577 0
+ 1457 08b8 0133     		adds	r3, r3, #1
+ 1458              		.loc 1 578 0
+ 1459 08ba 0021     		movs	r1, #0
+ 577:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				timStage += 1;
+ 1460              		.loc 1 577 0
+ 1461 08bc 84F82930 		strb	r3, [r4, #41]
+ 1462              		.loc 1 578 0
+ 1463 08c0 FFF7FEFF 		bl	TIM_SetCounter
+ 1464              	.LVL124:
+ 1465 08c4 1FE0     		b	.L100
+ 1466              	.L105:
+ 579:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			}
+ 580:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			else if (timStage == (timNr+1))
+ 1467              		.loc 1 580 0
+ 1468 08c6 94F82820 		ldrb	r2, [r4, #40]	@ zero_extendqisi2
+ 1469 08ca 94F82930 		ldrb	r3, [r4, #41]	@ zero_extendqisi2
+ 1470 08ce 154D     		ldr	r5, .L109
+ 1471 08d0 0132     		adds	r2, r2, #1
+ 1472 08d2 9342     		cmp	r3, r2
+ 1473 08d4 17D1     		bne	.L100
+ 581:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			{
+ 582:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				timNr += 1;
+ 583:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				rxBuffer[5] = TIM_GetCounter(TIM4);
+ 1474              		.loc 1 583 0
+ 1475 08d6 1548     		ldr	r0, .L109+8
+ 582:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				timNr += 1;
+ 1476              		.loc 1 582 0
+ 1477 08d8 85F82830 		strb	r3, [r5, #40]
+ 1478              		.loc 1 583 0
+ 1479 08dc FFF7FEFF 		bl	TIM_GetCounter
+ 1480              	.LVL125:
+ 1481 08e0 85F82F00 		strb	r0, [r5, #47]
+ 584:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				disableEXTI(EXTI_Line15);
+ 1482              		.loc 1 584 0
+ 1483 08e4 0F20     		movs	r0, #15
+ 1484 08e6 FFF7FEFF 		bl	disableEXTI
+ 1485              	.LVL126:
+ 585:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				enableEXTI(EXTI_Line12);
+ 1486              		.loc 1 585 0
+ 1487 08ea 0C20     		movs	r0, #12
+ 1488 08ec B2E7     		b	.L106
+ 1489              	.L93:
+ 586:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			}
+ 587:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		}
+ 588:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		break;
+ 589:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	default:
+ 590:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		timNr = 0;
+ 1490              		.loc 1 590 0
+ 1491 08ee 0021     		movs	r1, #0
+ 591:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		timStage = 0;
+ 592:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		TIM_SetCounter(TIM4, 0);
+ 1492              		.loc 1 592 0
+ 1493 08f0 0E48     		ldr	r0, .L109+8
+ 590:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		timNr = 0;
+ 1494              		.loc 1 590 0
+ 1495 08f2 84F82810 		strb	r1, [r4, #40]
+ 591:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		timStage = 0;
+ 1496              		.loc 1 591 0
+ 1497 08f6 84F82910 		strb	r1, [r4, #41]
+ 1498              		.loc 1 592 0
+ 1499 08fa FFF7FEFF 		bl	TIM_SetCounter
+ 1500              	.LVL127:
+ 593:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		CalcRXValues(&rxBuffer[0], 75);
+ 1501              		.loc 1 593 0
+ 1502 08fe 0C48     		ldr	r0, .L109+12
+ 1503 0900 4B21     		movs	r1, #75
+ 1504 0902 FFF7FEFF 		bl	CalcRXValues
+ 1505              	.LVL128:
+ 1506              	.L100:
+ 594:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		break;
+ 595:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	}
+ 596:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	EXTI_ClearITPendingBit(EXTI_Line12);
+ 1507              		.loc 1 596 0
+ 1508 0906 0C20     		movs	r0, #12
+ 1509 0908 FFF7FEFF 		bl	EXTI_ClearITPendingBit
+ 1510              	.LVL129:
+ 597:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	EXTI_ClearITPendingBit(EXTI_Line13);
+ 1511              		.loc 1 597 0
+ 1512 090c 0D20     		movs	r0, #13
+ 1513 090e FFF7FEFF 		bl	EXTI_ClearITPendingBit
+ 1514              	.LVL130:
+ 598:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	EXTI_ClearITPendingBit(EXTI_Line14);
+ 1515              		.loc 1 598 0
+ 1516 0912 0E20     		movs	r0, #14
+ 1517 0914 FFF7FEFF 		bl	EXTI_ClearITPendingBit
+ 1518              	.LVL131:
+ 599:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	EXTI_ClearITPendingBit(EXTI_Line15);
+ 1519              		.loc 1 599 0
+ 1520 0918 0F20     		movs	r0, #15
+ 600:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** }
+ 1521              		.loc 1 600 0
+ 1522 091a BDE83840 		pop	{r3, r4, r5, lr}
+ 599:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	EXTI_ClearITPendingBit(EXTI_Line15);
+ 1523              		.loc 1 599 0
+ 1524 091e FFF7FEBF 		b	EXTI_ClearITPendingBit
+ 1525              	.LVL132:
+ 1526              	.L110:
+ 1527 0922 00BF     		.align	2
+ 1528              	.L109:
+ 1529 0924 00000000 		.word	.LANCHOR0
+ 1530 0928 000C0048 		.word	1207962624
+ 1531 092c 00080040 		.word	1073743872
+ 1532 0930 2A000000 		.word	.LANCHOR0+42
+ 1533              		.cfi_endproc
+ 1534              	.LFE118:
+ 1536              		.align	1
+ 1537              		.global	USART2_IRQHandler
+ 1538              		.thumb
+ 1539              		.thumb_func
+ 1541              	USART2_IRQHandler:
+ 1542              	.LFB119:
+ 601:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 602:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** // this is the interrupt request handler (IRQ) for ALL USART1 interrupts
+ 603:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** /*USART Reception*/
+ 604:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** void USART2_IRQHandler(void)
+ 605:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+ 1543              		.loc 1 605 0
+ 1544              		.cfi_startproc
+ 1545              		@ args = 0, pretend = 0, frame = 0
+ 1546              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1547 0934 38B5     		push	{r3, r4, r5, lr}
+ 1548              	.LCFI9:
+ 1549              		.cfi_def_cfa_offset 16
+ 1550              		.cfi_offset 3, -16
+ 1551              		.cfi_offset 4, -12
+ 1552              		.cfi_offset 5, -8
+ 1553              		.cfi_offset 14, -4
+ 606:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	static unsigned char rxBuffer[5];
+ 607:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	static uint8_t i = 0;
+ 608:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 609:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)
+ 1554              		.loc 1 609 0
+ 1555 0936 1C48     		ldr	r0, .L119
+ 1556 0938 1C49     		ldr	r1, .L119+4
+ 1557 093a FFF7FEFF 		bl	USART_GetITStatus
+ 1558              	.LVL133:
+ 1559 093e 40B3     		cbz	r0, .L112
+ 610:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	{
+ 611:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		/* Read one byte from the receive data register */
+ 612:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		rxBuffer[i] = USART_ReceiveData(USART2);
+ 1560              		.loc 1 612 0
+ 1561 0940 1B4C     		ldr	r4, .L119+8
+ 1562 0942 1948     		ldr	r0, .L119
+ 1563 0944 94F83050 		ldrb	r5, [r4, #48]	@ zero_extendqisi2
+ 1564 0948 FFF7FEFF 		bl	USART_ReceiveData
+ 1565              	.LVL134:
+ 613:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		if(i >= 4)
+ 1566              		.loc 1 613 0
+ 1567 094c 94F83030 		ldrb	r3, [r4, #48]	@ zero_extendqisi2
+ 612:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		rxBuffer[i] = USART_ReceiveData(USART2);
+ 1568              		.loc 1 612 0
+ 1569 0950 2544     		add	r5, r5, r4
+ 1570              		.loc 1 613 0
+ 1571 0952 032B     		cmp	r3, #3
+ 612:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		rxBuffer[i] = USART_ReceiveData(USART2);
+ 1572              		.loc 1 612 0
+ 1573 0954 85F83100 		strb	r0, [r5, #49]
+ 1574              		.loc 1 613 0
+ 1575 0958 06D9     		bls	.L113
+ 614:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		{
+ 615:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			//xQueueSendFromISR( usartRxQueue, &msgPointer, &xYieldRequired );
+ 616:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			CalcRXValues(&rxBuffer[0], 55);
+ 1576              		.loc 1 616 0
+ 1577 095a 04F13100 		add	r0, r4, #49
+ 1578 095e 3721     		movs	r1, #55
+ 1579 0960 FFF7FEFF 		bl	CalcRXValues
+ 1580              	.LVL135:
+ 617:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			i = 0;
+ 1581              		.loc 1 617 0
+ 1582 0964 0023     		movs	r3, #0
+ 1583 0966 04E0     		b	.L118
+ 1584              	.L113:
+ 618:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		}
+ 619:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		else
+ 620:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		{
+ 621:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			if(rxBuffer[0] == 'A')
+ 1585              		.loc 1 621 0
+ 1586 0968 94F83120 		ldrb	r2, [r4, #49]	@ zero_extendqisi2
+ 1587 096c 412A     		cmp	r2, #65
+ 1588 096e 03D1     		bne	.L114
+ 622:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			{
+ 623:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				i++;
+ 1589              		.loc 1 623 0
+ 1590 0970 0133     		adds	r3, r3, #1
+ 1591              	.L118:
+ 1592 0972 84F83030 		strb	r3, [r4, #48]
+ 1593 0976 0CE0     		b	.L112
+ 1594              	.L114:
+ 624:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			}
+ 625:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			else
+ 626:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			{
+ 627:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				i = 0;
+ 1595              		.loc 1 627 0
+ 1596 0978 0023     		movs	r3, #0
+ 1597 097a 84F83030 		strb	r3, [r4, #48]
+ 628:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				rxBuffer[0] = 0;
+ 1598              		.loc 1 628 0
+ 1599 097e 84F83130 		strb	r3, [r4, #49]
+ 629:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				rxBuffer[1] = 0;
+ 1600              		.loc 1 629 0
+ 1601 0982 84F83230 		strb	r3, [r4, #50]
+ 630:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				rxBuffer[2] = 0;
+ 1602              		.loc 1 630 0
+ 1603 0986 84F83330 		strb	r3, [r4, #51]
+ 631:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				rxBuffer[3] = 0;
+ 1604              		.loc 1 631 0
+ 1605 098a 84F83430 		strb	r3, [r4, #52]
+ 632:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 				rxBuffer[4] = 0;
+ 1606              		.loc 1 632 0
+ 1607 098e 84F83530 		strb	r3, [r4, #53]
+ 1608              	.L112:
+ 633:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 			}
+ 634:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 		}
+ 635:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	}
+ 636:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	USART_ClearITPendingBit(USART2, USART_IT_RXNE);
+ 1609              		.loc 1 636 0
+ 1610 0992 0548     		ldr	r0, .L119
+ 1611 0994 0549     		ldr	r1, .L119+4
+ 1612 0996 FFF7FEFF 		bl	USART_ClearITPendingBit
+ 1613              	.LVL136:
+ 637:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	USART_ClearFlag(USART2, USART_IT_RXNE);
+ 1614              		.loc 1 637 0
+ 1615 099a 0348     		ldr	r0, .L119
+ 1616 099c 0349     		ldr	r1, .L119+4
+ 638:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** }
+ 1617              		.loc 1 638 0
+ 1618 099e BDE83840 		pop	{r3, r4, r5, lr}
+ 637:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	USART_ClearFlag(USART2, USART_IT_RXNE);
+ 1619              		.loc 1 637 0
+ 1620 09a2 FFF7FEBF 		b	USART_ClearFlag
+ 1621              	.LVL137:
+ 1622              	.L120:
+ 1623 09a6 00BF     		.align	2
+ 1624              	.L119:
+ 1625 09a8 00440040 		.word	1073759232
+ 1626 09ac 05010500 		.word	327941
+ 1627 09b0 00000000 		.word	.LANCHOR0
+ 1628              		.cfi_endproc
+ 1629              	.LFE119:
+ 1631              		.align	1
+ 1632              		.global	vApplicationMallocFailedHook
+ 1633              		.thumb
+ 1634              		.thumb_func
+ 1636              	vApplicationMallocFailedHook:
+ 1637              	.LFB120:
+ 639:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 640:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 641:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** void vApplicationMallocFailedHook( void )
+ 642:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+ 1638              		.loc 1 642 0
+ 1639              		.cfi_startproc
+ 1640              		@ Volatile: function does not return.
+ 1641              		@ args = 0, pretend = 0, frame = 0
+ 1642              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1643              		@ link register save eliminated.
+ 1644              	.L122:
+ 1645 09b4 FEE7     		b	.L122
+ 1646              		.cfi_endproc
+ 1647              	.LFE120:
+ 1649              		.align	1
+ 1650              		.global	vApplicationStackOverflowHook
+ 1651              		.thumb
+ 1652              		.thumb_func
+ 1654              	vApplicationStackOverflowHook:
+ 1655              	.LFB121:
+ 643:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	/* Called if a call to pvPortMalloc() fails because there is insufficient
+ 644:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	free memory available in the FreeRTOS heap.  pvPortMalloc() is called
+ 645:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	internally by FreeRTOS API functions that create tasks, queues, software
+ 646:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	timers, and semaphores.  The size of the FreeRTOS heap is set by the
+ 647:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	configTOTAL_HEAP_SIZE configuration constant in FreeRTOSConfig.h. */
+ 648:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	for( ;; );
+ 649:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** }
+ 650:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** /*-----------------------------------------------------------*/
+ 651:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 652:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** void vApplicationStackOverflowHook( xTaskHandle *pxTask, signed char *pcTaskName )
+ 653:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+ 1656              		.loc 1 653 0
+ 1657              		.cfi_startproc
+ 1658              		@ Volatile: function does not return.
+ 1659              		@ args = 0, pretend = 0, frame = 0
+ 1660              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1661              	.LVL138:
+ 1662              		.loc 1 653 0
+ 1663 09b6 08B5     		push	{r3, lr}
+ 1664              	.LCFI10:
+ 1665              		.cfi_def_cfa_offset 8
+ 1666              		.cfi_offset 3, -8
+ 1667              		.cfi_offset 14, -4
+ 1668              	.LVL139:
+ 1669              	.L124:
+ 654:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	( void ) pcTaskName;
+ 655:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	( void ) pxTask;
+ 656:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 657:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	/* Run time stack overflow checking is performed if
+ 658:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	configconfigCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2.  This hook
+ 659:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	function is called if a stack overflow is detected. */
+ 660:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	for( ;; )GPIO_SetBits(GPIOC, GPIO_Pin_8);
+ 1670              		.loc 1 660 0 discriminator 1
+ 1671 09b8 0248     		ldr	r0, .L125
+ 1672 09ba 4FF48071 		mov	r1, #256
+ 1673 09be FFF7FEFF 		bl	GPIO_SetBits
+ 1674              	.LVL140:
+ 1675 09c2 F9E7     		b	.L124
+ 1676              	.L126:
+ 1677              		.align	2
+ 1678              	.L125:
+ 1679 09c4 00080048 		.word	1207961600
+ 1680              		.cfi_endproc
+ 1681              	.LFE121:
+ 1683              		.align	1
+ 1684              		.global	vApplicationIdleHook
+ 1685              		.thumb
+ 1686              		.thumb_func
+ 1688              	vApplicationIdleHook:
+ 1689              	.LFB122:
+ 661:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** }
+ 662:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** /*-----------------------------------------------------------*/
+ 663:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 664:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** void vApplicationIdleHook( void )
+ 665:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+ 1690              		.loc 1 665 0
+ 1691              		.cfi_startproc
+ 1692              		@ args = 0, pretend = 0, frame = 0
+ 1693              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1694              		@ link register save eliminated.
+ 1695 09c8 7047     		bx	lr
+ 1696              		.cfi_endproc
+ 1697              	.LFE122:
+ 1699              		.align	1
+ 1700              		.global	vApplicationTickHook
+ 1701              		.thumb
+ 1702              		.thumb_func
+ 1704              	vApplicationTickHook:
+ 1705              	.LFB123:
+ 666:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 667:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	/* This function is called on each cycle of the idle task.  In this case it
+ 668:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	does nothing useful, other than report the amout of FreeRTOS heap that
+ 669:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 	remains unallocated. */
+ 670:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 671:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** }
+ 672:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 673:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** 
+ 674:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** void vApplicationTickHook( void )
+ 675:/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/main.c **** {
+ 1706              		.loc 1 675 0
+ 1707              		.cfi_startproc
+ 1708              		@ args = 0, pretend = 0, frame = 0
+ 1709              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1710              		@ link register save eliminated.
+ 1711 09ca 7047     		bx	lr
+ 1712              		.cfi_endproc
+ 1713              	.LFE123:
+ 1715              		.global	zTemp
+ 1716              		.global	yTemp
+ 1717              		.global	xTemp
+ 1718              		.comm	accBuffer,6,1
+ 1719              		.comm	XYZ,12,4
+ 1720              		.comm	CtrlStates,8,2
+ 1721              		.comm	GlobalSettings,64,4
+ 1722              		.comm	globalEXTI_Structure,4,4
+ 1723              		.global	COPTER_STATUS
+ 1724              		.section	.rodata.str1.1,"aMS",%progbits,1
+ 1725              	.LC0:
+ 1726 0000 25642C25 		.ascii	"%d,%d,%d, %d\012\000"
+ 1726      642C2564 
+ 1726      2C202564 
+ 1726      0A00
+ 1727              	.LC1:
+ 1728 000e 4572726F 		.ascii	"Error Gyro Test!\012\015\000"
+ 1728      72204779 
+ 1728      726F2054 
+ 1728      65737421 
+ 1728      0A0D00
+ 1729              	.LC2:
+ 1730 0021 494D555F 		.ascii	"IMU_Gyro\000"
+ 1730      4779726F 
+ 1730      00
+ 1731              	.LC3:
+ 1732 002a 5049445F 		.ascii	"PID_Calc\000"
+ 1732      43616C63 
+ 1732      00
+ 1733              	.LC4:
+ 1734 0033 5072696E 		.ascii	"Print_Euler\000"
+ 1734      745F4575 
+ 1734      6C657200 
+ 1735              		.bss
+ 1736              		.align	2
+ 1737              		.set	.LANCHOR0,. + 0
+ 1740              	COPTER_STATUS:
+ 1741 0000 00       		.space	1
+ 1742 0001 000000   		.space	3
+ 1745              	xTemp:
+ 1746 0004 00000000 		.space	4
+ 1749              	yTemp:
+ 1750 0008 00000000 		.space	4
+ 1753              	zTemp:
+ 1754 000c 00000000 		.space	4
+ 1757              	gasFiltered.9246:
+ 1758 0010 00000000 		.space	8
+ 1758      00000000 
+ 1761              	rollFiltered.9247:
+ 1762 0018 00000000 		.space	8
+ 1762      00000000 
+ 1765              	yawFiltered.9249:
+ 1766 0020 00000000 		.space	8
+ 1766      00000000 
+ 1769              	timNr.9260:
+ 1770 0028 00       		.space	1
+ 1773              	timStage.9261:
+ 1774 0029 00       		.space	1
+ 1777              	rxBuffer.9262:
+ 1778 002a 00000000 		.space	6
+ 1778      0000
+ 1781              	i.9273:
+ 1782 0030 00       		.space	1
+ 1785              	rxBuffer.9272:
+ 1786 0031 00000000 		.space	5
+ 1786      00
+ 1787 0036 0000     		.text
+ 1788              	.Letext0:
+ 1789              		.file 2 "/home/franz/sat/arm-none-eabi/include/stdint.h"
+ 1790              		.file 3 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/CMSIS/Include/core_
+ 1791              		.file 4 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/CMSIS/Device/ST/STM
+ 1792              		.file 5 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph
+ 1793              		.file 6 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/Source/inc
+ 1794              		.file 7 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/Source/por
+ 1795              		.file 8 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/FreeRTOS/Source/inc
+ 1796              		.file 9 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/project_inc/IMU_alg
+ 1797              		.file 10 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/project_inc/filter
+ 1798              		.file 11 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/project_inc/multic
+ 1799              		.file 12 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/project_inc/L3GD20
+ 1800              		.file 13 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/project_inc/LSM303
+ 1801              		.file 14 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/project_inc/PID_co
+ 1802              		.file 15 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/project_inc/MotorP
+ 1803              		.file 16 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/project_inc/stm32_
+ 1804              		.file 17 "/home/franz/sat/arm-none-eabi/include/stdio.h"
+ 1805              		.file 18 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/STM32F30x_StdPerip
+ 1806              		.file 19 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/STM32F30x_StdPerip
+ 1807              		.file 20 "/home/franz/Desktop/STM32F3_Multicopter/STM32F3_Multicopter_devel/src/STM32F30x_StdPerip
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+     /tmp/ccJhFuh4.s:20     .text:00000000 $t
+     /tmp/ccJhFuh4.s:24     .text:00000000 IMU_Print_Values
+     /tmp/ccJhFuh4.s:60     .text:00000024 $d
+                            *COM*:00000008 CtrlStates
+     /tmp/ccJhFuh4.s:65     .text:0000002c $t
+     /tmp/ccJhFuh4.s:69     .text:0000002c PID_Calculation
+     /tmp/ccJhFuh4.s:241    .text:00000170 $d
+                            *COM*:00000040 GlobalSettings
+                            *COM*:0000000c XYZ
+     /tmp/ccJhFuh4.s:249    .text:00000184 $t
+     /tmp/ccJhFuh4.s:253    .text:00000184 IMU_Calculation
+     /tmp/ccJhFuh4.s:524    .text:00000378 $d
+     /tmp/ccJhFuh4.s:531    .text:0000038c $t
+     /tmp/ccJhFuh4.s:936    .text:00000680 $d
+                            *COM*:00000006 accBuffer
+     /tmp/ccJhFuh4.s:946    .text.startup:00000000 $t
+     /tmp/ccJhFuh4.s:951    .text.startup:00000000 main
+     /tmp/ccJhFuh4.s:1059   .text.startup:000000a0 $d
+                            *COM*:00000004 globalEXTI_Structure
+     /tmp/ccJhFuh4.s:1074   .text:00000698 $t
+     /tmp/ccJhFuh4.s:1079   .text:00000698 CalcRXValues
+     /tmp/ccJhFuh4.s:1221   .text:00000784 $d
+     /tmp/ccJhFuh4.s:1228   .text:00000794 $t
+     /tmp/ccJhFuh4.s:1233   .text:00000794 disableEXTI
+     /tmp/ccJhFuh4.s:1258   .text:000007a4 $d
+     /tmp/ccJhFuh4.s:1262   .text:000007a8 $t
+     /tmp/ccJhFuh4.s:1267   .text:000007a8 enableEXTI
+     /tmp/ccJhFuh4.s:1292   .text:000007b8 $d
+     /tmp/ccJhFuh4.s:1296   .text:000007bc $t
+     /tmp/ccJhFuh4.s:1301   .text:000007bc EXTI15_10_IRQHandler
+     /tmp/ccJhFuh4.s:1321   .text:000007ce $d
+     /tmp/ccJhFuh4.s:1325   .text:000007d2 $t
+     /tmp/ccJhFuh4.s:1529   .text:00000924 $d
+     /tmp/ccJhFuh4.s:1536   .text:00000934 $t
+     /tmp/ccJhFuh4.s:1541   .text:00000934 USART2_IRQHandler
+     /tmp/ccJhFuh4.s:1625   .text:000009a8 $d
+     /tmp/ccJhFuh4.s:1631   .text:000009b4 $t
+     /tmp/ccJhFuh4.s:1636   .text:000009b4 vApplicationMallocFailedHook
+     /tmp/ccJhFuh4.s:1654   .text:000009b6 vApplicationStackOverflowHook
+     /tmp/ccJhFuh4.s:1679   .text:000009c4 $d
+     /tmp/ccJhFuh4.s:1683   .text:000009c8 $t
+     /tmp/ccJhFuh4.s:1688   .text:000009c8 vApplicationIdleHook
+     /tmp/ccJhFuh4.s:1704   .text:000009ca vApplicationTickHook
+     /tmp/ccJhFuh4.s:1753   .bss:0000000c zTemp
+     /tmp/ccJhFuh4.s:1749   .bss:00000008 yTemp
+     /tmp/ccJhFuh4.s:1745   .bss:00000004 xTemp
+     /tmp/ccJhFuh4.s:1740   .bss:00000000 COPTER_STATUS
+     /tmp/ccJhFuh4.s:1736   .bss:00000000 $d
+     /tmp/ccJhFuh4.s:1757   .bss:00000010 gasFiltered.9246
+     /tmp/ccJhFuh4.s:1761   .bss:00000018 rollFiltered.9247
+     /tmp/ccJhFuh4.s:1765   .bss:00000020 yawFiltered.9249
+     /tmp/ccJhFuh4.s:1769   .bss:00000028 timNr.9260
+     /tmp/ccJhFuh4.s:1773   .bss:00000029 timStage.9261
+     /tmp/ccJhFuh4.s:1777   .bss:0000002a rxBuffer.9262
+     /tmp/ccJhFuh4.s:1781   .bss:00000030 i.9273
+     /tmp/ccJhFuh4.s:1785   .bss:00000031 rxBuffer.9272
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.38a23960eabe78bbf9de88a92b018260
+                           .group:00000000 wm4.stm32f30x.h.54.c7b24f715ee55ef38656f44540ae3be6
+                           .group:00000000 wm4.core_cm4.h.32.1434cd257ff5806b1b03cd32ab0641e9
+                           .group:00000000 wm4.newlib.h.8.378a545e43bc5669590e42e276a93323
+                           .group:00000000 wm4.features.h.22.b72b3baab2bb2eab3661375590100b6b
+                           .group:00000000 wm4.config.h.197.f6039468f1d0fc1b2f8d10d31d95d32a
+                           .group:00000000 wm4._ansi.h.23.5644b60c990a4800b02a6e654e88f93a
+                           .group:00000000 wm4.stdint.h.20.54ad762faa59e3c05491630641c8d8bf
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.292.5f9271075d54fc48f1e25ff79df85cb2
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_comp.h.31.9bbc5f5f1a849069ea9062fbe7b81435
+                           .group:00000000 wm4.stm32f30x_dma.h.31.73d173fa6d60026d432f3cf1d2fc4407
+                           .group:00000000 wm4.stm32f30x_exti.h.31.22e280aa6e095108654ac8d3c74a2409
+                           .group:00000000 wm4.stm32f30x_flash.h.31.bee86dc3079b7049419bdbeec073e2cd
+                           .group:00000000 wm4.stm32f30x_gpio.h.31.3745297fee3728b346ad4d2a2467e40f
+                           .group:00000000 wm4.stm32f30x_syscfg.h.31.96b023b7dbc3641f358604478433eb5c
+                           .group:00000000 wm4.stm32f30x_i2c.h.31.52025acd7f154308042bf46a2835e9d3
+                           .group:00000000 wm4.stm32f30x_pwr.h.31.cdef322c6e7f25cfc29954045d24e9b8
+                           .group:00000000 wm4.stm32f30x_rcc.h.31.3b94c1144b21d1e4fe780e4d1a02d257
+                           .group:00000000 wm4.stm32f30x_spi.h.31.c1ebebab897d23cecc617ec8ad9fd534
+                           .group:00000000 wm4.stm32f30x_tim.h.31.336f9cd855fb4e2cd819ac260ded6518
+                           .group:00000000 wm4.stm32f30x_usart.h.31.cd85313e29c0a128555b4a7b8ec0f487
+                           .group:00000000 wm4.stm32f30x_misc.h.31.f08b0e9f53f0471613b5131bb95f8725
+                           .group:00000000 wm4.stm32f30x.h.6173.8b641ba1d9b0040eda9120fe8a414b2d
+                           .group:00000000 wm4.stdio.h.31.7c0e28c411445f3f9c5b11accf882760
+                           .group:00000000 wm4.stddef.h.184.159df79b4ca79c76561572a55985524c
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4._default_types.h.6.5e12cd604db8ce00b62bb2f02708eaf3
+                           .group:00000000 wm4.lock.h.2.9bc98482741e5e2a9450b12934a684ea
+                           .group:00000000 wm4.stddef.h.348.9a99de77b6ba3b4278b57e9cc6d6e349
+                           .group:00000000 wm4.reent.h.16.9e42f0e588b85e70b2bf6572af57ce64
+                           .group:00000000 wm4.types.h.23.0d949686bbcadd1621462d4fa1f884f9
+                           .group:00000000 wm4.stddef.h.39.7e3d906ac58942e0b374c527445f5de5
+                           .group:00000000 wm4.types.h.2.e9cec8c90ab35f77d9f499e06ae02400
+                           .group:00000000 wm4.types.h.80.ce121baf7fb2f5b502889c46862d44e6
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.64.99f7f8c5cde3e8fc6197cecee063ab22
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.158.a7efb00f6cbc6f43213b50e183c9830c
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.50.e3cb12f9608797e0cfb3c9615a6071cb
+                           .group:00000000 wm4.ctype.h.2.807cf8b53e92f83ce947ab40213cf812
+                           .group:00000000 wm4.math.h.35.13c5bec129ef04ad1bb0a1152b29c624
+                           .group:00000000 wm4.cdefs.h.45.6b392759c8a421d1199268021d4987e3
+                           .group:00000000 wm4.string.h.15.dab3980bf35408a4c507182805e2de3a
+                           .group:00000000 wm4.string.h.125.513d6ece205e52e1cd04235cb7b31cef
+                           .group:00000000 wm4.projdefs.h.76.214f319a5937dae232f0ee2912b07e1d
+                           .group:00000000 wm4.FreeRTOSConfig.h.79.4fba535e539909674ad2c5be302d2490
+                           .group:00000000 wm4.portmacro.h.77.7193a186e2184ceb906ebf519fd05bcc
+                           .group:00000000 wm4.portable.h.332.e25bf3f97ebf50a0f90736144cb8c3f8
+                           .group:00000000 wm4.mpu_wrappers.h.76.3abcfc7ebb6d78909ee0b4ad2f20f282
+                           .group:00000000 wm4.FreeRTOS.h.159.4a9fecccc9c9246f42d5b269fd45d4f4
+                           .group:00000000 wm4.list.h.105.6a6307ce3396638a078c02ff83387dc6
+                           .group:00000000 wm4.task.h.94.33ec4de8c3f825901c54e6cf58507761
+                           .group:00000000 wm4.queue.h.77.c405a8575cf45ee56672246904131fa4
+                           .group:00000000 wm4.timers.h.94.1c877eceef25f06590ac289101b9a408
+                           .group:00000000 wm4.semphr.h.86.b4272882ec518da0b7d9e2c0f219d626
+                           .group:00000000 wm4.filter_Lib.h.9.c3b4da84b619ff7a2d8e947a9cf27fbf
+                           .group:00000000 wm4.multicopter_settings.h.9.4150856825029c6eac58aea1640e2d0a
+                           .group:00000000 wm4.L3GD20_Lib_SPI.h.9.072a9ccc0c9c5d73511d8e48adcb1d3c
+                           .group:00000000 wm4.ADXL345_Lib.h.2.6f43829aa35c41174f5864ebbe83dc8a
+                           .group:00000000 wm4.LSM303DLHC_Lib_I2C.h.9.6eee883489de0435d98b6cc9e289e091
+
+UNDEFINED SYMBOLS
+printf
+vTaskDelay
+init_PID
+calc_PID_YAW
+calc_PID
+vPortEnterCritical
+vPortExitCritical
+resetIntegralValues_PID
+PWM_Motor
+memset
+IMU_init
+IMU_init_drift_correction
+Gyro_calibrate
+Gyro_readValues
+vTaskDelayUntil
+LSM303DLHC_ACC_calibrate
+Mag_calibrate
+xTaskGetTickCount
+floatFilterGyro
+LSM303DLHC_ACC_readValuesDMA
+floatFilterAcc
+IMU_drift_correction_ACC
+Mag_readValues
+update_intFilter
+IMU_drift_correction_MAG
+IMU_update
+IMU_ortho_adjust
+IMU_normalize
+IMU_DCM_to_XYZ
+RCC_Configuration
+NVIC_Configuration
+GPIO_Configuration
+USART_Configuration
+SPI_Configuration
+I2C_Configuration
+TIM3_PWM_Configuration
+TIM4_Configuration
+ADC_Configuration
+EXTI_Configuration
+DMA_Configuration
+SETTINGS_init
+CTRLSTATES_init
+xTaskGenericCreate
+vTaskStartScheduler
+EXTI_Init
+EXTI_GetITStatus
+GPIO_ReadInputDataBit
+TIM_GetCounter
+TIM_SetCounter
+EXTI_ClearITPendingBit
+USART_GetITStatus
+USART_ReceiveData
+USART_ClearITPendingBit
+USART_ClearFlag
+GPIO_SetBits

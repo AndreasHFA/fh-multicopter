@@ -1,0 +1,1373 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"stm32f30x_dac.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.align	1
+  19              		.global	DAC_DeInit
+  20              		.thumb
+  21              		.thumb_func
+  23              	DAC_DeInit:
+  24              	.LFB111:
+  25              		.file 1 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+   1:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+   2:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   ******************************************************************************
+   3:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @file    stm32f30x_dac.c
+   4:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @author  MCD Application Team
+   5:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @version V1.0.1
+   6:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @date    23-October-2012
+   7:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief   This file provides firmware functions to manage the following 
+   8:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          functionalities of the Digital-to-Analog Converter (DAC) peripheral: 
+   9:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *           + DAC channels configuration: trigger, output buffer, data format
+  10:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *           + DMA management      
+  11:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *           + Interrupts and flags management
+  12:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *
+  13:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   @verbatim
+  14:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     
+  15:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****  ===============================================================================
+  16:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****                       ##### DAC Peripheral features #####
+  17:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****  ===============================================================================
+  18:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     [..] The device integrates two 12-bit Digital Analog Converters that can 
+  19:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          be used independently or simultaneously (dual mode):
+  20:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          (#) DAC channel1 with DAC_OUT1 as output
+  21:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          (#) DAC channel2 with DAC_OUT2 as output
+  22:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     [..] Digital to Analog conversion can be non-triggered using DAC_Trigger_None
+  23:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          and DAC_OUT1/DAC_OUT2 is available once writing to DHRx register using 
+  24:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          DAC_SetChannel1Data()/DAC_SetChannel2Data.
+  25:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     [..] Digital to Analog conversion can be triggered by:
+  26:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          (#) External event: EXTI Line 9 (any GPIOx_Pin9) using DAC_Trigger_Ext_IT9.
+  27:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****              The used pin (GPIOx_Pin9) must be configured in input mode.
+  28:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          (#) Timers TRGO: TIM2, TIM8/TIM3, TIM4, TIM6, TIM7, and TIM15 
+  29:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****              (DAC_Trigger_T2_TRGO, DAC_Trigger_T4_TRGO...)
+  30:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****              The timer TRGO event should be selected using TIM_SelectOutputTrigger()
+  31:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****              (++) To trigger DAC conversions by TIM3 instead of TIM8 follow
+  32:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****                  this sequence:
+  33:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****                  (+++) Enable SYSCFG APB clock by calling
+  34:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****                        RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+  35:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****                  (+++) Select DAC_Trigger_T3_TRGO when calling DAC_Init()
+  36:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****                  (+++) Remap the DAC trigger from TIM8 to TIM3 by calling
+  37:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****                        SYSCFG_TriggerRemapConfig(SYSCFG_TriggerRemap_DACTIM3, ENABLE)
+  38:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          (#) Software using DAC_Trigger_Software
+  39:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     [..] Each DAC channel integrates an output buffer that can be used to 
+  40:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          reduce the output impedance, and to drive external loads directly
+  41:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          without having to add an external operational amplifier.
+  42:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          To enable, the output buffer use  
+  43:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Enable;
+  44:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     [..] Refer to the device datasheet for more details about output impedance
+  45:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          value with and without output buffer.
+  46:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     [..] Both DAC channels can be used to generate:
+  47:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          (+) Noise wave using DAC_WaveGeneration_Noise
+  48:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          (+) Triangle wave using DAC_WaveGeneration_Triangle
+  49:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     [..] Wave generation can be disabled using DAC_WaveGeneration_None
+  50:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     [..] The DAC data format can be:
+  51:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          (+) 8-bit right alignment using DAC_Align_8b_R
+  52:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          (+) 12-bit left alignment using DAC_Align_12b_L
+  53:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          (+) 12-bit right alignment using DAC_Align_12b_R
+  54:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     [..] The analog output voltage on each DAC channel pin is determined
+  55:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          by the following equation: 
+  56:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          (+) DAC_OUTx = VREF+ * DOR / 4095 with DOR is the Data Output Register. 
+  57:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          VREF+ is the input voltage reference (refer to the device datasheet)
+  58:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          e.g. To set DAC_OUT1 to 0.7V, use DAC_SetChannel1Data(DAC_Align_12b_R, 868);
+  59:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          Assuming that VREF+ = 3.3, DAC_OUT1 = (3.3 * 868) / 4095 = 0.7V
+  60:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     [..] A DMA request can be generated when an external trigger (but not
+  61:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          a software trigger) occurs if DMA2 requests are enabled using
+  62:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          DAC_DMACmd();
+  63:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          DMA requests are mapped as following:
+  64:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          (+) DAC channel1 is mapped on DMA2 channel3 which must be already 
+  65:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****              configured.
+  66:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****          (+) DAC channel2 is mapped on DMA2 channel4 which must be already 
+  67:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****              configured.
+  68:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****  
+  69:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****                     ##### How to use this driver #####
+  70:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****  ===============================================================================          
+  71:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     [..]
+  72:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     (+) DAC APB clock must be enabled to get write access to DAC
+  73:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****         registers using RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE);
+  74:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     (+) Configure DAC_OUTx (DAC_OUT1: PA4, DAC_OUT2: PA5) in analog mode.
+  75:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     (+) Configure the DAC channel using DAC_Init();
+  76:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     (+) Enable the DAC channel using DAC_Cmd();
+  77:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****  
+  78:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   @endverbatim
+  79:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     
+  80:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   ******************************************************************************
+  81:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @attention
+  82:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *
+  83:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  84:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *
+  85:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  86:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * You may not use this file except in compliance with the License.
+  87:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * You may obtain a copy of the License at:
+  88:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *
+  89:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *        http://www.st.com/software_license_agreement_liberty_v2
+  90:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *
+  91:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * Unless required by applicable law or agreed to in writing, software 
+  92:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * distributed under the License is distributed on an "AS IS" BASIS, 
+  93:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  94:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * See the License for the specific language governing permissions and
+  95:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * limitations under the License.
+  96:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *
+  97:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   ******************************************************************************
+  98:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+  99:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 100:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 101:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /* Includes ------------------------------------------------------------------*/
+ 102:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** #include "stm32f30x_dac.h"
+ 103:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** #include "stm32f30x_rcc.h"
+ 104:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 105:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /** @addtogroup STM32F30x_StdPeriph_Driver
+ 106:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @{
+ 107:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 108:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 109:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /** @defgroup DAC 
+ 110:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief DAC driver modules
+ 111:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @{
+ 112:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */ 
+ 113:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 114:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /* Private typedef -----------------------------------------------------------*/
+ 115:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /* Private define ------------------------------------------------------------*/
+ 116:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 117:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /* CR register Mask */
+ 118:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** #define CR_CLEAR_MASK              ((uint32_t)0x00000FFE)
+ 119:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 120:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /* DAC Dual Channels SWTRIG masks */
+ 121:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** #define DUAL_SWTRIG_SET            ((uint32_t)0x00000003)
+ 122:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** #define DUAL_SWTRIG_RESET          ((uint32_t)0xFFFFFFFC)
+ 123:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 124:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /* DHR registers offsets */
+ 125:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** #define DHR12R1_OFFSET             ((uint32_t)0x00000008)
+ 126:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** #define DHR12R2_OFFSET             ((uint32_t)0x00000014)
+ 127:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** #define DHR12RD_OFFSET             ((uint32_t)0x00000020)
+ 128:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 129:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /* DOR register offset */
+ 130:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** #define DOR_OFFSET                 ((uint32_t)0x0000002C)
+ 131:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 132:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /* Private macro -------------------------------------------------------------*/
+ 133:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /* Private variables ---------------------------------------------------------*/
+ 134:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /* Private function prototypes -----------------------------------------------*/
+ 135:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /* Private functions ---------------------------------------------------------*/
+ 136:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 137:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /** @defgroup DAC_Private_Functions
+ 138:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @{
+ 139:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 140:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 141:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /** @defgroup DAC_Group1 DAC channels configuration
+ 142:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****  *  @brief   DAC channels configuration: trigger, output buffer, data format 
+ 143:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****  *
+ 144:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** @verbatim   
+ 145:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****  ===============================================================================
+ 146:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     ##### DAC channels configuration: trigger, output buffer, data format #####
+ 147:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****  ===============================================================================  
+ 148:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 149:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** @endverbatim
+ 150:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @{
+ 151:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 152:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 153:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 154:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief  Deinitializes the DAC peripheral registers to their default reset values.
+ 155:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  None
+ 156:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @retval None
+ 157:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 158:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** void DAC_DeInit(void)
+ 159:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {
+  26              		.loc 1 159 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+ 160:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Enable DAC reset state */
+ 161:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   RCC_APB1PeriphResetCmd(RCC_APB1Periph_DAC, ENABLE);
+  30              		.loc 1 161 0
+  31 0000 0121     		movs	r1, #1
+ 159:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {
+  32              		.loc 1 159 0
+  33 0002 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+  38              		.loc 1 161 0
+  39 0004 4FF00050 		mov	r0, #536870912
+  40 0008 FFF7FEFF 		bl	RCC_APB1PeriphResetCmd
+  41              	.LVL0:
+ 162:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Release DAC from reset state */
+ 163:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   RCC_APB1PeriphResetCmd(RCC_APB1Periph_DAC, DISABLE);
+  42              		.loc 1 163 0
+  43 000c 4FF00050 		mov	r0, #536870912
+  44 0010 0021     		movs	r1, #0
+ 164:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** }
+  45              		.loc 1 164 0
+  46 0012 BDE80840 		pop	{r3, lr}
+ 163:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   RCC_APB1PeriphResetCmd(RCC_APB1Periph_DAC, DISABLE);
+  47              		.loc 1 163 0
+  48 0016 FFF7FEBF 		b	RCC_APB1PeriphResetCmd
+  49              	.LVL1:
+  50              		.cfi_endproc
+  51              	.LFE111:
+  53              		.align	1
+  54              		.global	DAC_Init
+  55              		.thumb
+  56              		.thumb_func
+  58              	DAC_Init:
+  59              	.LFB112:
+ 165:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 166:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 167:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief  Initializes the DAC peripheral according to the specified parameters
+ 168:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *         in the DAC_InitStruct.
+ 169:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_Channel: the selected DAC channel. 
+ 170:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be:
+ 171:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 172:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 173:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_InitStruct: pointer to a DAC_InitTypeDef structure that contains
+ 174:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *         the configuration information for the  specified DAC channel.
+ 175:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @retval None
+ 176:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 177:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** void DAC_Init(uint32_t DAC_Channel, DAC_InitTypeDef* DAC_InitStruct)
+ 178:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {
+  60              		.loc 1 178 0
+  61              		.cfi_startproc
+  62              		@ args = 0, pretend = 0, frame = 0
+  63              		@ frame_needed = 0, uses_anonymous_args = 0
+  64              	.LVL2:
+  65 001a 30B5     		push	{r4, r5, lr}
+  66              	.LCFI1:
+  67              		.cfi_def_cfa_offset 12
+  68              		.cfi_offset 4, -12
+  69              		.cfi_offset 5, -8
+  70              		.cfi_offset 14, -4
+ 179:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   uint32_t tmpreg1 = 0, tmpreg2 = 0;
+ 180:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 181:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Check the DAC parameters */
+ 182:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_TRIGGER(DAC_InitStruct->DAC_Trigger));
+ 183:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_GENERATE_WAVE(DAC_InitStruct->DAC_WaveGeneration));
+ 184:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_LFSR_UNMASK_TRIANGLE_AMPLITUDE(DAC_InitStruct->DAC_LFSRUnmask_TriangleAmplitu
+ 185:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_OUTPUT_BUFFER_STATE(DAC_InitStruct->DAC_OutputBuffer));
+ 186:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 187:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /*---------------------------- DAC CR Configuration --------------------------*/
+ 188:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Get the DAC CR value */
+ 189:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   tmpreg1 = DAC->CR;
+ 190:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Clear BOFFx, TENx, TSELx, WAVEx and MAMPx bits */
+ 191:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   tmpreg1 &= ~(CR_CLEAR_MASK << DAC_Channel);
+  71              		.loc 1 191 0
+  72 001c 40F6FE75 		movw	r5, #4094
+  73 0020 05FA00F5 		lsl	r5, r5, r0
+ 189:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   tmpreg1 = DAC->CR;
+  74              		.loc 1 189 0
+  75 0024 074B     		ldr	r3, .L3
+  76 0026 1A68     		ldr	r2, [r3, #0]
+  77              	.LVL3:
+  78              		.loc 1 191 0
+  79 0028 22EA0505 		bic	r5, r2, r5
+  80              	.LVL4:
+ 192:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Configure for the selected DAC channel: buffer output, trigger, 
+ 193:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****      wave generation, mask/amplitude for wave generation */
+ 194:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Set TSELx and TENx bits according to DAC_Trigger value */
+ 195:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Set WAVEx bits according to DAC_WaveGeneration value */
+ 196:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Set MAMPx bits according to DAC_LFSRUnmask_TriangleAmplitude value */ 
+ 197:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Set BOFFx bit according to DAC_OutputBuffer value */   
+ 198:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   tmpreg2 = (DAC_InitStruct->DAC_Trigger | DAC_InitStruct->DAC_WaveGeneration |
+  81              		.loc 1 198 0
+  82 002c 91E81400 		ldmia	r1, {r2, r4}
+  83 0030 1443     		orrs	r4, r4, r2
+  84 0032 8A68     		ldr	r2, [r1, #8]
+  85 0034 C968     		ldr	r1, [r1, #12]
+  86              	.LVL5:
+  87 0036 2243     		orrs	r2, r2, r4
+  88              	.LVL6:
+  89 0038 0A43     		orrs	r2, r2, r1
+  90              	.LVL7:
+ 199:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****              DAC_InitStruct->DAC_LFSRUnmask_TriangleAmplitude | \
+ 200:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****              DAC_InitStruct->DAC_OutputBuffer);
+ 201:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Calculate CR register value depending on DAC_Channel */
+ 202:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   tmpreg1 |= tmpreg2 << DAC_Channel;
+  91              		.loc 1 202 0
+  92 003a 02FA00F0 		lsl	r0, r2, r0
+  93              	.LVL8:
+  94 003e 2843     		orrs	r0, r0, r5
+  95              	.LVL9:
+ 203:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Write to DAC CR */
+ 204:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   DAC->CR = tmpreg1;
+  96              		.loc 1 204 0
+  97 0040 1860     		str	r0, [r3, #0]
+  98 0042 30BD     		pop	{r4, r5, pc}
+  99              	.L4:
+ 100              		.align	2
+ 101              	.L3:
+ 102 0044 00740040 		.word	1073771520
+ 103              		.cfi_endproc
+ 104              	.LFE112:
+ 106              		.align	1
+ 107              		.global	DAC_StructInit
+ 108              		.thumb
+ 109              		.thumb_func
+ 111              	DAC_StructInit:
+ 112              	.LFB113:
+ 205:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** }
+ 206:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 207:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 208:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief  Fills each DAC_InitStruct member with its default value.
+ 209:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_InitStruct: pointer to a DAC_InitTypeDef structure which will 
+ 210:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *         be initialized.
+ 211:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @retval None
+ 212:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 213:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** void DAC_StructInit(DAC_InitTypeDef* DAC_InitStruct)
+ 214:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {
+ 113              		.loc 1 214 0
+ 114              		.cfi_startproc
+ 115              		@ args = 0, pretend = 0, frame = 0
+ 116              		@ frame_needed = 0, uses_anonymous_args = 0
+ 117              		@ link register save eliminated.
+ 118              	.LVL10:
+ 215:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /*--------------- Reset DAC init structure parameters values -----------------*/
+ 216:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Initialize the DAC_Trigger member */
+ 217:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   DAC_InitStruct->DAC_Trigger = DAC_Trigger_None;
+ 119              		.loc 1 217 0
+ 120 0048 0023     		movs	r3, #0
+ 121 004a 0360     		str	r3, [r0, #0]
+ 218:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Initialize the DAC_WaveGeneration member */
+ 219:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   DAC_InitStruct->DAC_WaveGeneration = DAC_WaveGeneration_None;
+ 122              		.loc 1 219 0
+ 123 004c 4360     		str	r3, [r0, #4]
+ 220:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Initialize the DAC_LFSRUnmask_TriangleAmplitude member */
+ 221:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   DAC_InitStruct->DAC_LFSRUnmask_TriangleAmplitude = DAC_LFSRUnmask_Bit0;
+ 124              		.loc 1 221 0
+ 125 004e 8360     		str	r3, [r0, #8]
+ 222:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Initialize the DAC_OutputBuffer member */
+ 223:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   DAC_InitStruct->DAC_OutputBuffer = DAC_OutputBuffer_Enable;
+ 126              		.loc 1 223 0
+ 127 0050 C360     		str	r3, [r0, #12]
+ 128 0052 7047     		bx	lr
+ 129              		.cfi_endproc
+ 130              	.LFE113:
+ 132              		.align	1
+ 133              		.global	DAC_Cmd
+ 134              		.thumb
+ 135              		.thumb_func
+ 137              	DAC_Cmd:
+ 138              	.LFB114:
+ 224:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** }
+ 225:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 226:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 227:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief  Enables or disables the specified DAC channel.
+ 228:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 229:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be:
+ 230:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 231:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 232:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  NewState: new state of the DAC channel. 
+ 233:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 234:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @note   When the DAC channel is enabled the trigger source can no more be modified.
+ 235:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @retval None
+ 236:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 237:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** void DAC_Cmd(uint32_t DAC_Channel, FunctionalState NewState)
+ 238:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {
+ 139              		.loc 1 238 0
+ 140              		.cfi_startproc
+ 141              		@ args = 0, pretend = 0, frame = 0
+ 142              		@ frame_needed = 0, uses_anonymous_args = 0
+ 143              		@ link register save eliminated.
+ 144              	.LVL11:
+ 145 0054 074B     		ldr	r3, .L10
+ 146 0056 0122     		movs	r2, #1
+ 239:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Check the parameters */
+ 240:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 241:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 242:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 243:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   if (NewState != DISABLE)
+ 147              		.loc 1 243 0
+ 148 0058 21B1     		cbz	r1, .L7
+ 244:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 245:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     /* Enable the selected DAC channel */
+ 246:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     DAC->CR |= (DAC_CR_EN1 << DAC_Channel);
+ 149              		.loc 1 246 0
+ 150 005a 02FA00F2 		lsl	r2, r2, r0
+ 151 005e 1968     		ldr	r1, [r3, #0]
+ 152              	.LVL12:
+ 153 0060 0A43     		orrs	r2, r2, r1
+ 154 0062 04E0     		b	.L9
+ 155              	.LVL13:
+ 156              	.L7:
+ 247:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 248:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   else
+ 249:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 250:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     /* Disable the selected DAC channel */
+ 251:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     DAC->CR &= (~(DAC_CR_EN1 << DAC_Channel));
+ 157              		.loc 1 251 0
+ 158 0064 02FA00F2 		lsl	r2, r2, r0
+ 159 0068 1968     		ldr	r1, [r3, #0]
+ 160              	.LVL14:
+ 161 006a 21EA0202 		bic	r2, r1, r2
+ 162              	.L9:
+ 163 006e 1A60     		str	r2, [r3, #0]
+ 164 0070 7047     		bx	lr
+ 165              	.L11:
+ 166 0072 00BF     		.align	2
+ 167              	.L10:
+ 168 0074 00740040 		.word	1073771520
+ 169              		.cfi_endproc
+ 170              	.LFE114:
+ 172              		.align	1
+ 173              		.global	DAC_SoftwareTriggerCmd
+ 174              		.thumb
+ 175              		.thumb_func
+ 177              	DAC_SoftwareTriggerCmd:
+ 178              	.LFB115:
+ 252:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 253:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** }
+ 254:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 255:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 256:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief  Enables or disables the selected DAC channel software trigger.
+ 257:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 258:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be:
+ 259:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 260:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 261:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  NewState: new state of the selected DAC channel software trigger.
+ 262:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 263:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @retval None
+ 264:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 265:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** void DAC_SoftwareTriggerCmd(uint32_t DAC_Channel, FunctionalState NewState)
+ 266:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {
+ 179              		.loc 1 266 0
+ 180              		.cfi_startproc
+ 181              		@ args = 0, pretend = 0, frame = 0
+ 182              		@ frame_needed = 0, uses_anonymous_args = 0
+ 183              		@ link register save eliminated.
+ 184              	.LVL15:
+ 185 0078 074B     		ldr	r3, .L16
+ 186 007a 0009     		lsrs	r0, r0, #4
+ 187              	.LVL16:
+ 188 007c 0122     		movs	r2, #1
+ 267:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Check the parameters */
+ 268:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 269:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 270:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 271:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   if (NewState != DISABLE)
+ 189              		.loc 1 271 0
+ 190 007e 21B1     		cbz	r1, .L13
+ 272:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 273:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     /* Enable software trigger for the selected DAC channel */
+ 274:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     DAC->SWTRIGR |= (uint32_t)DAC_SWTRIGR_SWTRIG1 << (DAC_Channel >> 4);
+ 191              		.loc 1 274 0
+ 192 0080 02FA00F2 		lsl	r2, r2, r0
+ 193 0084 5968     		ldr	r1, [r3, #4]
+ 194              	.LVL17:
+ 195 0086 0A43     		orrs	r2, r2, r1
+ 196 0088 04E0     		b	.L15
+ 197              	.LVL18:
+ 198              	.L13:
+ 275:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 276:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   else
+ 277:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 278:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     /* Disable software trigger for the selected DAC channel */
+ 279:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     DAC->SWTRIGR &= ~((uint32_t)DAC_SWTRIGR_SWTRIG1 << (DAC_Channel >> 4));
+ 199              		.loc 1 279 0
+ 200 008a 02FA00F2 		lsl	r2, r2, r0
+ 201 008e 5968     		ldr	r1, [r3, #4]
+ 202              	.LVL19:
+ 203 0090 21EA0202 		bic	r2, r1, r2
+ 204              	.L15:
+ 205 0094 5A60     		str	r2, [r3, #4]
+ 206 0096 7047     		bx	lr
+ 207              	.L17:
+ 208              		.align	2
+ 209              	.L16:
+ 210 0098 00740040 		.word	1073771520
+ 211              		.cfi_endproc
+ 212              	.LFE115:
+ 214              		.align	1
+ 215              		.global	DAC_DualSoftwareTriggerCmd
+ 216              		.thumb
+ 217              		.thumb_func
+ 219              	DAC_DualSoftwareTriggerCmd:
+ 220              	.LFB116:
+ 280:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 281:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** }
+ 282:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 283:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 284:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief  Enables or disables simultaneously the two DAC channels software triggers.
+ 285:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  NewState: new state of the DAC channels software triggers.
+ 286:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 287:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @retval None
+ 288:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 289:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** void DAC_DualSoftwareTriggerCmd(FunctionalState NewState)
+ 290:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {
+ 221              		.loc 1 290 0
+ 222              		.cfi_startproc
+ 223              		@ args = 0, pretend = 0, frame = 0
+ 224              		@ frame_needed = 0, uses_anonymous_args = 0
+ 225              		@ link register save eliminated.
+ 226              	.LVL20:
+ 227 009c 044B     		ldr	r3, .L22
+ 291:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Check the parameters */
+ 292:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 293:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 294:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   if (NewState != DISABLE)
+ 295:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 296:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     /* Enable software trigger for both DAC channels */
+ 297:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     DAC->SWTRIGR |= DUAL_SWTRIG_SET;
+ 228              		.loc 1 297 0
+ 229 009e 5A68     		ldr	r2, [r3, #4]
+ 294:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   if (NewState != DISABLE)
+ 230              		.loc 1 294 0
+ 231 00a0 10B1     		cbz	r0, .L19
+ 232              		.loc 1 297 0
+ 233 00a2 42F00302 		orr	r2, r2, #3
+ 234 00a6 01E0     		b	.L21
+ 235              	.L19:
+ 298:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 299:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   else
+ 300:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 301:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     /* Disable software trigger for both DAC channels */
+ 302:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     DAC->SWTRIGR &= DUAL_SWTRIG_RESET;
+ 236              		.loc 1 302 0
+ 237 00a8 22F00302 		bic	r2, r2, #3
+ 238              	.L21:
+ 239 00ac 5A60     		str	r2, [r3, #4]
+ 240 00ae 7047     		bx	lr
+ 241              	.L23:
+ 242              		.align	2
+ 243              	.L22:
+ 244 00b0 00740040 		.word	1073771520
+ 245              		.cfi_endproc
+ 246              	.LFE116:
+ 248              		.align	1
+ 249              		.global	DAC_WaveGenerationCmd
+ 250              		.thumb
+ 251              		.thumb_func
+ 253              	DAC_WaveGenerationCmd:
+ 254              	.LFB117:
+ 303:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 304:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** }
+ 305:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 306:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 307:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief  Enables or disables the selected DAC channel wave generation.
+ 308:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 309:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be:
+ 310:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 311:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 312:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_Wave: specifies the wave type to enable or disable.
+ 313:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be:
+ 314:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Wave_Noise: noise wave generation
+ 315:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Wave_Triangle: triangle wave generation
+ 316:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  NewState: new state of the selected DAC channel wave generation.
+ 317:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be: ENABLE or DISABLE.  
+ 318:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @retval None
+ 319:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 320:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** void DAC_WaveGenerationCmd(uint32_t DAC_Channel, uint32_t DAC_Wave, FunctionalState NewState)
+ 321:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {
+ 255              		.loc 1 321 0
+ 256              		.cfi_startproc
+ 257              		@ args = 0, pretend = 0, frame = 0
+ 258              		@ frame_needed = 0, uses_anonymous_args = 0
+ 259              		@ link register save eliminated.
+ 260              	.LVL21:
+ 261 00b4 054B     		ldr	r3, .L28
+ 262 00b6 01FA00F1 		lsl	r1, r1, r0
+ 263              	.LVL22:
+ 322:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Check the parameters */
+ 323:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 324:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_WAVE(DAC_Wave)); 
+ 325:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 326:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 327:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   if (NewState != DISABLE)
+ 264              		.loc 1 327 0
+ 265 00ba 12B1     		cbz	r2, .L25
+ 328:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 329:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     /* Enable the selected wave generation for the selected DAC channel */
+ 330:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     DAC->CR |= DAC_Wave << DAC_Channel;
+ 266              		.loc 1 330 0
+ 267 00bc 1A68     		ldr	r2, [r3, #0]
+ 268              	.LVL23:
+ 269 00be 1143     		orrs	r1, r1, r2
+ 270 00c0 02E0     		b	.L27
+ 271              	.LVL24:
+ 272              	.L25:
+ 331:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 332:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   else
+ 333:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 334:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     /* Disable the selected wave generation for the selected DAC channel */
+ 335:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     DAC->CR &= ~(DAC_Wave << DAC_Channel);
+ 273              		.loc 1 335 0
+ 274 00c2 1A68     		ldr	r2, [r3, #0]
+ 275              	.LVL25:
+ 276 00c4 22EA0101 		bic	r1, r2, r1
+ 277              	.L27:
+ 278 00c8 1960     		str	r1, [r3, #0]
+ 279 00ca 7047     		bx	lr
+ 280              	.L29:
+ 281              		.align	2
+ 282              	.L28:
+ 283 00cc 00740040 		.word	1073771520
+ 284              		.cfi_endproc
+ 285              	.LFE117:
+ 287              		.align	1
+ 288              		.global	DAC_SetChannel1Data
+ 289              		.thumb
+ 290              		.thumb_func
+ 292              	DAC_SetChannel1Data:
+ 293              	.LFB118:
+ 336:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 337:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** }
+ 338:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 339:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 340:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief  Sets the specified data holding register value for DAC channel1.
+ 341:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_Align: Specifies the data alignment for DAC channel1.
+ 342:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be:
+ 343:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Align_8b_R: 8bit right data alignment selected
+ 344:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Align_12b_L: 12bit left data alignment selected
+ 345:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Align_12b_R: 12bit right data alignment selected
+ 346:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  Data: Data to be loaded in the selected data holding register.
+ 347:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @retval None
+ 348:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 349:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** void DAC_SetChannel1Data(uint32_t DAC_Align, uint16_t Data)
+ 350:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {  
+ 294              		.loc 1 350 0
+ 295              		.cfi_startproc
+ 296              		@ args = 0, pretend = 0, frame = 8
+ 297              		@ frame_needed = 0, uses_anonymous_args = 0
+ 298              		@ link register save eliminated.
+ 299              	.LVL26:
+ 300 00d0 82B0     		sub	sp, sp, #8
+ 301              	.LCFI2:
+ 302              		.cfi_def_cfa_offset 8
+ 351:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   __IO uint32_t tmp = 0;
+ 303              		.loc 1 351 0
+ 304 00d2 0023     		movs	r3, #0
+ 305 00d4 0193     		str	r3, [sp, #4]
+ 306              	.LVL27:
+ 352:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   
+ 353:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Check the parameters */
+ 354:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_ALIGN(DAC_Align));
+ 355:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_DATA(Data));
+ 356:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   
+ 357:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   tmp = (uint32_t)DAC_BASE; 
+ 307              		.loc 1 357 0
+ 308 00d6 054B     		ldr	r3, .L31
+ 309 00d8 0193     		str	r3, [sp, #4]
+ 358:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   tmp += DHR12R1_OFFSET + DAC_Align;
+ 310              		.loc 1 358 0
+ 311 00da 019B     		ldr	r3, [sp, #4]
+ 312 00dc 0833     		adds	r3, r3, #8
+ 313 00de 1818     		adds	r0, r3, r0
+ 314              	.LVL28:
+ 315 00e0 0190     		str	r0, [sp, #4]
+ 316              	.LVL29:
+ 359:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 360:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Set the DAC channel1 selected data holding register */
+ 361:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *(__IO uint32_t *) tmp = Data;
+ 317              		.loc 1 361 0
+ 318 00e2 019B     		ldr	r3, [sp, #4]
+ 319 00e4 1960     		str	r1, [r3, #0]
+ 362:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** }
+ 320              		.loc 1 362 0
+ 321 00e6 02B0     		add	sp, sp, #8
+ 322 00e8 7047     		bx	lr
+ 323              	.L32:
+ 324 00ea 00BF     		.align	2
+ 325              	.L31:
+ 326 00ec 00740040 		.word	1073771520
+ 327              		.cfi_endproc
+ 328              	.LFE118:
+ 330              		.align	1
+ 331              		.global	DAC_SetChannel2Data
+ 332              		.thumb
+ 333              		.thumb_func
+ 335              	DAC_SetChannel2Data:
+ 336              	.LFB119:
+ 363:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 364:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 365:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief  Sets the specified data holding register value for DAC channel2.
+ 366:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_Align: Specifies the data alignment for DAC channel2.
+ 367:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be:
+ 368:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Align_8b_R: 8bit right data alignment selected
+ 369:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Align_12b_L: 12bit left data alignment selected
+ 370:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Align_12b_R: 12bit right data alignment selected
+ 371:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  Data: Data to be loaded in the selected data holding register.
+ 372:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @retval None
+ 373:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 374:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** void DAC_SetChannel2Data(uint32_t DAC_Align, uint16_t Data)
+ 375:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {
+ 337              		.loc 1 375 0
+ 338              		.cfi_startproc
+ 339              		@ args = 0, pretend = 0, frame = 8
+ 340              		@ frame_needed = 0, uses_anonymous_args = 0
+ 341              		@ link register save eliminated.
+ 342              	.LVL30:
+ 343 00f0 82B0     		sub	sp, sp, #8
+ 344              	.LCFI3:
+ 345              		.cfi_def_cfa_offset 8
+ 376:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   __IO uint32_t tmp = 0;
+ 346              		.loc 1 376 0
+ 347 00f2 0023     		movs	r3, #0
+ 348 00f4 0193     		str	r3, [sp, #4]
+ 349              	.LVL31:
+ 377:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 378:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Check the parameters */
+ 379:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_ALIGN(DAC_Align));
+ 380:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_DATA(Data));
+ 381:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   
+ 382:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   tmp = (uint32_t)DAC_BASE;
+ 350              		.loc 1 382 0
+ 351 00f6 054B     		ldr	r3, .L34
+ 352 00f8 0193     		str	r3, [sp, #4]
+ 383:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   tmp += DHR12R2_OFFSET + DAC_Align;
+ 353              		.loc 1 383 0
+ 354 00fa 019B     		ldr	r3, [sp, #4]
+ 355 00fc 1433     		adds	r3, r3, #20
+ 356 00fe 1818     		adds	r0, r3, r0
+ 357              	.LVL32:
+ 358 0100 0190     		str	r0, [sp, #4]
+ 359              	.LVL33:
+ 384:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 385:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Set the DAC channel2 selected data holding register */
+ 386:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *(__IO uint32_t *)tmp = Data;
+ 360              		.loc 1 386 0
+ 361 0102 019B     		ldr	r3, [sp, #4]
+ 362 0104 1960     		str	r1, [r3, #0]
+ 387:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** }
+ 363              		.loc 1 387 0
+ 364 0106 02B0     		add	sp, sp, #8
+ 365 0108 7047     		bx	lr
+ 366              	.L35:
+ 367 010a 00BF     		.align	2
+ 368              	.L34:
+ 369 010c 00740040 		.word	1073771520
+ 370              		.cfi_endproc
+ 371              	.LFE119:
+ 373              		.align	1
+ 374              		.global	DAC_SetDualChannelData
+ 375              		.thumb
+ 376              		.thumb_func
+ 378              	DAC_SetDualChannelData:
+ 379              	.LFB120:
+ 388:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 389:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 390:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief  Sets the specified data holding register value for dual channel DAC.
+ 391:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_Align: Specifies the data alignment for dual channel DAC.
+ 392:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be:
+ 393:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Align_8b_R: 8bit right data alignment selected
+ 394:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Align_12b_L: 12bit left data alignment selected
+ 395:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Align_12b_R: 12bit right data alignment selected
+ 396:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  Data2: Data for DAC Channel2 to be loaded in the selected data holding register.
+ 397:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  Data1: Data for DAC Channel1 to be loaded in the selected data  holding register.
+ 398:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @note   In dual mode, a unique register access is required to write in both
+ 399:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          DAC channels at the same time.
+ 400:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @retval None
+ 401:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 402:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** void DAC_SetDualChannelData(uint32_t DAC_Align, uint16_t Data2, uint16_t Data1)
+ 403:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {
+ 380              		.loc 1 403 0
+ 381              		.cfi_startproc
+ 382              		@ args = 0, pretend = 0, frame = 0
+ 383              		@ frame_needed = 0, uses_anonymous_args = 0
+ 384              		@ link register save eliminated.
+ 385              	.LVL34:
+ 404:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   uint32_t data = 0, tmp = 0;
+ 405:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   
+ 406:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Check the parameters */
+ 407:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_ALIGN(DAC_Align));
+ 408:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_DATA(Data1));
+ 409:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_DATA(Data2));
+ 410:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   
+ 411:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Calculate and set dual DAC data holding register value */
+ 412:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   if (DAC_Align == DAC_Align_8b_R)
+ 386              		.loc 1 412 0
+ 387 0110 0828     		cmp	r0, #8
+ 413:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 414:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     data = ((uint32_t)Data2 << 8) | Data1; 
+ 415:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 416:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   else
+ 417:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 418:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     data = ((uint32_t)Data2 << 16) | Data1;
+ 419:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 420:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   
+ 421:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   tmp = (uint32_t)DAC_BASE;
+ 422:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   tmp += DHR12RD_OFFSET + DAC_Align;
+ 388              		.loc 1 422 0
+ 389 0112 044B     		ldr	r3, .L39
+ 414:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     data = ((uint32_t)Data2 << 8) | Data1; 
+ 390              		.loc 1 414 0
+ 391 0114 0CBF     		ite	eq
+ 392 0116 42EA0121 		orreq	r1, r2, r1, lsl #8
+ 393              	.LVL35:
+ 418:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     data = ((uint32_t)Data2 << 16) | Data1;
+ 394              		.loc 1 418 0
+ 395 011a 42EA0141 		orrne	r1, r2, r1, lsl #16
+ 396              	.LVL36:
+ 423:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 424:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Set the dual DAC selected data holding register */
+ 425:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *(__IO uint32_t *)tmp = data;
+ 397              		.loc 1 425 0
+ 398 011e C150     		str	r1, [r0, r3]
+ 399 0120 7047     		bx	lr
+ 400              	.L40:
+ 401 0122 00BF     		.align	2
+ 402              	.L39:
+ 403 0124 20740040 		.word	1073771552
+ 404              		.cfi_endproc
+ 405              	.LFE120:
+ 407              		.align	1
+ 408              		.global	DAC_GetDataOutputValue
+ 409              		.thumb
+ 410              		.thumb_func
+ 412              	DAC_GetDataOutputValue:
+ 413              	.LFB121:
+ 426:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** }
+ 427:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 428:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 429:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief  Returns the last data output value of the selected DAC channel.
+ 430:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 431:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be:
+ 432:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 433:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 434:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @retval The selected DAC channel data output value.
+ 435:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 436:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** uint16_t DAC_GetDataOutputValue(uint32_t DAC_Channel)
+ 437:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {
+ 414              		.loc 1 437 0
+ 415              		.cfi_startproc
+ 416              		@ args = 0, pretend = 0, frame = 8
+ 417              		@ frame_needed = 0, uses_anonymous_args = 0
+ 418              		@ link register save eliminated.
+ 419              	.LVL37:
+ 420 0128 82B0     		sub	sp, sp, #8
+ 421              	.LCFI4:
+ 422              		.cfi_def_cfa_offset 8
+ 438:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   __IO uint32_t tmp = 0;
+ 423              		.loc 1 438 0
+ 424 012a 0023     		movs	r3, #0
+ 425 012c 0193     		str	r3, [sp, #4]
+ 426              	.LVL38:
+ 439:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   
+ 440:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Check the parameters */
+ 441:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 442:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   
+ 443:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   tmp = (uint32_t) DAC_BASE ;
+ 427              		.loc 1 443 0
+ 428 012e 064B     		ldr	r3, .L42
+ 429 0130 0193     		str	r3, [sp, #4]
+ 444:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   tmp += DOR_OFFSET + ((uint32_t)DAC_Channel >> 2);
+ 430              		.loc 1 444 0
+ 431 0132 019B     		ldr	r3, [sp, #4]
+ 432 0134 2C33     		adds	r3, r3, #44
+ 433 0136 03EB9000 		add	r0, r3, r0, lsr #2
+ 434              	.LVL39:
+ 435 013a 0190     		str	r0, [sp, #4]
+ 436              	.LVL40:
+ 445:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   
+ 446:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Returns the DAC channel data output register value */
+ 447:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   return (uint16_t) (*(__IO uint32_t*) tmp);
+ 437              		.loc 1 447 0
+ 438 013c 019B     		ldr	r3, [sp, #4]
+ 439 013e 1868     		ldr	r0, [r3, #0]
+ 440              	.LVL41:
+ 448:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** }
+ 441              		.loc 1 448 0
+ 442 0140 80B2     		uxth	r0, r0
+ 443 0142 02B0     		add	sp, sp, #8
+ 444 0144 7047     		bx	lr
+ 445              	.L43:
+ 446 0146 00BF     		.align	2
+ 447              	.L42:
+ 448 0148 00740040 		.word	1073771520
+ 449              		.cfi_endproc
+ 450              	.LFE121:
+ 452              		.align	1
+ 453              		.global	DAC_DMACmd
+ 454              		.thumb
+ 455              		.thumb_func
+ 457              	DAC_DMACmd:
+ 458              	.LFB122:
+ 449:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 450:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @}
+ 451:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 452:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 453:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /** @defgroup DAC_Group2 DMA management functions
+ 454:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****  *  @brief   DMA management functions
+ 455:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****  *
+ 456:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** @verbatim   
+ 457:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****  ===============================================================================
+ 458:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****                     ##### DMA management functions #####
+ 459:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****  ===============================================================================  
+ 460:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 461:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** @endverbatim
+ 462:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @{
+ 463:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 464:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 465:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 466:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief  Enables or disables the specified DAC channel DMA request.
+ 467:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @note   When enabled DMA1 is generated when an external trigger (EXTI Line9,
+ 468:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *         TIM2, TIM4, TIM5, TIM6, TIM7 or TIM8  but not a software trigger) occurs.
+ 469:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 470:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be:
+ 471:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 472:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 473:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  NewState: new state of the selected DAC channel DMA request.
+ 474:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 475:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @note   The DAC channel1 is mapped on DMA1 channel3 which must be
+ 476:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          already configured.
+ 477:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @note   The DAC channel2 is mapped on DMA1 channel4 which must be
+ 478:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          already configured.    
+ 479:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @retval None
+ 480:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 481:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** void DAC_DMACmd(uint32_t DAC_Channel, FunctionalState NewState)
+ 482:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {
+ 459              		.loc 1 482 0
+ 460              		.cfi_startproc
+ 461              		@ args = 0, pretend = 0, frame = 0
+ 462              		@ frame_needed = 0, uses_anonymous_args = 0
+ 463              		@ link register save eliminated.
+ 464              	.LVL42:
+ 465 014c 074B     		ldr	r3, .L48
+ 466 014e 4FF48052 		mov	r2, #4096
+ 483:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Check the parameters */
+ 484:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 485:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 486:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 487:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   if (NewState != DISABLE)
+ 467              		.loc 1 487 0
+ 468 0152 21B1     		cbz	r1, .L45
+ 488:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 489:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     /* Enable the selected DAC channel DMA request */
+ 490:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     DAC->CR |= (DAC_CR_DMAEN1 << DAC_Channel);
+ 469              		.loc 1 490 0
+ 470 0154 02FA00F2 		lsl	r2, r2, r0
+ 471 0158 1968     		ldr	r1, [r3, #0]
+ 472              	.LVL43:
+ 473 015a 0A43     		orrs	r2, r2, r1
+ 474 015c 04E0     		b	.L47
+ 475              	.LVL44:
+ 476              	.L45:
+ 491:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 492:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   else
+ 493:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 494:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     /* Disable the selected DAC channel DMA request */
+ 495:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     DAC->CR &= (~(DAC_CR_DMAEN1 << DAC_Channel));
+ 477              		.loc 1 495 0
+ 478 015e 02FA00F2 		lsl	r2, r2, r0
+ 479 0162 1968     		ldr	r1, [r3, #0]
+ 480              	.LVL45:
+ 481 0164 21EA0202 		bic	r2, r1, r2
+ 482              	.L47:
+ 483 0168 1A60     		str	r2, [r3, #0]
+ 484 016a 7047     		bx	lr
+ 485              	.L49:
+ 486              		.align	2
+ 487              	.L48:
+ 488 016c 00740040 		.word	1073771520
+ 489              		.cfi_endproc
+ 490              	.LFE122:
+ 492              		.align	1
+ 493              		.global	DAC_ITConfig
+ 494              		.thumb
+ 495              		.thumb_func
+ 497              	DAC_ITConfig:
+ 498              	.LFB123:
+ 496:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 497:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** }
+ 498:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 499:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @}
+ 500:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 501:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 502:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /** @defgroup DAC_Group3 Interrupts and flags management functions
+ 503:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****  *  @brief   Interrupts and flags management functions
+ 504:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****  *
+ 505:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** @verbatim   
+ 506:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****  ===============================================================================
+ 507:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****               ##### Interrupts and flags management functions #####
+ 508:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****  ===============================================================================  
+ 509:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 510:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** @endverbatim
+ 511:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @{
+ 512:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 513:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 514:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 515:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief  Enables or disables the specified DAC interrupts.
+ 516:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 517:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be:
+ 518:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 519:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 520:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_IT: specifies the DAC interrupt sources to be enabled or disabled. 
+ 521:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be the following values:
+ 522:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_IT_DMAUDR: DMA underrun interrupt mask
+ 523:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @note   The DMA underrun occurs when a second external trigger arrives before the 
+ 524:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *         acknowledgement for the first external trigger is received (first request).
+ 525:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  NewState: new state of the specified DAC interrupts.
+ 526:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be: ENABLE or DISABLE.
+ 527:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @retval None
+ 528:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */ 
+ 529:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** void DAC_ITConfig(uint32_t DAC_Channel, uint32_t DAC_IT, FunctionalState NewState)  
+ 530:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {
+ 499              		.loc 1 530 0
+ 500              		.cfi_startproc
+ 501              		@ args = 0, pretend = 0, frame = 0
+ 502              		@ frame_needed = 0, uses_anonymous_args = 0
+ 503              		@ link register save eliminated.
+ 504              	.LVL46:
+ 505 0170 054B     		ldr	r3, .L54
+ 506 0172 01FA00F1 		lsl	r1, r1, r0
+ 507              	.LVL47:
+ 531:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Check the parameters */
+ 532:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 533:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_FUNCTIONAL_STATE(NewState));
+ 534:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_IT(DAC_IT)); 
+ 535:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 536:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   if (NewState != DISABLE)
+ 508              		.loc 1 536 0
+ 509 0176 12B1     		cbz	r2, .L51
+ 537:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 538:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     /* Enable the selected DAC interrupts */
+ 539:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     DAC->CR |=  (DAC_IT << DAC_Channel);
+ 510              		.loc 1 539 0
+ 511 0178 1A68     		ldr	r2, [r3, #0]
+ 512              	.LVL48:
+ 513 017a 1143     		orrs	r1, r1, r2
+ 514 017c 02E0     		b	.L53
+ 515              	.LVL49:
+ 516              	.L51:
+ 540:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 541:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   else
+ 542:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 543:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     /* Disable the selected DAC interrupts */
+ 544:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     DAC->CR &= (~(uint32_t)(DAC_IT << DAC_Channel));
+ 517              		.loc 1 544 0
+ 518 017e 1A68     		ldr	r2, [r3, #0]
+ 519              	.LVL50:
+ 520 0180 22EA0101 		bic	r1, r2, r1
+ 521              	.L53:
+ 522 0184 1960     		str	r1, [r3, #0]
+ 523 0186 7047     		bx	lr
+ 524              	.L55:
+ 525              		.align	2
+ 526              	.L54:
+ 527 0188 00740040 		.word	1073771520
+ 528              		.cfi_endproc
+ 529              	.LFE123:
+ 531              		.align	1
+ 532              		.global	DAC_GetFlagStatus
+ 533              		.thumb
+ 534              		.thumb_func
+ 536              	DAC_GetFlagStatus:
+ 537              	.LFB124:
+ 545:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 546:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** }
+ 547:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 548:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 549:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief  Checks whether the specified DAC flag is set or not.
+ 550:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 551:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be:
+ 552:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 553:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 554:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_FLAG: specifies the flag to check. 
+ 555:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be only of the following value:
+ 556:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_FLAG_DMAUDR: DMA underrun flag
+ 557:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @note   The DMA underrun occurs when a second external trigger arrives before the 
+ 558:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *         acknowledgement for the first external trigger is received (first request).
+ 559:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @retval The new state of DAC_FLAG (SET or RESET).
+ 560:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 561:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** FlagStatus DAC_GetFlagStatus(uint32_t DAC_Channel, uint32_t DAC_FLAG)
+ 562:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {
+ 538              		.loc 1 562 0
+ 539              		.cfi_startproc
+ 540              		@ args = 0, pretend = 0, frame = 0
+ 541              		@ frame_needed = 0, uses_anonymous_args = 0
+ 542              		@ link register save eliminated.
+ 543              	.LVL51:
+ 563:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   FlagStatus bitstatus = RESET;
+ 564:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Check the parameters */
+ 565:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 566:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_FLAG(DAC_FLAG));
+ 567:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 568:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Check the status of the specified DAC flag */
+ 569:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   if ((DAC->SR & (DAC_FLAG << DAC_Channel)) != (uint8_t)RESET)
+ 544              		.loc 1 569 0
+ 545 018c 01FA00F1 		lsl	r1, r1, r0
+ 546              	.LVL52:
+ 547 0190 034B     		ldr	r3, .L57
+ 548 0192 5B6B     		ldr	r3, [r3, #52]
+ 549              	.LVL53:
+ 550 0194 1942     		tst	r1, r3
+ 570:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 571:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     /* DAC_FLAG is set */
+ 572:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     bitstatus = SET;
+ 573:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 574:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   else
+ 575:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 576:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     /* DAC_FLAG is reset */
+ 577:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     bitstatus = RESET;
+ 578:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 579:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Return the DAC_FLAG status */
+ 580:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   return  bitstatus;
+ 581:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** }
+ 551              		.loc 1 581 0
+ 552 0196 0CBF     		ite	eq
+ 553 0198 0020     		moveq	r0, #0
+ 554 019a 0120     		movne	r0, #1
+ 555              	.LVL54:
+ 556 019c 7047     		bx	lr
+ 557              	.L58:
+ 558 019e 00BF     		.align	2
+ 559              	.L57:
+ 560 01a0 00740040 		.word	1073771520
+ 561              		.cfi_endproc
+ 562              	.LFE124:
+ 564              		.align	1
+ 565              		.global	DAC_ClearFlag
+ 566              		.thumb
+ 567              		.thumb_func
+ 569              	DAC_ClearFlag:
+ 570              	.LFB125:
+ 582:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 583:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 584:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief  Clears the DAC channel's pending flags.
+ 585:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 586:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be:
+ 587:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 588:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 589:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_FLAG: specifies the flag to clear. 
+ 590:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be of the following value:
+ 591:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_FLAG_DMAUDR: DMA underrun flag                           
+ 592:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @retval None
+ 593:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 594:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** void DAC_ClearFlag(uint32_t DAC_Channel, uint32_t DAC_FLAG)
+ 595:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {
+ 571              		.loc 1 595 0
+ 572              		.cfi_startproc
+ 573              		@ args = 0, pretend = 0, frame = 0
+ 574              		@ frame_needed = 0, uses_anonymous_args = 0
+ 575              		@ link register save eliminated.
+ 576              	.LVL55:
+ 596:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Check the parameters */
+ 597:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 598:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_FLAG(DAC_FLAG));
+ 599:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 600:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Clear the selected DAC flags */
+ 601:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   DAC->SR = (DAC_FLAG << DAC_Channel);
+ 577              		.loc 1 601 0
+ 578 01a4 01FA00F1 		lsl	r1, r1, r0
+ 579              	.LVL56:
+ 580 01a8 014B     		ldr	r3, .L60
+ 581 01aa 5963     		str	r1, [r3, #52]
+ 582 01ac 7047     		bx	lr
+ 583              	.L61:
+ 584 01ae 00BF     		.align	2
+ 585              	.L60:
+ 586 01b0 00740040 		.word	1073771520
+ 587              		.cfi_endproc
+ 588              	.LFE125:
+ 590              		.align	1
+ 591              		.global	DAC_GetITStatus
+ 592              		.thumb
+ 593              		.thumb_func
+ 595              	DAC_GetITStatus:
+ 596              	.LFB126:
+ 602:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** }
+ 603:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 604:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 605:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief  Checks whether the specified DAC interrupt has occurred or not.
+ 606:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 607:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be:
+ 608:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 609:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 610:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_IT: specifies the DAC interrupt source to check. 
+ 611:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be the following values:
+ 612:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_IT_DMAUDR: DMA underrun interrupt mask
+ 613:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @note   The DMA underrun occurs when a second external trigger arrives before the 
+ 614:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *         acknowledgement for the first external trigger is received (first request).
+ 615:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @retval The new state of DAC_IT (SET or RESET).
+ 616:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 617:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** ITStatus DAC_GetITStatus(uint32_t DAC_Channel, uint32_t DAC_IT)
+ 618:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {
+ 597              		.loc 1 618 0
+ 598              		.cfi_startproc
+ 599              		@ args = 0, pretend = 0, frame = 0
+ 600              		@ frame_needed = 0, uses_anonymous_args = 0
+ 601              		@ link register save eliminated.
+ 602              	.LVL57:
+ 619:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   ITStatus bitstatus = RESET;
+ 620:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   uint32_t enablestatus = 0;
+ 621:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   
+ 622:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Check the parameters */
+ 623:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 624:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_IT(DAC_IT));
+ 625:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 626:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Get the DAC_IT enable bit status */
+ 627:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   enablestatus = (DAC->CR & (DAC_IT << DAC_Channel)) ;
+ 603              		.loc 1 627 0
+ 604 01b4 01FA00F1 		lsl	r1, r1, r0
+ 605              	.LVL58:
+ 606 01b8 044B     		ldr	r3, .L65
+ 607 01ba 1A68     		ldr	r2, [r3, #0]
+ 608              	.LVL59:
+ 628:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   
+ 629:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Check the status of the specified DAC interrupt */
+ 630:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   if (((DAC->SR & (DAC_IT << DAC_Channel)) != (uint32_t)RESET) && enablestatus)
+ 609              		.loc 1 630 0
+ 610 01bc 586B     		ldr	r0, [r3, #52]
+ 611              	.LVL60:
+ 612 01be 0840     		ands	r0, r1, r0
+ 613 01c0 03D0     		beq	.L63
+ 614              		.loc 1 630 0 is_stmt 0 discriminator 1
+ 615 01c2 1142     		tst	r1, r2
+ 631:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 632:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     /* DAC_IT is set */
+ 633:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     bitstatus = SET;
+ 616              		.loc 1 633 0 is_stmt 1 discriminator 1
+ 617 01c4 0CBF     		ite	eq
+ 618 01c6 0020     		moveq	r0, #0
+ 619 01c8 0120     		movne	r0, #1
+ 620              	.L63:
+ 621              	.LVL61:
+ 634:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 635:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   else
+ 636:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   {
+ 637:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     /* DAC_IT is reset */
+ 638:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****     bitstatus = RESET;
+ 639:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   }
+ 640:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Return the DAC_IT status */
+ 641:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   return  bitstatus;
+ 642:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** }
+ 622              		.loc 1 642 0
+ 623 01ca 7047     		bx	lr
+ 624              	.L66:
+ 625              		.align	2
+ 626              	.L65:
+ 627 01cc 00740040 		.word	1073771520
+ 628              		.cfi_endproc
+ 629              	.LFE126:
+ 631              		.align	1
+ 632              		.global	DAC_ClearITPendingBit
+ 633              		.thumb
+ 634              		.thumb_func
+ 636              	DAC_ClearITPendingBit:
+ 637              	.LFB127:
+ 643:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 644:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** /**
+ 645:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @brief  Clears the DAC channel's interrupt pending bits.
+ 646:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_Channel: The selected DAC channel. 
+ 647:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be:
+ 648:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_1: DAC Channel1 selected
+ 649:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_Channel_2: DAC Channel2 selected
+ 650:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @param  DAC_IT: specifies the DAC interrupt pending bit to clear.
+ 651:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *          This parameter can be the following values:
+ 652:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   *            @arg DAC_IT_DMAUDR: DMA underrun interrupt mask                                     
+ 653:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   * @retval None
+ 654:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   */
+ 655:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** void DAC_ClearITPendingBit(uint32_t DAC_Channel, uint32_t DAC_IT)
+ 656:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** {
+ 638              		.loc 1 656 0
+ 639              		.cfi_startproc
+ 640              		@ args = 0, pretend = 0, frame = 0
+ 641              		@ frame_needed = 0, uses_anonymous_args = 0
+ 642              		@ link register save eliminated.
+ 643              	.LVL62:
+ 657:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Check the parameters */
+ 658:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_CHANNEL(DAC_Channel));
+ 659:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   assert_param(IS_DAC_IT(DAC_IT)); 
+ 660:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c **** 
+ 661:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   /* Clear the selected DAC interrupt pending bits */
+ 662:/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Driver/src/stm32f30x_dac.c ****   DAC->SR = (DAC_IT << DAC_Channel);
+ 644              		.loc 1 662 0
+ 645 01d0 01FA00F1 		lsl	r1, r1, r0
+ 646              	.LVL63:
+ 647 01d4 014B     		ldr	r3, .L68
+ 648 01d6 5963     		str	r1, [r3, #52]
+ 649 01d8 7047     		bx	lr
+ 650              	.L69:
+ 651 01da 00BF     		.align	2
+ 652              	.L68:
+ 653 01dc 00740040 		.word	1073771520
+ 654              		.cfi_endproc
+ 655              	.LFE127:
+ 657              	.Letext0:
+ 658              		.file 2 "/opt/CodeSourcery/Sourcery_CodeBench_Lite_for_ARM_EABI/bin/../lib/gcc/arm-none-eabi/4.7.2
+ 659              		.file 3 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Device/ST/STM32F30x
+ 660              		.file 4 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+ 661              		.file 5 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/CMSIS/Include/core_cm4.h"
+ 662              		.file 6 "/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/STM32F30x_StdPeriph_Drive
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f30x_dac.c
+     /tmp/cckrDa0W.s:18     .text:00000000 $t
+     /tmp/cckrDa0W.s:23     .text:00000000 DAC_DeInit
+     /tmp/cckrDa0W.s:58     .text:0000001a DAC_Init
+     /tmp/cckrDa0W.s:102    .text:00000044 $d
+     /tmp/cckrDa0W.s:106    .text:00000048 $t
+     /tmp/cckrDa0W.s:111    .text:00000048 DAC_StructInit
+     /tmp/cckrDa0W.s:137    .text:00000054 DAC_Cmd
+     /tmp/cckrDa0W.s:168    .text:00000074 $d
+     /tmp/cckrDa0W.s:172    .text:00000078 $t
+     /tmp/cckrDa0W.s:177    .text:00000078 DAC_SoftwareTriggerCmd
+     /tmp/cckrDa0W.s:210    .text:00000098 $d
+     /tmp/cckrDa0W.s:214    .text:0000009c $t
+     /tmp/cckrDa0W.s:219    .text:0000009c DAC_DualSoftwareTriggerCmd
+     /tmp/cckrDa0W.s:244    .text:000000b0 $d
+     /tmp/cckrDa0W.s:248    .text:000000b4 $t
+     /tmp/cckrDa0W.s:253    .text:000000b4 DAC_WaveGenerationCmd
+     /tmp/cckrDa0W.s:283    .text:000000cc $d
+     /tmp/cckrDa0W.s:287    .text:000000d0 $t
+     /tmp/cckrDa0W.s:292    .text:000000d0 DAC_SetChannel1Data
+     /tmp/cckrDa0W.s:326    .text:000000ec $d
+     /tmp/cckrDa0W.s:330    .text:000000f0 $t
+     /tmp/cckrDa0W.s:335    .text:000000f0 DAC_SetChannel2Data
+     /tmp/cckrDa0W.s:369    .text:0000010c $d
+     /tmp/cckrDa0W.s:373    .text:00000110 $t
+     /tmp/cckrDa0W.s:378    .text:00000110 DAC_SetDualChannelData
+     /tmp/cckrDa0W.s:403    .text:00000124 $d
+     /tmp/cckrDa0W.s:407    .text:00000128 $t
+     /tmp/cckrDa0W.s:412    .text:00000128 DAC_GetDataOutputValue
+     /tmp/cckrDa0W.s:448    .text:00000148 $d
+     /tmp/cckrDa0W.s:452    .text:0000014c $t
+     /tmp/cckrDa0W.s:457    .text:0000014c DAC_DMACmd
+     /tmp/cckrDa0W.s:488    .text:0000016c $d
+     /tmp/cckrDa0W.s:492    .text:00000170 $t
+     /tmp/cckrDa0W.s:497    .text:00000170 DAC_ITConfig
+     /tmp/cckrDa0W.s:527    .text:00000188 $d
+     /tmp/cckrDa0W.s:531    .text:0000018c $t
+     /tmp/cckrDa0W.s:536    .text:0000018c DAC_GetFlagStatus
+     /tmp/cckrDa0W.s:560    .text:000001a0 $d
+     /tmp/cckrDa0W.s:564    .text:000001a4 $t
+     /tmp/cckrDa0W.s:569    .text:000001a4 DAC_ClearFlag
+     /tmp/cckrDa0W.s:586    .text:000001b0 $d
+     /tmp/cckrDa0W.s:590    .text:000001b4 $t
+     /tmp/cckrDa0W.s:595    .text:000001b4 DAC_GetITStatus
+     /tmp/cckrDa0W.s:627    .text:000001cc $d
+     /tmp/cckrDa0W.s:631    .text:000001d0 $t
+     /tmp/cckrDa0W.s:636    .text:000001d0 DAC_ClearITPendingBit
+     /tmp/cckrDa0W.s:653    .text:000001dc $d
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.4549fa27c92e72ea66ffdb0399fbe8da
+                           .group:00000000 wm4.stm32f30x.h.54.c7b24f715ee55ef38656f44540ae3be6
+                           .group:00000000 wm4.core_cm4.h.32.2441f2e49dd40451ba4254637c879d0c
+                           .group:00000000 wm4.stdint.h.10.90b695f550ca6cc3fb08fa83baf01e05
+                           .group:00000000 wm4.core_cmInstr.h.25.d8165482ef3061013a2fc83e2d85f3d9
+                           .group:00000000 wm4.core_cm4_simd.h.29.013e5bcf58dba2d27c60184174208e07
+                           .group:00000000 wm4.core_cm4.h.155.cf7c793e178943e1bbf613f1b21cd51a
+                           .group:00000000 wm4.stm32f30x.h.292.5f9271075d54fc48f1e25ff79df85cb2
+                           .group:00000000 wm4.stm32f30x_adc.h.130.cbebad91f78fb87381fe0860eea6104e
+                           .group:00000000 wm4.stm32f30x_comp.h.31.9bbc5f5f1a849069ea9062fbe7b81435
+                           .group:00000000 wm4.stm32f30x_dma.h.31.73d173fa6d60026d432f3cf1d2fc4407
+                           .group:00000000 wm4.stm32f30x_exti.h.31.22e280aa6e095108654ac8d3c74a2409
+                           .group:00000000 wm4.stm32f30x_flash.h.31.bee86dc3079b7049419bdbeec073e2cd
+                           .group:00000000 wm4.stm32f30x_gpio.h.31.3745297fee3728b346ad4d2a2467e40f
+                           .group:00000000 wm4.stm32f30x_syscfg.h.31.96b023b7dbc3641f358604478433eb5c
+                           .group:00000000 wm4.stm32f30x_i2c.h.31.52025acd7f154308042bf46a2835e9d3
+                           .group:00000000 wm4.stm32f30x_pwr.h.31.cdef322c6e7f25cfc29954045d24e9b8
+                           .group:00000000 wm4.stm32f30x_rcc.h.31.3b94c1144b21d1e4fe780e4d1a02d257
+                           .group:00000000 wm4.stm32f30x_spi.h.31.c1ebebab897d23cecc617ec8ad9fd534
+                           .group:00000000 wm4.stm32f30x_tim.h.31.336f9cd855fb4e2cd819ac260ded6518
+                           .group:00000000 wm4.stm32f30x_usart.h.31.cd85313e29c0a128555b4a7b8ec0f487
+                           .group:00000000 wm4.stm32f30x_misc.h.31.f08b0e9f53f0471613b5131bb95f8725
+                           .group:00000000 wm4.stm32f30x.h.6173.8b641ba1d9b0040eda9120fe8a414b2d
+                           .group:00000000 wm4.stm32f30x_dac.h.49.b1b5b26e4ca241dbe67fa16dc86a615f
+
+UNDEFINED SYMBOLS
+RCC_APB1PeriphResetCmd
