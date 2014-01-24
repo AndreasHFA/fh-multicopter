@@ -233,7 +233,7 @@ static void IMU_Calculation( void *pvParameters )
 				//ADXL345_readValues(&accXYZ);
 				//LSM303DLHC_ACC_readValues(&accXYZ);
 				LSM303DLHC_ACC_readValuesDMA(&accXYZ, &accBuffer[0]);
-
+				printf("%d %d %d\n\r", accXYZ.accValueX,accXYZ.accValueY, accXYZ.accValueZ );
 				//ADC_AutoInjectedConvCmd(ADC2,ENABLE);
 //				ADC_StartConversion(ADC2);
 //				/* wait for ADRDY */

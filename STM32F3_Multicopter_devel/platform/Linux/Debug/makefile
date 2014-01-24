@@ -50,7 +50,7 @@ all: STM32F3_Multicopter.elf secondary-outputs
 STM32F3_Multicopter.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Summon Linux GCC C Linker'
-	arm-none-eabi-gcc -T""/home/user/Desktop/STM32-Projekte/STM32F3_Multicopter_devel/src/LinkerScript/STM32F303VC_FLASH.ld"" -nostartfiles -Xlinker --gc-sections -Wl,-Map,STM32F3_Multicopter.map -mcpu=cortex-m3 -mthumb -g3 -gdwarf-2 -o "STM32F3_Multicopter.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -T""/home/user/Desktop/STM32-Projekte/fh-multicopter/STM32F3_Multicopter_devel/src/LinkerScript/STM32F303VC_FLASH.ld"" -nostartfiles -Xlinker --gc-sections -Wl,-Map,STM32F3_Multicopter.map -mcpu=cortex-m3 -mthumb -g3 -gdwarf-2 -o "STM32F3_Multicopter.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
